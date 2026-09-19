@@ -1,7 +1,7 @@
 ---
-name: ui-ux-design
+name: turtleneck
 description: >-
-  Autonomous UI/UX architect agent skill. Use when asked to design, build, or modernize
+  Autonomous Senior UI/UX Architect agent skill. Use when asked to design, build, or modernize
   interfaces. Autonomously analyzes the current workspace stack (Tailwind, React, Vue,
   CSS tokens, component trees), conducts interactive requirement interviews with the user,
   aligns on layout architecture, and implements production-grade anti-slop UI.

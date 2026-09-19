@@ -1,8 +1,6 @@
-# Autonomous UI/UX Architect Skill (`ui-ux-design`)
+# Turtleneck (`turtleneck`)
 
-A production-grade, anti-slop agent skill that autonomously profiles your codebase, interviews you to clarify UI/UX requirements, aligns on wireframes, and implements accessible, high-performance interfaces.
-
-Built for **Google Antigravity**, Claude Code, and compatible AI agent frameworks.
+**The Senior UI/UX Architect Agent Skill.** Like `ponytail` is for senior dev efficiency, `turtleneck` is for senior design craft. A production-grade, anti-slop agent skill that autonomously profiles your codebase, interviews you to clarify UI/UX requirements, aligns on wireframes, and implements accessible, high-performance interfaces.
 
 ---
 
