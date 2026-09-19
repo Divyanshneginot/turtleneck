@@ -4,21 +4,25 @@ Actionable protocol for conducting a focused, rapid UI/UX alignment interview wi
 
 ---
 
-## 1. The 3 Essential Discovery Questions
+## 1. The 4 Essential Discovery Questions
 
 Never jump straight to writing code based on ambiguous prompts. Ask the user 3 structured questions:
 
-### Q1: Job-To-Be-Done (JTBD) & Primary Outcome
+### Q1: Visual Archetype & DNA
+* "Based on your project domain, should this feel like A) High-Trust Corporate, B) Warm Editorial Paper, C) Fluid Organics, D) High-Density Starlight, or E) Stark Geometric?"
+* (Or agent researches domain to recommend one.)
+
+### Q2: Job-To-Be-Done (JTBD) & Primary Outcome
 * *"What is the single most critical action or decision a user needs to make on this screen?"*
 * Examples: Monitor active background workers; Filter and export audit logs; Complete a multi-step checkout.
 
-### Q2: Information Density & User Archetype
+### Q3: Information Density & User Archetype
 * *"What density level fits the workflow best?"*
   * **Option A: High Density / Operational** (Compact tables, tight row padding, power-user hotkeys, minimal whitespace).
   * **Option B: Balanced / SaaS Dashboard** (Clear metrics cards, separated list items, moderate whitespace).
   * **Option C: Guided / Consumer Flow** (Single-task focus, large touch surfaces, progressive disclosure).
 
-### Q3: Layout Architecture Options
+### Q4: Layout Architecture Options
 Present 2 concrete wireframe architectures suited for the task:
 * **Architecture 1: Master-Detail Split** (Left list, right active detail pane. Ideal for fast triage).
 * **Architecture 2: Full-Width Data Grid + Drawer** (Spacious tabular overview with slide-over panel for inspect/edit).
