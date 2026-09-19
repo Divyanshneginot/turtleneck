@@ -1,18 +1,21 @@
-# UI/UX Design Skill (`ui-ux-design`)
+# Autonomous UI/UX Architect Skill (`ui-ux-design`)
 
-A production-grade, progressive-disclosure agent skill for automated UI/UX design, design token systems, component state modeling, and WCAG 2.2 accessibility compliance.
+A production-grade, anti-slop agent skill that autonomously profiles your codebase, interviews you to clarify UI/UX requirements, aligns on wireframes, and implements accessible, high-performance interfaces.
 
 Built for **Google Antigravity**, Claude Code, and compatible AI agent frameworks.
 
 ---
 
-## Features
+## 4-Phase Architecture
 
-* **Progressive Disclosure**: Lean `SKILL.md` footprint with specialized on-demand reference guides to minimize LLM token overhead.
-* **Systematic Design Tokens**: 8pt/4pt spatial grids, modular typographic scales (Major Third / 1.25), and semantic color mapping.
-* **Component State Completeness**: Standardized 5-state model (Default, Hover, Active, Focus-Visible, Disabled) with 44px touch targets.
-* **Usability Heuristics**: Direct mapping of Nielsen's 10 Heuristics to interface generation.
-* **WCAG 2.2 AA Compliance**: Automated checklist for color contrast, keyboard navigation, focus indicators, and screen reader semantics.
+```
+1. Workspace Scanner ──► 2. Requirements Interview ──► 3. Blueprint Alignment ──► 4. Anti-Slop Implementation
+```
+
+1. **Workspace Stack Profiling**: Detects your framework (React, Next.js, Vue, Svelte), styling system (Tailwind, CSS Modules, Radix, Shadcn), existing theme tokens, and component directories.
+2. **Interactive Requirements Interview**: Asks focused questions to nail down Jobs-To-Be-Done (JTBD), user density needs, and offers 2-3 concrete layout options.
+3. **Design Blueprint & Tokens**: Establishes anti-slop visual hierarchy and components grounded in your existing code patterns.
+4. **Production Implementation**: Generates clean, accessible (WCAG 2.2 AA), responsive, and 5-state complete UI.
 
 ---
 
@@ -20,12 +23,18 @@ Built for **Google Antigravity**, Claude Code, and compatible AI agent framework
 
 ```text
 ui-ux-design/
-├── SKILL.md                          # Main agent instructions & execution protocol
-├── README.md                         # Documentation & installation guide
-└── references/
-    ├── design-tokens.md              # Spatial grids, typographic scales, semantic color roles
-    ├── ux-heuristics.md              # Usability guidelines, response latencies, error prevention
-    └── accessibility-checklist.md    # WCAG 2.2 AA audit criteria, keyboard traps, ARIA rules
+├── SKILL.md                                 # Primary agent entrypoint & workflow
+├── README.md                                # Documentation & installation guide
+├── references/
+│   ├── workspace-scanner-guide.md           # Tooling & stack detection runbook
+│   ├── requirements-interview-framework.md  # JTBD discovery & wireframe option templates
+│   ├── anti-slop-manifesto.md               # Banned AI tropes & quality standards
+│   ├── design-tokens.md                     # 8pt grid, type scales, semantic color roles
+│   ├── ux-heuristics.md                     # Usability rules & response latencies
+│   └── accessibility-checklist.md           # WCAG 2.2 AA audit criteria
+└── examples/
+    ├── linear-issue-tracker.html            # Working Linear-style high-density UI demo
+    └── index.html                           # Accessible telemetry dashboard demo
 ```
 
 ---
@@ -54,16 +63,6 @@ cp -r ./ui-ux-design .agents/skills/ui-ux-design
 git add .agents/skills/ui-ux-design
 git commit -m "feat: add ui-ux-design agent skill"
 ```
-
----
-
-## How It Activates
-
-The agent automatically triggers this skill whenever prompts match UI/UX design intents, such as:
-* *"Design a responsive dashboard layout for..."*
-* *"Create an accessible color palette and design tokens for..."*
-* *"Build a button component with full state coverage..."*
-* *"Audit this interface for WCAG accessibility and usability issues..."*
 
 ---
 

@@ -1,66 +1,77 @@
 ---
 name: ui-ux-design
 description: >-
-  Agentic UI/UX design engine. Use when tasked with designing or building interfaces
-  requiring real-world benchmark research, extracting design systems from modern apps
-  (e.g., Linear, Stripe, Vercel, Raycast), synthesizing visual DNA, and generating production UI.
+  Autonomous UI/UX architect agent skill. Use when asked to design, build, or modernize
+  interfaces. Autonomously analyzes the current workspace stack (Tailwind, React, Vue,
+  CSS tokens, component trees), conducts interactive requirement interviews with the user,
+  aligns on layout architecture, and implements production-grade anti-slop UI.
 ---
 
-# Agentic UI/UX Research & Implementation Engine
+# Autonomous UI/UX Architect Protocol
 
-Transforms raw interface requests into bespoke, research-backed products by autonomously benchmarking top-tier references, extracting visual DNA, and generating production code.
+Transforms user UI requests into bespoke, production-ready interfaces by first scanning the local workspace, conducting a structured requirement interview with the user, aligning on architecture, and implementing anti-slop code.
 
 ---
 
-## 3-Phase Execution Pipeline
+## 4-Phase Operational Pipeline
 
 ```
-Phase 1: Deep Design Research ──► Phase 2: Design DNA Synthesis ──► Phase 3: High-Fidelity Implementation
+1. Workspace Analysis ──► 2. Requirements Interview ──► 3. Blueprint Alignment ──► 4. Production Build
 ```
 
 ---
 
-### Phase 1: Autonomous Design Research
-Do NOT guess or use generic templates. Research best-in-class products in the target category:
+### Phase 1: Workspace Analysis & Stack Profiling
+Before asking questions or drafting UI, inspect the repository:
 
-1. **Benchmark Identification**:
-   * Identify 2-3 category leaders (e.g., Developer Tools -> *Linear / Raycast*; Fintech -> *Stripe / Ramp*; Consumer -> *Airbnb / Notion*).
-   * Search web for design breakdowns, teardowns, and UI patterns for target niche.
-2. **Structural Extraction**:
-   * **Information Architecture**: Layout density, navigation model (sidebar vs command bar vs top tabs).
-   * **Visual Tone**: Atmospheric backdrop, border sharpness, shadow depth, glassmorphism vs brutalism.
-   * **Signature Components**: Hero treatments, data tables, metrics cards, filter widgets.
-
----
-
-### Phase 2: Learn & Synthesize Design DNA
-Distill research into a concrete, reproducible Design Manifest:
-
-1. **Palette Extraction**:
-   * Canvas background (deep dark `#08090A` or warm neutral `#FAFAF9`).
-   * Surface tiers (base, raised, overlay).
-   * Accent color (high-chroma signature action color).
-   * Contrast ratios validated against WCAG AA.
-2. **Typography DNA**:
-   * Font stack (geometric sans, clean humanist, or technical mono).
-   * Density and tracking rules (tight tracking `-0.02em` on bold display headings).
-3. **Component DNA**:
-   * Corner radiuses (`4px` surgical vs `12px` modern soft).
-   * Border stroke treatments (`1px solid rgba(255,255,255,0.08)` for dark themes).
-   * Micro-interaction cues (hover state latency, spring transforms).
+1. **Stack & Tooling Detection**:
+   * Inspect package files (`package.json`, `requirements.txt`, `composer.json`, etc.).
+   * Identify frontend framework (React, Next.js, Vue, Svelte, HTML/CSS).
+   * Identify styling engine (Tailwind CSS, Vanilla CSS, CSS Modules, Radix UI, Shadcn, PandaCSS).
+   * Identify icon libraries in use (Lucide, Heroicons, Radix Icons, FontAwesome).
+2. **Component Tree & Token Discovery**:
+   * Check existing component patterns (`src/components/`, `components/ui/`, `lib/`).
+   * Read existing design tokens (`tailwind.config.*`, `globals.css`, theme files).
+   * Map existing layout routes (`app/`, `pages/`, `views/`).
+3. **Synthesize Workspace Profile**:
+   * Summarize detected stack, theme conventions, and reuse opportunities.
+   * Refer to [Workspace Scanner Guide](./references/workspace-scanner-guide.md).
 
 ---
 
-### Phase 3: Generative Implementation
-Produce production frontend code matching the learned Design Manifest:
+### Phase 2: Interactive Requirements Interview
+Engage the user to clarify intent and resolve design ambiguities before writing code. Follow [Requirements Interview Framework](./references/requirements-interview-framework.md):
 
-1. **Semantic Foundation**: Clean HTML5 semantic tags with ARIA accessibility primitives.
-2. **CSS Token Embed**: Declare extracted tokens as CSS custom variables at `:root`.
-3. **Interactive Fidelity**:
-   * 5 component states (`default`, `hover`, `active`, `focus-visible`, `disabled`).
-   * Fluid responsive breakpoints (mobile drawer to desktop grid).
-   * Micro-interactions (smooth transitions under `150ms`, keyboard shortcuts).
-4. **Anti-Slop Quality Gate (Mandatory)**:
-   * Reject purple/cyan nebula blur blobs, fake glassmorphism, and buzzword copy ("quantum synergy").
-   * Audit against [Anti-Slop Manifesto](./references/anti-slop-manifesto.md): enforce high information density, sub-50ms responsiveness, real operational microcopy, and keyboard ergonomics.
-   * Verify WCAG AA contrast and keyboard trap prevention.
+1. **Core Problem & Target Audience**:
+   * What is the primary Job-To-Be-Done (JTBD) on this view?
+   * Who is the user (domain expert needing high density vs casual consumer needing guided flow)?
+2. **Layout & Density Preference**:
+   * Density level: High (data tables, compact controls) vs Moderate (cards, balanced spacing).
+   * Navigation model: Sidebar navigation, top header tabs, or command-driven (`Cmd+K`).
+3. **Present 2-3 Concrete Approaches**:
+   * Pitch distinct layout archetypes (e.g., Option A: Split-pane master-detail vs Option B: Focused feed with slide-over drawer).
+   * Solicit user preference or confirmation.
+
+---
+
+### Phase 3: Blueprint & Token Alignment
+Once user approves layout choice:
+1. Formulate exact data schema for UI components (mock realistic, domain-accurate data).
+2. Lock in design tokens (colors, typography, spacing) compatible with the scanned workspace.
+3. Validate against [Anti-Slop Manifesto](./references/anti-slop-manifesto.md):
+   * ❌ Zero glowing nebula blur blobs, fake glassmorphism, or marketing buzzwords.
+   * ✔ High data-to-ink ratio, domain microcopy, sub-50ms responsiveness.
+
+---
+
+### Phase 4: Production Implementation & Verification
+1. **Component Engineering**:
+   * Generate modular, clean components following discovered repo conventions.
+   * Support 5 component states (`default`, `hover`, `active`, `focus-visible`, `disabled`).
+   * Ensure min `44x44px` touch targets on interactive elements.
+2. **Accessibility Audit**:
+   * Verify WCAG 2.2 AA contrast (4.5:1 text, 3:1 UI).
+   * Semantic landmarks (`<nav>`, `<main>`, `<section>`), visible 2px focus outlines, keyboard escape handling.
+3. **Walkthrough & Verification**:
+   * Verify component renders cleanly in browser.
+   * Present summary of files changed and architectural decisions to user.
