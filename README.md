@@ -20,10 +20,17 @@
 ## Repository Layout
 
 ```text
-ui-ux-design/
-├── SKILL.md                                 # Primary agent entrypoint & workflow
-├── README.md                                # Documentation & installation guide
+turtleneck/
+├── SKILL.md                                 # Primary agent skill entrypoint (Antigravity & Agent Skills spec)
+├── README.md                                # Documentation & universal installation guide
+├── rules/                                   # Drop-in rules for all major AI coding agents
+│   ├── AGENTS.md                            # Universal standard (Antigravity, Codex, Aider, OpenHands)
+│   ├── CLAUDE.md                            # Claude Code command-line agent rules
+│   ├── .cursorrules                         # Cursor AI editor rules
+│   ├── .windsurfrules                       # Windsurf / Cascade rules
+│   └── copilot-instructions.md              # GitHub Copilot workspace instructions
 ├── scripts/
+│   ├── install.py                           # Zero-dependency universal installer CLI
 │   ├── extract_design.py                    # Playwright headless browser design DNA extractor
 │   ├── research_award_sites.py              # Headless inspector for award-winning benchmarks
 │   └── research_links.py                    # Headless inspector for category references
@@ -53,33 +60,65 @@ ui-ux-design/
 
 ---
 
-## Installation
+## Universal Installation
 
-### Option 1: Global Installation (All Workspaces)
-Clone or copy this folder into your global Antigravity config directory:
+Turtleneck works across **all** major AI coding environments.
 
-**Windows (PowerShell)**:
+### 1. One-Line Universal CLI (Any Repository)
+Run the installer directly in your project root:
+
+```bash
+# Auto-detects your setup and installs AGENTS.md / .cursorrules / Copilot
+python path/to/turtleneck/scripts/install.py
+
+# Or install for all platforms simultaneously:
+python path/to/turtleneck/scripts/install.py --all
+```
+
+---
+
+### 2. Framework-by-Framework Setup
+
+#### A. Cursor
+Copy `rules/.cursorrules` to your project root or run:
+```bash
+python path/to/turtleneck/scripts/install.py --cursor
+```
+
+#### B. Claude Code
+Copy `rules/CLAUDE.md` to your project root or run:
+```bash
+python path/to/turtleneck/scripts/install.py --claude
+```
+
+#### C. Windsurf / Cascade
+Copy `rules/.windsurfrules` to your project root or run:
+```bash
+python path/to/turtleneck/scripts/install.py --windsurf
+```
+
+#### D. GitHub Copilot
+Copy `rules/copilot-instructions.md` to `.github/copilot-instructions.md` or run:
+```bash
+python path/to/turtleneck/scripts/install.py --copilot
+```
+
+#### E. Google Antigravity
+Install globally into your Antigravity skills catalog:
+```bash
+python path/to/turtleneck/scripts/install.py --antigravity
+```
+Or manually:
 ```powershell
-Copy-Item -Recurse -Path .\ui-ux-design -Destination "$HOME\.gemini\config\skills\ui-ux-design"
+Copy-Item -Recurse -Path .\turtleneck -Destination "$HOME\.gemini\config\skills\turtleneck"
 ```
 
-**macOS / Linux**:
-```bash
-cp -r ./ui-ux-design ~/.gemini/config/skills/ui-ux-design
-```
-
-### Option 2: Project-Specific Installation (Current Repository)
-Add the skill to your project's `.agents/skills` directory and check it into git:
-
-```bash
-mkdir -p .agents/skills
-cp -r ./ui-ux-design .agents/skills/ui-ux-design
-git add .agents/skills/ui-ux-design
-git commit -m "feat: add ui-ux-design agent skill"
-```
+#### F. Aider / Codex / OpenHands / Generic Agents
+Drop `rules/AGENTS.md` into your repo root. Universal markdown instructions are recognized by all standard LLM tooling.
 
 ---
 
 ## License
 
 MIT
+

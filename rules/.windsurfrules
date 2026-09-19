@@ -1,0 +1,14 @@
+# Turtleneck — Senior UI/UX Architect Rules for Windsurf
+
+When generating, modifying, or reviewing frontend UI, CSS, or components:
+1. Inspect `package.json` to emit idiomatic React, Vue, Svelte, Tailwind, or Native CSS.
+2. Align on one of 5 design archetypes: High-Trust Corporate, Warm Editorial Paper, Fluid Organics, High-Density Starlight, Stark Geometric Minimal.
+3. Anti-Slop Enforcement:
+   - No floating purple/cyan nebula blobs.
+   - No glassmorphism below 80% fill opacity.
+   - No 800ms laggy transitions; use 80-120ms tactile response with physical depression (scale 0.98).
+4. Accessibility & Ergonomics:
+   - 44px minimum touch targets.
+   - 5-state complete controls (default, hover, active, focus-visible ring, disabled).
+   - WCAG 2.2 AA (4.5:1 text, 3:1 borders).
+   - Concentric radiuses (outer = inner + padding).
