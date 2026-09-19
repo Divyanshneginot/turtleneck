@@ -1,0 +1,321 @@
+{
+  "unseen_studio": {
+    "title": "Unseen Studio\u00ae \u2013 Brand, Digital & Motion",
+    "bodyBg": "rgba(0, 0, 0, 0)",
+    "bodyColor": "rgb(0, 0, 0)",
+    "fontFamily": "\"Neue Montreal\", system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif",
+    "headings": [
+      {
+        "tag": "H1",
+        "text": "Home",
+        "fontSize": "28.8px",
+        "fontWeight": "700",
+        "letterSpacing": "normal",
+        "lineHeight": "43.2px"
+      },
+      {
+        "tag": "H2",
+        "text": "Say hello",
+        "fontSize": "86.4px",
+        "fontWeight": "700",
+        "letterSpacing": "normal",
+        "lineHeight": "77.76px"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "ENTER WITHOUT AUDIO",
+        "padding": "0px 0px 1.44px",
+        "borderRadius": "0px",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "boxShadow": "none"
+      },
+      {
+        "text": "Enter\nEnter",
+        "padding": "0px",
+        "borderRadius": "0px",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(66, 66, 66)",
+        "boxShadow": "none"
+      },
+      {
+        "text": "Toggle Menu",
+        "padding": "0px",
+        "borderRadius": "50%",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "boxShadow": "none"
+      },
+      {
+        "text": "Toggle Sound",
+        "padding": "0px",
+        "borderRadius": "50%",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "boxShadow": "none"
+      },
+      {
+        "text": "Our 2025 Wrapped\nOur 2025 Wrapped\nOur 20",
+        "padding": "0px",
+        "borderRadius": "0px",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(0, 0, 0)",
+        "boxShadow": "none"
+      }
+    ]
+  },
+  "superlist": {
+    "title": "Superlist \u2014 Task Management & To-Do List App for Work and Life",
+    "bodyBg": "rgb(24, 24, 36)",
+    "bodyColor": "rgb(0, 0, 0)",
+    "fontFamily": "sans-serif",
+    "headings": [
+      {
+        "tag": "H1",
+        "text": "Tasks, notes, and plans.\nFinally in one app.",
+        "fontSize": "64px",
+        "fontWeight": "600",
+        "letterSpacing": "-1.28px",
+        "lineHeight": "60.8px"
+      },
+      {
+        "tag": "H2",
+        "text": "Stop spending time organizing your tasks \u2014 let AI do it for you. Superlist uses AI to turn voice rec",
+        "fontSize": "30px",
+        "fontWeight": "600",
+        "letterSpacing": "-0.6px",
+        "lineHeight": "36px"
+      },
+      {
+        "tag": "H2",
+        "text": "Stop juggling five different apps. Superlist makes it simple to manage your entire life.",
+        "fontSize": "48px",
+        "fontWeight": "600",
+        "letterSpacing": "-0.96px",
+        "lineHeight": "52.8px"
+      },
+      {
+        "tag": "H2",
+        "text": "Everyday superpowers. Superlist is light enough for daily routines but powerful enough for big plans",
+        "fontSize": "48px",
+        "fontWeight": "600",
+        "letterSpacing": "-0.96px",
+        "lineHeight": "52.8px"
+      },
+      {
+        "tag": "H2",
+        "text": "Move seamlessly from talk to done. AI-powered meeting notes and voice assistant.",
+        "fontSize": "48px",
+        "fontWeight": "600",
+        "letterSpacing": "-0.96px",
+        "lineHeight": "52.8px"
+      },
+      {
+        "tag": "H2",
+        "text": "In a sea of ultra-efficient productivity tools, Superlist brings a little more fun to getting things",
+        "fontSize": "51px",
+        "fontWeight": "400",
+        "letterSpacing": "-1.02px",
+        "lineHeight": "45.9px"
+      }
+    ],
+    "buttons": []
+  },
+  "linear_app": {
+    "title": "Linear \u2013 The system for product development",
+    "bodyBg": "rgb(8, 9, 10)",
+    "bodyColor": "rgb(247, 248, 248)",
+    "fontFamily": "\"Inter Variable\", \"SF Pro Display\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, \"Open Sans\", \"Helvetica Neue\", sans-serif",
+    "headings": [
+      {
+        "tag": "H1",
+        "text": "The product development\nsystem for teams and agents\nThe product development system for teams and age",
+        "fontSize": "64px",
+        "fontWeight": "510",
+        "letterSpacing": "-1.408px",
+        "lineHeight": "64px"
+      },
+      {
+        "tag": "H2",
+        "text": "A new species of product tool. Purpose-built for modern teams with AI workflows at its core, Linear ",
+        "fontSize": "48px",
+        "fontWeight": "510",
+        "letterSpacing": "-1.056px",
+        "lineHeight": "48px"
+      },
+      {
+        "tag": "H2",
+        "text": "Intake\nand integrations",
+        "fontSize": "48px",
+        "fontWeight": "510",
+        "letterSpacing": "-1.056px",
+        "lineHeight": "48px"
+      },
+      {
+        "tag": "H2",
+        "text": "Planning\nand monitoring",
+        "fontSize": "48px",
+        "fontWeight": "510",
+        "letterSpacing": "-1.056px",
+        "lineHeight": "48px"
+      },
+      {
+        "tag": "H2",
+        "text": "AI and\nautomations",
+        "fontSize": "48px",
+        "fontWeight": "510",
+        "letterSpacing": "-1.056px",
+        "lineHeight": "48px"
+      },
+      {
+        "tag": "H2",
+        "text": "Build, review,\nand ship",
+        "fontSize": "48px",
+        "fontWeight": "510",
+        "letterSpacing": "-1.056px",
+        "lineHeight": "48px"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Product",
+        "padding": "0px 12px",
+        "borderRadius": "9999px",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(138, 143, 152)",
+        "boxShadow": "none"
+      },
+      {
+        "text": "Resources",
+        "padding": "0px 12px",
+        "borderRadius": "9999px",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(138, 143, 152)",
+        "boxShadow": "none"
+      },
+      {
+        "text": "Linear",
+        "padding": "0px 4px",
+        "borderRadius": "8px",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(255, 255, 255)",
+        "boxShadow": "none"
+      },
+      {
+        "text": "Pulse",
+        "padding": "0px 7px",
+        "borderRadius": "8px",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(208, 214, 224)",
+        "boxShadow": "none"
+      },
+      {
+        "text": "Inbox",
+        "padding": "0px 7px",
+        "borderRadius": "8px",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(208, 214, 224)",
+        "boxShadow": "none"
+      }
+    ]
+  },
+  "koto_studio": {
+    "title": "Koto, an international creative agency building impactful brands",
+    "bodyBg": "rgba(0, 0, 0, 0)",
+    "bodyColor": "rgb(255, 255, 255)",
+    "fontFamily": "gtKotoheim, \"gtKotoheim Fallback\", sans-serif",
+    "headings": [
+      {
+        "tag": "H2",
+        "text": "CHANNELS",
+        "fontSize": "9px",
+        "fontWeight": "400",
+        "letterSpacing": "-0.18px",
+        "lineHeight": "9px"
+      },
+      {
+        "tag": "H2",
+        "text": "Explore",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "lineHeight": "11px"
+      },
+      {
+        "tag": "H2",
+        "text": "Channels",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "letterSpacing": "normal",
+        "lineHeight": "11px"
+      },
+      {
+        "tag": "H1",
+        "text": "We\u2019re Koto",
+        "fontSize": "48px",
+        "fontWeight": "300",
+        "letterSpacing": "-0.48px",
+        "lineHeight": "48px"
+      },
+      {
+        "tag": "H2",
+        "text": "Our work",
+        "fontSize": "38px",
+        "fontWeight": "300",
+        "letterSpacing": "-0.38px",
+        "lineHeight": "41.8px"
+      },
+      {
+        "tag": "H2",
+        "text": "Studio news",
+        "fontSize": "32px",
+        "fontWeight": "300",
+        "letterSpacing": "normal",
+        "lineHeight": "36.8px"
+      }
+    ],
+    "buttons": [
+      {
+        "text": "Necessary   2",
+        "padding": "0px 10.5px 0px 0px",
+        "borderRadius": "0px",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(152, 152, 152)",
+        "boxShadow": "none"
+      },
+      {
+        "text": "Preferences   0",
+        "padding": "0px 10.5px 0px 0px",
+        "borderRadius": "0px",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(152, 152, 152)",
+        "boxShadow": "none"
+      },
+      {
+        "text": "Statistics   6",
+        "padding": "0px 10.5px 0px 0px",
+        "borderRadius": "0px",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(152, 152, 152)",
+        "boxShadow": "none"
+      },
+      {
+        "text": "Marketing   8",
+        "padding": "0px 10.5px 0px 0px",
+        "borderRadius": "0px",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(152, 152, 152)",
+        "boxShadow": "none"
+      },
+      {
+        "text": "Unclassified   4",
+        "padding": "0px 12px 0px 0px",
+        "borderRadius": "0px",
+        "bgColor": "rgba(0, 0, 0, 0)",
+        "color": "rgb(152, 152, 152)",
+        "boxShadow": "none"
+      }
+    ]
+  }
+}

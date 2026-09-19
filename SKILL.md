@@ -28,12 +28,15 @@ Before asking questions or drafting UI, inspect the repository and live benchmar
    * Inspect package files (`package.json`, `requirements.txt`, etc.).
    * Identify frontend framework (React, Next.js, Vue, Svelte, HTML/CSS).
    * Identify styling engine (Tailwind CSS, Vanilla CSS, Radix UI, Shadcn).
-2. **Live Browser Benchmark Extraction**:
-   * When targeting a reference design or URL, run the built-in browser extractor:
+2. **Live Headless Browser Extraction & Feeling Inspection**:
+   * Inspect benchmark URLs in headless browser mode (`scripts/extract_design.py`):
      ```bash
      python scripts/extract_design.py <target-url> references/
      ```
-   * Extracts exact computed styles: dominant backgrounds, text colors, font stacks, optical radii, and specular box-shadows directly into JSON.
+   * Do NOT merely copy-paste code or mimic a single reference. Inspect rendered screenshots, typography scale tension ($\ge 4:1$), spatial cadence, and interactive mechanics.
+   * Enforce the **Tri-Source Synthesis Protocol** (Refer to [Award-Winning Craft Playbook](./references/award-winning-craft-playbook.md) and [Creative Synthesis Protocol](./references/creative-synthesis-protocol.md)):
+     * Forbid 1:1 cloning of metaphors, copy, or single-site layouts.
+     * Synthesize: [Texture/Atmosphere from Source A] + [Interaction Mechanics from Source B] + [Information Architecture from Source C].
 
 ---
 

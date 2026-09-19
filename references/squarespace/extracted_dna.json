@@ -1,0 +1,43 @@
+{
+  "url": "https://www.squarespace.com/",
+  "dominant_bg_colors": [
+    "rgb(0, 0, 0)",
+    "rgba(0, 0, 0, 0.41)",
+    "rgb(255, 255, 255)",
+    "rgba(0, 0, 0, 0.54)",
+    "rgb(47, 47, 47)",
+    "rgba(255, 255, 255, 0.3)"
+  ],
+  "dominant_text_colors": [
+    "rgb(0, 0, 0)",
+    "rgb(255, 255, 255)",
+    "rgb(137, 137, 137)",
+    "rgb(221, 221, 221)"
+  ],
+  "primary_fonts": [
+    "sans-serif",
+    "Clarkson",
+    "Clarkson Serif"
+  ],
+  "common_font_sizes": [
+    "16px",
+    "15px",
+    "13px",
+    "64px",
+    "12px",
+    "20px"
+  ],
+  "common_border_radii": [
+    "8px",
+    "3px",
+    "30px",
+    "100px",
+    "50%",
+    "4px"
+  ],
+  "top_box_shadows": [
+    "rgba(0, 0, 0, 0.1) 0px 8px 16px 0px",
+    "color(srgb 0 0 0 / 0.2) 0px 0px 0px 2px inset"
+  ],
+  "sample_css_vars": {}
+}

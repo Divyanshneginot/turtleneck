@@ -1,0 +1,30 @@
+{
+  "title": "Just a moment...",
+  "headings": [
+    {
+      "tag": "H1",
+      "text": "medium.com"
+    },
+    {
+      "tag": "H2",
+      "text": "Performing security verification"
+    },
+    {
+      "tag": "H2",
+      "text": "Verification successful. Waiting for medium.com to respond"
+    }
+  ],
+  "sample_paragraphs": [
+    "This website uses a security service to protect against malicious bots. This page is displayed while the website verifies you are not a bot."
+  ],
+  "external_links": [
+    {
+      "text": "Cloudflare",
+      "href": "https://www.cloudflare.com/?utm_source=challenge&utm_campaign=m"
+    },
+    {
+      "text": "Privacy",
+      "href": "https://www.cloudflare.com/privacypolicy/"
+    }
+  ]
+}
