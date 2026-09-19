@@ -4,12 +4,12 @@ Explicit rules to prevent 1:1 cloning of reference websites and ensure agents ge
 
 ---
 
-## 1. The Anti-Cloning Rule (Tri-Source Fusion)
+## 1. The Anti-Cloning Rule (Multi-Source Fusion)
 
-Never copy a single reference site. To create an original visual identity, fuse 3 orthogonal sources:
+Never copy a single reference site. To create an original visual identity, fuse 4+ orthogonal sources:
 
 ```
-[Texture/Tone from Source A]  +  [Interaction Model from Source B]  +  [Layout Architecture from Source C]
+[Texture/Tone] + [Interaction Physics] + [Layout Density] + [Typography Tension]
                                         │
                                         ▼
                          Bespoke, Original Product UI

@@ -14,7 +14,7 @@ The definitive engineering reference for modern interface craft, micro-interacti
 * **The Asymmetric Exit Rule**: Dismissals and exits must be **30%–50% faster** than entrances (`100ms – 140ms`). The user has finished their intent; the UI must clear the path immediately.
 
 ### Timing Curves & Spring Parameters
-* **Expo Out (Linear/Raycast Enter)**: `cubic-bezier(0.16, 1, 0.3, 1)` — Instant velocity, long smooth deceleration, zero bounce.
+* **Expo Out (Starlight Console Enter)**: `cubic-bezier(0.16, 1, 0.3, 1)` — Instant velocity, long smooth deceleration, zero bounce.
 * **Sharp Exit / Dismiss**: `cubic-bezier(0.4, 0, 1, 1)`
 * **Spring Damping Ratio**: $\zeta = \frac{c}{2\sqrt{km}} \in [0.85, 1.0]$. Never underdamped ($\zeta < 0.7$) in utility UI.
   * *Micro-toggles*: `{ stiffness: 450, damping: 32, mass: 0.8 }` (settles in ~140ms, 0 overshoot).
@@ -114,7 +114,7 @@ Every interactive element must define 5 states:
 5. **Disabled**: `opacity: 0.48`, `cursor: not-allowed`, `pointer-events: none`.
 
 ### Touch Ergonomics
-* Minimum tap boundary: **44px × 44px** (Apple HIG) / **48px × 48px** (Android M3).
+* Minimum tap boundary: **44px × 44px** (Fluid Organics System) / **48px × 48px** (Material System).
 * Compact icons must use `::after` pseudo-elements to expand touch bounds to 44px.
 
 ---

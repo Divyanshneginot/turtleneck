@@ -24,4 +24,4 @@ Every interface must be grounded in genuine workflow research:
 * ✔ **Domain-Accurate Microcopy**: Write precise, operational text (e.g., *"Export 1,420 records to CSV (2.4MB)"* instead of *"Export with AI magic"*).
 * ✔ **Sub-50ms Tactile Speed**: Instant keyboard responses, crisp transitions (under 120ms), native focus outlines, zero layout shifts.
 * ✔ **Content-First Contrast**: True dark/light mode with rock-solid text contrast (minimum 7:1 for core data, 4.5:1 for secondary).
-* ✔ **Keyboard Command Ergonomics**: Full keyboard navigability (`Tab`, `Esc`, `Cmd+K`, hotkeys) matching high-productivity tools like GitHub, Linear, or terminal utilities.
+* ✔ **Keyboard Command Ergonomics**: Full keyboard navigability (`Tab`, `Esc`, `Cmd+K`, hotkeys) matching high-productivity tools like high-density trackers or terminal utilities.

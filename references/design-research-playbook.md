@@ -8,9 +8,9 @@ Runbook for conducting automated design research and synthesizing interface DNA.
 
 | Category | Benchmark References | Key Visual Signatures |
 | :--- | :--- | :--- |
-| **Developer Tools & Infrastructure** | Linear, Raycast, Vercel, Supabase | High information density, dark-first mode, monochromatic canvas with subtle borders (`1px solid rgba(255,255,255,0.08)`), keyboard-first command bars (`Cmd+K`), tight typography (`letter-spacing: -0.02em`). |
-| **Fintech & Enterprise Payments** | Stripe, Ramp, Mercury | Crisp typographic contrast, generous white space, subtle multi-stop mesh gradients, refined card elevations, high-trust neutral slate palettes. |
-| **Productivity & Workspace** | Notion, Cron/Notion Calendar, Craft | Warm paper neutrals (`#FBFBFA`), fluid inline editing, minimal chrome, subtle divider rules, drag-and-drop affordances. |
+| **Developer Tools & Infrastructure** | High-Density Trackers, Engineering Consoles, Minimal Cloud Platforms | High information density, dark-first mode, monochromatic canvas with subtle borders (`1px solid rgba(255,255,255,0.08)`), keyboard-first command bars (`Cmd+K`), tight typography (`letter-spacing: -0.02em`). |
+| **Fintech & Enterprise Payments** | High-Trust Corporate Platforms, Fintech Apps | Crisp typographic contrast, generous white space, subtle multi-stop mesh gradients, refined card elevations, high-trust neutral slate palettes. |
+| **Productivity & Workspace** | Editorial Workspaces, Warm Paper Calendars | Warm paper neutrals (`#FBFBFA`), fluid inline editing, minimal chrome, subtle divider rules, drag-and-drop affordances. |
 | **Data & AI Analytics** | Perplexity, Scale AI, HuggingFace | Split-pane viewports, streaming skeleton feedback, prominent prompt inputs, token counter chips, high contrast data tables. |
 
 ---

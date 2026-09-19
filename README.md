@@ -34,7 +34,7 @@ ui-ux-design/
 │   ├── creative-synthesis-protocol.md       # Tri-Source Synthesis rules preventing 1:1 cloning
 │   ├── master-ui-craft-benchmark.md         # Motion timing, typography math, OKLCH, WCAG 2.2
 │   ├── taste-vs-slop-matrix.md              # Quality rubric: modern craft vs. slop
-│   ├── design-archetypes.md                 # 5 archetype palettes (Stripe, Notion, Apple, Linear, Vercel)
+│   ├── design-archetypes.md                 # 5 archetype palettes (Corporate, Editorial, Fluid, Starlight, Minimal)
 │   ├── full-product-design-system.md        # 6 product surfaces (Shell, Dashboard, Table, Form, Drawer, Empty)
 │   ├── workspace-scanner-guide.md           # Tooling & stack detection runbook
 │   ├── requirements-interview-framework.md  # JTBD discovery & wireframe option templates
@@ -43,9 +43,9 @@ ui-ux-design/
 │   ├── ux-heuristics.md                     # Usability rules & response latencies
 │   └── accessibility-checklist.md           # WCAG 2.2 AA audit criteria
 └── examples/
-    ├── creative-craft.html                  # Bespoke artisanal acoustic instrument (Tri-Source synthesis)
-    ├── index.html                           # Multi-archetype application workbench with 4 surfaces
-    └── linear-issue-tracker.html            # High-density keyboard-first issue tracker
+    ├── index.html                           # Archetype Switcher & Application Window Frame
+    ├── creative-craft.html                  # Instrument Console (Original Benchmark Synthesis)
+    └── high-density-tracker.html            # High-density keyboard-first issue tracker
 ```
 
 ---

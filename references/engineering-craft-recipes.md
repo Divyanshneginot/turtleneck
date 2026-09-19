@@ -1,10 +1,10 @@
-# Verified Engineering UI Recipes: Linear, Resend, Raycast & Vercel
+# Verified Engineering UI Recipes: High-Density Starlight & Minimal Platforms
 
 Exact CSS techniques, token structures, and typography recipes reverse-engineered from category-defining web applications.
 
 ---
 
-## 1. The Dynamic Mouse-Following Spotlight (Raycast / Linear)
+## 1. The Dynamic Mouse-Following Spotlight (High-Density Consoles)
 
 Uses CSS Custom Properties updated via `mousemove` in `requestAnimationFrame` to cast a soft illumination over cards.
 
@@ -56,7 +56,7 @@ document.querySelectorAll('.spotlight-card').forEach(card => {
 
 ---
 
-## 2. Hairline Gradient Borders (Vercel / Supabase)
+## 2. Hairline Gradient Borders (Stark Minimal Platforms)
 
 Creates a subtle, directional top-down light gradient across the 1px border without extra DOM elements:
 
@@ -72,7 +72,7 @@ Creates a subtle, directional top-down light gradient across the 1px border with
 
 ---
 
-## 3. The Linear.app "Starlight" Palette & Typography
+## 3. The High-Density "Starlight" Palette & Typography
 
 * **Canvas**: `#08090a` (pure deep charcoal; never dull gray).
 * **Card Surface**: `#0e1013`.

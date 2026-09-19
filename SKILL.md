@@ -28,15 +28,12 @@ Before asking questions or drafting UI, inspect the repository and live benchmar
    * Inspect package files (`package.json`, `requirements.txt`, etc.).
    * Identify frontend framework (React, Next.js, Vue, Svelte, HTML/CSS).
    * Identify styling engine (Tailwind CSS, Vanilla CSS, Radix UI, Shadcn).
-2. **Live Headless Browser Extraction & Feeling Inspection**:
-   * Inspect benchmark URLs in headless browser mode (`scripts/extract_design.py`):
-     ```bash
-     python scripts/extract_design.py <target-url> references/
-     ```
-   * Do NOT merely copy-paste code or mimic a single reference. Inspect rendered screenshots, typography scale tension ($\ge 4:1$), spatial cadence, and interactive mechanics.
-   * Enforce the **Tri-Source Synthesis Protocol** (Refer to [Award-Winning Craft Playbook](./references/award-winning-craft-playbook.md) and [Creative Synthesis Protocol](./references/creative-synthesis-protocol.md)):
-     * Forbid 1:1 cloning of metaphors, copy, or single-site layouts.
-     * Synthesize: [Texture/Atmosphere from Source A] + [Interaction Mechanics from Source B] + [Information Architecture from Source C].
+2. **Review Existing Headless Research & Feel**:
+   * Do NOT run scrapers. Analyze existing headless captures in `references/deep_research/` and `references/award_research/`.
+   * Feel the soul of the benchmarks—narrative pacing, visual weight, spatial breathing, and micro-tactility—not just hex codes.
+   * Enforce the **Creative Synthesis Protocol** (Refer to [Award-Winning Craft Playbook](./references/award-winning-craft-playbook.md) and [Creative Synthesis Protocol](./references/creative-synthesis-protocol.md)):
+     * Blend atmosphere, interaction physics, typography tension, and layout density from 4+ different sources into something new. Never lean on one reference.
+     * Forbid 1:1 cloning of metaphors, copy, diff blocks, terminal cursors, or recognizable brand gimmicks. Extract the WHY, invent a new HOW.
 
 ---
 
@@ -45,11 +42,11 @@ Engage the user to clarify intent, archetype, and layout before writing code:
 
 1. **Visual Archetype Selection (Refer to [Design Archetypes Catalog](./references/design-archetypes.md))**:
    * Do NOT assume dark mode or developer aesthetic. Confirm the product archetype:
-     * **A. Stripe Enterprise**: Clean high-trust light mode (`#f6f9fc`), crisp slate borders, fintech/SaaS clarity.
-     * **B. Notion Editorial**: Warm paper canvas (`#fbfbfa`), serif headlines, minimal chrome, distraction-free docs.
-     * **C. Apple HIG**: Fluid system UI, tactile segmented controls, soft squircle radiuses (`10-14px`).
-     * **D. Linear / Raycast**: Dark starlight engineering (`#08090a`), high data density, keyboard hotkeys.
-     * **E. Vercel Monochrome**: Stark black/white minimalism, zero ornamentation, monospaced metadata.
+     * **A. High-Trust Corporate**: Clean high-trust light mode (`#f6f9fc`), crisp slate borders, fintech/SaaS clarity.
+     * **B. Warm Editorial Paper**: Warm paper canvas (`#fbfbfa`), serif headlines, minimal chrome, distraction-free docs.
+     * **C. Fluid Organics**: Fluid system UI, tactile segmented controls, soft squircle radiuses (`10-14px`).
+     * **D. High-Density Starlight**: Dark starlight engineering (`#08090a`), high data density, keyboard hotkeys.
+     * **E. Stark Geometric Minimal**: Stark black/white minimalism, zero ornamentation, monospaced metadata.
 2. **Core Job-To-Be-Done & Target Density**:
    * Identify primary outcome (monitoring, triage, editing, onboarding).
    * Confirm density: High-density operational vs balanced SaaS vs consumer guided flow.
