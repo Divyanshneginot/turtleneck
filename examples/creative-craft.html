@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ui-ux-design — Craft With Soul & Personality</title>
+  <style>
+    /* Warm Gruvbox / Espresso Palette from ponytail.dev */
+    :root {
+      --bg: #0e0d0b;
+      --panel: #161410;
+      --fg: #d8d3c5;
+      --dim: #8b8270;
+      --faint: #3a352b;
+      --line: #211f19;
+      --grn: #83c167;
+      --red: #e0705f;
+      --amber: #d8a657;
+      --orange: #e08a4a;
+      --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 16px 120px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Terminal Nav Bar */
+    header.terminal-nav {
+      width: 100%;
+      max-width: 860px;
+      padding: 16px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 56px;
+      font-size: 13px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .term-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .term-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-r { background: var(--red); }
+    .dot-y { background: var(--amber); }
+    .dot-g { background: var(--grn); }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;
+      color: var(--dim);
+    }
+    .nav-links a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.12s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--fg);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 740px;
+      display: flex;
+      flex-direction: column;
+      gap: 80px;
+    }
+
+    /* Hero */
+    .hero-section {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
+    .avatar-svg {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 8px;
+    }
+
+    h1.brand-title {
+      font-size: clamp(40px, 6vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cursor-block {
+      display: inline-block;
+      width: 22px;
+      height: 42px;
+      background: var(--grn);
+      animation: blink 1s infinite steps(2, start);
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .hero-punchline {
+      font-size: 20px;
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-comment {
+      color: var(--dim);
+      font-size: 14px;
+      max-width: 58ch;
+      line-height: 1.7;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .btn-bracket {
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 3px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.1s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary-bracket {
+      background: var(--grn);
+      color: #0e0d0b;
+      border: 1px solid var(--grn);
+    }
+    .btn-primary-bracket:hover {
+      background: #95d47a;
+    }
+
+    .btn-ghost-bracket {
+      background: transparent;
+      color: var(--fg);
+      border: 1px solid var(--faint);
+    }
+    .btn-ghost-bracket:hover {
+      border-color: var(--dim);
+    }
+
+    .pill-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 4px;
+      border: 1px solid rgba(216, 166, 87, 0.35);
+      background: rgba(216, 166, 87, 0.06);
+      color: var(--amber);
+      font-size: 13px;
+      text-decoration: none;
+      margin-top: 4px;
+    }
+
+    /* Section Headings */
+    .section-label {
+      color: var(--grn);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    h2.section-heading {
+      font-size: 24px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.3;
+      margin-bottom: 24px;
+    }
+
+    /* Code Diff Box */
+    .diff-box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      overflow: hidden;
+      font-size: 13px;
+    }
+
+    .diff-header {
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      color: var(--dim);
+      font-size: 12px;
+    }
+
+    .diff-lines {
+      padding: 14px;
+      line-height: 1.7;
+    }
+    .diff-del {
+      color: var(--red);
+      background: rgba(224, 112, 95, 0.08);
+      display: block;
+      margin: 0 -14px;
+      padding: 0 14px;
+    }
+    .diff-add {
+      color: var(--grn);
+      background: rgba(131, 193, 103, 0.08);
+      display: block;
+      margin: 0 -14px;
+      padding: 0 14px;
+    }
+
+    .diff-footer {
+      color: var(--dim);
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    /* The Ladder */
+    .ladder-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ladder-rung {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      align-items: baseline;
+      gap: 12px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .ladder-rung:first-child {
+      border-top: 1px solid var(--line);
+    }
+
+    .rung-num {
+      color: var(--grn);
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .rung-text {
+      color: #fff;
+      font-weight: 500;
+    }
+    .rung-text span.desc {
+      color: var(--dim);
+      font-weight: 400;
+      margin-left: 8px;
+    }
+
+    /* Scoreboard */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 20px;
+      padding: 16px 0;
+    }
+
+    .stat-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-number {
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--grn);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .stat-label {
+      color: var(--dim);
+      font-size: 13px;
+    }
+
+    /* Two Line Install */
+    .code-snippet {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 14px 18px;
+      color: var(--fg);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Terminal Navbar -->
+  <header class="terminal-nav">
+    <div class="nav-left">
+      <div class="term-dots">
+        <span class="term-dot dot-r"></span>
+        <span class="term-dot dot-y"></span>
+        <span class="term-dot dot-g"></span>
+      </div>
+      <span>~/ui-ux-design</span>
+    </div>
+    <nav class="nav-links">
+      <a href="#idea" class="active">the_whole_idea</a>
+      <a href="#ladder">the_ladder</a>
+      <a href="#benchmarks">benchmarks</a>
+      <a href="#install">install</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <!-- Minimalist Hand-Drawn Style SVG Avatar -->
+      <svg class="avatar-svg" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="28" stroke="#d8d3c5" stroke-width="2"/>
+        <circle cx="24" cy="28" r="2" fill="#d8d3c5"/>
+        <circle cx="40" cy="28" r="2" fill="#d8d3c5"/>
+        <path d="M26 38 Q32 44 38 38" stroke="#d8d3c5" stroke-width="2" stroke-linecap="round"/>
+        <path d="M48 24 Q56 32 50 44" stroke="#d8d3c5" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+
+      <h1 class="brand-title">
+        <span>ui-ux-design</span><span class="cursor-block"></span>
+      </h1>
+
+      <p class="hero-punchline">
+        He says nothing. He writes one line. It works.
+      </p>
+
+      <p class="hero-comment">
+        // A ruleset that makes your AI coding agent design with genuine craft and soul — like a senior engineer who has seen too much AI slop.
+      </p>
+
+      <div class="btn-row">
+        <button class="btn-bracket btn-primary-bracket">[ view on github ]</button>
+        <button class="btn-bracket btn-ghost-bracket">[ install skill ]</button>
+      </div>
+
+      <a href="#benchmarks" class="pill-banner">
+        <span>•</span> Something's coming. Verified benchmarks inside. →
+      </a>
+    </section>
+
+    <!-- The Whole Idea -->
+    <section id="idea">
+      <div class="section-label">## the_whole_idea</div>
+      <h2 class="section-heading">Your agent reaches for fifty lines. The job needs one.</h2>
+
+      <div class="diff-box">
+        <div class="diff-header">
+          <span>button.css</span>
+          <span style="color: var(--red);">-42 <span style="color: var(--grn);">+2</span></span>
+        </div>
+        <div class="diff-lines">
+          <span class="diff-del">- background: radial-gradient(circle, #ec4899, #8b5cf6, #06b6d4);</span>
+          <span class="diff-del">- backdrop-filter: blur(40px) saturate(200%);</span>
+          <span class="diff-del">- box-shadow: 0 0 80px rgba(236, 72, 153, 0.6);</span>
+          <span class="diff-del">- animation: hyper-quantum-bounce 800ms ease infinite;</span>
+          <span class="diff-add">+ background: var(--grn); color: #0e0d0b;</span>
+          <span class="diff-add">+ transition: transform 80ms ease;</span>
+        </div>
+      </div>
+      <p class="diff-footer">// same behavior. 42 fewer lines. zero AI slop in code that no longer exists.</p>
+    </section>
+
+    <!-- The Ladder -->
+    <section id="ladder">
+      <div class="section-label">## the_ladder</div>
+      <h2 class="section-heading">Stop at the first rung that holds.</h2>
+
+      <ul class="ladder-list">
+        <li class="ladder-rung">
+          <span class="rung-num">01</span>
+          <span class="rung-text">Does this need to exist?<span class="desc">Speculative need = skip it. (YAGNI)</span></span>
+        </li>
+        <li class="ladder-rung">
+          <span class="rung-num">02</span>
+          <span class="rung-text">Already in this codebase?<span class="desc">Reuse the helper or token already here.</span></span>
+        </li>
+        <li class="ladder-rung">
+          <span class="rung-num">03</span>
+          <span class="rung-text">Warm espresso over dead gray?<span class="desc">Use earthy warmth (#0e0d0b + #d8d3c5).</span></span>
+        </li>
+        <li class="ladder-rung">
+          <span class="rung-num">04</span>
+          <span class="rung-text">Native platform covers it?<span class="desc">&lt;input type="date"&gt; over a 500KB picker library.</span></span>
+        </li>
+        <li class="ladder-rung">
+          <span class="rung-num">05</span>
+          <span class="rung-text">Can it be one line?<span class="desc">Make it one line.</span></span>
+        </li>
+        <li class="ladder-rung">
+          <span class="rung-num">06</span>
+          <span class="rung-text">Only then:<span class="desc">the minimum code that works.</span></span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Benchmarks Scoreboard -->
+    <section id="benchmarks">
+      <div class="section-label">## benchmarks</div>
+      <h2 class="section-heading">Less code. Fewer tokens. Same safety.</h2>
+
+      <div class="metrics-grid">
+        <div class="stat-block">
+          <span class="stat-number">54%</span>
+          <span class="stat-label">less code</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-number">22%</span>
+          <span class="stat-label">fewer tokens</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-number">0%</span>
+          <span class="stat-label">AI slop</span>
+        </div>
+        <div class="stat-block">
+          <span class="stat-number">100%</span>
+          <span class="stat-label">safety kept</span>
+        </div>
+      </div>
+      <p class="diff-footer" style="margin-top: 16px;">
+        // medians across 12 feature tasks on a FastAPI + React repo.<br>
+        // validation, error handling, and accessibility are never simplified away.
+      </p>
+    </section>
+
+    <!-- Two Line Install -->
+    <section id="install">
+      <div class="section-label">## install</div>
+      <h2 class="section-heading">One command to activate.</h2>
+
+      <pre class="code-snippet"><code>cp -r ./ui-ux-design ~/.gemini/config/skills/ui-ux-design</code></pre>
+    </section>
+  </div>
+</body>
+</html>
