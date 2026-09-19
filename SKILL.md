@@ -60,6 +60,7 @@ Produce production frontend code matching the learned Design Manifest:
    * 5 component states (`default`, `hover`, `active`, `focus-visible`, `disabled`).
    * Fluid responsive breakpoints (mobile drawer to desktop grid).
    * Micro-interactions (smooth transitions under `150ms`, keyboard shortcuts).
-4. **Self-Verification**:
-   * Verify generated interface matches extracted benchmark tone.
-   * Verify keyboard navigability and absence of generic template tropes.
+4. **Anti-Slop Quality Gate (Mandatory)**:
+   * Reject purple/cyan nebula blur blobs, fake glassmorphism, and buzzword copy ("quantum synergy").
+   * Audit against [Anti-Slop Manifesto](./references/anti-slop-manifesto.md): enforce high information density, sub-50ms responsiveness, real operational microcopy, and keyboard ergonomics.
+   * Verify WCAG AA contrast and keyboard trap prevention.
