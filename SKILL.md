@@ -37,18 +37,21 @@ Before asking questions or drafting UI, inspect the repository and live benchmar
 
 ---
 
-### Phase 2: Interactive Requirements Interview
-Engage the user to clarify intent and resolve design ambiguities before writing code. Follow [Requirements Interview Framework](./references/requirements-interview-framework.md):
+### Phase 2: Interactive Requirements & Archetype Selection
+Engage the user to clarify intent, archetype, and layout before writing code:
 
-1. **Core Problem & Target Audience**:
-   * What is the primary Job-To-Be-Done (JTBD) on this view?
-   * Who is the user (domain expert needing high density vs casual consumer needing guided flow)?
-2. **Layout & Density Preference**:
-   * Density level: High (data tables, compact controls) vs Moderate (cards, balanced spacing).
-   * Navigation model: Sidebar navigation, top header tabs, or command-driven (`Cmd+K`).
-3. **Present 2-3 Concrete Approaches**:
-   * Pitch distinct layout archetypes (e.g., Option A: Split-pane master-detail vs Option B: Focused feed with slide-over drawer).
-   * Solicit user preference or confirmation.
+1. **Visual Archetype Selection (Refer to [Design Archetypes Catalog](./references/design-archetypes.md))**:
+   * Do NOT assume dark mode or developer aesthetic. Confirm the product archetype:
+     * **A. Stripe Enterprise**: Clean high-trust light mode (`#f6f9fc`), crisp slate borders, fintech/SaaS clarity.
+     * **B. Notion Editorial**: Warm paper canvas (`#fbfbfa`), serif headlines, minimal chrome, distraction-free docs.
+     * **C. Apple HIG**: Fluid system UI, tactile segmented controls, soft squircle radiuses (`10-14px`).
+     * **D. Linear / Raycast**: Dark starlight engineering (`#08090a`), high data density, keyboard hotkeys.
+     * **E. Vercel Monochrome**: Stark black/white minimalism, zero ornamentation, monospaced metadata.
+2. **Core Job-To-Be-Done & Target Density**:
+   * Identify primary outcome (monitoring, triage, editing, onboarding).
+   * Confirm density: High-density operational vs balanced SaaS vs consumer guided flow.
+3. **Present 2-3 Concrete Architecture Options**:
+   * Refer to [Requirements Interview Framework](./references/requirements-interview-framework.md) to pitch layout options.
 
 ---
 

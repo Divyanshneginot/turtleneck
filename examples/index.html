@@ -35,8 +35,71 @@
       --status-amber: #f59e0b;
       --status-rose: #f43f5e;
       
-      --font-mono: "CommitMono", ui-monospace, SFMono-Regular, "JetBrains Mono", monospace;
+      --font-mono: "CommitMono", ui-monospace, SFMono-Regular, monospace;
       --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    /* ARCHETYPE 1: STRIPE ENTERPRISE (Clean Light) */
+    body[data-archetype="stripe"] {
+      --canvas: #f6f9fc;
+      --window-bg: #ffffff;
+      --sidebar-bg: #f8fafc;
+      --surface-elevated: #ffffff;
+      --surface-active: #edf2f7;
+      --radius-window: 8px;
+      --radius-control: 6px;
+      --radius-badge: 4px;
+      --border-window: #e3e8ee;
+      --border-subtle: #edf2f7;
+      --border-strong: #cbd5e1;
+      --text-primary: #0a2540;
+      --text-secondary: #425466;
+      --text-muted: #8898aa;
+      --shadow-specular: 0 4px 12px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
+      --accent-indigo: #635bff;
+      --accent-indigo-hover: #4f46e5;
+    }
+
+    /* ARCHETYPE 2: NOTION WARM PAPER (Editorial Docs) */
+    body[data-archetype="notion"] {
+      --canvas: #fbfbfa;
+      --window-bg: #ffffff;
+      --sidebar-bg: #f7f6f3;
+      --surface-elevated: #ffffff;
+      --surface-active: #efedea;
+      --radius-window: 6px;
+      --radius-control: 4px;
+      --radius-badge: 3px;
+      --border-window: #e9e9e8;
+      --border-subtle: #f1f1ef;
+      --border-strong: #d3d1cb;
+      --text-primary: #37352f;
+      --text-secondary: #787774;
+      --text-muted: #9b9a97;
+      --shadow-specular: 0 1px 3px rgba(15, 15, 15, 0.08);
+      --accent-indigo: #2383e2;
+      --accent-indigo-hover: #1b6ec2;
+    }
+
+    /* ARCHETYPE 3: APPLE HIG (Fluid System Minimalist) */
+    body[data-archetype="apple"] {
+      --canvas: #f2f2f7;
+      --window-bg: #ffffff;
+      --sidebar-bg: #f9f9fb;
+      --surface-elevated: #ffffff;
+      --surface-active: #e5e5ea;
+      --radius-window: 14px;
+      --radius-control: 10px;
+      --radius-badge: 6px;
+      --border-window: rgba(0, 0, 0, 0.08);
+      --border-subtle: rgba(0, 0, 0, 0.05);
+      --border-strong: rgba(0, 0, 0, 0.14);
+      --text-primary: #000000;
+      --text-secondary: #6c6c70;
+      --text-muted: #8e8e93;
+      --shadow-specular: 0 8px 24px rgba(0, 0, 0, 0.06);
+      --accent-indigo: #007aff;
+      --accent-indigo-hover: #0056b3;
     }
 
     *, *::before, *::after {
@@ -689,6 +752,15 @@
         <p>Covering the full application lifecycle: Dashboards, Data Tables, Forms, Drawers, and Empty States.</p>
       </div>
       <div class="header-pills">
+        <div class="archetype-selector-wrap" style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); font-weight: 600;">ARCHETYPE:</span>
+          <select id="archetype-select" style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-strong); color: var(--text-primary); border-radius: var(--radius-badge); padding: 4px 10px; font-size: 11px; font-family: var(--font-mono); outline: none; cursor: pointer;">
+            <option value="linear" style="background: #0d0f12; color: #fff;">Linear Starlight (Dark)</option>
+            <option value="stripe" style="background: #ffffff; color: #000;">Stripe Enterprise (Light)</option>
+            <option value="notion" style="background: #fbfbfa; color: #000;">Notion Paper (Warm)</option>
+            <option value="apple" style="background: #f2f2f7; color: #000;">Apple HIG (Fluid)</option>
+          </select>
+        </div>
         <div class="status-badge">
           <span class="status-dot"></span>
           <span>SYSTEM READY</span>
@@ -1023,11 +1095,11 @@
       showToast('Diagnostic ping executed. 0 errors detected.');
     });
 
-    // Escape Key Dismissal
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        drawer.classList.remove('open');
-      }
+    // Live Archetype Switcher
+    const archetypeSelect = document.getElementById('archetype-select');
+    archetypeSelect.addEventListener('change', (e) => {
+      document.body.setAttribute('data-archetype', e.target.value);
+      showToast(`Switched to ${e.target.options[e.target.selectedIndex].text} archetype.`);
     });
   </script>
 </body>
