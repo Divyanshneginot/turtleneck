@@ -27,23 +27,27 @@ ui-ux-design/
 ├── README.md                                # Documentation & installation guide
 ├── scripts/
 │   ├── extract_design.py                    # Playwright headless browser design DNA extractor
-│   └── research_award_sites.py              # Headless inspector for award-winning benchmarks
+│   ├── research_award_sites.py              # Headless inspector for award-winning benchmarks
+│   └── research_links.py                    # Headless inspector for category references
 ├── references/
 │   ├── award-winning-craft-playbook.md      # Scale tension, button ergonomics & surface chemistry
 │   ├── creative-direction-guide.md          # Principles of authentic soul, personality & materiality
-│   ├── creative-synthesis-protocol.md       # Tri-Source Synthesis rules preventing 1:1 cloning
+│   ├── creative-synthesis-protocol.md       # Multi-Source (4+) Synthesis rules preventing 1:1 cloning
 │   ├── master-ui-craft-benchmark.md         # Motion timing, typography math, OKLCH, WCAG 2.2
-│   ├── taste-vs-slop-matrix.md              # Quality rubric: modern craft vs. slop
+│   ├── taste-vs-slop-matrix.md              # Quality rubric & anti-slop quality gate
 │   ├── design-archetypes.md                 # 5 archetype palettes (Corporate, Editorial, Fluid, Starlight, Minimal)
-│   ├── full-product-design-system.md        # 6 product surfaces (Shell, Dashboard, Table, Form, Drawer, Empty)
+│   ├── full-product-design-system.md        # 6 product surfaces & copy-paste accessible primitives
+│   ├── engineering-craft-recipes.md         # Spotlight cards, hairline borders, editorial & native platform recipes
+│   ├── design-research-playbook.md          # Category benchmarks & synthesis manifest template
 │   ├── workspace-scanner-guide.md           # Tooling & stack detection runbook
 │   ├── requirements-interview-framework.md  # JTBD discovery & wireframe option templates
-│   ├── anti-slop-manifesto.md               # Banned AI tropes & quality standards
 │   ├── design-tokens.md                     # 8pt grid, type scales, semantic color roles
 │   ├── ux-heuristics.md                     # Usability rules & response latencies
-│   └── accessibility-checklist.md           # WCAG 2.2 AA audit criteria
+│   ├── accessibility-checklist.md           # WCAG 2.2 AA audit criteria
+│   ├── deep_research/                       # Curated benchmark extractions (JSON & captures)
+│   └── award_research/                      # Award-winning benchmark synthesis (JSON & captures)
 └── examples/
-    ├── index.html                           # Archetype Switcher & Application Window Frame
+    ├── index.html                           # Multi-Archetype Workbench with 5 live visual modes
     ├── creative-craft.html                  # Instrument Console (Original Benchmark Synthesis)
     └── high-density-tracker.html            # High-density keyboard-first issue tracker
 ```

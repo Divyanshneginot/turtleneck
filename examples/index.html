@@ -39,8 +39,29 @@
       --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
+    /* ARCHETYPE: HIGH-DENSITY STARLIGHT (Dark) - Default */
+    body[data-archetype="starlight"] {
+      --canvas: #000000;
+      --window-bg: #0c0d0e;
+      --sidebar-bg: #08090a;
+      --surface-elevated: #14161a;
+      --surface-active: #1a1d22;
+      --radius-window: 8px;
+      --radius-control: 6px;
+      --radius-badge: 4px;
+      --border-window: rgba(255, 255, 255, 0.08);
+      --border-subtle: rgba(255, 255, 255, 0.06);
+      --border-strong: rgba(255, 255, 255, 0.12);
+      --text-primary: #f0f0f0;
+      --text-secondary: #a1a4a5;
+      --text-muted: #66696b;
+      --shadow-specular: rgba(24, 25, 28, 0.88) 0px 0px 0px 1px, rgba(255, 255, 255, 0.08) 0px 1px 0px 0px inset;
+      --accent-indigo: #5e6ad2;
+      --accent-indigo-hover: #6f7bf7;
+    }
+
     /* ARCHETYPE 1: HIGH-TRUST CORPORATE (Clean Light) */
-    body[data-archetype="stripe"] {
+    body[data-archetype="corporate"] {
       --canvas: #f6f9fc;
       --window-bg: #ffffff;
       --sidebar-bg: #f8fafc;
@@ -61,7 +82,7 @@
     }
 
     /* ARCHETYPE 2: WARM EDITORIAL PAPER (Editorial Docs) */
-    body[data-archetype="notion"] {
+    body[data-archetype="editorial"] {
       --canvas: #fbfbfa;
       --window-bg: #ffffff;
       --sidebar-bg: #f7f6f3;
@@ -82,7 +103,7 @@
     }
 
     /* ARCHETYPE 3: FLUID ORGANICS (Fluid System Minimalist) */
-    body[data-archetype="apple"] {
+    body[data-archetype="fluid"] {
       --canvas: #f2f2f7;
       --window-bg: #ffffff;
       --sidebar-bg: #f9f9fb;
@@ -100,6 +121,27 @@
       --shadow-specular: 0 8px 24px rgba(0, 0, 0, 0.06);
       --accent-indigo: #007aff;
       --accent-indigo-hover: #0056b3;
+    }
+
+    /* ARCHETYPE 5: STARK GEOMETRIC MINIMAL */
+    body[data-archetype="minimal"] {
+      --canvas: #000000;
+      --window-bg: #000000;
+      --sidebar-bg: #050505;
+      --surface-elevated: #0d0d0d;
+      --surface-active: #171717;
+      --radius-window: 2px;
+      --radius-control: 2px;
+      --radius-badge: 1px;
+      --border-window: #262626;
+      --border-subtle: #1a1a1a;
+      --border-strong: #333333;
+      --text-primary: #ffffff;
+      --text-secondary: #888888;
+      --text-muted: #555555;
+      --shadow-specular: none;
+      --accent-indigo: #ffffff;
+      --accent-indigo-hover: #cccccc;
     }
 
     *, *::before, *::after {
@@ -159,7 +201,7 @@
       font-size: 24px;
       font-weight: 600;
       letter-spacing: -0.025em;
-      color: #fff;
+      color: var(--text-primary);
     }
 
     .title-area p {
@@ -643,7 +685,7 @@
       right: 0;
       bottom: 32px; /* Above footer */
       width: 380px;
-      background: #11141a;
+      background: var(--surface-elevated);
       border-left: 1px solid var(--border-strong);
       box-shadow: -12px 0 32px rgba(0, 0, 0, 0.6);
       transform: translateX(100%);
@@ -724,7 +766,7 @@
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background: #181b22;
+      background: var(--surface-elevated);
       border: 1px solid var(--border-strong);
       border-radius: var(--radius-control);
       padding: 10px 16px;
@@ -755,10 +797,11 @@
         <div class="archetype-selector-wrap" style="display: flex; align-items: center; gap: 8px;">
           <span style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono); font-weight: 600;">ARCHETYPE:</span>
           <select id="archetype-select" style="background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-strong); color: var(--text-primary); border-radius: var(--radius-badge); padding: 4px 10px; font-size: 11px; font-family: var(--font-mono); outline: none; cursor: pointer;">
-            <option value="linear" style="background: #0d0f12; color: #fff;">High-Density Starlight (Dark)</option>
-            <option value="stripe" style="background: #ffffff; color: #000;">High-Trust Corporate (Light)</option>
-            <option value="notion" style="background: #fbfbfa; color: #000;">Warm Editorial Paper</option>
-            <option value="apple" style="background: #f2f2f7; color: #000;">Fluid Organics</option>
+            <option value="starlight" style="background: #0d0f12; color: #fff;">High-Density Starlight (Dark)</option>
+            <option value="corporate" style="background: #ffffff; color: #000;">High-Trust Corporate (Light)</option>
+            <option value="editorial" style="background: #fbfbfa; color: #000;">Warm Editorial Paper</option>
+            <option value="fluid" style="background: #f2f2f7; color: #000;">Fluid Organics</option>
+            <option value="minimal" style="background: #000000; color: #fff;">Stark Geometric Minimal</option>
           </select>
         </div>
         <a href="creative-craft.html" style="font-size: 11px; font-family: var(--font-mono); color: var(--text-primary); text-decoration: none; padding: 4px 10px; border: 1px solid var(--border-strong); border-radius: var(--radius-badge); background: rgba(255,255,255,0.03); display: flex; align-items: center; gap: 6px; transition: all 0.15s;">

@@ -106,6 +106,9 @@ def extract_design_dna(url, output_dir="."):
     return dna
 
 if __name__ == "__main__":
-    target = sys.argv[1] if len(sys.argv) > 1 else "https://linear.app"
+    if len(sys.argv) < 2:
+        print("Usage: python extract_design.py <target_url> [output_dir]")
+        sys.exit(1)
+    target = sys.argv[1]
     out = sys.argv[2] if len(sys.argv) > 2 else "references"
     extract_design_dna(target, out)

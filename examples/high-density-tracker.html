@@ -236,7 +236,7 @@
       background: var(--accent-indigo-hover);
     }
 
-    /* Issue List View (Linear Table Style) */
+    /* Issue List View (Starlight Table Style) */
     .issue-list {
       list-style: none;
     }
@@ -316,7 +316,7 @@
       color: #d1d5db;
     }
 
-    /* Modal / Command Palette (Raycast Style) */
+    /* Modal / Command Palette (Overlay Style) */
     .palette-backdrop {
       position: fixed;
       inset: 0;
@@ -439,7 +439,7 @@
       <li class="issue-row">
         <span class="priority-high">▲</span>
         <span class="issue-id">ENG-105</span>
-        <span class="issue-title">Add Raycast-style command palette modal with quick fuzzy filter</span>
+        <span class="issue-title">Add keyboard command palette modal with quick fuzzy filter</span>
         <span class="tag-pill">UX Core</span>
         <div class="status-indicator">
           <span class="dot dot-done"></span>
@@ -450,10 +450,8 @@
 
       <li class="issue-row">
         <span class="priority-medium">●</span>
-        <div class="issue-main">
-          <span class="issue-id">AGY-40</span>
-          <span class="issue-title">Benchmark geometric & high-density design systems for responsive tokens</span>
-        </div>
+        <span class="issue-id">AGY-40</span>
+        <span class="issue-title">Benchmark geometric & high-density design systems for responsive tokens</span>
         <span class="tag-pill">Research</span>
         <div class="status-indicator">
           <span class="dot dot-backlog"></span>
@@ -519,13 +517,32 @@
       // 'c' shortcut when not in input
       if (e.key === 'c' && document.activeElement.tagName !== 'INPUT') {
         e.preventDefault();
-        alert('Prompt: Quick Create Issue modal');
+        showToast('Quick Issue Modal triggered (Shortcut: C)');
       }
     });
 
     palette.addEventListener('click', (e) => {
       if (e.target === palette) togglePalette(false);
     });
+
+    function showToast(msg) {
+      let toast = document.getElementById('app-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'app-toast';
+        toast.setAttribute('role', 'status');
+        toast.setAttribute('aria-live', 'polite');
+        toast.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#15181e;border:1px solid var(--border-strong);border-radius:6px;padding:8px 14px;font-size:12px;color:var(--text-primary);box-shadow:0 8px 24px rgba(0,0,0,0.6);z-index:200;display:flex;align-items:center;gap:8px;font-family:var(--font-mono);';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.style.opacity = '1';
+      toast.style.display = 'flex';
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.style.display = 'none';
+      }, 2400);
+    }
   </script>
 </body>
 </html>

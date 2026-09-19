@@ -634,7 +634,7 @@
             <div class="control-label">Profile</div>
             <div class="switch-housing">
               <button class="rocker-btn active" data-mode="tube">TUBE</button>
-              <button class="rocker-btn" data-mode="linear">LIN</button>
+              <button class="rocker-btn" data-mode="direct">DIR</button>
             </div>
             <div class="knob-val" id="modeStatus">CLASSIC</div>
           </div>
@@ -680,9 +680,9 @@
       <article class="editorial-card">
         <div class="card-num">[03] // SOUL OVER TEMPLATES</div>
         <div class="card-body">
-          <h3>Tri-Source Synthesis</h3>
+          <h3>Multi-Source Synthesis</h3>
           <p>
-            Never copy single references. Fuse texture from analog instruments, mechanics from physical controls, and information architecture from high-density data routers.
+            Never copy single references. Fuse texture from analog instruments, mechanics from physical controls, layout density from editorial publishing, and typography tension from high-density data routers.
           </p>
         </div>
         <div class="card-footer">
@@ -783,8 +783,7 @@
       let startY = 0;
       let startAngle = parseFloat(knob.dataset.rotation || 0);
 
-      knob.style.transform = 
-otate(deg);
+      knob.style.transform = `rotate(${startAngle}deg)`;
 
       knob.addEventListener('mousedown', (e) => {
         isDragging = true;
@@ -798,8 +797,7 @@ otate(deg);
         const deltaY = startY - e.clientY;
         let newAngle = Math.max(-135, Math.min(135, startAngle + deltaY * 1.5));
         knob.dataset.rotation = newAngle;
-        knob.style.transform = 
-otate(deg);
+        knob.style.transform = `rotate(${newAngle}deg)`;
         onRotate(newAngle);
       });
 
@@ -815,7 +813,7 @@ otate(deg);
     setupKnob('knobResonance', (angle) => {
       const pct = Math.round(((angle + 135) / 270) * 100);
       amplitude = 15 + (pct / 100) * 35;
-      document.getElementById('valResonance').textContent = ${pct}%;
+      document.getElementById('valResonance').textContent = `${pct}%`;
       document.getElementById('stateIndicator').textContent = 'TUNED // ACTIVE';
     });
 
@@ -823,8 +821,8 @@ otate(deg);
     setupKnob('knobHarmonics', (angle) => {
       const mult = (1 + ((angle + 135) / 270) * 3).toFixed(1);
       harmonicMultiplier = parseFloat(mult);
-      document.getElementById('valHarmonics').textContent = ${mult}x;
-      document.getElementById('hzIndicator').textContent = ${(440 * mult).toFixed(1)} Hz;
+      document.getElementById('valHarmonics').textContent = `${mult}x`;
+      document.getElementById('hzIndicator').textContent = `${(440 * mult).toFixed(1)} Hz`;
     });
 
     // Rocker Mode Switch
@@ -834,7 +832,7 @@ otate(deg);
         rockers.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         isTubeMode = btn.dataset.mode === 'tube';
-        document.getElementById('modeStatus').textContent = isTubeMode ? 'CLASSIC' : 'LINEAR';
+        document.getElementById('modeStatus').textContent = isTubeMode ? 'CLASSIC' : 'DIRECT';
       });
     });
 

@@ -21,7 +21,7 @@ Transforms user UI requests into bespoke, production-ready interfaces by first s
 
 ---
 
-### Phase 1: Workspace Analysis & Live Browser Extraction
+### Phase 1: Workspace Analysis & Research Review
 Before asking questions or drafting UI, inspect the repository and live benchmarks:
 
 1. **Stack & Tooling Detection**:

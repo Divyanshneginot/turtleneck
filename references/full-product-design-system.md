@@ -81,3 +81,196 @@ Comprehensive specifications for every core application surface beyond landing p
 * **Error Boundary**:
   - Clear diagnosis without technical stack dumps.
   - Immediate recovery action (`Retry Operation` or `Back to Safety`).
+
+---
+
+## 2. Production-Ready Accessible Component Primitives
+
+Copy-pasteable, zero-dependency accessible implementations compliant with WCAG 2.2 AA.
+
+### A. Accessible Modal Dialog (`<dialog>`)
+
+```html
+<button id="open-dialog-btn" class="btn-primary">Open Settings</button>
+
+<dialog id="settings-dialog" class="app-dialog" aria-modal="true" aria-labelledby="dialog-title">
+  <div class="dialog-header">
+    <h2 id="dialog-title">Project Settings</h2>
+    <button id="close-dialog-btn" class="btn-close" aria-label="Close dialog">✕</button>
+  </div>
+  <div class="dialog-body">
+    <label for="project-name">Workspace Name</label>
+    <input id="project-name" type="text" class="input-field" value="Production Cluster">
+  </div>
+  <div class="dialog-footer">
+    <button id="cancel-btn" class="btn-ghost">Cancel</button>
+    <button class="btn-primary">Save Changes</button>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.getElementById('settings-dialog');
+  const openBtn = document.getElementById('open-dialog-btn');
+  const closeBtn = document.getElementById('close-dialog-btn');
+  const cancelBtn = document.getElementById('cancel-btn');
+
+  openBtn.addEventListener('click', () => dialog.showModal());
+  [closeBtn, cancelBtn].forEach(b => b.addEventListener('click', () => {
+    dialog.close();
+    openBtn.focus(); // Restore focus to trigger element
+  }));
+
+  // Backdrop click dismiss
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) {
+      dialog.close();
+      openBtn.focus();
+    }
+  });
+</script>
+```
+
+### B. Keyboard-First Command Palette (`Cmd/Ctrl+K`)
+
+```html
+<dialog id="cmd-palette" class="palette-dialog" aria-modal="true" aria-label="Command Palette">
+  <div class="palette-bar">
+    <input id="cmd-input" type="text" role="combobox" aria-expanded="true" aria-controls="cmd-list" aria-autocomplete="list" placeholder="Type a command...">
+    <kbd>ESC</kbd>
+  </div>
+  <ul id="cmd-list" role="listbox">
+    <li id="opt-1" role="option" aria-selected="true" class="cmd-item active">Deploy to Staging</li>
+    <li id="opt-2" role="option" aria-selected="false" class="cmd-item">Export Telemetry</li>
+    <li id="opt-3" role="option" aria-selected="false" class="cmd-item">Rotate API Keys</li>
+  </ul>
+</dialog>
+
+<script>
+  const palette = document.getElementById('cmd-palette');
+  const cmdInput = document.getElementById('cmd-input');
+  const items = Array.from(document.querySelectorAll('.cmd-item'));
+  let activeIndex = 0;
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      palette.open ? palette.close() : palette.showModal();
+    }
+    if (!palette.open) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      activeIndex = (activeIndex + 1) % items.length;
+      updateActiveItem();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      activeIndex = (activeIndex - 1 + items.length) % items.length;
+      updateActiveItem();
+    }
+  });
+
+  function updateActiveItem() {
+    items.forEach((item, i) => {
+      const isSelected = i === activeIndex;
+      item.classList.toggle('active', isSelected);
+      item.setAttribute('aria-selected', isSelected);
+      if (isSelected) {
+        cmdInput.setAttribute('aria-activedescendant', item.id);
+        item.scrollIntoView({ block: 'nearest' });
+      }
+    });
+  }
+</script>
+```
+
+### C. 5-State Button Primitive (WCAG 2.2 AA Compliant)
+
+```css
+.btn-core {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  min-width: 44px; /* WCAG 2.2 minimum tap boundary */
+  padding: 0 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--radius-control, 6px);
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+  background: var(--surface-elevated, #14161a);
+  color: var(--text-primary, #f0f0f0);
+  cursor: pointer;
+  user-select: none;
+  transition: background 120ms ease, border-color 120ms ease, transform 80ms ease;
+}
+
+/* 1. Hover */
+.btn-core:hover:not(:disabled) {
+  background: var(--surface-active, #1a1d22);
+  border-color: var(--border-strong, rgba(255, 255, 255, 0.16));
+}
+
+/* 2. Active (Physical depression) */
+.btn-core:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* 3. Focus-Visible (WCAG 2.2 3:1 contrast focus ring) */
+.btn-core:focus-visible {
+  outline: 2px solid var(--accent-indigo, #5e6ad2);
+  outline-offset: 2px;
+}
+
+/* 4. Disabled */
+.btn-core:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+```
+
+### D. Toast Notification Primitive
+
+```html
+<div id="toast-region" class="toast-stack" role="region" aria-label="Notifications"></div>
+
+<script>
+  function triggerToast(message, duration = 3000) {
+    const stack = document.getElementById('toast-region');
+    const toast = document.createElement('div');
+    toast.className = 'toast-alert';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    toast.textContent = message;
+
+    stack.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(4px)';
+      setTimeout(() => toast.remove(), 180);
+    }, duration);
+  }
+</script>
+
+<style>
+  .toast-stack {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 9999;
+  }
+  .toast-alert {
+    background: var(--surface-elevated, #14161a);
+    border: 1px solid var(--border-strong, rgba(255, 255, 255, 0.14));
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 12px;
+    color: var(--text-primary, #f0f0f0);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+</style>
+```

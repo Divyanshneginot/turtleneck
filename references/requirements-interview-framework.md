@@ -6,7 +6,7 @@ Actionable protocol for conducting a focused, rapid UI/UX alignment interview wi
 
 ## 1. The 4 Essential Discovery Questions
 
-Never jump straight to writing code based on ambiguous prompts. Ask the user 3 structured questions:
+Never jump straight to writing code based on ambiguous prompts. Ask the user 4 structured questions:
 
 ### Q1: Visual Archetype & DNA
 * "Based on your project domain, should this feel like A) High-Trust Corporate, B) Warm Editorial Paper, C) Fluid Organics, D) High-Density Starlight, or E) Stark Geometric?"

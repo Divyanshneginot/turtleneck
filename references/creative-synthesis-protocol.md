@@ -18,6 +18,7 @@ Never copy a single reference site. To create an original visual identity, fuse 
 * **Source A (Atmosphere / Materials)**: Real-world physical tactile textures (vintage audio synthesizer, Japanese stationery, risograph print, mechanical Swiss horology).
 * **Source B (Interaction Model)**: Domain-appropriate tactile mechanics (patch bay pins, rotary sliders, timeline scrubbers, physical rocker switches).
 * **Source C (Information Architecture)**: Real software functional requirements (data feeds, status monitors, inspection drawers).
+* **Source D (Typography Tension & Scale)**: Editorial typographic hierarchy (juxtaposing bold display headlines against 9–11px technical monospaced metadata, extreme $\ge 4:1$ scale ratio).
 
 ---
 

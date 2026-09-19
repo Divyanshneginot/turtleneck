@@ -11,7 +11,7 @@ Runbook for conducting automated design research and synthesizing interface DNA.
 | **Developer Tools & Infrastructure** | High-Density Trackers, Engineering Consoles, Minimal Cloud Platforms | High information density, dark-first mode, monochromatic canvas with subtle borders (`1px solid rgba(255,255,255,0.08)`), keyboard-first command bars (`Cmd+K`), tight typography (`letter-spacing: -0.02em`). |
 | **Fintech & Enterprise Payments** | High-Trust Corporate Platforms, Fintech Apps | Crisp typographic contrast, generous white space, subtle multi-stop mesh gradients, refined card elevations, high-trust neutral slate palettes. |
 | **Productivity & Workspace** | Editorial Workspaces, Warm Paper Calendars | Warm paper neutrals (`#FBFBFA`), fluid inline editing, minimal chrome, subtle divider rules, drag-and-drop affordances. |
-| **Data & AI Analytics** | Perplexity, Scale AI, HuggingFace | Split-pane viewports, streaming skeleton feedback, prominent prompt inputs, token counter chips, high contrast data tables. |
+| **Data & AI Analytics** | Conversational Intelligence, Model Hubs, Neural Interfaces | Split-pane viewports, streaming skeleton feedback, prominent prompt inputs, token counter chips, high contrast data tables. |
 
 ---
 
@@ -19,7 +19,7 @@ Runbook for conducting automated design research and synthesizing interface DNA.
 
 When researching a niche, generate targeted search queries:
 1. `"<target-niche> UI patterns teardown modern web"`
-2. `"<benchmark-brand> design system typography color tokens"`
+2. `"<target-niche> design system typography color tokens"`
 3. `"<target-niche> best-in-class UX dashboard components"`
 
 ---
@@ -30,7 +30,7 @@ Save learned findings into this structured schema before writing UI code:
 
 ```markdown
 ### Design Manifest: [Target Application]
-* **Benchmark Source**: [e.g. Linear + Raycast hybrid]
+* **Synthesis Archetypes**: [e.g. High-Density Starlight + Fluid Organics multi-source synthesis]
 * **Color Palette**:
   - Canvas: `#08090A`
   - Surface: `#121417`
@@ -44,5 +44,5 @@ Save learned findings into this structured schema before writing UI code:
 * **Signature Elements**:
   - Keybinding indicators (`KBD` chips)
   - Status indicator pips (pulsing glowing dots)
-  - Radial gradient backdrop glow
+  - Directional top-edge rim illumination (`linear-gradient(to bottom, rgba(255,255,255,0.06), transparent)`)
 ```
