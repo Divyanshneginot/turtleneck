@@ -24,10 +24,11 @@ Transforms user UI requests into bespoke, production-ready interfaces by first s
 ### Phase 1: Workspace Analysis & Research Review
 Before asking questions or drafting UI, inspect the repository and live benchmarks:
 
-1. **Stack & Tooling Detection**:
+1. **Stack & Tooling Detection (Refer to [Framework Integrations](./references/framework-integrations.md))**:
    * Inspect package files (`package.json`, `requirements.txt`, etc.).
    * Identify frontend framework (React, Next.js, Vue, Svelte, HTML/CSS).
-   * Identify styling engine (Tailwind CSS, Vanilla CSS, Radix UI, Shadcn).
+   * Identify styling engine (Tailwind CSS, Vanilla CSS, Radix UI, CSS Modules).
+   * Match code generation directly to discovered framework idioms.
 2. **Review Existing Headless Research & Feel**:
    * Do NOT run scrapers. Analyze existing headless captures in `references/deep_research/` and `references/award_research/`.
    * Feel the soul of the benchmarks—narrative pacing, visual weight, spatial breathing, and micro-tactility—not just hex codes.
@@ -70,7 +71,8 @@ Once user approves layout choice:
 ---
 
 ### Phase 4: Production Implementation & Master Craft Verification
-1. **Component Engineering (Refer to [Master Craft Benchmark](./references/master-ui-craft-benchmark.md))**:
+1. **Component Engineering (Refer to [Master Craft Benchmark](./references/master-ui-craft-benchmark.md) & [Framework Integrations](./references/framework-integrations.md))**:
+   * Emit idiomatic code matching detected stack: React (TSX/hooks), Vue (`<script setup>`), Svelte 5 (runes), or Native Platform (zero-dependency HTML/CSS/JS).
    * Generate modular, clean components following discovered repo conventions.
    * **Motion & Timing**: `80-120ms` state feedback, `200-240ms` enter, `100-140ms` exit (asymmetric exit rule), `cubic-bezier(0.16, 1, 0.3, 1)` or critical springs ($\zeta \ge 0.85$). GPU compositor thread isolation (`transform`/`opacity` only).
    * **Typography Precision**: Negative tracking on headings, `font-variant-numeric: tabular-nums` for data cells, `text-wrap: balance` on headlines.

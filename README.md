@@ -37,6 +37,7 @@ ui-ux-design/
 │   ├── taste-vs-slop-matrix.md              # Quality rubric & anti-slop quality gate
 │   ├── design-archetypes.md                 # 5 archetype palettes (Corporate, Editorial, Fluid, Starlight, Minimal)
 │   ├── full-product-design-system.md        # 6 product surfaces & copy-paste accessible primitives
+│   ├── framework-integrations.md            # React, Next.js, Vue 3, Svelte 5, Tailwind & Native recipes
 │   ├── engineering-craft-recipes.md         # Spotlight cards, hairline borders, editorial & native platform recipes
 │   ├── design-research-playbook.md          # Category benchmarks & synthesis manifest template
 │   ├── workspace-scanner-guide.md           # Tooling & stack detection runbook
