@@ -1,0 +1,26 @@
+{
+  "benchmark_source": "https://resend.com (Extracted via Playwright / MS Edge)",
+  "extracted_tokens": {
+    "canvas_bg": "#000000",
+    "surface_card": "#0c0d0e",
+    "text_primary": "#f0f0f0",
+    "text_secondary": "#a1a4a5",
+    "font_stack": {
+      "ui": "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+      "code": "CommitMono, ui-monospace, SFMono-Regular, monospace"
+    },
+    "border_radii": {
+      "card": "8px",
+      "button": "6px",
+      "badge": "4px"
+    },
+    "shadow_specular": "rgba(24, 25, 28, 0.88) 0px 0px 0px 1px, rgba(255, 255, 255, 0.08) 0px 1px 0px 0px inset",
+    "ambient_shadow": "rgba(0, 0, 0, 0.25) 0px 2px 32px 0px",
+    "alpha_scale": {
+      "a1": "rgba(255, 255, 255, 0.03)",
+      "a2": "rgba(255, 255, 255, 0.06)",
+      "a3": "rgba(255, 255, 255, 0.08)",
+      "a4": "rgba(255, 255, 255, 0.12)"
+    }
+  }
+}

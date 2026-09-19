@@ -3,42 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aether — Developer Telemetry Console</title>
+  <title>Aether — Full Product Design System Workbench</title>
   <style>
     /* ==========================================================================
-       1. SYSTEM TOKENS: OPTICALLY BALANCED SCALES (Linear / macOS HIG)
+       1. TOKENS & SYSTEM FOUNDATION
        ========================================================================== */
     :root {
-      --canvas: #08090a;
-      --window-bg: #0d0f12;
-      --sidebar-bg: #0a0b0e;
-      --surface-elevated: #15181e;
-      --surface-active: #1c2028;
+      --canvas: #000000;
+      --window-bg: #0c0d0e;
+      --sidebar-bg: #08090a;
+      --surface-elevated: #14161a;
+      --surface-active: #1a1d22;
       
-      /* Optical Radius Hierarchy: R_inner = R_outer - Padding */
-      --radius-window: 10px;
+      --radius-window: 8px;
       --radius-control: 6px;
       --radius-badge: 4px;
       
-      /* Subtle Hairline Dividers */
-      --border-window: rgba(255, 255, 255, 0.09);
+      --border-window: rgba(255, 255, 255, 0.08);
       --border-subtle: rgba(255, 255, 255, 0.06);
       --border-strong: rgba(255, 255, 255, 0.12);
       
-      /* High-Legibility Neutral Hierarchy */
-      --text-primary: #ededed;
-      --text-secondary: #8a8f98;
-      --text-muted: #525660;
+      --text-primary: #f0f0f0;
+      --text-secondary: #a1a4a5;
+      --text-muted: #66696b;
       
-      /* Functional Accent Palette */
+      --shadow-specular: rgba(24, 25, 28, 0.88) 0px 0px 0px 1px, rgba(255, 255, 255, 0.08) 0px 1px 0px 0px inset;
+      
       --accent-indigo: #5e6ad2;
       --accent-indigo-hover: #6f7bf7;
       --status-emerald: #10b981;
       --status-amber: #f59e0b;
       --status-rose: #f43f5e;
       
-      --font-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Menlo, Consolas, monospace;
-      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+      --font-mono: "CommitMono", ui-monospace, SFMono-Regular, "JetBrains Mono", monospace;
+      --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     *, *::before, *::after {
@@ -58,12 +56,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 32px 16px 64px;
+      padding: 24px 16px 64px;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
-    /* Ambient Subtle Grid Backdrop */
     .bg-grid {
       position: fixed;
       inset: 0;
@@ -80,10 +77,10 @@
       position: relative;
       z-index: 1;
       width: 100%;
-      max-width: 1040px;
+      max-width: 1080px;
       display: flex;
       flex-direction: column;
-      gap: 28px;
+      gap: 24px;
     }
 
     /* Page Header */
@@ -135,21 +132,22 @@
     }
 
     /* ==========================================================================
-       2. UNIFIED APPLICATION WINDOW FRAME (Linear / macOS Native Model)
+       2. UNIFIED APPLICATION WINDOW FRAME
        ========================================================================== */
     .app-window {
       background-color: var(--window-bg);
       border: 1px solid var(--border-window);
       border-radius: var(--radius-window);
       box-shadow: 
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
-        0 24px 64px -12px rgba(0, 0, 0, 0.7);
+        var(--shadow-specular),
+        0 24px 64px -12px rgba(0, 0, 0, 0.9);
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
-    /* Window Titlebar */
+    /* Titlebar */
     .window-titlebar {
       height: 42px;
       background: var(--sidebar-bg);
@@ -184,12 +182,6 @@
       color: var(--text-primary);
     }
 
-    .window-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
     .quick-search-trigger {
       display: flex;
       align-items: center;
@@ -218,14 +210,14 @@
       color: var(--text-secondary);
     }
 
-    /* Window Body: Sidebar + Workbench Layout */
+    /* Window Body Layout */
     .window-body {
       display: grid;
       grid-template-columns: 220px 1fr;
-      min-height: 520px;
+      min-height: 540px;
     }
 
-    /* Unified Sidebar */
+    /* Sidebar Navigation */
     .window-sidebar {
       background-color: var(--sidebar-bg);
       border-right: 1px solid var(--border-subtle);
@@ -263,6 +255,10 @@
       cursor: pointer;
       text-decoration: none;
       transition: all 0.1s ease;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
     }
     .nav-item:hover {
       background-color: var(--surface-elevated);
@@ -284,76 +280,71 @@
       color: var(--text-muted);
     }
 
-    /* Workbench Main Panel */
+    /* Workbench Area */
     .workbench-main {
       display: flex;
       flex-direction: column;
+      position: relative;
       overflow: hidden;
     }
 
-    /* Toolbar */
-    .workbench-toolbar {
-      height: 48px;
-      padding: 0 20px;
-      border-bottom: 1px solid var(--border-subtle);
+    .workbench-view {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+    }
+    .workbench-view.active {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
     }
 
-    .toolbar-left {
-      display: flex;
-      gap: 6px;
-    }
-
-    .tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 5px 12px;
-      border-radius: var(--radius-control);
-      cursor: pointer;
-      transition: all 0.1s;
-    }
-    .tab-btn:hover {
-      color: var(--text-primary);
-    }
-    .tab-btn.active {
-      background: var(--surface-elevated);
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-
-    .btn-action {
-      background: var(--accent-indigo);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius-control);
-      padding: 6px 12px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: background 0.12s;
-    }
-    .btn-action:hover {
-      background: var(--accent-indigo-hover);
-    }
-
-    /* Workbench Content Panes */
-    .workbench-content {
-      padding: 20px;
+    /* ==========================================================================
+       SURFACE 1: DASHBOARD & TELEMETRY VIEW
+       ========================================================================== */
+    .metrics-row {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 20px 20px 0;
+    }
+
+    .kpi-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .kpi-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .kpi-value {
+      font-size: 26px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+    }
+    .kpi-trend {
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .trend-up { color: var(--status-emerald); }
+    .trend-down { color: var(--status-rose); }
+
+    .telemetry-split {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+      padding: 20px;
       flex: 1;
     }
 
-    /* Telemetry Pane */
     .pane-card {
       background: rgba(255, 255, 255, 0.015);
       border: 1px solid var(--border-subtle);
@@ -373,7 +364,6 @@
       align-items: center;
     }
 
-    /* Code View */
     .code-terminal {
       background: #000;
       border: 1px solid var(--border-subtle);
@@ -385,69 +375,274 @@
       line-height: 1.6;
       flex: 1;
     }
-
     .hl-key { color: #f43f5e; }
     .hl-val { color: #38bdf8; }
     .hl-num { color: #fbbf24; }
-    .hl-bool { color: #a78bfa; }
 
-    /* Task Triage Rows (Linear Style) */
-    .task-rows {
-      list-style: none;
+    /* ==========================================================================
+       SURFACE 2: DENSE DATA TABLE (Sorting, Batch Select, Drawer Trigger)
+       ========================================================================== */
+    .table-toolbar {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border-subtle);
       display: flex;
-      flex-direction: column;
-      gap: 4px;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
     }
 
-    .task-row {
+    .search-input-wrap {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 8px 10px;
-      background: rgba(255, 255, 255, 0.02);
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
       border-radius: var(--radius-control);
+      padding: 6px 12px;
+      width: 260px;
+    }
+    .search-input-wrap input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      font-size: 12px;
+      width: 100%;
+    }
+
+    .table-container {
+      overflow-x: auto;
+      padding: 0 20px;
+      flex: 1;
+    }
+
+    table.dense-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 12px;
+    }
+
+    table.dense-table th {
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    table.dense-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      color: var(--text-secondary);
+    }
+
+    table.dense-table tbody tr {
       cursor: pointer;
       transition: background 0.1s;
     }
-    .task-row:hover {
+    table.dense-table tbody tr:hover {
       background: var(--surface-elevated);
+      color: var(--text-primary);
     }
 
-    .row-left {
+    /* ==========================================================================
+       SURFACE 3: FORMS & CONTROLS WORKBENCH
+       ========================================================================== */
+    .form-container {
+      padding: 24px;
+      max-width: 600px;
       display: flex;
-      align-items: center;
-      gap: 10px;
+      flex-direction: column;
+      gap: 20px;
     }
 
-    .pip {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
-    .pip-emerald { background: var(--status-emerald); }
-    .pip-amber { background: var(--status-amber); }
-    .pip-rose { background: var(--status-rose); }
-
-    .task-id {
-      font-family: var(--font-mono);
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .form-hint {
       font-size: 11px;
       color: var(--text-muted);
     }
 
-    .task-label {
+    .input-control {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      padding: 8px 12px;
+      font-size: 13px;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.12s;
+    }
+    .input-control:focus {
+      border-color: var(--accent-indigo);
+      box-shadow: 0 0 0 1px var(--accent-indigo);
+    }
+
+    /* Toggle Switch */
+    .switch-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 36px;
+      height: 20px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      transition: 0.2s;
+    }
+    .slider::before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      border-radius: 50%;
+      transition: 0.2s;
+    }
+    input:checked + .slider {
+      background-color: var(--accent-indigo);
+    }
+    input:checked + .slider::before {
+      transform: translateX(16px);
+    }
+
+    /* ==========================================================================
+       SURFACE 4: EMPTY STATE BLUEPRINT
+       ========================================================================== */
+    .empty-state-view {
+      padding: 64px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+      margin: auto;
+    }
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-control);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      display: grid;
+      place-content: center;
+      font-size: 20px;
+      color: var(--text-muted);
+    }
+    .empty-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .empty-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      max-width: 360px;
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       SURFACE 5: SLIDE-OVER DETAIL DRAWER
+       ========================================================================== */
+    .slide-drawer {
+      position: absolute;
+      top: 42px; /* Below titlebar */
+      right: 0;
+      bottom: 32px; /* Above footer */
+      width: 380px;
+      background: #11141a;
+      border-left: 1px solid var(--border-strong);
+      box-shadow: -12px 0 32px rgba(0, 0, 0, 0.6);
+      transform: translateX(100%);
+      transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+    }
+    .slide-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .drawer-body {
+      padding: 20px;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Common Buttons */
+    .btn-action {
+      background: var(--accent-indigo);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-control);
+      padding: 6px 14px;
       font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.12s;
+    }
+    .btn-action:hover {
+      background: var(--accent-indigo-hover);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-control);
+      padding: 5px 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .btn-ghost:hover {
+      border-color: var(--border-strong);
       color: var(--text-primary);
     }
 
-    .task-tag {
-      font-size: 10px;
-      color: var(--text-muted);
-      background: rgba(255, 255, 255, 0.04);
-      padding: 2px 6px;
-      border-radius: var(--radius-badge);
-    }
-
-    /* Window Status Footer */
+    /* Window Footer */
     .window-footer {
       height: 32px;
       background: var(--sidebar-bg);
@@ -461,16 +656,25 @@
       color: var(--text-muted);
     }
 
-    .footer-stat {
-      display: flex;
+    /* Toast Alert */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #181b22;
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-control);
+      padding: 10px 16px;
+      font-size: 12px;
+      color: var(--text-primary);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.8);
+      display: none;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
+      z-index: 999;
     }
-
-    @media (max-width: 768px) {
-      .window-body { grid-template-columns: 1fr; }
-      .window-sidebar { display: none; }
-      .workbench-content { grid-template-columns: 1fr; }
+    .toast-box.show {
+      display: flex;
     }
   </style>
 </head>
@@ -481,21 +685,18 @@
     <!-- Page Header -->
     <header class="page-header">
       <div class="title-area">
-        <h1>Telemetry & Runtime Architecture</h1>
-        <p>Unified engineering workbench. Optical radius hierarchy, hairline separation, zero slop.</p>
+        <h1>Comprehensive Product Design Workbench</h1>
+        <p>Covering the full application lifecycle: Dashboards, Data Tables, Forms, Drawers, and Empty States.</p>
       </div>
       <div class="header-pills">
         <div class="status-badge">
           <span class="status-dot"></span>
-          <span>CLUSTER ONLINE</span>
-        </div>
-        <div class="status-badge">
-          <span>LATENCY: 38ms</span>
+          <span>SYSTEM READY</span>
         </div>
       </div>
     </header>
 
-    <!-- Unified Application Frame (Window Structure) -->
+    <!-- Unified Application Frame -->
     <div class="app-window">
       <!-- Titlebar -->
       <div class="window-titlebar">
@@ -507,15 +708,11 @@
         <div class="window-breadcrumbs">
           <span>aether</span>
           <span>/</span>
-          <span>workspace</span>
-          <span>/</span>
-          <span class="active">dispatch-runtime</span>
+          <span id="breadcrumb-active" class="active">telemetry-dashboard</span>
         </div>
-        <div class="window-actions">
-          <div class="quick-search-trigger" id="cmd-btn">
-            <span>Search actions</span>
-            <kbd>Ctrl K</kbd>
-          </div>
+        <div class="quick-search-trigger" id="cmd-btn">
+          <span>Search actions</span>
+          <kbd>Ctrl K</kbd>
         </div>
       </div>
 
@@ -524,137 +721,312 @@
         <!-- Sidebar Navigation -->
         <aside class="window-sidebar">
           <div>
-            <div class="nav-group-title">WORKSPACE</div>
+            <div class="nav-group-title">PRODUCT SURFACES</div>
             <ul class="sidebar-nav">
-              <li><a href="#" class="nav-item active"><span>Overview</span><kbd>1</kbd></a></li>
-              <li><a href="#" class="nav-item"><span>Dispatch Engine</span><kbd>2</kbd></a></li>
-              <li><a href="#" class="nav-item"><span>Telemetry Streams</span><kbd>3</kbd></a></li>
-              <li><a href="#" class="nav-item"><span>Incident Logs</span><kbd>4</kbd></a></li>
-            </ul>
-
-            <div class="nav-group-title" style="margin-top: 20px;">SETTINGS</div>
-            <ul class="sidebar-nav">
-              <li><a href="#" class="nav-item"><span>API Keys</span></a></li>
-              <li><a href="#" class="nav-item"><span>Audit Security</span></a></li>
+              <li>
+                <button class="nav-item active" data-view="dashboard">
+                  <span>1. Dashboard</span>
+                  <kbd>D</kbd>
+                </button>
+              </li>
+              <li>
+                <button class="nav-item" data-view="datatable">
+                  <span>2. Data Table</span>
+                  <kbd>T</kbd>
+                </button>
+              </li>
+              <li>
+                <button class="nav-item" data-view="forms">
+                  <span>3. Forms & Settings</span>
+                  <kbd>S</kbd>
+                </button>
+              </li>
+              <li>
+                <button class="nav-item" data-view="empty">
+                  <span>4. Empty State</span>
+                  <kbd>E</kbd>
+                </button>
+              </li>
             </ul>
           </div>
 
           <div class="sidebar-footer">
             <span>BRANCH: main</span>
-            <span>v3.8.4</span>
+            <span>v4.0-craft</span>
           </div>
         </aside>
 
-        <!-- Main Workbench -->
+        <!-- Workbench View Area -->
         <main class="workbench-main">
-          <!-- Toolbar -->
-          <div class="workbench-toolbar">
-            <div class="toolbar-left">
-              <button class="tab-btn active">Live Inspector</button>
-              <button class="tab-btn">Batch Logs</button>
-              <button class="tab-btn">Network Graph</button>
+          <!-- VIEW 1: DASHBOARD & TELEMETRY -->
+          <div class="workbench-view active" id="view-dashboard">
+            <div class="metrics-row">
+              <div class="kpi-card">
+                <span class="kpi-label">API Throughput</span>
+                <span class="kpi-value">1,420/s</span>
+                <span class="kpi-trend trend-up">▲ 14.2% vs last cycle</span>
+              </div>
+              <div class="kpi-card">
+                <span class="kpi-label">P99 Latency</span>
+                <span class="kpi-value">38.2ms</span>
+                <span class="kpi-trend trend-up">▲ 4.1ms faster</span>
+              </div>
+              <div class="kpi-card">
+                <span class="kpi-label">Error Rate</span>
+                <span class="kpi-value">0.02%</span>
+                <span class="kpi-trend trend-down">▼ 0.01% decrease</span>
+              </div>
             </div>
-            <button class="btn-action" id="trigger-dispatch">
-              <span>Execute Dispatch</span>
-              <kbd style="background: rgba(0,0,0,0.3); color: #fff;">↵</kbd>
-            </button>
+
+            <div class="telemetry-split">
+              <div class="pane-card">
+                <div class="pane-title">
+                  <span>Payload Stream</span>
+                  <button class="btn-action" id="trigger-dispatch" style="padding: 4px 10px; font-size: 11px;">
+                    Dispatch Job ↵
+                  </button>
+                </div>
+                <pre class="code-terminal" id="terminal-out"><code>{
+  <span class="hl-key">"status"</span>: <span class="hl-val">"listening"</span>,
+  <span class="hl-key">"cluster"</span>: <span class="hl-val">"us-east-4"</span>,
+  <span class="hl-key">"workers"</span>: <span class="hl-num">16</span>
+}</code></pre>
+              </div>
+
+              <div class="pane-card">
+                <div class="pane-title">
+                  <span>System Diagnostics</span>
+                </div>
+                <p style="color: var(--text-secondary); font-size: 12px; line-height: 1.6;">
+                  All 16 background threads operating with zero drift. Memory footprint contained under 14MB. Click the sidebar tabs to inspect other product surfaces.
+                </p>
+              </div>
+            </div>
           </div>
 
-          <!-- Content Panes -->
-          <div class="workbench-content">
-            <!-- Left Pane: JSON Payload Terminal -->
-            <div class="pane-card">
-              <div class="pane-title">
-                <span>Payload Stream</span>
-                <span style="font-family: var(--font-mono); font-size: 11px; color: var(--status-emerald);">● 200 READY</span>
+          <!-- VIEW 2: DENSE DATA TABLE (CRUD) -->
+          <div class="workbench-view" id="view-datatable">
+            <div class="table-toolbar">
+              <div class="search-input-wrap">
+                <span style="color: var(--text-muted);">🔍</span>
+                <input type="text" placeholder="Filter records by ID or name...">
               </div>
-              <pre class="code-terminal" id="terminal-out"><code>{
-  <span class="hl-key">"workflow"</span>: <span class="hl-val">"autonomous-ui-audit"</span>,
-  <span class="hl-key">"target_repo"</span>: <span class="hl-val">"Projects/ui-ux-design"</span>,
-  <span class="hl-key">"status"</span>: <span class="hl-val">"active"</span>,
-  <span class="hl-key">"latency_ms"</span>: <span class="hl-num">38</span>,
-  <span class="hl-key">"anti_slop_verified"</span>: <span class="hl-bool">true</span>
-}</code></pre>
+              <button class="btn-action" id="add-record-btn">+ New Deployment</button>
             </div>
 
-            <!-- Right Pane: Active Sprint Triage -->
-            <div class="pane-card">
-              <div class="pane-title">
-                <span>Active Sprint Triage</span>
-                <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">3 ITEMS</span>
+            <div class="table-container">
+              <table class="dense-table">
+                <thead>
+                  <tr>
+                    <th><input type="checkbox"></th>
+                    <th>Job ID</th>
+                    <th>Repository</th>
+                    <th>Status</th>
+                    <th>Runtime</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="drawer-row" data-id="JOB-8942" data-repo="Projects/ui-ux-design" data-status="Active">
+                    <td><input type="checkbox"></td>
+                    <td style="font-family: var(--font-mono); color: var(--text-primary);">JOB-8942</td>
+                    <td>Projects/ui-ux-design</td>
+                    <td><span style="color: var(--status-emerald);">● Completed</span></td>
+                    <td style="font-family: var(--font-mono);">72ms</td>
+                    <td><button class="btn-ghost" style="padding: 2px 6px; font-size: 11px;">Inspect ❯</button></td>
+                  </tr>
+                  <tr class="drawer-row" data-id="JOB-8941" data-repo="second-brain" data-status="Review">
+                    <td><input type="checkbox"></td>
+                    <td style="font-family: var(--font-mono); color: var(--text-primary);">JOB-8941</td>
+                    <td>second-brain/tools</td>
+                    <td><span style="color: var(--status-amber);">● Review</span></td>
+                    <td style="font-family: var(--font-mono);">128ms</td>
+                    <td><button class="btn-ghost" style="padding: 2px 6px; font-size: 11px;">Inspect ❯</button></td>
+                  </tr>
+                  <tr class="drawer-row" data-id="JOB-8940" data-repo="crisis-coordinator" data-status="Idle">
+                    <td><input type="checkbox"></td>
+                    <td style="font-family: var(--font-mono); color: var(--text-primary);">JOB-8940</td>
+                    <td>crisis-coordinator</td>
+                    <td><span style="color: var(--text-muted);">● Standby</span></td>
+                    <td style="font-family: var(--font-mono);">42ms</td>
+                    <td><button class="btn-ghost" style="padding: 2px 6px; font-size: 11px;">Inspect ❯</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- VIEW 3: FORMS & SETTINGS -->
+          <div class="workbench-view" id="view-forms">
+            <div class="form-container">
+              <div class="form-group">
+                <label class="form-label" for="setting-endpoint">Webhook Production URL</label>
+                <input class="input-control" type="text" id="setting-endpoint" value="https://api.aether.internal/v1/telemetry">
+                <span class="form-hint">Must be an HTTPS endpoint with valid SSL termination.</span>
               </div>
-              <ul class="task-rows">
-                <li class="task-row">
-                  <div class="row-left">
-                    <span class="pip pip-emerald"></span>
-                    <span class="task-id">ENG-402</span>
-                    <span class="task-label">Unified app frame layout</span>
-                  </div>
-                  <span class="task-tag">Craft</span>
-                </li>
 
-                <li class="task-row">
-                  <div class="row-left">
-                    <span class="pip pip-amber"></span>
-                    <span class="task-id">ENG-401</span>
-                    <span class="task-label">Calibrated optical radiuses</span>
-                  </div>
-                  <span class="task-tag">Hierarchy</span>
-                </li>
+              <div class="switch-row">
+                <div>
+                  <div class="form-label">Autonomous Anti-Slop Enforcement</div>
+                  <div class="form-hint">Reject unreadable glassmorphism and purple nebula blobs automatically.</div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
 
-                <li class="task-row">
-                  <div class="row-left">
-                    <span class="pip pip-rose"></span>
-                    <span class="task-id">ENG-398</span>
-                    <span class="task-label">Hairline internal grid borders</span>
-                  </div>
-                  <span class="task-tag">Tokens</span>
-                </li>
-              </ul>
+              <div class="switch-row">
+                <div>
+                  <div class="form-label">Asymmetric Exit Physics</div>
+                  <div class="form-hint">Accelerate surface dismissals by 40% to prevent user blocking.</div>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <button class="btn-action" id="save-settings-btn" style="align-self: flex-start;">
+                Save Changes
+              </button>
+            </div>
+          </div>
+
+          <!-- VIEW 4: EMPTY STATE -->
+          <div class="workbench-view" id="view-empty">
+            <div class="empty-state-view">
+              <div class="empty-icon">📂</div>
+              <div class="empty-title">No Incident Logs Recorded</div>
+              <div class="empty-desc">
+                Your system error budget is at 99.98%. No outages or fatal exceptions have been triggered during this cycle.
+              </div>
+              <button class="btn-action" id="simulate-error-btn">Simulate Diagnostic Ping</button>
+            </div>
+          </div>
+
+          <!-- SLIDE-OVER DETAIL DRAWER -->
+          <div class="slide-drawer" id="slide-drawer">
+            <div class="drawer-header">
+              <h3 id="drawer-title" style="font-size: 14px; font-weight: 600;">Job Inspection</h3>
+              <button class="btn-ghost" id="close-drawer-btn" style="padding: 2px 8px;">✕</button>
+            </div>
+            <div class="drawer-body">
+              <div class="form-group">
+                <span class="kpi-label">TARGET REPOSITORY</span>
+                <span id="drawer-repo" style="font-size: 13px; font-weight: 500; color: var(--text-primary);">--</span>
+              </div>
+              <div class="form-group">
+                <span class="kpi-label">STATUS</span>
+                <span id="drawer-status" style="font-size: 13px; font-weight: 500;">--</span>
+              </div>
+              <div class="form-group">
+                <span class="kpi-label">EXECUTION LOGS</span>
+                <div style="background: #000; border: 1px solid var(--border-subtle); border-radius: var(--radius-control); padding: 10px; font-family: var(--font-mono); font-size: 11px; color: #38bdf8;">
+                  [00:00:01] Pre-flight checks passed.<br>
+                  [00:00:02] Optical radius hierarchy verified.<br>
+                  [00:00:03] Zero console warnings.
+                </div>
+              </div>
             </div>
           </div>
 
           <!-- Window Status Footer -->
           <div class="window-footer">
-            <div class="footer-stat">
-              <span>MEM: 12.4 MB</span>
-              <span>•</span>
-              <span>THREADS: 4/4</span>
-              <span>•</span>
-              <span>THROUGHPUT: 1,420 req/s</span>
-            </div>
-            <span>READY</span>
+            <span>STATUS: NORMAL</span>
+            <span>ALL PRODUCT SURFACES ACTIVE</span>
           </div>
         </main>
       </div>
     </div>
   </div>
 
-  <script>
-    // Dispatch Button Interaction
-    const btn = document.getElementById('trigger-dispatch');
-    const term = document.getElementById('terminal-out');
+  <!-- Toast Notification Box -->
+  <div class="toast-box" id="toast-msg">
+    <span>✓</span>
+    <span id="toast-text">Settings updated successfully</span>
+  </div>
 
-    btn.addEventListener('click', () => {
-      btn.innerHTML = `<span>Dispatching...</span>`;
-      const start = performance.now();
-      setTimeout(() => {
-        const ms = Math.round(performance.now() - start);
-        btn.innerHTML = `<span>Execute Dispatch</span> <kbd style="background: rgba(0,0,0,0.3); color: #fff;">↵</kbd>`;
-        term.innerHTML = `<code>{
-  <span class="hl-key">"workflow"</span>: <span class="hl-val">"autonomous-ui-audit"</span>,
-  <span class="hl-key">"status"</span>: <span class="hl-val">"completed"</span>,
-  <span class="hl-key">"latency_ms"</span>: <span class="hl-num">${ms}</span>,
-  <span class="hl-key">"anti_slop_verified"</span>: <span class="hl-bool">true</span>
-}</code>`;
-      }, 70);
+  <script>
+    // Tab switching between the 4 product surfaces
+    const navItems = document.querySelectorAll('.nav-item');
+    const views = document.querySelectorAll('.workbench-view');
+    const breadcrumb = document.getElementById('breadcrumb-active');
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const targetView = item.getAttribute('data-view');
+        
+        navItems.forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+
+        views.forEach(v => v.classList.remove('active'));
+        const activeView = document.getElementById(`view-${targetView}`);
+        if (activeView) activeView.classList.add('active');
+
+        breadcrumb.textContent = `${targetView}-view`;
+      });
     });
 
-    // Keyboard shortcut triggers
+    // Toast Trigger Helper
+    const toast = document.getElementById('toast-msg');
+    const toastText = document.getElementById('toast-text');
+    function showToast(msg) {
+      toastText.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Save Settings Toast
+    document.getElementById('save-settings-btn').addEventListener('click', () => {
+      showToast('Settings saved with zero slop.');
+    });
+
+    // Dispatch Simulation
+    const dispatchBtn = document.getElementById('trigger-dispatch');
+    const terminal = document.getElementById('terminal-out');
+    dispatchBtn.addEventListener('click', () => {
+      dispatchBtn.textContent = 'Dispatching...';
+      setTimeout(() => {
+        dispatchBtn.textContent = 'Dispatch Job ↵';
+        terminal.innerHTML = `<code>{
+  <span class="hl-key">"status"</span>: <span class="hl-val">"dispatched"</span>,
+  <span class="hl-key">"latency"</span>: <span class="hl-num">34ms</span>,
+  <span class="hl-key">"verified"</span>: <span class="hl-val">true</span>
+}</code>`;
+        showToast('Job dispatched successfully (34ms).');
+      }, 80);
+    });
+
+    // Drawer slide-over open/close
+    const drawer = document.getElementById('slide-drawer');
+    const closeDrawerBtn = document.getElementById('close-drawer-btn');
+    const drawerTitle = document.getElementById('drawer-title');
+    const drawerRepo = document.getElementById('drawer-repo');
+    const drawerStatus = document.getElementById('drawer-status');
+
+    document.querySelectorAll('.drawer-row').forEach(row => {
+      row.addEventListener('click', () => {
+        drawerTitle.textContent = `Inspect: ${row.getAttribute('data-id')}`;
+        drawerRepo.textContent = row.getAttribute('data-repo');
+        drawerStatus.textContent = row.getAttribute('data-status');
+        drawer.classList.add('open');
+      });
+    });
+
+    closeDrawerBtn.addEventListener('click', () => {
+      drawer.classList.remove('open');
+    });
+
+    // Simulate Ping
+    document.getElementById('simulate-error-btn').addEventListener('click', () => {
+      showToast('Diagnostic ping executed. 0 errors detected.');
+    });
+
+    // Escape Key Dismissal
     document.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-        e.preventDefault();
-        alert('Command Palette: Active');
+      if (e.key === 'Escape') {
+        drawer.classList.remove('open');
       }
     });
   </script>

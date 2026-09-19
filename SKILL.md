@@ -21,21 +21,19 @@ Transforms user UI requests into bespoke, production-ready interfaces by first s
 
 ---
 
-### Phase 1: Workspace Analysis & Stack Profiling
-Before asking questions or drafting UI, inspect the repository:
+### Phase 1: Workspace Analysis & Live Browser Extraction
+Before asking questions or drafting UI, inspect the repository and live benchmarks:
 
 1. **Stack & Tooling Detection**:
-   * Inspect package files (`package.json`, `requirements.txt`, `composer.json`, etc.).
+   * Inspect package files (`package.json`, `requirements.txt`, etc.).
    * Identify frontend framework (React, Next.js, Vue, Svelte, HTML/CSS).
-   * Identify styling engine (Tailwind CSS, Vanilla CSS, CSS Modules, Radix UI, Shadcn, PandaCSS).
-   * Identify icon libraries in use (Lucide, Heroicons, Radix Icons, FontAwesome).
-2. **Component Tree & Token Discovery**:
-   * Check existing component patterns (`src/components/`, `components/ui/`, `lib/`).
-   * Read existing design tokens (`tailwind.config.*`, `globals.css`, theme files).
-   * Map existing layout routes (`app/`, `pages/`, `views/`).
-3. **Synthesize Workspace Profile**:
-   * Summarize detected stack, theme conventions, and reuse opportunities.
-   * Refer to [Workspace Scanner Guide](./references/workspace-scanner-guide.md).
+   * Identify styling engine (Tailwind CSS, Vanilla CSS, Radix UI, Shadcn).
+2. **Live Browser Benchmark Extraction**:
+   * When targeting a reference design or URL, run the built-in browser extractor:
+     ```bash
+     python scripts/extract_design.py <target-url> references/
+     ```
+   * Extracts exact computed styles: dominant backgrounds, text colors, font stacks, optical radii, and specular box-shadows directly into JSON.
 
 ---
 
