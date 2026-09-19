@@ -6,7 +6,7 @@
   <title>Aether — Developer-First Telemetry & Agent Dispatch</title>
   <style>
     /* ==========================================================================
-       1. TOKENS & SYSTEM FOUNDATION
+       1. LINEAR + RESEND VERIFIED DESIGN TOKENS
        ========================================================================== */
     :root {
       --bg-canvas: #08090a;
@@ -49,11 +49,12 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 24px 16px 90px;
+      padding: 24px 16px 80px;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
 
+    /* Subtitle grid overlay for subtle depth */
     .bg-grid {
       position: fixed;
       inset: 0;
@@ -77,13 +78,13 @@
     }
 
     /* ==========================================================================
-       2. EDITORIAL NAVBAR WITH SLIDING TAB PILL
+       2. EDITORIAL NAVBAR (Resend-Style Chrome)
        ========================================================================== */
     header.site-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 20px;
+      padding-bottom: 24px;
       border-bottom: 1px solid var(--border-subtle);
     }
 
@@ -111,50 +112,6 @@
       font-weight: 600;
       font-size: 15px;
       letter-spacing: -0.02em;
-    }
-
-    /* Sliding Tabs Navigation (Linear Style) */
-    .tab-nav-wrapper {
-      position: relative;
-      display: flex;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border-subtle);
-      border-radius: 999px;
-      padding: 3px;
-    }
-
-    .tab-pill-indicator {
-      position: absolute;
-      top: 3px;
-      left: 3px;
-      height: calc(100% - 6px);
-      background: var(--bg-surface-active);
-      border: 1px solid var(--border-strong);
-      border-radius: 999px;
-      transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .tab-nav-btn {
-      position: relative;
-      z-index: 2;
-      background: transparent;
-      border: none;
-      color: var(--text-secondary);
-      font-size: 12px;
-      font-weight: 500;
-      padding: 6px 14px;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: color 150ms ease;
-    }
-    .tab-nav-btn.active {
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-    .tab-nav-btn:hover {
-      color: var(--text-primary);
     }
 
     .header-actions {
@@ -192,12 +149,12 @@
     }
 
     /* ==========================================================================
-       3. HERO: EDITORIAL SERIF + LIVE TELEMETRY SPARKLINE
+       3. HERO: EDITORIAL SERIF + REFINED SUBTITLE
        ========================================================================== */
     .hero {
       text-align: center;
-      max-width: 820px;
-      margin: 16px auto 8px;
+      max-width: 780px;
+      margin: 20px auto 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -221,20 +178,14 @@
       border-radius: 50%;
       background: var(--accent-emerald);
       box-shadow: 0 0 8px var(--accent-emerald);
-      animation: pulse-dot 2s infinite ease-in-out;
-    }
-
-    @keyframes pulse-dot {
-      0%, 100% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.3); opacity: 1; }
     }
 
     h1.hero-title {
       font-family: var(--font-serif);
-      font-size: clamp(38px, 5.5vw, 64px);
+      font-size: clamp(38px, 5.5vw, 62px);
       font-weight: 400;
-      line-height: 1.06;
-      letter-spacing: -0.035em;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
       color: #fff;
     }
 
@@ -244,63 +195,15 @@
     }
 
     p.hero-desc {
-      font-size: 15px;
+      font-size: 16px;
       color: var(--text-secondary);
       line-height: 1.6;
-      max-width: 62ch;
+      max-width: 60ch;
       text-wrap: pretty;
     }
 
     /* ==========================================================================
-       4. TELEMETRY SPARKLINE TICKER BAR
-       ========================================================================== */
-    .telemetry-strip {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 16px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: var(--radius-md);
-      padding: 12px 20px;
-    }
-
-    .telemetry-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .sparkline-svg {
-      width: 80px;
-      height: 24px;
-      stroke: var(--accent-emerald);
-      stroke-width: 1.5;
-      fill: none;
-    }
-
-    .telemetry-metric {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .metric-label {
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .metric-val {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-    }
-
-    /* ==========================================================================
-       5. SPOTLIGHT CARDS (Raycast / Linear Precision)
+       4. SPOTLIGHT CARDS & GRADIENT BORDERS (Linear / Raycast Verified)
        ========================================================================== */
     .dashboard-grid {
       display: grid;
@@ -314,6 +217,7 @@
       border-radius: var(--radius-lg);
       border: 1px solid transparent;
       background-clip: padding-box;
+      /* Dual background trick for 1px hairline directional border */
       background-image: 
         linear-gradient(var(--bg-surface), var(--bg-surface)), 
         linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 100%);
@@ -325,6 +229,7 @@
       gap: 20px;
     }
 
+    /* Cursor Spotlight */
     @media (hover: hover) {
       .spotlight-card::before {
         content: "";
@@ -360,7 +265,7 @@
     }
 
     /* ==========================================================================
-       6. LIVE INTERACTIVE API SANDBOX WITH STREAMING SIMULATOR
+       5. LIVE INTERACTIVE API DISPATCHER (Resend Style)
        ========================================================================== */
     .code-sandbox {
       background: #000000;
@@ -392,36 +297,16 @@
       color: var(--text-secondary);
     }
 
-    .btn-copy {
-      background: transparent;
-      border: 1px solid var(--border-subtle);
-      border-radius: 4px;
-      color: var(--text-muted);
-      padding: 2px 8px;
-      font-size: 11px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      transition: all 120ms ease;
-    }
-    .btn-copy:hover {
-      color: var(--text-primary);
-      border-color: var(--border-strong);
-    }
-
     .code-view {
       padding: 16px;
       color: #9ca3af;
       line-height: 1.7;
       overflow-x: auto;
-      min-height: 140px;
     }
 
     .hl-key { color: #f43f5e; }
     .hl-val { color: #38bdf8; }
     .hl-num { color: #fbbf24; }
-    .hl-bool { color: #a78bfa; }
 
     .sandbox-footer {
       padding: 12px 14px;
@@ -446,6 +331,7 @@
       color: var(--text-primary);
     }
 
+    /* Snappy 5-State Action Button */
     .btn-dispatch {
       min-height: 36px;
       padding: 0 16px;
@@ -474,7 +360,7 @@
     }
 
     /* ==========================================================================
-       7. LINEAR SPRINT TRIAGE LIST
+       6. LINEAR SPRINT TRIAGE BOARD (High-Density Utility)
        ========================================================================== */
     .triage-list {
       list-style: none;
@@ -540,40 +426,8 @@
     }
 
     /* ==========================================================================
-       8. STICKY DOCK / SYSTEM STATUS BAR (Linear Style)
+       7. COMMAND PALETTE MODAL (Raycast Experience)
        ========================================================================== */
-    .system-dock {
-      position: fixed;
-      bottom: 16px;
-      z-index: 40;
-      background: rgba(14, 16, 19, 0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--border-strong);
-      border-radius: 999px;
-      padding: 6px 18px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      font-size: 11px;
-      font-family: var(--font-mono);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
-    }
-
-    .dock-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--text-secondary);
-    }
-
-    .dock-divider {
-      width: 1px;
-      height: 12px;
-      background: var(--border-subtle);
-    }
-
-    /* Command Palette Modal */
     .palette-overlay {
       position: fixed;
       inset: 0;
@@ -648,8 +502,6 @@
 
     @media (max-width: 820px) {
       .dashboard-grid { grid-template-columns: 1fr; }
-      .tab-nav-wrapper { display: none; }
-      .system-dock { display: none; }
     }
   </style>
 </head>
@@ -657,25 +509,15 @@
   <div class="bg-grid"></div>
 
   <div class="app" role="main">
-    <!-- Resend-Style Header with Sliding Tabs -->
+    <!-- Resend-Style Editorial Header -->
     <header class="site-header">
       <div class="brand">
         <div class="brand-mark">Æ</div>
         <span class="brand-text">Aether Architecture</span>
       </div>
-
-      <!-- Sliding Indicator Tabs -->
-      <nav class="tab-nav-wrapper" id="tab-nav" aria-label="Views">
-        <div class="tab-pill-indicator" id="tab-indicator"></div>
-        <button class="tab-nav-btn active" data-tab="overview">Overview</button>
-        <button class="tab-nav-btn" data-tab="agents">Dispatch</button>
-        <button class="tab-nav-btn" data-tab="telemetry">Telemetry</button>
-        <button class="tab-nav-btn" data-tab="audit">Audit Log</button>
-      </nav>
-
       <div class="header-actions">
         <button class="kbd-btn" id="open-cmd">
-          <span>Command</span>
+          <span>Search command bar</span>
           <kbd>Ctrl K</kbd>
         </button>
       </div>
@@ -685,50 +527,16 @@
     <section class="hero">
       <div class="pill-announcement">
         <span class="indicator"></span>
-        <span>Aether Runtime Engine v3.8 • Live Cluster</span>
+        <span>Aether Runtime Engine v3.8</span>
       </div>
       <h1 class="hero-title">
         The interface for developers<br>
         <em>obsessed with true craft.</em>
       </h1>
       <p class="hero-desc">
-        Grounded in Linear's starlight palette and Resend's editorial typography. Featuring dynamic cursor spotlights, sub-100ms streaming execution, and zero AI slop.
+        Zero AI slop. Designed with mathematical tracking, sub-100ms micro-interactions, directional cursor spotlights, and high-density telemetry.
       </p>
     </section>
-
-    <!-- Real-time Sparkline Ticker -->
-    <div class="telemetry-strip" aria-label="Live Telemetry Bar">
-      <div class="telemetry-item">
-        <svg class="sparkline-svg" viewBox="0 0 80 24">
-          <polyline points="0,18 15,14 30,19 45,9 60,12 75,4 80,6"></polyline>
-        </svg>
-        <div class="telemetry-metric">
-          <span class="metric-label">Ingest Throughput</span>
-          <span class="metric-val">1,420 req/s</span>
-        </div>
-      </div>
-
-      <div class="telemetry-item">
-        <div class="telemetry-metric">
-          <span class="metric-label">P99 Cluster Latency</span>
-          <span class="metric-val" id="p99-metric">38.4ms</span>
-        </div>
-      </div>
-
-      <div class="telemetry-item">
-        <div class="telemetry-metric">
-          <span class="metric-label">Active Agents</span>
-          <span class="metric-val">12 Standby</span>
-        </div>
-      </div>
-
-      <div class="telemetry-item">
-        <div class="telemetry-metric">
-          <span class="metric-label">Error Budget</span>
-          <span class="metric-val" style="color: var(--accent-emerald);">99.98%</span>
-        </div>
-      </div>
-    </div>
 
     <!-- Dashboard: 2-Column Spotlight Grid -->
     <div class="dashboard-grid">
@@ -736,7 +544,7 @@
       <section class="spotlight-card" aria-labelledby="api-heading">
         <div class="card-top">
           <h2 class="card-heading" id="api-heading">Agentic Dispatch Sandbox</h2>
-          <span style="color: var(--accent-emerald); font-family: var(--font-mono); font-size: 11px;">● 200 READY</span>
+          <span style="color: var(--accent-emerald); font-family: var(--font-mono); font-size: 11px;">● 200 OK</span>
         </div>
 
         <div class="code-sandbox">
@@ -745,18 +553,18 @@
               <span class="method-tag">POST</span>
               <span class="endpoint">/v1/agents/dispatch</span>
             </div>
-            <button class="btn-copy" id="copy-btn">Copy JSON</button>
+            <span style="color: var(--text-muted); font-size: 11px;">JSON</span>
           </div>
-          <pre class="code-view" id="code-output"><code>{
+          <pre class="code-view"><code>{
   <span class="hl-key">"workflow"</span>: <span class="hl-val">"autonomous-ui-audit"</span>,
   <span class="hl-key">"target_repo"</span>: <span class="hl-val">"Projects/ui-ux-design"</span>,
   <span class="hl-key">"precision"</span>: <span class="hl-num">100</span>,
-  <span class="hl-key">"anti_slop_gate"</span>: <span class="hl-bool">true</span>
+  <span class="hl-key">"anti_slop_gate"</span>: <span class="hl-val">true</span>
 }</code></pre>
           <div class="sandbox-footer">
             <div class="telemetry-status">
               <span>Latency: <span class="tnum" id="latency-counter">38ms</span></span>
-              <span>Payload: <span class="tnum">2.4 KB</span></span>
+              <span>Memory: <span class="tnum">11.4 MB</span></span>
             </div>
             <button class="btn-dispatch" id="trigger-btn">
               <span>Execute Dispatch</span>
@@ -805,25 +613,6 @@
     </div>
   </div>
 
-  <!-- Linear-Style Sticky System Dock -->
-  <footer class="system-dock" aria-label="System Quick Status">
-    <div class="dock-item">
-      <span style="color: var(--accent-emerald);">●</span>
-      <span>CLUSTER ONLINE</span>
-    </div>
-    <div class="dock-divider"></div>
-    <div class="dock-item">
-      <span>BRANCH:</span>
-      <span style="color: var(--text-primary);">main@77c060e</span>
-    </div>
-    <div class="dock-divider"></div>
-    <div class="dock-item">
-      <span>SHORTCUTS:</span>
-      <kbd>Ctrl K</kbd>
-      <kbd>C</kbd>
-    </div>
-  </footer>
-
   <!-- Command Palette Modal -->
   <div class="palette-overlay" id="palette-modal" role="dialog" aria-modal="true">
     <div class="palette-box">
@@ -850,27 +639,7 @@
   </div>
 
   <script>
-    // 1. Sliding Tab Indicator (Fluid CSS Layout Transition)
-    const tabNav = document.getElementById('tab-nav');
-    const tabIndicator = document.getElementById('tab-indicator');
-    const tabBtns = document.querySelectorAll('.tab-nav-btn');
-
-    function updateTabPill(activeBtn) {
-      tabIndicator.style.width = `${activeBtn.offsetWidth}px`;
-      tabIndicator.style.transform = `translateX(${activeBtn.offsetLeft - 3}px)`;
-    }
-    const initialActive = document.querySelector('.tab-nav-btn.active');
-    if (initialActive) updateTabPill(initialActive);
-
-    tabBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        tabBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        updateTabPill(btn);
-      });
-    });
-
-    // 2. Dynamic Cursor Spotlight (Raycast / Linear technique)
+    // 1. Dynamic Cursor Spotlight (Raycast / Linear technique)
     document.querySelectorAll('.spotlight-card').forEach(card => {
       card.addEventListener('mousemove', (e) => {
         const rect = card.getBoundingClientRect();
@@ -879,41 +648,20 @@
       });
     });
 
-    // 3. Dispatch Sandbox with Streaming Simulation
+    // 2. Dispatch Sandbox Interaction
     const triggerBtn = document.getElementById('trigger-btn');
     const latencyCounter = document.getElementById('latency-counter');
-    const p99Metric = document.getElementById('p99-metric');
-    const codeOutput = document.getElementById('code-output');
-
     triggerBtn.addEventListener('click', () => {
-      triggerBtn.innerHTML = `<span>Streaming...</span>`;
+      triggerBtn.textContent = 'Dispatching...';
       const start = performance.now();
       setTimeout(() => {
         const diff = Math.round(performance.now() - start);
         latencyCounter.textContent = `${diff}ms`;
-        p99Metric.textContent = `${(diff * 0.95).toFixed(1)}ms`;
         triggerBtn.innerHTML = `<span>Execute Dispatch</span> <kbd style="background: rgba(0,0,0,0.4);">↵</kbd>`;
-        
-        // Flash subtle payload update
-        codeOutput.innerHTML = `<code>{
-  <span class="hl-key">"status"</span>: <span class="hl-val">"dispatched"</span>,
-  <span class="hl-key">"agent_id"</span>: <span class="hl-val">"aether-worker-09"</span>,
-  <span class="hl-key">"execution_ms"</span>: <span class="hl-num">${diff}</span>,
-  <span class="hl-key">"anti_slop_passed"</span>: <span class="hl-bool">true</span>
-}</code>`;
-      }, 75);
+      }, 95);
     });
 
-    // 4. Copy JSON Button
-    const copyBtn = document.getElementById('copy-btn');
-    copyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText(codeOutput.innerText).then(() => {
-        copyBtn.textContent = 'Copied ✓';
-        setTimeout(() => copyBtn.textContent = 'Copy JSON', 2000);
-      });
-    });
-
-    // 5. Command Palette (Ctrl+K / Esc)
+    // 3. Command Palette (Ctrl+K / Esc)
     const cmdModal = document.getElementById('palette-modal');
     const openCmdBtn = document.getElementById('open-cmd');
     const cmdInput = document.getElementById('cmd-input');
