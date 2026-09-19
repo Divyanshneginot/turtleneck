@@ -5,6 +5,10 @@ __pycache__/
 .venv/
 venv/
 
+# Patch bundles (developer scratch output — never commit these)
+*.patch
+*.diff
+
 # Turtleneck install output (created by scripts/install.py inside a target project)
 .turtleneck/
 *.turtleneck.bak

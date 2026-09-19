@@ -4,6 +4,69 @@ All notable changes to Turtleneck are documented here.
 
 ## Unreleased
 
+### Fixed — skill installation now obeys the same safety contract as rule installation
+
+`--claude-skill` / `--antigravity` previously backed up an existing skill directory exactly once
+and then overwrote matching files with no ownership detection, no `--force`, and no numbered
+backups. Skill installs now follow the same refuse-by-default contract as rule files:
+
+* **Manifest ownership.** Every skill install writes a schema-versioned
+  `turtleneck-skill-manifest.json` recording the SHA-256 of each shipped relative path. A skill
+  directory is Turtleneck-owned only when the manifest proves it; a tampered or missing manifest
+  never grants ownership.
+* **Foreign or mixed content is refused** by default, with the exact protected paths listed.
+* **`--force`** snapshots the whole directory to a collision-safe numbered `.turtleneck.bak`
+  (never overwriting an existing backup) before replacing it.
+* **`--dry-run`** parity for skill installs and skill uninstalls.
+* **Upgrade reconciliation.** Stale files the previous manifest still owned are removed on
+  upgrade instead of being left as orphans; the manifest is rewritten each install.
+* **`uninstall_skill()`** removes only manifest-owned files whose content still matches the
+  recorded hash, restores foreign files previously kept in a forced backup, and never deletes or
+  overwrites a foreign addition.
+* **Knowledge base installs (`install_references`) are now refuse-by-default too** for files that
+  differ from the shipped copy, with `--force` + backup as the escape hatch.
+
+### Fixed — Windows compatibility (manifest paths + test encodings)
+
+* **Skill manifest paths are now always forward-slash POSIX relative paths** (`Path.as_posix()`).
+  The previous `f"{sub}/{src.relative_to(base)}"` produced backslash separators on Windows,
+  breaking manifest-key matching and causing false "foreign content" refusals and missed
+  stale-file reconciliation during skill installs/uninstalls.
+* **Tests pin `encoding="utf-8"` on every file read/write.** On Windows, bare
+  `Path.read_text()`/`write_text()` default to the locale code page (cp1252), which threw
+  `UnicodeDecodeError`s whenever the installer (correctly UTF-8) round-tripped rules files.
+  The installer itself already pinned UTF-8 everywhere; only the tests were unpinned.
+
+### Added — fast path, verification scope, and clearer guarantees
+
+* **Fast path.** `SKILL.md`, `README.md`, and all six rules files now exempt an explicit brief
+  (archetype + surface + density + layout direction) from the multi-question interview: restate
+  the inferred constraints in one preflight, raise at most one genuine ambiguity, then build.
+* **Execution modes (tempo).** `SKILL.md`, `README.md`, the interview framework, and every rules
+  file now define four modes — direct Phase 4 (small fixes), time-boxed fast path (deadlines),
+  fast path (explicit briefs), and the full pipeline (vague/consequential) — and require the
+  Output Contract to record which mode ran and why the interview was skipped when it was. This
+  closes the "full interview on a two-minute fix" friction: a full interview on a small change is
+  now explicitly a protocol violation.
+* **Mobile & native ergonomics.** New `references/mobile-touch-and-native.md`: thumb zones,
+  safe-area insets, `44px`/`48dp` tap targets, pointer-cancellation, gesture timing budgets, the
+  tap-equivalent-for-every-gesture rule, and a React Native / Flutter / SwiftUI token + 5-state
+  mapping. Wired into `SKILL.md`, `README.md`, and all six rules files; the compatibility table
+  now names the native stacks.
+* **`references/verification-scope.md`** states plainly what each gate verifies and what it does
+  not, and documents that passing a token/example gate does not certify an arbitrary product UI
+  as WCAG 2.2 AA compliant. `SKILL.md`, `README.md`, `rules/AGENTS.md` and `rules/CLAUDE.md`
+  point at it.
+* **`CONTRIBUTING.md`** records the gate checklist, the drift-proofs, the installer safety
+  contract, and the local release process.
+* **Compatibility table** in `README.md` (Python 3.9+ runtime, dev/CI versions).
+
+### Fixed — removed claims the checks could not back
+
+* The example checker is regex-based and the contrast gate is limited to declared pairs. Docs no
+  longer imply that these certify an arbitrary generated UI; the Output Contract now requires an
+  agent to claim only what a specific check actually ran.
+
 ### Improved — the skill itself, not just its packaging
 
 * **Triggering discipline.** `SKILL.md` now opens with a *When to use (and when not to)* section,

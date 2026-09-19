@@ -27,6 +27,21 @@ Do not use it for:
 * Pixel-perfect replication of a supplied design. Follow the supplied design; borrow only the
   accessibility, motion, and state-completeness rules from Phase 4.
 
+### Execution modes (tempo)
+
+Always pick the **least ceremony the brief earns** — internalize the full pipeline as the ceiling,
+not the default:
+
+| Mode | When | What to do |
+| :--- | :--- | :--- |
+| **Direct Phase 4** | One component, one style tweak, a fix, or the user says "just do it" | Skip Phases 1–3; apply Phase 4 craft rules (5-state, motion budgets, contrast) directly. |
+| **Time-boxed Fast Path** | Hard deadline, or a brief that already names scope + stack | Skip the interview. Infer archetype/density from the codebase + request; state your call and ONE alternative in a single line; build. |
+| **Full pipeline** | Vague, greenfield, or consequential surface (flagship page, design system) | Run all four phases, including the interview. |
+
+Under time pressure, self-check *tempo* explicitly: if the task is a small or well-scoped change,
+say so in one line and take the Direct Phase 4 / Time-boxed route. Burning a full interview cycle
+on a two-minute fix is a protocol violation.
+
 ---
 
 ## Reference implementations (show, don't tell)
@@ -61,7 +76,10 @@ Before asking questions or drafting UI, inspect the repository and the committed
 
 1. **Stack & Tooling Detection** — refer to the [Workspace Scanner Guide](./references/workspace-scanner-guide.md) and [Framework Integrations](./references/framework-integrations.md):
    * Inspect package files (`package.json`, `requirements.txt`, lockfiles).
-   * Identify the frontend framework (React, Next.js, Vue, Svelte, HTML/CSS).
+   * Identify the frontend framework (React, Next.js, Vue, Svelte, HTML/CSS — or a native stack:
+     React Native, Flutter, SwiftUI). Web rules are not native rules; when the target is a phone
+     or a native app, also load the [Mobile, Touch & Native Ergonomics](./references/mobile-touch-and-native.md)
+     reference.
    * Identify the styling engine (Tailwind CSS, Vanilla CSS, Radix UI, CSS Modules).
    * Record existing theme tokens and component directory conventions.
    * Match code generation directly to the discovered framework idioms.
@@ -89,6 +107,12 @@ Before asking questions or drafting UI, inspect the repository and the committed
 ### Phase 2: Interactive Requirements & Archetype Selection
 Engage the user to clarify intent, archetype, and layout before writing code. Never skip this
 phase and never assume a dark developer aesthetic.
+
+**Fast path.** If the user's brief already supplies the archetype, target surface, density, and
+layout/content direction, do not block on the multi-question interview. Restate the inferred
+constraints in one short preflight, surface at most one genuine ambiguity, then build. Keep the
+full interview for vague or consequential design decisions — see
+[Verification Scope & Fast Path](./references/verification-scope.md).
 
 1. **Visual Archetype Selection** — refer to the [Design Archetypes Catalog](./references/design-archetypes.md):
      * **A. High-Trust Corporate**: Clean high-trust light mode (`#f6f9fc`), crisp slate borders, fintech/SaaS clarity.
@@ -155,6 +179,10 @@ Once the user approves a layout choice:
 3. **Walkthrough & Verification**:
    * Verify zero console errors and zero layout shifts.
    * Verify the emitted palette with `scripts/check_contrast.py` before claiming AA compliance.
+   * Acknowledge the limits: the gates check *declared* tokens and *textual* markers — they do not
+     certify an arbitrary generated UI as WCAG 2.2 AA compliant. Do not claim WCAG compliance off
+     a token/example gate; claim only what a specific check actually ran
+     ([Verification Scope & Fast Path](./references/verification-scope.md)).
    * Close with the **Output Contract** below — no un-audited claims.
 
 ### Output Contract
@@ -173,4 +201,6 @@ Accessibility    : focus-visible [yes] · reduced-motion [yes] · tap targets >=
 Reference used   : <examples/*.html mirrored, if any>
 Files changed    : <list>
 Deliberate breaks: <any rule you intentionally violated, and why — empty is the goal>
+Execution mode   : full-pipeline / fast-path / time-boxed / direct-phase-4 — and why
+Interview        : conducted [yes/no] · if skipped, reason: <one line>
 ```

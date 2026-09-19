@@ -26,11 +26,13 @@ trigger applies — never preload the whole set.
 | :--- | :--- |
 | Phase 1 — detecting the stack, tooling, existing tokens | `.turtleneck/references/workspace-scanner-guide.md` |
 | Phase 1/4 — emitting idiomatic React, Next.js, Vue 3, Svelte 5, Tailwind, native | `.turtleneck/references/framework-integrations.md` |
+| Phase 1/4 — thumb zones, tap targets, gestures, RN/Flutter/SwiftUI mapping | `.turtleneck/references/mobile-touch-and-native.md` |
 | Phase 1 — choosing category benchmarks, writing a synthesis manifest | `.turtleneck/references/design-research-playbook.md` |
 | Phase 1 — scale tension, button ergonomics, surface chemistry | `.turtleneck/references/award-winning-craft-playbook.md` |
 | Phase 1 — blending 4+ sources without 1:1 cloning | `.turtleneck/references/creative-synthesis-protocol.md` |
 | Phase 1 — injecting authentic soul, personality, materiality | `.turtleneck/references/creative-direction-guide.md` |
 | Phase 2 — JTBD discovery, pitching 2-3 layout options | `.turtleneck/references/requirements-interview-framework.md` |
+| Phase 2/4 — what the gates verify, fast path vs full interview | `.turtleneck/references/verification-scope.md` |
 | Phase 2 — the 5 archetype palettes and their token specs | `.turtleneck/references/design-archetypes.md` |
 | Phase 3 — 8pt grid, type scale, semantic colour roles, elevation | `.turtleneck/references/design-tokens.md` |
 | Phase 3 — the 6 product surfaces and accessible primitives | `.turtleneck/references/full-product-design-system.md` |
@@ -55,10 +57,17 @@ trigger applies — never preload the whole set.
   * **Svelte 5**: Runes (`$props()`, `{@render}`).
   * **Tailwind CSS**: Semantic CSS variables (`bg-canvas`, `text-content-primary`).
   * **Native Platform**: Zero-dependency HTML `<dialog>`, `@container`, `clamp()`.
+  * **React Native / Flutter / SwiftUI**: map tokens and 5-state controls to the platform's
+    primitives; apply `.turtleneck/references/mobile-touch-and-native.md` (thumb zones, `44/48px`
+    targets, safe areas, gesture timing).
 
 ## Phase 2: Requirements Interview
 
 Ask before you assume. Never skip this phase, and never infer a dark developer aesthetic by default.
+Fast path: if the brief already names archetype, surface, density, and layout direction, restate
+them in one preflight, raise at most one genuine ambiguity, then build — no multi-question interview.
+Tempo: a full interview on a two-minute fix is a protocol violation — apply Phase 4 craft rules
+directly and skip Phases 1–3.
 
 1. **Confirm the product archetype** (details in `design-archetypes.md`):
    * **High-Trust Corporate** — clean slate canvas (`#f6f9fc`), dark ink (`#0a2540`), fintech clarity.

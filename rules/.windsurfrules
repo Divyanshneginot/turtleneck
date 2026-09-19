@@ -46,11 +46,15 @@ Paths are relative to the repository root. The knowledge base is installed to
 **Phase 1 — Workspace Analysis.** Detect the framework and styling engine first (React, Next.js,
 Vue, Svelte, Tailwind, CSS Modules) and emit idiomatic code for it. Review the committed captures
 in `.turtleneck/references/deep_research/` and `.turtleneck/references/award_research/`;
-never run scrapers against live sites.
+never run scrapers against live sites. For React Native, Flutter or SwiftUI targets, follow
+`.turtleneck/references/mobile-touch-and-native.md`.
 
 **Phase 2 — Requirements Interview.** Ask before assuming. Confirm one of the five archetypes,
 establish the Job-To-Be-Done and target density, then pitch 2-3 concrete layout options and wait
-for the user to choose. Never assume a dark developer aesthetic.
+for the user to choose. Never assume a dark developer aesthetic. Fast path: if the brief already
+names archetype, surface, density, and layout direction, restate them in one preflight, raise at
+most one real ambiguity, then build. Tempo: a full interview on a two-minute fix is a protocol
+violation — apply Phase 4 craft rules directly and skip Phases 1-3.
 
 * High-Trust Corporate · Warm Editorial Paper · Fluid Organics · High-Density Starlight · Stark Geometric Minimal
 
@@ -68,8 +72,10 @@ Reject AI slop:
 * `80-120ms` tactile response; modal enter `200-240ms`, exit `100-140ms`.
 * Animate `transform`/`opacity` only — never `transition: all`.
 * Ship a `@media (prefers-reduced-motion: reduce)` fallback.
-* `44x44px` minimum tap target.
+* `44x44px` minimum tap target (`48dp` on Material).
 * WCAG 2.2 AA contrast: 4.5:1 text, 3:1 UI boundaries. Verify with `scripts/check_contrast.py`.
 * Concentric border radiuses: `R_outer = R_inner + padding`.
 * Blend 4+ sources for atmosphere, physics, information architecture and typography; never clone
   a single brand 1:1.
+* On mobile/native: thumb-first layout, safe-area insets, actions on pointer-up, and a tap
+  equivalent for every gesture (`.turtleneck/references/mobile-touch-and-native.md`).

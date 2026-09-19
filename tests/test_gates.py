@@ -93,7 +93,7 @@ def test_contrast_gate_fails_when_docs_drift(monkeypatch):
 
 def test_contrast_gate_fails_on_unannotated_decorative_token(monkeypatch, tmp_path):
     doc = tmp_path / "tokens.md"
-    doc.write_text("| `border-subtle` | dividers | `#E2E8F0` | `#111827` |\n")
+    doc.write_text("| `border-subtle` | dividers | `#E2E8F0` | `#111827` |\n", encoding="utf-8")
     monkeypatch.setattr(contrast, "ROOT", tmp_path)
     monkeypatch.setattr(
         contrast, "PAIRS",

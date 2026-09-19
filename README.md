@@ -24,8 +24,10 @@ itself.
 
 It is built on three ideas:
 
-1. **Interview before building.** Never assume a dark developer aesthetic. Confirm the archetype,
-   the job-to-be-done, and the density; pitch 2–3 layouts; wait for a choice.
+1. **Interview before building — but never over-interview.** Never assume a dark developer
+   aesthetic on a vague brief: confirm the archetype, the job-to-be-done, and the density; pitch
+   2–3 layouts; wait for a choice. For a small tweak or an explicit brief, take the fast path or
+   go straight to Phase 4 — a full interview on a two-minute fix is a protocol violation.
 2. **Show, don't tell.** The `examples/` are live reference implementations the skill mirrors —
    not decoration.
 3. **Prove, don't promise.** Every hard rule (contrast, focus states, motion budgets) is asserted
@@ -53,6 +55,15 @@ python path/to/turtleneck/scripts/install.py --all    # every supported agent
 | Cline | `--cline` | `.clinerules` |
 | Google Antigravity | `--antigravity` | global skill install |
 
+### Compatibility
+
+| Component | Runtime requirements |
+| :--- | :--- |
+| `scripts/install.py` + all three gates | Python **3.9+**, standard library only |
+| `tests/` | Python **3.9+**, `pytest` (CI pins `pytest==9.1.1` on 3.11 and 3.12; also passes on Windows, Python 3.13 tested) |
+| Agent rules (`rules/`, `SKILL.md`) | Markdown/plain-text consumers — no runtime; framework detection covers React/Next.js, Vue 3, Svelte 5, Tailwind CSS, vanilla HTML/CSS, plus React Native / Flutter / SwiftUI via `references/mobile-touch-and-native.md` |
+| Playwright scrapers (maintainer-only) | `python 3.x` + `requirements-dev.txt` (Playwright) — not part of any install |
+
 **Safety first.** If a destination already holds *your* content, the installer refuses (exit 2)
 and prints the protected line. Escapes: `--dry-run` (plan only), `--append` (merge between
 `<!-- turtleneck:begin/end -->` markers, idempotent), `--force` (after writing a
@@ -69,12 +80,19 @@ spec, running.
 ## How it works
 
 **Phase 1 — Workspace Analysis.** Detects your framework and styling engine (React, Next.js,
-Vue, Svelte, Tailwind, CSS Modules, Radix) and emits idiomatic code for what it finds. It reads
-the committed benchmark captures — it never scrapes live sites.
+Vue, Svelte, Tailwind, CSS Modules, Radix — or React Native, Flutter, SwiftUI) and emits idiomatic
+code for what it finds. It reads the committed benchmark captures — it never scrapes live sites.
+Mobile and native targets additionally load `references/mobile-touch-and-native.md` for thumb
+zones, touch targets, gesture timing, and the native-stack token mapping.
 
 **Phase 2 — Requirements Interview.** Four questions: archetype, job-to-be-done, density, and a
 choice between 2–3 concrete layouts. See
-`references/requirements-interview-framework.md`.
+`references/requirements-interview-framework.md`. The interview is the *ceiling*, not the default:
+a **fast path** skips it when your brief already names the archetype, surface, density, and layout
+direction — the skill restates the inferred constraints in one preflight, raises at most one
+genuine ambiguity, and builds. A **time-boxed** run compresses Phases 1–2 the same way, and a
+small/one-component request skips straight to Phase 4. Every build's Output Contract records which
+mode it used, so skipping the interview is auditable, not silent.
 
 **Phase 3 — Blueprint Alignment.** Locks realistic mock data and design tokens drawn from your
 existing patterns, then runs the anti-slop gate (`references/taste-vs-slop-matrix.md`).
@@ -107,11 +125,29 @@ Three zero-dependency gates assert the repository obeys its own protocol. CI run
 python scripts/check_consistency.py   # pipeline parity, interview step, reference graph, no LaTeX
 python scripts/check_contrast.py      # all 46 declared colour pairs vs WCAG 2.2 AA
 python scripts/check_examples.py      # examples honour focus-visible, reduced-motion, no `transition: all`
-pytest tests/ -q                      # installer safety contract (55 tests)
+pytest tests/ -q                      # installer safety contract + gates (74 tests)
 ```
 
 `check_contrast.py` fails if the documentation ever drifts from the values it verifies, so a
 token can't be quietly weakened. `check_examples.py` keeps the reference implementations honest.
+
+### What this guarantees — and what it does not
+
+The gates are scoped, heuristic checks on *declared* inputs, not a certification of an arbitrary
+product UI:
+
+* **Guaranteed:** this repository's declared colour pairs meet WCAG 2.2 AA thresholds; the
+  reference examples carry the `:focus-visible`, `prefers-reduced-motion`, compositor-only
+  transitions, and accessible names the protocol mandates; and the protocol text is consistent
+  across every prompt file.
+* **Not guaranteed:** that any UI an agent later generates is WCAG 2.2 AA compliant. The example
+  checker is regex-based — it does not validate semantic structure, keyboard behaviour, runtime
+  states, ARIA correctness, responsive layouts, DOM-computed contrast, or visual regressions; and
+  the contrast gate only sees colour pairs someone declared. Do not claim "WCAG compliant" off a
+  token/example gate — claim only what a specific check actually ran.
+
+The full statement of scope, plus the fast-path rules for skipping the interview on an explicit
+brief, lives in `references/verification-scope.md`.
 
 ---
 

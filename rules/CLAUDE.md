@@ -25,11 +25,13 @@ Paths are relative to the repository root. The knowledge base is installed to
 | :--- | :--- |
 | Phase 1 — detecting the stack, tooling, existing tokens | `.turtleneck/references/workspace-scanner-guide.md` |
 | Phase 1/4 — emitting idiomatic React, Next.js, Vue 3, Svelte 5, Tailwind, native | `.turtleneck/references/framework-integrations.md` |
+| Phase 1/4 — thumb zones, tap targets, gestures, RN/Flutter/SwiftUI mapping | `.turtleneck/references/mobile-touch-and-native.md` |
 | Phase 1 — choosing category benchmarks, writing a synthesis manifest | `.turtleneck/references/design-research-playbook.md` |
 | Phase 1 — scale tension, button ergonomics, surface chemistry | `.turtleneck/references/award-winning-craft-playbook.md` |
 | Phase 1 — blending 4+ sources without 1:1 cloning | `.turtleneck/references/creative-synthesis-protocol.md` |
 | Phase 1 — injecting authentic soul, personality, materiality | `.turtleneck/references/creative-direction-guide.md` |
 | Phase 2 — JTBD discovery, pitching 2-3 layout options | `.turtleneck/references/requirements-interview-framework.md` |
+| Phase 2/4 — what the gates verify, fast path vs full interview | `.turtleneck/references/verification-scope.md` |
 | Phase 2 — the 5 archetype palettes and their token specs | `.turtleneck/references/design-archetypes.md` |
 | Phase 3 — 8pt grid, type scale, semantic colour roles, elevation | `.turtleneck/references/design-tokens.md` |
 | Phase 3 — the 6 product surfaces and accessible primitives | `.turtleneck/references/full-product-design-system.md` |
@@ -47,10 +49,14 @@ Paths are relative to the repository root. The knowledge base is installed to
 1. **Phase 1 — Workspace Analysis**: inspect `package.json` first and emit idiomatic React, Next.js,
    Vue, Svelte, Tailwind or vanilla CSS. Review the committed captures in
    `.turtleneck/references/deep_research/` and `.turtleneck/references/award_research/`;
-   do not run scrapers against live sites.
+   do not run scrapers against live sites. For React Native, Flutter or SwiftUI targets, follow
+   `.turtleneck/references/mobile-touch-and-native.md`.
 2. **Phase 2 — Requirements Interview**: ask before assuming. Confirm the archetype, establish the
    Job-To-Be-Done and target density, then pitch 2-3 layout options and wait for a choice.
-   Never default to a dark developer aesthetic.
+   Never default to a dark developer aesthetic. Fast path: if the brief already names archetype,
+   surface, density, and layout direction, restate them in one preflight, raise at most one real
+   ambiguity, then build. Tempo: a full interview on a two-minute fix is a protocol violation —
+   apply Phase 4 craft rules directly and skip Phases 1-3.
    - High-Trust Corporate (clean slate `#f6f9fc`, fintech clarity)
    - Warm Editorial Paper (cream `#fbfbfa`, serif headlines)
    - Fluid Organics (soft squircles, tactile controls)
