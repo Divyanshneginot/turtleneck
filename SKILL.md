@@ -68,14 +68,18 @@ Once user approves layout choice:
 
 ---
 
-### Phase 4: Production Implementation & Verification
-1. **Component Engineering**:
+### Phase 4: Production Implementation & Master Craft Verification
+1. **Component Engineering (Refer to [Master Craft Benchmark](./references/master-ui-craft-benchmark.md))**:
    * Generate modular, clean components following discovered repo conventions.
-   * Support 5 component states (`default`, `hover`, `active`, `focus-visible`, `disabled`).
-   * Ensure min `44x44px` touch targets on interactive elements.
-2. **Accessibility Audit**:
-   * Verify WCAG 2.2 AA contrast (4.5:1 text, 3:1 UI).
-   * Semantic landmarks (`<nav>`, `<main>`, `<section>`), visible 2px focus outlines, keyboard escape handling.
+   * **Motion & Timing**: `80-120ms` state feedback, `200-240ms` enter, `100-140ms` exit (asymmetric exit rule), `cubic-bezier(0.16, 1, 0.3, 1)` or critical springs ($\zeta \ge 0.85$). GPU compositor thread isolation (`transform`/`opacity` only).
+   * **Typography Precision**: Negative tracking on headings, `font-variant-numeric: tabular-nums` for data cells, `text-wrap: balance` on headlines.
+   * **Concentric Radiuses**: $R_{\text{outer}} = R_{\text{inner}} + \text{Padding}$.
+   * **5-State Completeness**: (`default`, `hover`, `active` scale 0.98, `focus-visible` 2px ring, `disabled`).
+   * **Touch Ergonomics**: Minimum `44x44px` physical tap targets.
+2. **Accessibility Audit (WCAG 2.2 AA)**:
+   * 4.5:1 text contrast, 3:1 UI boundaries.
+   * Focus rings with 3:1 contrast against element and background canvas.
+   * Trap-free modal keyboard navigation with `Escape` dismiss and trigger focus restoration.
 3. **Walkthrough & Verification**:
-   * Verify component renders cleanly in browser.
+   * Verify zero console errors and zero layout shifts.
    * Present summary of files changed and architectural decisions to user.
