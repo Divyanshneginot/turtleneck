@@ -1,71 +1,65 @@
 ---
 name: ui-ux-design
 description: >-
-  Expert UI/UX design workflow for web and mobile interfaces. Use when designing
-  layouts, wireframes, component systems, color palettes, typography hierarchies,
-  responsive interfaces, micro-interactions, or conducting accessibility (WCAG) and UX audits.
+  Agentic UI/UX design engine. Use when tasked with designing or building interfaces
+  requiring real-world benchmark research, extracting design systems from modern apps
+  (e.g., Linear, Stripe, Vercel, Raycast), synthesizing visual DNA, and generating production UI.
 ---
 
-# UI/UX Design Protocol
+# Agentic UI/UX Research & Implementation Engine
 
-Systematic, production-grade interface design workflow. Adhere to progressive disclosure and token efficiency.
+Transforms raw interface requests into bespoke, research-backed products by autonomously benchmarking top-tier references, extracting visual DNA, and generating production code.
 
-## Core Execution Flow
+---
+
+## 3-Phase Execution Pipeline
 
 ```
-1. Layout & Hierarchy ──► 2. Design Tokens ──► 3. Component States ──► 4. Responsiveness ──► 5. Usability & WCAG
+Phase 1: Deep Design Research ──► Phase 2: Design DNA Synthesis ──► Phase 3: High-Fidelity Implementation
 ```
 
 ---
 
-### Step 1: Information Architecture & Layout Grid
-* Establish primary, secondary, tertiary visual focal points before writing markup.
-* Base all spatial layout on an **8pt grid** (use 4pt for micro-spacing and icons).
-* Define container max-widths:
-  * Compact / Mobile: `360px` - `480px`
-  * Tablet: `768px` - `1024px`
-  * Desktop content wells: `1200px` - `1440px` (avoid edge-to-edge text lines; cap line length at 65-75 characters).
+### Phase 1: Autonomous Design Research
+Do NOT guess or use generic templates. Research best-in-class products in the target category:
+
+1. **Benchmark Identification**:
+   * Identify 2-3 category leaders (e.g., Developer Tools -> *Linear / Raycast*; Fintech -> *Stripe / Ramp*; Consumer -> *Airbnb / Notion*).
+   * Search web for design breakdowns, teardowns, and UI patterns for target niche.
+2. **Structural Extraction**:
+   * **Information Architecture**: Layout density, navigation model (sidebar vs command bar vs top tabs).
+   * **Visual Tone**: Atmospheric backdrop, border sharpness, shadow depth, glassmorphism vs brutalism.
+   * **Signature Components**: Hero treatments, data tables, metrics cards, filter widgets.
 
 ---
 
-### Step 2: Design Tokens & Visual Hierarchy
-* Refer to [Design Tokens Reference](./references/design-tokens.md) for full scales.
-* Apply **60-30-10 Color Rule**:
-  * `60%`: Base / Background / Neutral surfaces.
-  * `30%`: Structural content, typography, borders, card backgrounds.
-  * `10%`: Primary interactive accent (actions, active links, highlights).
-* Maintain strict contrast ratios (WCAG 2.2):
-  * Body text: min `4.5:1` against background.
-  * Large headings / icons / UI borders: min `3:1`.
+### Phase 2: Learn & Synthesize Design DNA
+Distill research into a concrete, reproducible Design Manifest:
+
+1. **Palette Extraction**:
+   * Canvas background (deep dark `#08090A` or warm neutral `#FAFAF9`).
+   * Surface tiers (base, raised, overlay).
+   * Accent color (high-chroma signature action color).
+   * Contrast ratios validated against WCAG AA.
+2. **Typography DNA**:
+   * Font stack (geometric sans, clean humanist, or technical mono).
+   * Density and tracking rules (tight tracking `-0.02em` on bold display headings).
+3. **Component DNA**:
+   * Corner radiuses (`4px` surgical vs `12px` modern soft).
+   * Border stroke treatments (`1px solid rgba(255,255,255,0.08)` for dark themes).
+   * Micro-interaction cues (hover state latency, spring transforms).
 
 ---
 
-### Step 3: Component State Completeness
-Never produce static, single-state components. Every interactive element must define 5 core states:
-1. **Default**: Clear affordance and identifiable hit area.
-2. **Hover**: Visual elevation change, color shift, or subtle border transition (desktop only).
-3. **Active / Pressed**: Subtle scale down (e.g. `scale(0.98)`) or darkened shade.
-4. **Focus-visible**: High-contrast outline (`2px solid`, `2px offset`) for keyboard navigation.
-5. **Disabled**: Reduced opacity (`40-50%`), `not-allowed` cursor, removed pointer events, `aria-disabled="true"`.
+### Phase 3: Generative Implementation
+Produce production frontend code matching the learned Design Manifest:
 
-Touch target rule: Interactive elements must measure minimum **44x44 CSS pixels** on touch-capable viewports.
-
----
-
-### Step 4: Responsive & Touch Ergonomics
-* Prioritize content flow using mobile-first layout:
-  * Phone: Single-column stack, thumbs-reachable bottom actions/navigation.
-  * Tablet: 2-column adaptive grids.
-  * Desktop: Multi-column dashboards, persistent navigation rails.
-* Never use fixed heights on content containers—use min-height and fluid flex/grid.
-
----
-
-### Step 5: Usability & Accessibility Verification
-* Audit layout against [UX Heuristics](./references/ux-heuristics.md):
-  * Provide feedback within 100ms for user interactions.
-  * Clear error prevention and destructive action confirmations.
-* Verify compliance against [Accessibility Checklist](./references/accessibility-checklist.md):
-  * Semantic HTML tags (`<nav>`, `<main>`, `<article>`, `<button>`, `<dialog>`).
-  * Explicit ARIA labels where visual labels are omitted (e.g., icon-only buttons).
-  * Logical tab order and keyboard trap prevention.
+1. **Semantic Foundation**: Clean HTML5 semantic tags with ARIA accessibility primitives.
+2. **CSS Token Embed**: Declare extracted tokens as CSS custom variables at `:root`.
+3. **Interactive Fidelity**:
+   * 5 component states (`default`, `hover`, `active`, `focus-visible`, `disabled`).
+   * Fluid responsive breakpoints (mobile drawer to desktop grid).
+   * Micro-interactions (smooth transitions under `150ms`, keyboard shortcuts).
+4. **Self-Verification**:
+   * Verify generated interface matches extracted benchmark tone.
+   * Verify keyboard navigability and absence of generic template tropes.

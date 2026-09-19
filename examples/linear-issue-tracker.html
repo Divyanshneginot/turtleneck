@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linear-Style Agentic Issue Tracker</title>
+  <style>
+    /* Learned Linear/Raycast Design DNA */
+    :root {
+      --bg-canvas: #08090a;
+      --bg-surface: #101216;
+      --bg-surface-elevated: #16191f;
+      --bg-surface-active: #1e222b;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(94, 106, 210, 0.6);
+      --text-primary: #ededed;
+      --text-secondary: #8a8f98;
+      --text-muted: #575a62;
+      --accent-indigo: #5e6ad2;
+      --accent-indigo-hover: #6f7bf7;
+      --priority-urgent: #f87171;
+      --priority-high: #fbbf24;
+      --priority-medium: #60a5fa;
+      --priority-low: #9ca3af;
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 10px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+      font-size: 13px;
+      line-height: 1.4;
+      letter-spacing: -0.01em;
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* Left Minimalist Sidebar */
+    aside {
+      width: 240px;
+      background-color: var(--bg-surface);
+      border-right: 1px solid var(--border-subtle);
+      padding: 16px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .workspace-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 8px;
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text-primary);
+      cursor: pointer;
+    }
+    .workspace-header:hover {
+      background: var(--border-subtle);
+    }
+
+    .ws-avatar {
+      width: 22px;
+      height: 22px;
+      background: linear-gradient(135deg, var(--accent-indigo), #9061f9);
+      border-radius: var(--radius-sm);
+      display: grid;
+      place-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .nav-list {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.1s ease;
+    }
+    .nav-item:hover, .nav-item.active {
+      color: var(--text-primary);
+      background-color: var(--bg-surface-elevated);
+    }
+    .nav-item.active {
+      font-weight: 600;
+    }
+
+    .badge-count {
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--bg-surface-active);
+      padding: 1px 6px;
+      border-radius: 999px;
+    }
+
+    /* Main Workspace */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-canvas);
+      overflow-x: hidden;
+    }
+
+    /* Header Bar */
+    header {
+      height: 52px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(8, 9, 10, 0.8);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .breadcrumbs span.current {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .search-trigger {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 6px 12px;
+      color: var(--text-muted);
+      font-size: 12px;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .search-trigger:hover {
+      border-color: var(--text-muted);
+      color: var(--text-secondary);
+    }
+
+    kbd {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 3px;
+      padding: 1px 4px;
+      font-family: inherit;
+      font-size: 10px;
+      color: var(--text-secondary);
+    }
+
+    /* Views & Filters Toolbar */
+    .view-toolbar {
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 6px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.1s ease;
+    }
+    .tab-btn:hover {
+      color: var(--text-primary);
+      background: var(--bg-surface);
+    }
+    .tab-btn.active {
+      color: var(--text-primary);
+      background: var(--bg-surface-elevated);
+      font-weight: 600;
+    }
+
+    .btn-new {
+      background: var(--accent-indigo);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s;
+    }
+    .btn-new:hover {
+      background: var(--accent-indigo-hover);
+    }
+
+    /* Issue List View (Linear Table Style) */
+    .issue-list {
+      list-style: none;
+    }
+
+    .issue-row {
+      display: grid;
+      grid-template-columns: 32px 80px 1fr 140px 100px 32px;
+      align-items: center;
+      padding: 9px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      cursor: pointer;
+      transition: background-color 0.1s ease;
+    }
+    .issue-row:hover {
+      background-color: var(--bg-surface);
+    }
+
+    .priority-icon {
+      width: 14px;
+      height: 14px;
+      display: inline-block;
+    }
+    .priority-urgent { color: var(--priority-urgent); }
+    .priority-high { color: var(--priority-high); }
+    .priority-medium { color: var(--priority-medium); }
+
+    .issue-id {
+      color: var(--text-muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+    }
+
+    .issue-title {
+      color: var(--text-primary);
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding-right: 16px;
+    }
+
+    .tag-pill {
+      font-size: 11px;
+      color: var(--text-secondary);
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      padding: 2px 8px;
+      border-radius: 999px;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .dot-progress { background-color: #fbbf24; }
+    .dot-done { background-color: #5e6ad2; }
+    .dot-backlog { background-color: var(--text-muted); }
+
+    .avatar {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #374151;
+      display: grid;
+      place-content: center;
+      font-size: 10px;
+      color: #d1d5db;
+    }
+
+    /* Modal / Command Palette (Raycast Style) */
+    .palette-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      display: none;
+      place-content: center;
+      z-index: 100;
+    }
+    .palette-backdrop.active {
+      display: grid;
+    }
+
+    .palette-card {
+      width: 540px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+    }
+
+    .palette-input-wrap {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .palette-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      font-size: 15px;
+    }
+
+    .palette-list {
+      list-style: none;
+      padding: 8px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .palette-item {
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .palette-item:hover, .palette-item.selected {
+      background: var(--bg-surface-elevated);
+      color: var(--text-primary);
+    }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside>
+    <div>
+      <div class="workspace-header">
+        <div class="ws-avatar">AG</div>
+        <span>Antigravity Studio</span>
+      </div>
+      <ul class="nav-list">
+        <li><a href="#" class="nav-item active"><span>Inbox</span><span class="badge-count">3</span></a></li>
+        <li><a href="#" class="nav-item"><span>My Issues</span><span class="badge-count">8</span></a></li>
+        <li><a href="#" class="nav-item"><span>Active Sprint</span></a></li>
+        <li><a href="#" class="nav-item"><span>Roadmap</span></a></li>
+      </ul>
+    </div>
+    <div class="nav-item">
+      <span>Settings</span>
+      <kbd>G then S</kbd>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main>
+    <header>
+      <div class="breadcrumbs">
+        <span>Engineering</span>
+        <span>/</span>
+        <span class="current">Sprint Backlog</span>
+      </div>
+      <div class="search-trigger" id="open-palette">
+        <span>Search or command...</span>
+        <kbd>Ctrl K</kbd>
+      </div>
+    </header>
+
+    <div class="view-toolbar">
+      <div class="filter-tabs">
+        <button class="tab-btn active">All Issues (3)</button>
+        <button class="tab-btn">In Progress (1)</button>
+        <button class="tab-btn">Done (1)</button>
+      </div>
+      <button class="btn-new" id="new-issue-btn">+ New Issue <kbd>C</kbd></button>
+    </div>
+
+    <!-- Issues Table -->
+    <ul class="issue-list" id="issue-container">
+      <li class="issue-row">
+        <span class="priority-urgent">▲</span>
+        <span class="issue-id">ENG-108</span>
+        <span class="issue-title">Refactor agentic research loop to auto-synthesize design tokens</span>
+        <span class="tag-pill">Design System</span>
+        <div class="status-indicator">
+          <span class="dot dot-progress"></span>
+          <span>In Progress</span>
+        </div>
+        <div class="avatar">DN</div>
+      </li>
+
+      <li class="issue-row">
+        <span class="priority-high">▲</span>
+        <span class="issue-id">ENG-105</span>
+        <span class="issue-title">Add Raycast-style command palette modal with quick fuzzy filter</span>
+        <span class="tag-pill">UX Core</span>
+        <div class="status-indicator">
+          <span class="dot dot-done"></span>
+          <span>Done</span>
+        </div>
+        <div class="avatar">AI</div>
+      </li>
+
+      <li class="issue-row">
+        <span class="priority-medium">●</span>
+        <span class="issue-id">ENG-99</span>
+        <span class="issue-title">Benchmark Linear & Vercel design systems for responsive tokens</span>
+        <span class="tag-pill">Research</span>
+        <div class="status-indicator">
+          <span class="dot dot-backlog"></span>
+          <span>Backlog</span>
+        </div>
+        <div class="avatar">DN</div>
+      </li>
+    </ul>
+  </main>
+
+  <!-- Command Palette Modal -->
+  <div class="palette-backdrop" id="palette">
+    <div class="palette-card">
+      <div class="palette-input-wrap">
+        <span style="color: var(--accent-indigo)">❯</span>
+        <input type="text" class="palette-input" id="palette-search" placeholder="Type a command or search issues..." autofocus>
+        <kbd>ESC</kbd>
+      </div>
+      <ul class="palette-list">
+        <li class="palette-item selected">
+          <span>Create new issue</span>
+          <kbd>C</kbd>
+        </li>
+        <li class="palette-item">
+          <span>Switch workspace to Antigravity</span>
+          <kbd>W</kbd>
+        </li>
+        <li class="palette-item">
+          <span>Export design tokens to CSS</span>
+          <kbd>E</kbd>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Command Palette Open / Close Handling
+    const palette = document.getElementById('palette');
+    const openPaletteBtn = document.getElementById('open-palette');
+    const searchInput = document.getElementById('palette-search');
+
+    function togglePalette(show) {
+      if (show) {
+        palette.classList.add('active');
+        searchInput.focus();
+      } else {
+        palette.classList.remove('active');
+      }
+    }
+
+    openPaletteBtn.addEventListener('click', () => togglePalette(true));
+
+    document.addEventListener('keydown', (e) => {
+      // Ctrl+K or Cmd+K
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        togglePalette(!palette.classList.contains('active'));
+      }
+      // Escape
+      if (e.key === 'Escape' && palette.classList.contains('active')) {
+        togglePalette(false);
+      }
+      // 'c' shortcut when not in input
+      if (e.key === 'c' && document.activeElement.tagName !== 'INPUT') {
+        e.preventDefault();
+        alert('Prompt: Quick Create Issue modal');
+      }
+    });
+
+    palette.addEventListener('click', (e) => {
+      if (e.target === palette) togglePalette(false);
+    });
+  </script>
+</body>
+</html>
