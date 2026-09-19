@@ -26,6 +26,7 @@ ui-ux-design/
 ├── SKILL.md                                 # Primary agent entrypoint & workflow
 ├── README.md                                # Documentation & installation guide
 ├── references/
+│   ├── taste-vs-slop-matrix.md              # Quality rubric: modern craft vs. slop
 │   ├── workspace-scanner-guide.md           # Tooling & stack detection runbook
 │   ├── requirements-interview-framework.md  # JTBD discovery & wireframe option templates
 │   ├── anti-slop-manifesto.md               # Banned AI tropes & quality standards

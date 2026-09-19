@@ -58,9 +58,13 @@ Engage the user to clarify intent and resolve design ambiguities before writing 
 Once user approves layout choice:
 1. Formulate exact data schema for UI components (mock realistic, domain-accurate data).
 2. Lock in design tokens (colors, typography, spacing) compatible with the scanned workspace.
-3. Validate against [Anti-Slop Manifesto](./references/anti-slop-manifesto.md):
-   * ❌ Zero glowing nebula blur blobs, fake glassmorphism, or marketing buzzwords.
-   * ✔ High data-to-ink ratio, domain microcopy, sub-50ms responsiveness.
+3. **Validate Against Taste vs. Slop Matrix**:
+   * Refer to [Taste vs. Slop Matrix](./references/taste-vs-slop-matrix.md).
+   * **Modern patterns encouraged when done right**:
+     * Glassmorphism: strictly for floating chrome, high fill opacity (`80-90%`), hairline border, text contrast $\ge 4.5:1$.
+     * Bento layouts: high data density, real functional widgets, zero decorative 3D balls.
+     * Gradients: subtle single-source rim lighting guiding attention to primary actions.
+   * **Slop strictly rejected**: illegible $10\%$ glass opacity, giant saturated nebula blobs, 800ms sluggish animations, buzzword copy.
 
 ---
 
