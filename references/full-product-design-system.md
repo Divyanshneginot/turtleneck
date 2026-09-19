@@ -42,7 +42,7 @@ Comprehensive specifications for every core application surface beyond landing p
   - Hover highlight (`rgba(255,255,255,0.025)`).
   - Fixed-width numerical columns with `tabular-nums` right-aligned.
   - Status column with colored pips (`emerald` for active, `amber` for pending, `rose` for failed).
-* **Batch Action Toolbar**: Floating bar appearing when $\ge 1$ item selected (`Delete Selected`, `Change Status`, `Export`).
+* **Batch Action Toolbar**: Floating bar appearing when >= 1 item is selected (`Delete Selected`, `Change Status`, `Export`).
 
 ---
 

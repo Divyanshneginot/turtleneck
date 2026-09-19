@@ -10,7 +10,7 @@ Award-winning sites stand apart from generic SaaS templates through 4 foundation
 
 | Pillar | Generic AI Slop / Template | Award-Winning Craft Benchmark |
 | :--- | :--- | :--- |
-| **Typography Tension** | Monotonous scale (e.g., 32px title, 16px body, 14px caption). | **Extreme Scale Tension ($\ge 4:1$)**: 64–86px display headings juxtaposed against 9–11px micro-grotesk metadata tags. Tight negative kerning (-0.02em to -0.04em) on titles, wide tracking (+0.08em to +0.16em) on micro-tags. |
+| **Typography Tension** | Monotonous scale (e.g., 32px title, 16px body, 14px caption). | **Extreme Scale Tension (>= 4:1)**: 64–86px display headings juxtaposed against 9–11px micro-grotesk metadata tags. Tight negative kerning (-0.02em to -0.04em) on titles, wide tracking (+0.08em to +0.16em) on micro-tags. |
 | **Interactive Physics** | Bouncy 600ms bezier curves, decorative floating 3D spheres. | **Tactile Responsive Mechanics**: Direct-manipulation controls (custom rotary knobs, physical rocker toggles, canvas waveforms, cursor parallax, 100–140ms damped springs). |
 | **Surface Chemistry** | Sterile #000 pitch void or flat #222 gray with purple nebula blobs. | **Tuned Materiality**: Tinted deep slates (#090a0c, #111317), warm stone/paper tones (#f9f8f5), hairline grid datum lines (`rgba(255,255,255,0.05)`), corner registration marks. |
 | **Identity & Metaphor** | Cloned buzzwords, generic "supercharge" claims, copied icons. | **Domain-Authentic Metaphors**: Custom physical or architectural mechanics tailored to the exact problem space (e.g., telemetry monitor, sound synthesizer, architectural spec sheet). |

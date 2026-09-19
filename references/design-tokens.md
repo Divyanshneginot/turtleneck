@@ -52,14 +52,33 @@ Never hardcode arbitrary hex values into component files. Always map tokens to f
 | `bg-surface-elevated` | Popovers, tooltips, dropdowns | `#FFFFFF` (with shadow) | `#1F2937` |
 | `text-primary` | Main titles and high-priority copy | `#0F172A` | `#F9FAFB` |
 | `text-secondary` | Descriptive paragraphs, subtitles | `#475569` | `#9CA3AF` |
-| `text-muted` | Placeholder text, inactive hints | `#94A3B8` | `#6B7280` |
-| `border-subtle` | Card borders, dividers | `#E2E8F0` | `#1F2937` |
-| `border-strong` | Active input borders, key dividers | `#CBD5E1` | `#374151` |
+| `text-muted` | Placeholder text, inactive hints | `#637896` | `#737A89` |
+| `border-subtle` | Card borders, dividers *(decorative — see note below)* | `#E2E8F0` | `#1F2937` |
+| `border-strong` | Active input borders, key dividers *(UI boundary)* | `#7F97B5` | `#56657E` |
 | `action-primary` | Primary buttons, active tabs | `#2563EB` | `#3B82F6` |
 | `action-primary-hover`| Hover state for primary action | `#1D4ED8` | `#60A5FA` |
+| `on-action-primary` | Foreground on primary buttons | `#FFFFFF` | `#090D16` |
 | `status-success`| Positive indicators, confirmations | `#16A34A` | `#22C55E` |
 | `status-warning`| Caution alerts, intermediate status | `#D97706` | `#F59E0B` |
 | `status-danger` | Errors, destructive actions | `#DC2626` | `#EF4444` |
+
+### 3.1 Contrast Compliance Notes (WCAG 2.2 AA)
+
+Every pair above is verified by `scripts/check_contrast.py`. Read these before substituting values:
+
+* **`text-*` tokens are held at >= 4.5:1** against `bg-canvas` in both themes. The previous
+  `text-muted` values (`#94A3B8` light at 2.56:1, `#6B7280` dark at 4.02:1) failed AA and were
+  replaced with `#637896` (4.51:1) and `#737A89` (4.51:1) at identical hue.
+* **`border-strong` is a UI component boundary** (WCAG 1.4.11) and is therefore held at >= 3:1:
+  `#7F97B5` light (3.00:1 on `#FFFFFF`), `#56657E` dark (3.01:1 on `#111827`, 3.29:1 on `#090D16`).
+  The previous `#CBD5E1` / `#374151` measured 1.48:1 and 1.72:1.
+* **`border-subtle` is decorative and exempt from WCAG 1.4.11.** It renders card edges and
+  section dividers, which are not interactive components. It MUST NOT be the only indicator of
+  a component boundary, a focus ring, or a selected/active state. If you need a boundary the
+  user must perceive, use `border-strong`.
+* **Dark-theme primary buttons use dark ink, not white.** `#3B82F6` and its hover `#60A5FA` are
+  light fills: white text on them measures only 3.68:1 and 2.54:1. Always render
+  `on-action-primary` (`#090D16`) on dark-theme primary buttons — 5.28:1 and 7.64:1 respectively.
 
 ---
 

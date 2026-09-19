@@ -16,7 +16,7 @@ The definitive engineering reference for modern interface craft, micro-interacti
 ### Timing Curves & Spring Parameters
 * **Expo Out (Starlight Console Enter)**: `cubic-bezier(0.16, 1, 0.3, 1)` — Instant velocity, long smooth deceleration, zero bounce.
 * **Sharp Exit / Dismiss**: `cubic-bezier(0.4, 0, 1, 1)`
-* **Spring Damping Ratio**: $\zeta = \frac{c}{2\sqrt{km}} \in [0.85, 1.0]$. Never underdamped ($\zeta < 0.7$) in utility UI.
+* **Spring Damping Ratio**: `zeta = c / (2 * sqrt(k * m))`, held in `[0.85, 1.0]`. Never underdamped (`zeta < 0.7`) in utility UI.
   * *Micro-toggles*: `{ stiffness: 450, damping: 32, mass: 0.8 }` (settles in ~140ms, 0 overshoot).
   * *Modals/Dialogs*: `{ stiffness: 320, damping: 28, mass: 1 }` (settles in ~220ms).
 
@@ -30,7 +30,9 @@ The definitive engineering reference for modern interface craft, micro-interacti
 ## 2. Typography Craft & Precision
 
 ### Mathematical Tracking Formula (Negative Letter-Spacing)
-$$\text{Letter-Spacing (em)} = -0.022 \times \log_{10}\left(\frac{\text{Font Size (px)}}{16}\right)$$
+```
+Letter-Spacing (em) = -0.022 * log10( Font Size (px) / 16 )
+```
 
 * **Display Hero (`48px – 64px+`)**: `-0.035em` to `-0.025em`
 * **Headings (`24px – 36px`)**: `-0.02em` to `-0.015em`
@@ -93,7 +95,9 @@ In dark mode, convey elevation via fill lightness steps and top-edge specular hi
 
 ### Concentric Corner Radius Rule
 To prevent distorted nested margins, inner and outer radiuses must share concentric center points:
-$$R_{\text{outer}} = R_{\text{inner}} + \text{Padding}$$
+```
+R_outer = R_inner + Padding
+```
 *(e.g., if inner badge radius is `8px` and card padding is `12px`, card radius must be `20px`).*
 
 ### Fluid Clamp Formula

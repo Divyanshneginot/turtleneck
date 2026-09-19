@@ -13,7 +13,7 @@
       --hairline: rgba(255, 255, 255, 0.05);
       --fg-primary: #f2efe9;
       --fg-secondary: #949a8f;
-      --fg-muted: #565a62;
+      --fg-muted: #737983;
       --accent-amber: #e69d45;
       --accent-amber-glow: rgba(230, 157, 69, 0.15);
       --accent-cadmium: #e0533c;
@@ -200,7 +200,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      transition: all 0.15s var(--spring);
+      transition: background-color 0.15s var(--spring), color 0.15s var(--spring), border-color 0.15s var(--spring), box-shadow 0.15s var(--spring), transform 0.15s var(--spring);
       position: relative;
       text-decoration: none;
       user-select: none;
@@ -409,7 +409,7 @@
       font-size: 10px;
       cursor: pointer;
       border-radius: 2px;
-      transition: all 0.12s;
+      transition: background-color 0.12s, color 0.12s, box-shadow 0.12s;
     }
 
     .rocker-btn.active {
@@ -553,6 +553,27 @@
       .telemetry-strip { grid-template-columns: repeat(2, 1fr); }
       header.masthead { padding: 16px 24px; }
       main.stage { padding: 32px 16px 80px; }
+    }
+
+    /* Turtleneck: 5-state completeness — focus-visible ring, 7.61:1 worst case on canvas and surfaces */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2px solid var(--accent-amber);
+      outline-offset: 2px;
+    }
+
+    /* Turtleneck: honour the user's reduced-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>

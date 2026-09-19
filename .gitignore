@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Turtleneck install output (created by scripts/install.py inside a target project)
+.turtleneck/
+*.turtleneck.bak
+*.turtleneck.bak.*

@@ -12,11 +12,11 @@
       --bg-surface-elevated: #16191f;
       --bg-surface-active: #1e222b;
       --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-focus: rgba(94, 106, 210, 0.6);
+      --border-focus: rgba(99, 111, 211, 0.6);
       --text-primary: #ededed;
       --text-secondary: #8a8f98;
-      --text-muted: #575a62;
-      --accent-indigo: #5e6ad2;
+      --text-muted: #747882;
+      --accent-indigo: #636fd3;
       --accent-indigo-hover: #6f7bf7;
       --priority-urgent: #f87171;
       --priority-high: #fbbf24;
@@ -101,7 +101,7 @@
       font-weight: 500;
       cursor: pointer;
       text-decoration: none;
-      transition: all 0.1s ease;
+      transition: color 0.1s ease, background-color 0.1s ease;
     }
     .nav-item:hover, .nav-item.active {
       color: var(--text-primary);
@@ -206,7 +206,7 @@
       padding: 4px 10px;
       border-radius: var(--radius-sm);
       cursor: pointer;
-      transition: all 0.1s ease;
+      transition: color 0.1s ease, background-color 0.1s ease;
     }
     .tab-btn:hover {
       color: var(--text-primary);
@@ -376,6 +376,27 @@
       background: var(--bg-surface-elevated);
       color: var(--text-primary);
     }
+
+    /* Turtleneck: 5-state completeness — focus-visible ring, >=3:1 on canvas and all four surfaces */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2px solid var(--accent-indigo-hover);
+      outline-offset: 2px;
+    }
+
+    /* Turtleneck: honour the user's reduced-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -467,7 +488,7 @@
     <div class="palette-card">
       <div class="palette-input-wrap">
         <span style="color: var(--accent-indigo)">❯</span>
-        <input type="text" class="palette-input" id="palette-search" placeholder="Type a command or search issues..." autofocus>
+        <input type="text" class="palette-input" id="palette-search" placeholder="Type a command or search issues..." aria-label="Search issues or run a command" autofocus>
         <kbd>ESC</kbd>
       </div>
       <ul class="palette-list">

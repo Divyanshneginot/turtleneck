@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    name: Turtleneck self-verification
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install test dependencies
+        run: python -m pip install --upgrade pip && pip install pytest==9.1.1
+
+      # The three gates assert the repository obeys its own protocol.
+      - name: Consistency gate (pipeline parity, interview step, reference graph, no LaTeX)
+        run: python scripts/check_consistency.py
+
+      - name: Contrast gate (declared colour pairs vs WCAG 2.2 AA)
+        run: python scripts/check_contrast.py
+
+      - name: Examples gate (focus-visible, reduced motion, transitions, a11y names, contrast)
+        run: python scripts/check_examples.py
+
+      - name: Installer safety contract
+        run: pytest tests/ -v

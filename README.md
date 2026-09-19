@@ -1,124 +1,171 @@
-# Turtleneck (`turtleneck`)
+# Turtleneck
 
-**The Senior UI/UX Architect Agent Skill.** Like `ponytail` is for senior dev efficiency, `turtleneck` is for senior design craft. A production-grade, anti-slop agent skill that autonomously profiles your codebase, interviews you to clarify UI/UX requirements, aligns on wireframes, and implements accessible, high-performance interfaces.
+> **Design taste, encoded — and enforced.**
+
+A senior UI/UX architect for your AI coding agent.
+
+Most design prompts *describe* good taste and hope. Turtleneck is a working system: it profiles
+your codebase, interviews you about the job to be done, aligns on a layout, and ships
+accessible, anti-slop interfaces — and the repository ships its own exam, failing the build the
+moment its docs, tokens, or examples violate the rules they teach.
+
+```
+1. Workspace Analysis ──► 2. Requirements Interview ──► 3. Blueprint Alignment ──► 4. Production Build
+```
 
 ---
 
-## 4-Phase Architecture
+## Why this exists
 
-```
-1. Workspace Scanner ──► 2. Requirements Interview ──► 3. Blueprint Alignment ──► 4. Anti-Slop Implementation
-```
+AI-generated UI has a tell: purple nebula blobs, unreadable 10%-opacity glass, 800ms animations,
+hollow bento cards, buttons with two states. Turtleneck's job is to make that impossible by
+giving your agent the instincts of a senior design engineer — and the discipline to check
+itself.
 
-1. **Workspace Stack Profiling**: Detects your framework (React, Next.js, Vue, Svelte), styling system (Tailwind, CSS Modules, Radix, Shadcn), existing theme tokens, and component directories.
-2. **Interactive Requirements Interview**: Asks focused questions to nail down Jobs-To-Be-Done (JTBD), user density needs, and offers 2-3 concrete layout options.
-3. **Design Blueprint & Tokens**: Establishes anti-slop visual hierarchy and components grounded in your existing code patterns.
-4. **Production Implementation**: Generates clean, accessible (WCAG 2.2 AA), responsive, and 5-state complete UI.
+It is built on three ideas:
+
+1. **Interview before building.** Never assume a dark developer aesthetic. Confirm the archetype,
+   the job-to-be-done, and the density; pitch 2–3 layouts; wait for a choice.
+2. **Show, don't tell.** The `examples/` are live reference implementations the skill mirrors —
+   not decoration.
+3. **Prove, don't promise.** Every hard rule (contrast, focus states, motion budgets) is asserted
+   by a script, so "WCAG AA" is a test result, not a vibe.
 
 ---
 
-## Repository Layout
+## Quick start
+
+Run the installer in your project root. It auto-detects your tooling and **never overwrites a
+file you already own.**
+
+```bash
+python path/to/turtleneck/scripts/install.py          # auto-detect
+python path/to/turtleneck/scripts/install.py --all    # every supported agent
+```
+
+| Your tool | Install flag | What you get |
+| :--- | :--- | :--- |
+| Any / generic (Codex, Aider, OpenHands) | *(default)* | `AGENTS.md` |
+| Claude Code | `--claude` / `--claude-skill` | rules, or the full skill |
+| Cursor | `--cursor` | `.cursorrules` |
+| Windsurf / Cascade | `--windsurf` | `.windsurfrules` |
+| GitHub Copilot | `--copilot` | `.github/copilot-instructions.md` |
+| Cline | `--cline` | `.clinerules` |
+| Google Antigravity | `--antigravity` | global skill install |
+
+**Safety first.** If a destination already holds *your* content, the installer refuses (exit 2)
+and prints the protected line. Escapes: `--dry-run` (plan only), `--append` (merge between
+`<!-- turtleneck:begin/end -->` markers, idempotent), `--force` (after writing a
+`.turtleneck.bak`), `--uninstall` (restore, remove only what it owns).
+
+Rules installs also copy the knowledge base to `.turtleneck/references/` so the rules' links
+resolve. `--no-references` skips it.
+
+**See it rendered.** Open `examples/index.html` in a browser and flip the archetype — it's the
+spec, running.
+
+---
+
+## How it works
+
+**Phase 1 — Workspace Analysis.** Detects your framework and styling engine (React, Next.js,
+Vue, Svelte, Tailwind, CSS Modules, Radix) and emits idiomatic code for what it finds. It reads
+the committed benchmark captures — it never scrapes live sites.
+
+**Phase 2 — Requirements Interview.** Four questions: archetype, job-to-be-done, density, and a
+choice between 2–3 concrete layouts. See
+`references/requirements-interview-framework.md`.
+
+**Phase 3 — Blueprint Alignment.** Locks realistic mock data and design tokens drawn from your
+existing patterns, then runs the anti-slop gate (`references/taste-vs-slop-matrix.md`).
+
+**Phase 4 — Production Build.** Five-state controls, `44×44px` targets, `80–120ms` feedback,
+compositor-only motion, `prefers-reduced-motion` fallbacks, and WCAG 2.2 AA contrast — then
+verifies the palette with `scripts/check_contrast.py` before claiming compliance.
+
+### The five archetypes
+
+Every design decision starts from one of five fully-tokened archetypes
+(`references/design-archetypes.md`):
+
+| Archetype | Feel |
+| :--- | :--- |
+| High-Trust Corporate | Clean slate, fintech clarity |
+| Warm Editorial Paper | Cream canvas, serif headlines |
+| Fluid Organics | Soft squircles, tactile controls |
+| High-Density Starlight | Dark engineering, keyboard-first |
+| Stark Geometric Minimal | Monochrome, zero ornament |
+
+---
+
+## Proof over promises
+
+Three zero-dependency gates assert the repository obeys its own protocol. CI runs all three plus
+`pytest`.
+
+```bash
+python scripts/check_consistency.py   # pipeline parity, interview step, reference graph, no LaTeX
+python scripts/check_contrast.py      # all 46 declared colour pairs vs WCAG 2.2 AA
+python scripts/check_examples.py      # examples honour focus-visible, reduced-motion, no `transition: all`
+pytest tests/ -q                      # installer safety contract (55 tests)
+```
+
+`check_contrast.py` fails if the documentation ever drifts from the values it verifies, so a
+token can't be quietly weakened. `check_examples.py` keeps the reference implementations honest.
+
+---
+
+## Repository layout
 
 ```text
 turtleneck/
-├── SKILL.md                                 # Primary agent skill entrypoint (Antigravity & Agent Skills spec)
-├── README.md                                # Documentation & universal installation guide
-├── rules/                                   # Drop-in rules for all major AI coding agents
-│   ├── AGENTS.md                            # Universal standard (Antigravity, Codex, Aider, OpenHands)
-│   ├── CLAUDE.md                            # Claude Code command-line agent rules
-│   ├── .cursorrules                         # Cursor AI editor rules
-│   ├── .windsurfrules                       # Windsurf / Cascade rules
-│   └── copilot-instructions.md              # GitHub Copilot workspace instructions
-├── scripts/
-│   ├── install.py                           # Zero-dependency universal installer CLI
-│   ├── extract_design.py                    # Playwright headless browser design DNA extractor
-│   ├── research_award_sites.py              # Headless inspector for award-winning benchmarks
-│   └── research_links.py                    # Headless inspector for category references
-├── references/
-│   ├── award-winning-craft-playbook.md      # Scale tension, button ergonomics & surface chemistry
-│   ├── creative-direction-guide.md          # Principles of authentic soul, personality & materiality
-│   ├── creative-synthesis-protocol.md       # Multi-Source (4+) Synthesis rules preventing 1:1 cloning
-│   ├── master-ui-craft-benchmark.md         # Motion timing, typography math, OKLCH, WCAG 2.2
-│   ├── taste-vs-slop-matrix.md              # Quality rubric & anti-slop quality gate
-│   ├── design-archetypes.md                 # 5 archetype palettes (Corporate, Editorial, Fluid, Starlight, Minimal)
-│   ├── full-product-design-system.md        # 6 product surfaces & copy-paste accessible primitives
-│   ├── framework-integrations.md            # React, Next.js, Vue 3, Svelte 5, Tailwind & Native recipes
-│   ├── engineering-craft-recipes.md         # Spotlight cards, hairline borders, editorial & native platform recipes
-│   ├── design-research-playbook.md          # Category benchmarks & synthesis manifest template
-│   ├── workspace-scanner-guide.md           # Tooling & stack detection runbook
-│   ├── requirements-interview-framework.md  # JTBD discovery & wireframe option templates
-│   ├── design-tokens.md                     # 8pt grid, type scales, semantic color roles
-│   ├── ux-heuristics.md                     # Usability rules & response latencies
-│   ├── accessibility-checklist.md           # WCAG 2.2 AA audit criteria
-│   ├── deep_research/                       # Curated benchmark extractions (JSON & captures)
-│   └── award_research/                      # Award-winning benchmark synthesis (JSON & captures)
-└── examples/
-    ├── index.html                           # Multi-Archetype Workbench with 5 live visual modes
-    ├── creative-craft.html                  # Instrument Console (Original Benchmark Synthesis)
-    └── high-density-tracker.html            # High-density keyboard-first issue tracker
+├── SKILL.md              # skill entrypoint (Agent Skills / Antigravity spec)
+├── rules/                # drop-in rules for Claude, Cursor, Windsurf, Copilot, Cline, AGENTS.md
+├── references/           # the knowledge base: tokens, archetypes, craft, a11y, heuristics
+│   ├── deep_research/    # committed headless benchmark captures (authoritative)
+│   └── award_research/   # award-site synthesis (authoritative)
+├── examples/             # live reference implementations the skill mirrors
+├── scripts/              # install.py + the three verification gates (+ maintainer-only scrapers)
+└── tests/                # installer + gate test suite
 ```
 
 ---
 
-## Universal Installation
+## Maintainer notes
 
-Turtleneck works across **all** major AI coding environments.
-
-### 1. One-Line Universal CLI (Any Repository)
-Run the installer directly in your project root:
+The Playwright scrapers in `scripts/` are **not** part of a normal build — the committed captures
+are authoritative and `SKILL.md` tells agents not to run scrapers. To regenerate:
 
 ```bash
-# Auto-detects your setup and installs AGENTS.md / .cursorrules / Copilot
-python path/to/turtleneck/scripts/install.py
-
-# Or install for all platforms simultaneously:
-python path/to/turtleneck/scripts/install.py --all
+pip install -r requirements-dev.txt
+playwright install chromium
+python scripts/research_award_sites.py
 ```
 
 ---
 
-### 2. Framework-by-Framework Setup
+## Contributing
 
-#### A. Cursor
-Copy `rules/.cursorrules` to your project root or run:
+The whole point of this repo is that its rules are mechanically enforced, so contributions are
+cheap to check. Before you open a PR, make the gates pass:
+
 ```bash
-python path/to/turtleneck/scripts/install.py --cursor
+python -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
+.venv/bin/pytest tests/ -q
+python scripts/check_consistency.py && python scripts/check_contrast.py && python scripts/check_examples.py
 ```
 
-#### B. Claude Code
-Copy `rules/CLAUDE.md` to your project root or run:
-```bash
-python path/to/turtleneck/scripts/install.py --claude
-```
+The drift-proofs you must respect:
 
-#### C. Windsurf / Cascade
-Copy `rules/.windsurfrules` to your project root or run:
-```bash
-python path/to/turtleneck/scripts/install.py --windsurf
-```
-
-#### D. GitHub Copilot
-Copy `rules/copilot-instructions.md` to `.github/copilot-instructions.md` or run:
-```bash
-python path/to/turtleneck/scripts/install.py --copilot
-```
-
-#### E. Google Antigravity
-Install globally into your Antigravity skills catalog:
-```bash
-python path/to/turtleneck/scripts/install.py --antigravity
-```
-Or manually:
-```powershell
-Copy-Item -Recurse -Path .\turtleneck -Destination "$HOME\.gemini\config\skills\turtleneck"
-```
-
-#### F. Aider / Codex / OpenHands / Generic Agents
-Drop `rules/AGENTS.md` into your repo root. Universal markdown instructions are recognized by all standard LLM tooling.
+* **Change a colour token?** Update the matching pair in `scripts/check_contrast.py` — it fails if
+  the docs and the gate disagree.
+* **Add a reference doc?** Link it from `SKILL.md`, or `check_consistency.py` flags it as orphaned.
+* **Add an example?** Wire it into `SKILL.md`'s reference table, or the gate calls it out.
+* **Touch the pipeline?** The exact line `1. Workspace Analysis ──► … ──► 4. Production Build` must
+  stay identical in `README.md`, `SKILL.md` and every file under `rules/`.
 
 ---
 
 ## License
 
-MIT
-
+MIT — see [LICENSE](./LICENSE).

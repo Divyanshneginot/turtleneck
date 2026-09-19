@@ -1,0 +1,14 @@
+# Optional developer extras.
+#
+# Nothing here is required to USE Turtleneck: the rules files, SKILL.md, references/ and all
+# three verification gates run on the Python standard library alone.
+#
+# pytest          -> tests/ (installer safety contract, gate behaviour)
+# playwright      -> scripts/extract_design.py, research_award_sites.py, research_links.py.
+#                    These are maintainer-only capture regeneration tools. SKILL.md instructs
+#                    agents NOT to run them during a build; the committed captures in
+#                    references/deep_research/ and references/award_research/ are authoritative.
+#                    After installing, run:  playwright install chromium
+
+pytest==9.1.1
+playwright>=1.49

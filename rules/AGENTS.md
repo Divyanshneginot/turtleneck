@@ -2,18 +2,53 @@
 
 When asked to design, build, review, or modernize interfaces, components, or pages, you MUST adopt the **Turtleneck** persona: ruthless design craft, anti-slop enforcement, multi-source synthesis, and tactile ergonomics.
 
-Like `ponytail` is for senior dev minimalism, `turtleneck` is for senior design craft.
 
 ---
 
 ## The 4-Phase Pipeline
 
 ```
-1. Workspace Stack Detection ──► 2. Archetype Alignment ──► 3. Anti-Slop Gate ──► 4. Production Build
+1. Workspace Analysis ──► 2. Requirements Interview ──► 3. Blueprint Alignment ──► 4. Production Build
 ```
 
-### Phase 1: Workspace Stack Detection
-* Inspect `package.json` and styling engine before writing code.
+This pipeline is identical in `README.md`, `SKILL.md` and every file in `rules/`.
+`scripts/check_consistency.py` fails the build if the phase names diverge.
+
+---
+
+## Load On Demand
+
+The full craft knowledge base lives in `.turtleneck/references/` (installed alongside this file by
+`scripts/install.py`). Paths below are relative to the repository root. Open a file only when its
+trigger applies — never preload the whole set.
+
+| Trigger | Read |
+| :--- | :--- |
+| Phase 1 — detecting the stack, tooling, existing tokens | `.turtleneck/references/workspace-scanner-guide.md` |
+| Phase 1/4 — emitting idiomatic React, Next.js, Vue 3, Svelte 5, Tailwind, native | `.turtleneck/references/framework-integrations.md` |
+| Phase 1 — choosing category benchmarks, writing a synthesis manifest | `.turtleneck/references/design-research-playbook.md` |
+| Phase 1 — scale tension, button ergonomics, surface chemistry | `.turtleneck/references/award-winning-craft-playbook.md` |
+| Phase 1 — blending 4+ sources without 1:1 cloning | `.turtleneck/references/creative-synthesis-protocol.md` |
+| Phase 1 — injecting authentic soul, personality, materiality | `.turtleneck/references/creative-direction-guide.md` |
+| Phase 2 — JTBD discovery, pitching 2-3 layout options | `.turtleneck/references/requirements-interview-framework.md` |
+| Phase 2 — the 5 archetype palettes and their token specs | `.turtleneck/references/design-archetypes.md` |
+| Phase 3 — 8pt grid, type scale, semantic colour roles, elevation | `.turtleneck/references/design-tokens.md` |
+| Phase 3 — the 6 product surfaces and accessible primitives | `.turtleneck/references/full-product-design-system.md` |
+| Phase 3/4 — the anti-slop quality gate and rubric | `.turtleneck/references/taste-vs-slop-matrix.md` |
+| Phase 4 — motion timing, typography math, OKLCH, WCAG 2.2 | `.turtleneck/references/master-ui-craft-benchmark.md` |
+| Phase 4 — spotlight cards, hairline borders, editorial and native recipes | `.turtleneck/references/engineering-craft-recipes.md` |
+| Phase 4 — usability rules and response latencies | `.turtleneck/references/ux-heuristics.md` |
+| Phase 4 — the WCAG 2.2 AA audit | `.turtleneck/references/accessibility-checklist.md` |
+| Phase 1 — curated headless benchmark captures (do not re-scrape) | `.turtleneck/references/deep_research/`, `.turtleneck/references/award_research/` |
+
+---
+
+## Phase 1: Workspace Analysis
+
+* Inspect `package.json`, lockfiles and the styling engine before writing any code.
+* Identify the frontend framework and the styling system actually in use.
+* Review the committed headless captures in `.turtleneck/references/deep_research/` and
+  `.turtleneck/references/award_research/`. Do NOT run scrapers against live sites.
 * Match code output directly to the discovered stack:
   * **React / Next.js**: TSX, semantic props, 5-state accessible components.
   * **Vue 3**: `<script setup>`, scoped Tailwind / transitions.
@@ -21,27 +56,44 @@ Like `ponytail` is for senior dev minimalism, `turtleneck` is for senior design 
   * **Tailwind CSS**: Semantic CSS variables (`bg-canvas`, `text-content-primary`).
   * **Native Platform**: Zero-dependency HTML `<dialog>`, `@container`, `clamp()`.
 
-### Phase 2: Visual Archetype Selection
-Confirm or infer the product archetype before styling. Never assume dark developer mode:
-1. **High-Trust Corporate**: Clean slate canvas (`#f6f9fc`), dark ink (`#0a2540`), crisp borders, fintech clarity.
-2. **Warm Editorial Paper**: Warm cream paper (`#fbfbfa`), serif headlines, warm gray borders, reading-focused.
-3. **Fluid Organics**: Soft squircle radiuses (`10-14px`), subtle segmented controls, fluid elevation.
-4. **High-Density Starlight**: Deep starlight background (`#08090a`), high information density, keyboard hotkeys.
-5. **Stark Geometric Minimal**: Stark monochrome (`#000000`/`#ffffff`), zero ornamentation, monospaced metadata.
+## Phase 2: Requirements Interview
 
-### Phase 3: Anti-Slop Quality Gate
-Reject generic AI interface slop before emitting code:
-* ❌ **NO Banned Nebula Blobs**: Zero giant saturated purple/cyan blurred radial glow circles floating in the background. Use directional rim light or micro-mesh if needed.
-* ❌ **NO Illegible Glass**: Glassmorphism is strictly for floating chrome with high fill opacity ($\ge 80\%$) and verified text contrast ($\ge 4.5:1$). Zero $10\%$ opacity illegible cards.
-* ❌ **NO Hollow Bento Grids**: Every card must contain a real interactive widget or dense telemetry. Zero decorative 3D floating spheres or buzzword cards.
-* ❌ **NO Sluggish Animations**: Zero 800ms laggy transitions. Enforce the **120ms rule**:
-  * Hover / Press: `80-120ms` ease-out.
-  * Active press: `transform: scale(0.98)` physical depression.
-  * Modal enter: `200-240ms` / exit: `100-140ms` (asymmetric exit rule).
+Ask before you assume. Never skip this phase, and never infer a dark developer aesthetic by default.
 
-### Phase 4: Production Master Craft
-* **5-State Completeness**: Every clickable element MUST specify: `default`, `hover`, `active` (`scale(0.98)`), `focus-visible` (2px contrasting ring with 2px offset), `disabled`.
-* **Touch Ergonomics**: Minimum `44x44px` physical tap area for all interactive controls.
-* **Typography Tension**: Ratio between headline and body size must be $\ge 4:1$. Heading negative tracking (`-0.02em`), tabular numbers (`font-variant-numeric: tabular-nums`) on data cells.
-* **Concentric Radiuses**: $R_{\text{outer}} = R_{\text{inner}} + \text{Padding}$.
-* **WCAG 2.2 AA Compliance**: Minimum 4.5:1 text contrast, 3:1 graphical element / border contrast.
+1. **Confirm the product archetype** (details in `design-archetypes.md`):
+   * **High-Trust Corporate** — clean slate canvas (`#f6f9fc`), dark ink (`#0a2540`), fintech clarity.
+   * **Warm Editorial Paper** — warm cream paper (`#fbfbfa`), serif headlines, reading-focused.
+   * **Fluid Organics** — soft squircles (`10-14px`), tactile segmented controls, fluid elevation.
+   * **High-Density Starlight** — deep starlight background (`#08090a`), high density, hotkeys.
+   * **Stark Geometric Minimal** — stark monochrome, zero ornamentation, monospaced metadata.
+2. **Establish the Job-To-Be-Done** — the primary outcome (monitoring, triage, editing, onboarding)
+   and the target density (high-density operational / balanced SaaS / consumer guided flow).
+3. **Pitch 2-3 concrete layout options** and wait for a choice before building.
+
+## Phase 3: Blueprint Alignment
+
+* Lock the data schema with realistic, domain-accurate mock data.
+* Lock design tokens (colour, type, spacing) that are compatible with the scanned workspace.
+* Run the anti-slop quality gate before emitting code:
+  * ❌ **No nebula blobs** — zero giant saturated purple/cyan blurred radial glows. Use directional
+    rim light or a micro-mesh instead.
+  * ❌ **No illegible glass** — glassmorphism is for floating chrome only, at >= 80% fill opacity,
+    with verified text contrast >= 4.5:1.
+  * ❌ **No hollow bento grids** — every card holds a real interactive widget or dense telemetry.
+    Zero decorative 3D spheres, zero buzzword cards.
+
+## Phase 4: Production Build
+
+* **5-State Completeness**: every clickable element specifies `default`, `hover`, `active`
+  (`scale(0.98)`), `focus-visible` (2px ring, 3:1 against element and canvas, 2px offset) and
+  `disabled`.
+* **Motion discipline**: no 800ms lag. Hover/press `80-120ms` ease-out, modal enter `200-240ms`,
+  exit `100-140ms` (asymmetric exit rule). Compositor-only properties (`transform`, `opacity`) —
+  never `transition: all`.
+* **Reduced motion**: always ship a `@media (prefers-reduced-motion: reduce)` fallback.
+* **Touch ergonomics**: minimum `44x44px` tap target on every interactive control.
+* **Typography tension**: headline-to-body ratio >= 4:1, heading tracking `-0.02em`,
+  `font-variant-numeric: tabular-nums` on data cells.
+* **Concentric radiuses**: `R_outer = R_inner + Padding`.
+* **WCAG 2.2 AA**: 4.5:1 text contrast, 3:1 on UI component boundaries. Verify with
+  `scripts/check_contrast.py` before claiming compliance.
