@@ -1,13 +1,13 @@
 # Turtleneck
 
-> **Design taste, encoded — and enforced.**
+[![CI](https://github.com/Divyanshneginot/turtleneck/actions/workflows/ci.yml/badge.svg)](https://github.com/Divyanshneginot/turtleneck/actions)
+![Python](https://img.shields.io/badge/python-3.9%2B-blue?logo=python)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+![Tests](https://img.shields.io/badge/tests-passing-brightgreen)
 
-A senior UI/UX architect for your AI coding agent.
+> **Design taste, encoded — and enforced.** A senior UI/UX architect for AI coding agents.
 
-Most design prompts *describe* good taste and hope. Turtleneck is a working system: it profiles
-your codebase, interviews you about the job to be done, aligns on a layout, and ships
-accessible, anti-slop interfaces — and the repository ships its own exam, failing the build the
-moment its docs, tokens, or examples violate the rules they teach.
+Turtleneck eliminates generic AI slop (purple gradients, unreadable low-contrast glass, 800ms animations, broken focus states) by enforcing strict layout archetypes, design tokens, and automated WCAG AA test gates across Claude Code, Cursor, Windsurf, Copilot, and Google Antigravity.
 
 ```
 1. Workspace Analysis ──► 2. Requirements Interview ──► 3. Blueprint Alignment ──► 4. Production Build
