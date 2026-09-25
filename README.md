@@ -5,9 +5,10 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 ![Tests](https://img.shields.io/badge/tests-passing-brightgreen)
 
-> **Design taste, encoded — and enforced.** A senior UI/UX architect for AI coding agents.
+> **Product Design Intelligence for AI coding agents.** Version 2.0.0.
+> Decide, then make. Do not decorate an undefined product.
 
-Turtleneck eliminates generic AI slop (purple gradients, unreadable low-contrast glass, 800ms animations, broken focus states) by enforcing strict layout archetypes, design tokens, and automated WCAG AA test gates across Claude Code, Cursor, Windsurf, Copilot, and Google Antigravity.
+Turtleneck is not merely a styling checklist. It is a product-design decision system: it turns an outcome into an information architecture, interaction model, visual direction, state model, and implementation plan before writing the UI across Claude Code, Cursor, Windsurf, Copilot, and Google Antigravity.
 
 ```
 1. Workspace Analysis ──► 2. Requirements Interview ──► 3. Blueprint Alignment ──► 4. Production Build
@@ -17,21 +18,13 @@ Turtleneck eliminates generic AI slop (purple gradients, unreadable low-contrast
 
 ## Why this exists
 
-AI-generated UI has a tell: purple nebula blobs, unreadable 10%-opacity glass, 800ms animations,
-hollow bento cards, buttons with two states. Turtleneck's job is to make that impossible by
-giving your agent the instincts of a senior design engineer — and the discipline to check
-itself.
+AI-generated UI has a tell: arbitrary purple gradients, floating glass cards, excessive pills, meaningless charts, and uniform card grids. Turtleneck makes that impossible by giving your agent the instincts of a senior product designer — and the discipline to verify itself.
 
-It is built on three ideas:
+It is built on three core tenets:
 
-1. **Interview before building — but never over-interview.** Never assume a dark developer
-   aesthetic on a vague brief: confirm the archetype, the job-to-be-done, and the density; pitch
-   2–3 layouts; wait for a choice. For a small tweak or an explicit brief, take the fast path or
-   go straight to Phase 4 — a full interview on a two-minute fix is a protocol violation.
-2. **Show, don't tell.** The `examples/` are live reference implementations the skill mirrors —
-   not decoration.
-3. **Prove, don't promise.** Every hard rule (contrast, focus states, motion budgets) is asserted
-   by a script, so "WCAG AA" is a test result, not a vibe.
+1. **Decide, then make — with adaptive tempo.** First determine what the user is trying to accomplish, what they must decide, and choose the archetype from the job. Select the smallest process that produces a sound decision: Direct mode for tiny changes, Fast path for known scopes, Discovery for vague or greenfield surfaces.
+2. **Specialized capabilities for decisions.** When users don't know what they need, make the interface help them decide with guided recommenders, quizzes, and template builders that explain rationale and reveal cause and effect.
+3. **Prove, don't promise.** Automated test gates assert WCAG 2.2 AA contrast, `:focus-visible` rings, reduced-motion fallbacks, and compositor-only transitions before code is claimed complete.
 
 ---
 

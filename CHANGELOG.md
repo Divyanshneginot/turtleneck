@@ -2,7 +2,24 @@
 
 All notable changes to Turtleneck are documented here.
 
-## Unreleased
+## [2.0.0] - 2026-09-25
+
+### Changed — Product Design Intelligence overhaul
+
+* **Transformed skill from styling checklist to product-design decision system (`SKILL.md`).**
+  Replaced cosmetic checklists with outcome-driven product intelligence: "Decide, then make. Do not decorate an undefined product."
+* **Adaptive tempo system.**
+  Added Direct (tiny changes), Fast path (known scope/deadline), and Discovery (greenfield/vague briefs) modes with distinct ceremony levels and preflight briefs.
+* **Job-to-be-done interaction archetypes.**
+  Mapped user jobs to structural archetypes (Compare/monitor, Consequential choice, Starting point, Learn/convert, Produce/edit, Configure system) rather than aesthetic skins.
+* **Specialized capabilities for decision flows.**
+  Added formal contracts for guided recommenders/quizzes (client-side deterministic scoring, plain-language questions, explainable recommendations) and template choosers (intent grouping, real live previews, immutable starter copies).
+* **Purposeful dynamic UI and motion.**
+  Enforced cause-and-effect transitions (selection updates preview, non-looping subtle validation cues) with compositor-only properties (`transform`/`opacity`) and mandatory reduced-motion fallbacks.
+* **Standardized response contract & implementation template.**
+  Added structured completion contract reporting mode, outcome, pattern, direction, interaction model, responsive plan, verified accessibility, and motion.
+
+## [1.1.0] - 2026-09-25
 
 ### Added — discovery metadata, subject-matter-first protocol, custom contrast verification, and behavioral evals
 

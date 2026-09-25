@@ -1,220 +1,299 @@
 ---
 name: turtleneck
+version: 2.0.0
 description: >-
-  Use when designing, building, restyling, or reviewing a user-facing web or
-  native interface where visual direction, interaction quality, accessibility,
-  responsive behavior, or design-system consistency matters. Skip for non-visual
-  backend/CLI work and exact reproduction of an already supplied design.
+  Use when designing, building, restyling, or reviewing product surfaces, visual redesigns, onboarding, quizzes, template builders, dashboards, or design-system tokens where interaction model, responsive behavior, or accessibility matters. Skip for non-visual backend/CLI work and exact reproduction of an already supplied design.
 ---
 
-# Autonomous UI/UX Architect Protocol
+# Turtleneck — Product Design Intelligence
 
-Transforms user UI requests into bespoke, production-ready interfaces by first scanning the local workspace, conducting a structured requirement interview with the user, aligning on architecture, and implementing anti-slop code.
+Turtleneck is not merely a styling checklist. It is a product-design decision system: it turns an outcome into an information architecture, interaction model, visual direction, state model, and implementation plan before writing the UI.
+
+### Operating principle
+Decide, then make. Do not decorate an undefined product. First determine what the user is trying to accomplish, what they must decide, what can go wrong, and what feedback makes the next action obvious. Then create an original solution that fits the existing codebase.
+
+Use the smallest process that produces a sound decision. Under a hard deadline, do not ask a long interview: state assumptions, select a viable pattern, build, and leave clear extension points.
+
+### Core pipeline
+```
+1. Workspace Analysis ──► 2. Requirements Interview ──► 3. Blueprint Alignment ──► 4. Production Build
+```
 
 ---
 
-## When to use (and when not to)
+## When to invoke
 
-Use this skill when the task is to **design, build, restyle, or review a user-facing surface** —
-a page, component, dashboard, form, or design system. It earns its keep when the brief is vague
-("make it look professional") or when layout, density, and feel are genuinely undecided.
+Use for:
+* New pages, applications, flows, components, dashboards, settings, onboarding, and redesigns.
+* A quiz, guided recommendation tool, configurator, form builder, template picker, or other interactive decision flow.
+* Requests such as "make it feel designed," "make it dynamic," "create a modern UI," or "give users options."
+* UI/UX audits where recommendations must become implementable changes.
 
-Do not use it for:
+Do not invoke for a trivial isolated CSS fix, a supplied pixel-perfect design, or a non-UI task. Apply the relevant accessibility and interaction rules directly in those cases.
 
-* Pure backend, CLI, or data-pipeline work with no user-facing surface.
-* A one-line styling tweak — a full interview would be ceremony. Apply the Phase 4 craft rules
-  directly instead.
-* Pixel-perfect replication of a supplied design. Follow the supplied design; borrow only the
-  accessibility, motion, and state-completeness rules from Phase 4.
+### Select a tempo
 
-### Execution modes (tempo)
-
-Always pick the **least ceremony the brief earns** — internalize the full pipeline as the ceiling,
-not the default:
-
-| Mode | When | What to do |
+| Mode | Use when | Required work |
 | :--- | :--- | :--- |
-| **Direct Phase 4** | One component, one style tweak, a fix, or the user says "just do it" | Skip Phases 1–3; apply Phase 4 craft rules directly; emit compact completion report. |
-| **Time-boxed Fast Path** | Hard deadline, or a brief that already names scope + stack | Skip the interview. Infer archetype/density from codebase + request; state call + 1 alternative in 1 line; build. |
-| **Fast Path** | Explicit brief supplying surface, density, layout, and direction | Skip multi-question interview. Restate inferred constraints in 1 preflight line; surface <= 1 ambiguity; build. |
-| **Full Pipeline** | Vague, greenfield, or consequential surface (flagship page, design system) | Run all four phases end-to-end, including structured interview and blueprint alignment. |
+| **Direct** | Tiny, unambiguous change | Inspect local conventions; implement complete states. Skip interview; apply craft rules directly; emit compact completion report. |
+| **Fast path** | Scope/stack/outcome are known or time is short | State assumptions in one sentence; select one pattern and one fallback; build. |
+| **Discovery** | Vague, high-stakes, or greenfield work | Run the design brief and present 2–3 concrete directions before build. |
 
-Under time pressure, self-check *tempo* explicitly: if the task is a small or well-scoped change,
-say so in one line and take the Direct Phase 4 / Time-boxed route. Burning a full interview cycle
-on a two-minute fix is a protocol violation.
+Never make a user wait for ceremony when a useful, reversible default exists.
 
 ---
 
 ## Reference implementations (show, don't tell)
 
 Before building, open the reference implementation closest to your target and mirror its craft.
-These files are the executable form of this protocol — the gates in `scripts/` assert that they
-obey it.
+The gates in `scripts/` assert that they obey the accessibility and craft baselines.
 
 | File | What it demonstrates |
 | :--- | :--- |
-| `./examples/index.html` | The 5-archetype workbench. Switch `data-archetype` between corporate / editorial / fluid / starlight / minimal and compare token systems, density, and chrome. |
-| `./examples/high-density-tracker.html` | High-Density Starlight, keyboard-first operational UI: dense tables, command palette, hotkeys, tab and focus states. |
-| `./examples/creative-craft.html` | Editorial / instrument craft: serif display tension, tactile button physics, warm dark surfaces. |
+| `./examples/index.html` | The 5-archetype workbench: Compare token systems, density, and chrome across archetypes. |
+| `./examples/high-density-tracker.html` | High-density keyboard-first operational UI: dense telemetry tables, command palette, hotkeys. |
+| `./examples/creative-craft.html` | Editorial & instrument craft: serif display tension, tactile button physics, warm surfaces. |
 | `./examples/accessible-dialog-palette.html` | Accessible dialogs & command palette: focus trapping, Escape dismissal, trigger restoration, 5-state buttons. |
 | `./examples/form-validation-states.html` | Accessible form validation: error summary, inline field states, aria-describedby links, and tap targets. |
 
 ---
 
-## 4-Phase Operational Pipeline
+## 1. Inspect the reality (Workspace Analysis)
 
+Before changing code, inspect the workspace (see [Workspace Scanner Guide](./references/workspace-scanner-guide.md) and [Framework Integrations](./references/framework-integrations.md)):
+
+* Identify framework, routing, styling system, component library, token source, icon/font approach, test/build commands, and relevant existing screens. When targeting mobile or native apps, consult [Mobile, Touch & Native Ergonomics](./references/mobile-touch-and-native.md).
+* Reuse local primitives and conventions where they are good; repair inconsistencies rather than layering a second system over them.
+* Identify target viewport(s), real data shape, loading/error/empty permissions states, and likely content lengths.
+* If references or competitor examples are available, study them as pattern evidence, not as a layout to copy (see [Design Research Playbook](./references/design-research-playbook.md), [Creative Direction Guide](./references/creative-direction-guide.md), and [Creative Synthesis Protocol](./references/creative-synthesis-protocol.md)). Extract task model, navigation, progressive disclosure, trust cues, density, and interaction feedback. Do not reproduce distinctive branding, wording, illustrations, or recognizable page composition.
+
+Output a compact internal design brief:
+* **Outcome**: `<user result>`
+* **Audience/context**: `<who, where, urgency, device>`
+* **Primary action**: `<one verb>`
+* **Critical decisions**: `<what users must choose or understand>`
+* **Constraints**: `<stack, content, accessibility, deadline>`
+* **Success signal**: `<observable completion/metric>`
+
+If key facts are missing, either ask at most three high-leverage questions or proceed with labeled assumptions. Questions should change the design, not merely collect preferences. Refer to [Requirements Interview Framework](./references/requirements-interview-framework.md) and [Verification Scope & Fast Path](./references/verification-scope.md).
+
+---
+
+## 2. Think like a product designer
+
+### 2.1 Choose the interaction archetype
+Choose the archetype from the job, not a fashion preference (see [Design Archetypes Catalog](./references/design-archetypes.md)):
+
+| User job | Default pattern | Design test |
+| :--- | :--- | :--- |
+| Compare / monitor many items | Dense dashboard, table + detail pane | Can a user scan, filter, and act without losing place? |
+| Make one consequential choice | Guided chooser / quiz / recommendation flow | Does each answer reduce uncertainty? |
+| Create from a starting point | Template gallery + preview + customization | Can a newcomer start in one click and an expert customize? |
+| Learn or convert | Narrative landing page | Does each section earn the next scroll/action? |
+| Produce/edit content | Focused workspace with progressive tools | Is the canvas primary and controls contextual? |
+| Configure a system | Settings with clear grouping and safe defaults | Can a user predict the effect before saving? |
+
+A dark dashboard is not a default. Pick light/dark, density, type, and material based on audience, environment, task duration, and brand constraints. Ground visual choices in the product's real-world subject matter. Avoid interchangeable templates (see [Award-Winning Craft Playbook](./references/award-winning-craft-playbook.md)).
+
+### 2.2 Generate options before committing
+For discovery work, produce 2–3 meaningfully different directions, each with:
+* a name and one-sentence thesis;
+* page/flow structure;
+* density and visual archetype;
+* why it fits the job;
+* one trade-off.
+
+Good differences are structural (guided flow vs gallery, split pane vs workspace), not superficial color swaps. Recommend one. If the user does not choose and timing matters, choose the option that minimizes cognitive load and supports the primary outcome.
+
+### 2.3 Design the whole state machine
+For every interactive surface, specify:
+* default, hover, active/pressed, keyboard focus-visible, disabled;
+* loading/skeleton, success/confirmation, empty, error/retry, and offline/permission state where relevant;
+* entry, exit, cancellation, undo, and persistence behavior;
+* desktop keyboard path and touch path.
+
+A UI is incomplete if its happy path alone is designed. Validate against [Taste vs. Slop Matrix](./references/taste-vs-slop-matrix.md).
+
+---
+
+## 3. Special capability: quizzes, recommenders, and template builders
+
+When users do not know what they need, make the interface help them decide instead of presenting an overwhelming blank canvas.
+
+### 3.1 Guided quiz / recommender
+Use a quiz only when answers genuinely alter the recommendation. Do not disguise a marketing form as a quiz.
+
+**Flow contract:**
+* Establish the desired outcome in the first question.
+* Ask 3–7 independent, plain-language questions; every question must affect scoring, filters, or the resulting setup.
+* Use one decision per step. Offer "Not sure" when uncertainty is valid.
+* Show progress as Step n of m, allow Back, preserve answers, and make Exit/cancel obvious.
+* Explain the result using the user's own answers: "Recommended because you chose…"
+* Offer a primary next step plus alternatives and an editable answer summary.
+
+**Recommendation model:**
+* Define options as data, not scattered conditional JSX.
+* Give each option explicit fit rules/weights and a deterministic tie-breaker.
+* Never claim false precision. If inputs are insufficient, return a shortlist and explain what would differentiate it.
+* Keep scoring client-side when possible; do not collect sensitive data unless the product needs it and consent is clear.
+
+Example schema:
+```typescript
+type Answer = string | number | boolean;
+type Template = {
+  id: string;
+  name: string;
+  description: string;
+  tags: string[];
+  preview: string;
+  score: (answers: Record<string, Answer>) => number;
+  rationale: (answers: Record<string, Answer>) => string[];
+};
 ```
-1. Workspace Analysis ──► 2. Requirements Interview ──► 3. Blueprint Alignment ──► 4. Production Build
-```
 
-This pipeline is identical in `README.md`, `SKILL.md` and every file in `rules/`.
-`scripts/check_consistency.py` fails the build if the phase names diverge.
+### 3.2 Template chooser
+A template selection surface must enable action, not act as a static card grid.
 
-Read a reference only when its phase applies — never preload the whole set.
+**Required behavior:**
+* 6–12 realistic starter templates grouped by user intent; include Blank only as a deliberate expert option.
+* Search, category filters, and clear selected state when the collection warrants them.
+* A fast preview (side panel, modal, or live canvas) containing actual structure/content, not a generic image rectangle.
+* "Use template" creates an editable copy; template remains immutable.
+* The chosen template may be tailored by quiz answers or a few lightweight controls (tone, color, sections, audience).
+* Preserve selection and customization across navigation/reload when the host product supports persistence.
 
----
+Choose between gallery-first and quiz-first:
+* **Gallery-first**: users recognize what they want; show templates immediately, filters refine.
+* **Quiz-first**: users describe needs better than they recognize layouts; recommend 1–3 templates, then let them browse all.
+* **Hybrid**: show a gallery plus "Help me choose" when both populations matter.
 
-### Phase 1: Workspace Analysis & Research Review
-Before asking questions or drafting UI, inspect the repository and the committed benchmarks:
+### 3.3 Dynamic UI should have purpose
+Use dynamic behavior to reveal cause and effect:
+* selection updates a real preview;
+* a step answer updates recommendation confidence or downstream options;
+* form validation appears at the field at an appropriate time;
+* filters update count and preserve scroll/context;
+* changes are undoable when consequential.
 
-1. **Stack & Tooling Detection** — refer to the [Workspace Scanner Guide](./references/workspace-scanner-guide.md) and [Framework Integrations](./references/framework-integrations.md):
-   * Inspect package files (`package.json`, `requirements.txt`, lockfiles).
-   * Identify the frontend framework (React, Next.js, Vue, Svelte, HTML/CSS — or a native stack:
-     React Native, Flutter, SwiftUI). Web rules are not native rules; when the target is a phone
-     or a native app, also load the [Mobile, Touch & Native Ergonomics](./references/mobile-touch-and-native.md)
-     reference.
-   * Identify the styling engine (Tailwind CSS, Vanilla CSS, Radix UI, CSS Modules).
-   * Record existing theme tokens and component directory conventions.
-   * Match code generation directly to the discovered framework idioms.
-2. **Review Existing Headless Research & Feel**:
-   * The committed captures in `references/deep_research/` and `references/award_research/` are
-     authoritative. Do NOT run scrapers against live sites during a build. The scripts in
-     `scripts/` are an optional maintainer-only regeneration path and need Playwright
-     (see `requirements-dev.txt`).
-   * Pick category benchmarks and record a synthesis manifest using the
-     [Design Research Playbook](./references/design-research-playbook.md).
-   * Feel the soul of the benchmarks — narrative pacing, visual weight, spatial breathing, and
-     micro-tactility — not just hex codes. The
-     [Creative Direction Guide](./references/creative-direction-guide.md) covers authentic
-     personality and materiality.
-   * Enforce the **Creative Synthesis Protocol** — refer to the
-     [Award-Winning Craft Playbook](./references/award-winning-craft-playbook.md) and the
-     [Creative Synthesis Protocol](./references/creative-synthesis-protocol.md):
-     * Blend atmosphere, interaction physics, typography tension, and layout density from 4+
-       different sources into something new. Never lean on one reference.
-     * Forbid 1:1 cloning of metaphors, copy, diff blocks, terminal cursors, or recognizable
-       brand gimmicks. Extract the WHY, invent a new HOW.
+Do not add animation that delays choice, hides navigation, or exists only as decoration. See [Full Product Design System](./references/full-product-design-system.md).
 
 ---
 
-### Phase 2: Requirements Interview & Architectural Direction
+## 4. Visual and motion craft
 
-The authoritative Execution Modes table determines whether this phase runs. Do not run a multi-question
-interview when the brief earns a fast path or Direct Phase 4. Never assume a dark developer aesthetic by
-default. See [Verification Scope & Fast Path](./references/verification-scope.md).
+### Visual direction
+Create a compact token layer compatible with the project (see [Design Tokens](./references/design-tokens.md)):
+* semantic colors: canvas, surface, raised surface, text, muted text, border, accent, success, warning, danger;
+* spacing scale; type roles; radius/elevation; z-index; motion durations/easings.
+* Use a limited, intentional palette. Reserve high-saturation color for meaningful actions/status.
+* Select typography for the product's voice and reading task; use a deliberate display/body contrast only when it helps hierarchy.
+* Establish hierarchy through layout, type, contrast, and whitespace before adding borders, shadows, or gradients.
+* Avoid generic "AI UI" signals: arbitrary purple gradients, floating glass cards, excessive pills, meaningless charts, and uniform card grids.
 
-1. **Derive Direction from Subject Matter First (Before Archetypes)**:
-   * **Audience & Context**: Who uses this interface, in what physical/cognitive environment, and under what load?
-   * **Primary Job-To-Be-Done**: Identify the single decisive outcome (monitoring, triage, editing, onboarding).
-   * **Domain Materials & Vernacular**: Ground visual choices in the product's real-world subject matter (e.g. clinical precision, financial ledger clarity, technical telemetry, physical publication). Spend boldness in one intentional place.
-   * **Genericity Check**: *Could this visual direction and layout be reused unchanged for another product in this category?* If yes, revise it. Reject interchangeable template defaults.
-2. **Archetypes as Constraint Lenses (Not Themes or Presets)** — refer to the [Design Archetypes Catalog](./references/design-archetypes.md):
-   Use archetypes as diagnostic constraint lenses to govern trust, density, chrome, and interaction physics—never as cosmetic skins or theme presets:
-   * **A. High-Trust Corporate**: Lens for institutional trust, clean slate canvas (`#f6f9fc`), crisp borders, fintech/SaaS clarity.
-   * **B. Warm Editorial Paper**: Lens for reading focus, warm cream canvas (`#fbfbfa`), serif headlines, minimal chrome.
-   * **C. Fluid Organics**: Lens for mobile ergonomics, squircle geometry (`10-14px`), tactile segmented controls.
-   * **D. High-Density Starlight**: Lens for keyboard-first telemetry, deep dark canvas (`#08090a`), dense tables, hotkeys.
-   * **E. Stark Geometric Minimal**: Lens for architectural discipline, pitch black canvas (`#000000`), razor borders, monochrome semaphores.
-3. **Present 2-3 Concrete Architecture Options** (Full Pipeline):
-   * Confirm target density: high-density operational vs balanced SaaS vs consumer guided flow.
-   * Use the [Requirements Interview Framework](./references/requirements-interview-framework.md) to pitch 2-3 concrete layout options and wait for user selection before building.
+### Motion system
+Motion must communicate state, hierarchy, continuity, or causality (see [Engineering Craft Recipes](./references/engineering-craft-recipes.md)):
+* Micro feedback: 80–140ms.
+* Enter: 180–260ms; exit: 100–180ms, normally shorter than entry.
+* Use `transform` and `opacity`; never `transition: all`.
+* Use one easing family, e.g. `cubic-bezier(.16, 1, .3, 1)`; avoid bouncy motion in serious workflows.
+* Selection may crossfade/slide a preview; step changes may transition in the direction of travel; validation may use a subtle non-looping cue.
+* Respect `prefers-reduced-motion: reduce`: remove nonessential movement while preserving state clarity.
+* Never use autoplay motion that competes with reading, creates motion sickness, or blocks input.
 
----
-
-### Phase 3: Blueprint & Token Alignment
-Once the user approves a layout choice:
-
-1. Formulate the exact data schema for UI components (mock realistic, domain-accurate data).
-2. Lock in design tokens compatible with the scanned workspace:
-   * Spacing grid, type scale, semantic colour roles and elevation — see
-     [Design Tokens](./references/design-tokens.md).
-   * Surface patterns and accessible primitives for the six product surfaces — see
-     [Full Product Design System](./references/full-product-design-system.md).
-3. **Validate Against the Taste vs. Slop Matrix** — refer to the
-   [Taste vs. Slop Matrix](./references/taste-vs-slop-matrix.md):
-   * **Modern patterns encouraged when done right**:
-     * Glassmorphism: strictly for floating chrome, high fill opacity (`80-90%`), hairline
-       border, text contrast >= 4.5:1.
-     * Bento layouts: high data density, real functional widgets, zero decorative 3D balls.
-     * Gradients: subtle single-source rim lighting guiding attention to primary actions.
-   * **Slop strictly rejected**: illegible 10% glass opacity, giant saturated nebula blobs,
-     800ms sluggish animations, buzzword copy.
+### Responsive behavior
+Design narrow screens deliberately rather than shrinking desktop (see [Mobile, Touch & Native Ergonomics](./references/mobile-touch-and-native.md)):
+* define what stacks, scrolls, collapses, becomes a sheet, or becomes a separate step;
+* retain primary action and progress/context;
+* avoid horizontal scrolling except intentionally scrollable data regions;
+* validate at narrow mobile, common laptop, and wide desktop widths.
 
 ---
 
-### Phase 4: Production Implementation & Master Craft Verification
-1. **Component Engineering** — refer to the
-   [Master Craft Benchmark](./references/master-ui-craft-benchmark.md),
-   [Engineering Craft Recipes](./references/engineering-craft-recipes.md) and
-   [Framework Integrations](./references/framework-integrations.md):
-   * Emit idiomatic code matching the detected stack: React (TSX/hooks), Vue (`<script setup>`),
-     Svelte 5 (runes), or Vanilla Web Platform (zero-dependency HTML/CSS/JS). When targeting
-     mobile/desktop native (React Native, Flutter, SwiftUI), apply platform mappings from
-     [Mobile, Touch & Native Ergonomics](./references/mobile-touch-and-native.md).
-   * Generate modular, clean components following the discovered repo conventions.
-   * **Motion & Timing**: `80-120ms` state feedback, `200-240ms` enter, `100-140ms` exit
-     (asymmetric exit rule), `cubic-bezier(0.16, 1, 0.3, 1)` or critical springs (damping ratio
-     `zeta >= 0.85`). GPU compositor thread isolation — animate `transform`/`opacity` only,
-     never `transition: all`.
-   * **Reduced Motion**: always ship a `@media (prefers-reduced-motion: reduce)` fallback.
-   * **Typography Precision**: negative tracking on headings, `font-variant-numeric: tabular-nums`
-     for data cells, `text-wrap: balance` on headlines.
-   * **Concentric Radiuses**: `R_outer = R_inner + Padding`.
-   * **5-State Completeness**: `default`, `hover`, `active` (scale 0.98), `focus-visible`
-     (2px ring), `disabled`.
-   * **Touch Ergonomics**: minimum `44x44px` physical tap targets.
-2. **Usability & Accessibility Audit (WCAG 2.2 AA)** — refer to
-   [UX Heuristics](./references/ux-heuristics.md) and the
-   [Accessibility Checklist](./references/accessibility-checklist.md):
-   * 4.5:1 text contrast, 3:1 on UI component boundaries and graphical objects.
-   * Focus rings with 3:1 contrast against both the element and the background canvas.
-   * Trap-free modal keyboard navigation with `Escape` dismiss and trigger focus restoration.
-   * Honour response-latency budgets and never convey state by colour alone.
-3. **Walkthrough & Verification**:
-   * Verify zero console errors and zero layout shifts.
-   * Verify the emitted palette with `scripts/check_contrast.py` before claiming AA compliance.
-   * Acknowledge the limits: the gates check *declared* tokens and *textual* markers — they do not
-     certify an arbitrary generated UI as WCAG 2.2 AA compliant. Do not claim WCAG compliance off
-     a token/example gate; claim only what a specific check actually ran
-     ([Verification Scope & Fast Path](./references/verification-scope.md)).
-   * Close with the **Output Contract** or **Compact Completion Report** below — no un-audited claims.
+## 5. Implementation standard
 
-### Output Contract
+* Build the semantic structure and real interaction model first; then style.
+* Keep components small around user concepts, not arbitrary visual fragments. Keep quiz/template data separate from rendering.
+* Use framework-native state patterns. Do not add a state library for a local chooser.
+* Use semantic controls (`button`, `label`, `input`, `dialog`, `nav`, headings) rather than clickable divs (see [Master Craft Benchmark](./references/master-ui-craft-benchmark.md)).
+* Give every async action visible pending/success/error handling. Prevent duplicate submission.
+* Use stable keys, preserve focus after DOM changes, and return focus when dialogs close.
+* Do not fabricate analytics, testimonials, performance claims, user data, or "AI recommendations." Use realistic mock content only when mock data is requested or unavoidable, and label it in development/demo contexts.
+* Do not introduce external assets, trackers, or dependencies unless justified by the existing project and task.
 
-End consequential builds (Full Pipeline, Fast Path, Time-boxed) with this audit contract:
+### Accessibility baseline
+Meet WCAG 2.2 AA contrast targets (see [Accessibility Checklist](./references/accessibility-checklist.md) and [UX Heuristics](./references/ux-heuristics.md)):
+* 4.5:1 normal text, 3:1 large text and UI boundaries.
+* Every function is keyboard operable; focus order follows visual/task order.
+* Use visible `:focus-visible` indicators with sufficient contrast.
+* Targets are at least 44 × 44 CSS pixels when touch is relevant.
+* Label controls, inputs, progress, icons, errors, and dynamic status appropriately; never rely on color alone.
+* Dialogs trap focus, close on Escape where appropriate, restore trigger focus, and expose a real accessible name.
+* Reduced-motion support is mandatory.
+
+### Verification
+Before claiming completion:
+* run the repository's relevant build, typecheck, lint, and tests;
+* inspect desktop and mobile layouts; exercise keyboard-only navigation;
+* test default, hover, focus, disabled, loading, empty, error, and success states that apply;
+* verify quiz scoring/recommendation paths and template preview/apply/reset flows with representative answers;
+* check the console for errors and avoid layout shift introduced by the work.
+* Report only checks actually run. If environment/tooling prevented a check, say so plainly.
+
+---
+
+## Response contract
+
+For a build, end with:
 
 ```text
-Archetype Lens   : <chosen lens> — and the one-line rationale
-Stack detected   : <framework> + <styling engine>
-Layout           : <option picked or inferred architecture>
-Density          : operational / balanced / guided
-Tokens           : canvas <hex> · surface <hex> · accent <hex> · muted <hex> (<ratio>:1, verified)
-Accessibility    : focus-visible [yes] · reduced-motion [yes] · tap targets >=44px [yes]
-                   · text contrast >=4.5:1 [verified by scripts/check_contrast.py]
-Reference used   : <examples/*.html mirrored, if any>
-Files changed    : <list>
-Deliberate breaks: <any rule intentionally violated, and why — empty is the goal>
-Execution mode   : full-pipeline / fast-path / time-boxed — and why
-Interview        : conducted [yes/no] · if skipped, reason: <one line>
+Mode             : direct / fast path / discovery — reason
+Outcome          : <what the surface enables>
+Pattern          : <chosen archetype and why>
+Design direction : <visual/density choice>
+Interaction model: <key flow; quiz/template logic if used>
+Responsive plan  : <mobile behavior>
+Accessibility    : <implemented provisions; verified items only>
+Motion           : <purpose and reduced-motion behavior>
+Files changed    : <paths>
+Verification     : <commands/checks actually run and results>
+Assumptions      : <only unresolved assumptions>
 ```
 
-#### Compact Completion Report (Direct Phase 4)
-
-For single components, one-line style tweaks, and direct fixes, do not emit the full 11-line contract. Use this compact report:
-
+#### Compact Completion Report (Direct Mode)
+For tiny, unambiguous changes, emit the compact report:
 ```text
-Mode             : Direct Phase 4 (<one-line reason>)
+Mode             : Direct (<one-line reason>)
 Files changed    : <list>
 Checks run       : contrast (<ratio>:1, verified) · focus-visible [yes] · reduced-motion [yes]
 Deliberate breaks: <any rule intentionally violated, or "none">
+```
+
+For a design-only request, provide: the brief, 2–3 directions when discovery is warranted, recommended direction, information architecture, interaction/state model, and an implementation-ready prompt. Do not pretend code or verification occurred.
+
+---
+
+## Implementation-ready prompt template
+
+Use this prompt when handing Turtleneck a concrete build task:
+
+```text
+Use the turtleneck skill in [fast path/discovery] mode. Inspect the existing project before editing.
+
+Build: [surface and primary user outcome].
+Users: [audience/context].
+Required content/data: [real schema or fixtures].
+Platform/constraints: [framework, routes, dependencies, deadline].
+
+The experience must [choose one: let users browse templates / guide unsure users through a 3–7 question recommender / support both].
+Templates/options: [list, categories, or domain].
+For a recommender, make every question change a deterministic, explainable result. Preserve Back,
+progress, answers, accessible keyboard navigation, and an editable result. For templates, provide
+search/filter when useful, a real preview, selected state, and an editable copy after "Use template."
+
+Create an original direction informed by patterns, not a clone of any named site. Use purposeful
+responsive motion, all meaningful UI states, semantic HTML, focus-visible styles, and
+prefers-reduced-motion support. Do not ask more than three questions; if blocked by ambiguity,
+state assumptions and ship the strongest reversible default.
+
+Run the relevant checks. End with Turtleneck's response contract, listing only verification you ran.
 ```
