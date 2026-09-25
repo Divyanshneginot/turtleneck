@@ -11,5 +11,7 @@ venv/
 
 # Turtleneck install output (created by scripts/install.py inside a target project)
 .turtleneck/
+.agents/
 *.turtleneck.bak
 *.turtleneck.bak.*
+
