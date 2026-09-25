@@ -16,12 +16,12 @@
      TURTLENECK UNIFIED DESIGN TOKENS (Obsidian Core System)
      ========================================================================== */
   :root {
-    --canvas: #08090e;
-    --canvas-subtle: #0d0f17;
-    --surface-1: #121520;
-    --surface-2: #181c2b;
-    --surface-3: #20263a;
-    --surface-highlight: #283049;
+    --canvas: #06070a;
+    --canvas-subtle: #0a0c12;
+    --surface-1: #10131d;
+    --surface-2: #161a29;
+    --surface-3: #1e2438;
+    --surface-highlight: #28304a;
 
     --text-primary: #f8fafc;
     --text-secondary: #94a3b8;
@@ -31,9 +31,9 @@
     --border-strong: rgba(255, 255, 255, 0.16);
     --border-focus: #6366f1;
 
-    --accent-primary: #6366f1;
-    --accent-hover: #4f46e5;
-    --accent-glow: rgba(99, 102, 241, 0.15);
+    --accent-indigo: #6366f1;
+    --accent-indigo-hover: #4f46e5;
+    --accent-indigo-glow: rgba(99, 102, 241, 0.22);
     --accent-emerald: #10b981;
     --accent-rose: #f43f5e;
     --accent-amber: #f59e0b;
@@ -74,11 +74,11 @@
   }
 
   ::selection {
-    background: var(--accent-primary);
+    background: var(--accent-indigo);
     color: #ffffff;
   }
 
-  /* 8pt Grid Overlay (Interactive Toggle) */
+  /* 8pt Spatial Grid Overlay */
   body.show-grid::after {
     content: "";
     position: fixed;
@@ -114,8 +114,9 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(8, 9, 14, 0.82);
+    background: rgba(6, 7, 10, 0.85);
     backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--border-subtle);
     padding: 14px 0;
   }
@@ -143,7 +144,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0 16px rgba(99, 102, 241, 0.35);
+    box-shadow: 0 0 16px var(--accent-indigo-glow);
   }
 
   .brand-glyph svg {
@@ -221,17 +222,17 @@
 
   .btn-icon-toggle.active {
     background: rgba(99, 102, 241, 0.15);
-    border-color: var(--accent-primary);
+    border-color: var(--accent-indigo);
     color: #a5b4fc;
   }
 
   .btn-icon-toggle:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
 
   .btn-nav-install {
     background: #ffffff;
-    color: #08090e;
+    color: #06070a;
     font-weight: 600;
     font-size: 13px;
     padding: 7px 16px;
@@ -250,7 +251,7 @@
   }
 
   .btn-nav-install:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
 
   /* ==========================================================================
@@ -262,15 +263,15 @@
     overflow: hidden;
   }
 
-  /* Ambient radial gradient glow */
-  .hero-glow {
+  /* Atmospheric Radial Lighting */
+  .hero-radial-glow {
     position: absolute;
-    top: -120px;
+    top: -160px;
     left: 50%;
     transform: translateX(-50%);
-    width: 800px;
-    height: 480px;
-    background: radial-gradient(circle at center, rgba(99, 102, 241, 0.18) 0%, rgba(59, 130, 246, 0.08) 45%, transparent 70%);
+    width: 900px;
+    height: 520px;
+    background: radial-gradient(ellipse 80% 50% at 50% 20%, rgba(99, 102, 241, 0.2) 0%, rgba(59, 130, 246, 0.08) 45%, transparent 70%);
     pointer-events: none;
     z-index: 0;
   }
@@ -279,25 +280,25 @@
     position: relative;
     z-index: 1;
     text-align: center;
-    max-width: 880px;
+    max-width: 920px;
     margin: 0 auto;
   }
 
-  .hero-pill {
+  .hero-badge-pill {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     padding: 6px 14px;
     border-radius: var(--radius-pill);
-    background: rgba(99, 102, 241, 0.1);
-    border: 1px solid rgba(99, 102, 241, 0.28);
+    background: rgba(99, 102, 241, 0.12);
+    border: 1px solid rgba(99, 102, 241, 0.3);
     color: #c7d2fe;
     font-size: 12px;
     font-weight: 600;
     margin-bottom: 28px;
   }
 
-  .hero-pill-dot {
+  .hero-pill-indicator {
     width: 6px;
     height: 6px;
     border-radius: 50%;
@@ -316,7 +317,7 @@
   }
 
   .hero-title-gradient {
-    background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+    background: linear-gradient(180deg, #ffffff 40%, #94a3b8 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -325,7 +326,7 @@
     font-size: clamp(16px, 2vw, 19px);
     line-height: 1.6;
     color: var(--text-secondary);
-    max-width: 680px;
+    max-width: 700px;
     margin: 0 auto 36px;
     text-wrap: balance;
   }
@@ -341,7 +342,7 @@
 
   .btn-primary-hero {
     background: #ffffff;
-    color: #08090e;
+    color: #06070a;
     font-weight: 600;
     font-size: 14px;
     padding: 12px 24px;
@@ -362,7 +363,7 @@
   }
 
   .btn-primary-hero:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
 
   .btn-secondary-hero {
@@ -387,7 +388,7 @@
   }
 
   .btn-secondary-hero:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
 
   /* Quick Install Bar */
@@ -404,7 +405,7 @@
   }
 
   .install-prompt-symbol {
-    color: var(--accent-primary);
+    color: var(--accent-indigo);
     font-family: var(--font-mono);
     font-size: 13px;
     font-weight: 700;
@@ -441,11 +442,11 @@
   }
 
   .btn-copy-install:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
 
   /* ==========================================================================
-     HERO PRODUCT SHOWCASE: THE INTERACTIVE DESIGN INSPECTOR
+     HERO PRODUCT SHOWCASE: INTERACTIVE DESIGN INSPECTOR
      ========================================================================== */
   .inspector-window {
     background: var(--surface-1);
@@ -453,8 +454,9 @@
     border-radius: var(--radius-xl);
     overflow: hidden;
     margin-top: 56px;
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     text-align: left;
+    position: relative;
   }
 
   .window-topbar {
@@ -532,19 +534,19 @@
   }
 
   .mode-btn:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
 
   /* Stage Body */
   .inspector-stage {
-    padding: 40px;
+    padding: 44px;
     min-height: 380px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
-    background: radial-gradient(circle at center, rgba(30, 35, 52, 0.5) 0%, transparent 80%);
+    background: radial-gradient(circle at center, rgba(30, 35, 52, 0.45) 0%, transparent 80%);
   }
 
   @media (max-width: 640px) {
@@ -555,6 +557,7 @@
   .specimen-slop-card {
     background: linear-gradient(135deg, rgba(168, 85, 247, 0.12) 0%, rgba(236, 72, 153, 0.08) 100%);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid rgba(192, 132, 252, 0.25);
     border-radius: 20px;
     padding: 32px;
@@ -614,7 +617,7 @@
     padding: 28px 32px;
     max-width: 560px;
     width: 100%;
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     position: relative;
   }
 
@@ -725,7 +728,7 @@
   }
 
   .craft-action-btn:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
 
   .craft-aux-tag {
@@ -788,7 +791,7 @@
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--accent-primary);
+    color: var(--accent-indigo);
     margin-bottom: 12px;
     display: block;
   }
@@ -850,7 +853,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--accent-primary);
+    color: var(--accent-indigo);
   }
 
   .bento-card h3 {
@@ -900,7 +903,7 @@
   }
 
   .test-btn:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
   }
 
   .state-indicators {
@@ -975,7 +978,7 @@
   .arch-tab.active {
     background: var(--surface-1);
     color: var(--text-primary);
-    border-bottom: 2px solid var(--accent-primary);
+    border-bottom: 2px solid var(--accent-indigo);
   }
 
   .archetype-display-area {
@@ -1150,7 +1153,7 @@
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--accent-primary);
+    color: var(--accent-indigo);
     font-weight: 700;
   }
 
@@ -1262,12 +1265,12 @@
 
   <!-- Hero Section -->
   <section class="hero-section">
-    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-radial-glow" aria-hidden="true"></div>
     <div class="wrap hero-content">
       
-      <div class="hero-pill">
-        <span class="hero-pill-dot" aria-hidden="true"></span>
-        <span>The AI Agent Skill for Senior Product Design</span>
+      <div class="hero-badge-pill">
+        <span class="hero-pill-indicator" aria-hidden="true"></span>
+        <span>The Autonomous Product Design Skill for AI Agents</span>
       </div>
 
       <h1 class="hero-title">
@@ -1276,7 +1279,7 @@
       </h1>
 
       <p class="hero-subtitle">
-        AI coding agents default to digital slop: murky purple gradients, unreadable glassmorphism, and 800ms bouncy springs. Turtleneck injects principal-level product design into your agent — enforcing typographic tension, 5-state completeness, tactile micro-feedback, and verified WCAG 2.2 AA contrast on Turn 1.
+        AI coding agents default to digital slop: murky gradients, unreadable glassmorphism, and sluggish animations. Turtleneck injects principal-level product design into your agent — enforcing typographic tension, 5-state completeness, tactile micro-feedback, and verified WCAG 2.2 AA contrast on Turn 1.
       </p>
 
       <div class="hero-actions">
@@ -1306,7 +1309,7 @@
           </div>
 
           <div class="window-title">
-            <span>turtleneck-inspector // telemetry-cluster-v2</span>
+            <span>turtleneck-inspector // telemetry-cluster-v2.spec</span>
           </div>
 
           <div class="mode-switcher" role="tablist" aria-label="Design comparison selector">
@@ -1345,25 +1348,41 @@
 
       <div class="bento-grid">
         
-        <!-- Pillar 1: Typographic Tension -->
+        <!-- Pillar 1: Vernacular Harmony -->
         <article class="bento-card">
           <div>
             <div class="bento-icon-wrap" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
             </div>
-            <h3 style="margin-top: 14px;">Typographic Scale Tension</h3>
+            <h3 style="margin-top: 14px;">Vernacular Harmony</h3>
             <p>
-              Scale ratio &ge; 4:1. High visual collision between confident bold display titles and precision monospace telemetry badges. Never uniform bland sans-serif blobs.
+              100% commitment to ONE coherent design dialect. Zero aesthetic collage: no mixing editorial serifs with hacker terminals and pastel blur on one surface.
             </p>
           </div>
           <div class="bento-widget">
-            <div style="font-family: var(--font-mono); font-size: 10px; color: var(--accent-primary); margin-bottom: 4px;">RATIO: 4.2:1 DISPLAY COLLISION</div>
-            <div style="font-size: 24px; font-weight: 800; letter-spacing: -0.03em; color: #ffffff;">Telemetry Node</div>
-            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); margin-top: 2px;">NODE_ID: 0x8849F &bull; REGION: US_EAST_1</div>
+            <div style="font-family: var(--font-mono); font-size: 10px; color: var(--accent-indigo); margin-bottom: 4px;">SYSTEM DIALECT: OBSIDIAN DEVTOOL</div>
+            <div style="font-size: 13px; color: var(--text-primary); font-weight: 600;">Unified border radii &bull; Cohesive scale &bull; Zero trope collision</div>
           </div>
         </article>
 
-        <!-- Pillar 2: 5-State Completeness -->
+        <!-- Pillar 2: Frequency-Gated Timing -->
+        <article class="bento-card">
+          <div>
+            <div class="bento-icon-wrap" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3 style="margin-top: 14px;">Frequency-Gated Timing</h3>
+            <p>
+              0ms animation on high-frequency keyboard operations. 80–120ms atomic micro-interactions on buttons. Custom ease-out curves; never sluggish ease-in.
+            </p>
+          </div>
+          <div class="bento-widget" style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">KEYBOARD ACTIONS:</div>
+            <span style="font-family: var(--font-mono); font-size: 11px; color: #10b981; font-weight: 700;">0ms INSTANT</span>
+          </div>
+        </article>
+
+        <!-- Pillar 3: 5-State Completeness -->
         <article class="bento-card">
           <div>
             <div class="bento-icon-wrap" aria-hidden="true">
@@ -1371,7 +1390,7 @@
             </div>
             <h3 style="margin-top: 14px;">5-State Completeness</h3>
             <p>
-              Every control declares default, hover, active (<code>scale(0.98)</code>), <code>:focus-visible</code> (2px solid, 2px offset), and disabled/loading states.
+              Every control declares default, hover, active (<code>scale(0.97)</code>), <code>:focus-visible</code> (2px solid, 2px offset), and disabled/loading states.
             </p>
           </div>
           <div class="bento-widget state-test-box">
@@ -1387,24 +1406,24 @@
           </div>
         </article>
 
-        <!-- Pillar 3: Physical Tactile Feedback -->
+        <!-- Pillar 4: Layered Atmospheric Elevation -->
         <article class="bento-card">
           <div>
             <div class="bento-icon-wrap" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg>
             </div>
-            <h3 style="margin-top: 14px;">90ms Tactile Physics</h3>
+            <h3 style="margin-top: 14px;">Layered Elevation Tokens</h3>
             <p>
-              Atomic compositor-only micro-interactions on <code>transform</code> and <code>opacity</code>. Zero <code>transition: all</code>. Synthesized Web Audio mechanical acoustic feedback.
+              Tiered obsidian/slate surfaces with razor-sharp 1px inner borders. High optical depth without muddy glass blur or washed-out purple gradients.
             </p>
           </div>
-          <div class="bento-widget" style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary);">AUDIO SYNTHESIS:</div>
-            <span style="font-family: var(--font-mono); font-size: 11px; color: #10b981; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16,185,129,0.3); padding: 2px 8px; border-radius: 4px;">WEBAUDIO ONLINE</span>
+          <div class="bento-widget" style="font-family: var(--font-mono); font-size: 11px; display: flex; justify-content: space-between;">
+            <span style="color: var(--text-muted);">SURFACE TIERS:</span>
+            <span style="color: #cbd5e1;">#08090e &rarr; #10131d &rarr; #161a29</span>
           </div>
         </article>
 
-        <!-- Pillar 4: Authentic Domain Density -->
+        <!-- Pillar 5: Reality-Grounded Domain Density -->
         <article class="bento-card">
           <div>
             <div class="bento-icon-wrap" aria-hidden="true">
@@ -1426,7 +1445,7 @@
           </div>
         </article>
 
-        <!-- Pillar 5: Verified WCAG 2.2 AA -->
+        <!-- Pillar 6: Verified WCAG 2.2 AA -->
         <article class="bento-card">
           <div>
             <div class="bento-icon-wrap" aria-hidden="true">
@@ -1440,22 +1459,6 @@
           <div class="bento-widget" style="font-family: var(--font-mono); font-size: 12px; display: flex; justify-content: space-between;">
             <span style="color: var(--text-secondary);">Body Text: 18.6:1</span>
             <span style="color: #10b981; font-weight: 700;">AAA PASS</span>
-          </div>
-        </article>
-
-        <!-- Pillar 6: Strict 8pt Spatial Grid -->
-        <article class="bento-card">
-          <div>
-            <div class="bento-icon-wrap" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-            </div>
-            <h3 style="margin-top: 14px;">Strict 8pt Spatial Grid</h3>
-            <p>
-              Mathematical rhythm across padding, margin, layout, and component sizing. Harmonious optical balance that holds together on every viewport.
-            </p>
-          </div>
-          <div class="bento-widget" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);">
-            SPATIAL STEPS: 8px &bull; 16px &bull; 24px &bull; 32px &bull; 48px
           </div>
         </article>
 
