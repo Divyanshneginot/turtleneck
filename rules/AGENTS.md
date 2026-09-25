@@ -4,11 +4,14 @@ When asked to design, build, review, or modernize interfaces, components, or pag
 
 ### Autonomous Craft Mandate (Do Not Wait To Be Asked)
 The user must NEVER have to ask you to "make it look good", "add craft", "make it interactive", or "elevate the design". Deliver on Turn 1:
-1. **Typographic scale tension**: Dramatic ratio (>=4:1) between large display type (e.g. sharp display serif or brutalist display sans) and minute monospace metadata tags; never uniform bland sans-serif blobs.
-2. **5-state interactive completeness**: Every control must implement default, hover, active (`scale(0.98)`), `:focus-visible` (2px solid, 2px offset, >=3:1 contrast), and disabled/loading/confirmation states.
-3. **Physical tactile feedback**: Instant 80–120ms micro-interactions on compositor-only properties (`transform`, `opacity`), zero `transition: all`, and synthesized Web Audio mechanical acoustics where appropriate.
-4. **Authentic domain density**: Populate interfaces with real, high-fidelity operational data, domain terminology, and state badges — never generic "Lorem ipsum", "Title here", or empty card shells.
-5. **Architectural anti-slop discipline**: Strict 8pt spatial grid, verified WCAG 2.2 AA contrast (>=4.5:1 text, >=3:1 controls), and zero commodity AI slop (no washed-out purple gradients, frosted glass blur, or sluggish 800ms bouncy springs).
+1. **Vernacular Harmony (Zero Aesthetic Collage)**: Commit 100% to ONE coherent visual dialect (one of the 5 Turtleneck archetypes). Never mix conflicting aesthetic tropes (e.g. never mash 18th-century editorial drop caps with a hacker terminal and pink dashed tape on the same surface). Every container, border radius, type pairing, and token on a given surface must speak the exact same language.
+2. **Frequency-Gated Interaction Timing**: Never animate high-frequency actions (100+ times/day = 0ms; no open/close animation on command palettes, keyboard shortcuts, or rapid tabs). Micro-interactions must settle in 80–120ms with custom ease-out (`cubic-bezier(0.16, 1, 0.3, 1)`). Never use `ease-in` on UI. Never animate from `scale(0)` (start at `scale(0.95)` with opacity). Popovers and dropdowns must be origin-aware (`transform-origin: var(--origin)`).
+3. **Atmospheric Layered Elevation**: True dark mode uses tiered elevation tokens (`--canvas: #08090e`, `--surface-1: #121520`, `--surface-2: #181c2b`, `--surface-3: #20263a`), razor-sharp 1px inner borders (`rgba(255,255,255,0.08)`), and subtle ambient radial lighting (opacity 0.08–0.15). Zero washed-out purple fills or low-opacity blurry glassmorphism that destroys contrast.
+4. **Typographic scale tension**: Dramatic ratio (>=4:1) between large display type and precision monospace metadata tags; never uniform bland sans-serif blobs.
+5. **5-state interactive completeness**: Every control must implement default, hover, active (`scale(0.97)`), `:focus-visible` (2px solid, 2px offset, >=3:1 contrast), and disabled/loading/confirmation states.
+6. **Physical tactile feedback**: Instant 80–120ms micro-interactions on compositor-only properties (`transform`, `opacity`), zero `transition: all`, and synthesized Web Audio mechanical acoustics where appropriate.
+7. **Authentic domain density**: Populate interfaces with real, high-fidelity operational data, domain terminology, and state badges — never generic "Lorem ipsum", "Title here", or empty card shells.
+8. **Architectural anti-slop discipline**: Strict 8pt spatial grid, verified WCAG 2.2 AA contrast (>=4.5:1 text, >=3:1 controls), and zero commodity AI slop.
 
 
 ---

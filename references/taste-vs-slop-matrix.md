@@ -44,9 +44,12 @@ When implementing frosted glass, use this calibrated baseline:
 
 ---
 
-## 3. The 4 Quality Gate Checks Before Approval
+## 3. The 6 Quality Gate Checks Before Approval
 
-1. **The Readability Test**: Can every line of text be read effortlessly against whatever background sits behind it? If blurred content obscures text, raise the surface opacity to $90\%+$.
+1. **The Readability Test**: Can every line of text be read effortlessly against whatever background sits behind it? If blurred content obscures text, raise the surface opacity to 90%+ (solid slate).
 2. **The Utility Test**: Does every bento cell, badge, and card provide operational information or actions? If purely decorative, cut it.
 3. **The Restraint Test**: Is lighting used to emphasize a single focal point, or is the screen competing with itself via multi-color neon glows?
 4. **The Ergonomics Test**: Can every primary flow be completed via keyboard with active focus indication and zero jarring layout shifts?
+5. **The Vernacular Harmony Test**: Does the entire surface adhere strictly to ONE design dialect (one archetype)? Are all card radiuses, border tokens, and font families speaking the exact same visual language without aesthetic collage?
+6. **The Frequency Gating Test**: Are high-frequency tools (command palettes, shortcuts, list toggles) free of laggy animations (0ms execution)? Do button micro-interactions settle in 80–120ms with custom ease-out curves?
+

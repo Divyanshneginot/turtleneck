@@ -43,3 +43,31 @@ When inspired by an award-winning site:
 1. **Never copy the visual metaphor**: If a reference uses an audio console, do NOT build an audio console for a database tool; use a schema topography map or query execution timeline.
 2. **Extract the structural logic**: Extract the *scale tension ratio*, the *density cadence*, and the *tactile feedback duration*, not the text or brand identity.
 3. **Fuse four distinct lineages**: Combine material texture from Source A (e.g. vintage horology), interaction mechanics from Source B (e.g. video scrubber), layout architecture from Source C (e.g. dense financial terminal), and typography tension from Source D (e.g. Swiss editorial poster).
+
+---
+
+## 4. Fundamental Interface Craft & Interaction Physics
+
+### A. The Vernacular Harmony Law
+A product surface must commit 100% to **ONE coherent visual dialect** (one of the 5 Turtleneck archetypes). Never produce an aesthetic collage: do NOT combine 18th-century editorial drop caps with a hacker terminal and pink dashed tape on the same surface. Every container, border radius, type pairing, and token on a given surface must speak the exact same language.
+
+### B. Frequency-Gated Interaction Timing
+* **High-Frequency Actions (100+ times/day)**: Command palettes, keyboard shortcuts, rapid tabs. **0ms animation**. Never animate keyboard-initiated toggles. Instant execution is mandatory.
+* **Micro-Interactions (tens of times/day)**: 80–120ms atomic micro-transitions on compositor-only properties (`transform`, `opacity`).
+* **Occasional Transitions**: 160–250ms with custom punchy ease-out (`cubic-bezier(0.16, 1, 0.3, 1)`).
+* **Never use `ease-in` on UI**: It starts sluggishly and causes perceived delay. Use `ease-out` so elements move immediately.
+* **Never animate from `scale(0)`**: Nothing in physical reality appears from absolute zero. Animate from `scale(0.95)` with opacity.
+* **Origin-Aware Popovers**: Dropdowns and popovers must emerge from their trigger element (`transform-origin: var(--origin)`), not screen center.
+* **Interruptible Physics**: Interactive gestures must maintain velocity and reverse smoothly without restarting from zero.
+
+### C. Atmospheric Layered Elevation (Anti-Slop Dark Canvas)
+True dark mode does not use washed-out purple fills or low-opacity blurry glassmorphism that destroys contrast. Use tiered elevation:
+* **Base Canvas**: `#08090e` to `#0b0d13`.
+* **Surface Layer 1 (Cards)**: `#121520` with 1px border `rgba(255, 255, 255, 0.08)`.
+* **Surface Layer 2 (Raised Inputs/Menus)**: `#181c2b` with 1px border `rgba(255, 255, 255, 0.12)`.
+* **Surface Layer 3 (Hover/Active)**: `#20263a`.
+
+### D. Reality-Grounded Domain Density
+Interfaces must encounter reality immediately. Never design with empty card frames or "Lorem ipsum". Populate with authentic operational data: cluster IDs, p99 latencies, ISO timestamps, and realistic state tags.
+
+
