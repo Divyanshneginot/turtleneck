@@ -3,29 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Turtleneck Specimen — Accessible Form Validation States</title>
+  <title>AURELIUS & CO. — Sovereign Treasury & Capital Routing Gateway</title>
   <style>
     :root {
-      --canvas: #f6f9fc;
+      --canvas: #fbfbfa;
       --surface: #ffffff;
-      --surface-elevated: #ffffff;
-      --text-primary: #0a2540;
-      --text-secondary: #425466;
-      --text-muted: #627489;
-      --focus-ring: #6259ff;
-      --accent: #6259ff;
-      --accent-hover: #4f46e5;
-      --border-subtle: #e3e8ee;
-      --border-strong: #7f97b5;
-      --error-ink: #b91c1c;
+      --surface-active: #efedea;
+      --border-subtle: #e9e9e8;
+      --border-strong: #d3d1cb;
+      --text-primary: #1c1917;
+      --text-secondary: #44403c;
+      --text-muted: #78716c;
+      --focus-ring: #1b75cf;
+      --accent: #1b75cf;
+      --accent-hover: #1660ab;
+      --gold-ink: #854d0e;
+      --gold-bg: rgba(234, 179, 8, 0.08);
+      --error-ink: #991b1b;
       --error-bg: #fef2f2;
       --error-border: #f87171;
-      --success-ink: #15803d;
-      --success-bg: #f0fdf4;
-      --success-border: #86efac;
+      --font-serif: "Newsreader", "Playfair Display", Georgia, "Times New Roman", serif;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: "SF Mono", ui-monospace, "CommitMono", monospace;
     }
 
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -34,45 +36,148 @@
     body {
       background-color: var(--canvas);
       color: var(--text-primary);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      background-image: 
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(27, 117, 207, 0.03), transparent 70%),
+        linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 72px 72px, 72px 72px;
+    }
+
+    header.ledger-masthead {
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(251, 251, 250, 0.9);
+      backdrop-filter: blur(12px);
+      padding: 18px 48px;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      padding: 24px;
-      line-height: 1.5;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .brand-mark {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+
+    .ledger-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--gold-ink);
+      background: var(--gold-bg);
+      border: 1px solid rgba(133, 77, 14, 0.2);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .masthead-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+    }
+
+    main.workspace {
+      max-width: 980px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 48px 24px;
+      flex: 1;
+    }
+
+    .hero-lead {
+      margin-bottom: 36px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 28px;
+    }
+
+    .meta-lead {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    h1.hero-title {
+      font-family: var(--font-serif);
+      font-size: 42px;
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    p.hero-desc {
+      color: var(--text-secondary);
+      font-size: 16px;
+      max-width: 640px;
+    }
+
+    /* Two-Column Ledger Layout */
+    .ledger-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (max-width: 820px) {
+      .ledger-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     .card {
-      max-width: 540px;
-      width: 100%;
       background: var(--surface);
       border: 1px solid var(--border-subtle);
-      border-radius: 8px;
+      border-radius: 6px;
       padding: 32px;
-      box-shadow: 0 4px 12px rgba(10, 37, 64, 0.05);
+      box-shadow: 0 4px 16px rgba(28, 25, 23, 0.03);
     }
 
-    h1 {
+    .card-title {
+      font-family: var(--font-serif);
       font-size: 20px;
       font-weight: 600;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.01em;
       margin-bottom: 6px;
     }
 
-    p.subtitle {
-      color: var(--text-secondary);
-      font-size: 14px;
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
       margin-bottom: 24px;
     }
 
+    /* Validation Summary Banner */
     .alert-summary {
       background: var(--error-bg);
       border: 1px solid var(--error-border);
       border-radius: 6px;
-      padding: 14px 16px;
-      margin-bottom: 24px;
+      padding: 16px 18px;
+      margin-bottom: 28px;
       display: none;
     }
 
@@ -80,18 +185,18 @@
       display: block;
     }
 
-    .alert-summary h2 {
+    .alert-summary-title {
       font-size: 14px;
       font-weight: 600;
       color: var(--error-ink);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .alert-summary ul {
-      margin-left: 20px;
+      margin-left: 24px;
       font-size: 13px;
       color: var(--error-ink);
     }
@@ -102,25 +207,59 @@
       font-weight: 500;
     }
 
-    .form-group {
+    /* Currency Switcher Pill */
+    .currency-segmented {
+      display: inline-flex;
+      background: var(--surface-active);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 3px;
       margin-bottom: 20px;
+      gap: 2px;
+    }
+
+    .currency-btn {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 4px;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      min-height: 38px;
+      transition: background-color 0.1s ease-out, color 0.1s ease-out;
+    }
+
+    .currency-btn[data-active="true"] {
+      background: var(--surface);
+      color: var(--text-primary);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 22px;
     }
 
     label {
       display: block;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
       color: var(--text-primary);
       margin-bottom: 6px;
     }
 
-    .hint {
+    .field-hint {
       font-size: 12px;
       color: var(--text-muted);
       margin-bottom: 6px;
     }
 
-    input[type="text"], input[type="email"] {
+    input[type="text"] {
       width: 100%;
       min-height: 44px;
       background: var(--surface);
@@ -129,11 +268,11 @@
       color: var(--text-primary);
       padding: 10px 14px;
       font-size: 14px;
-      font-family: inherit;
+      font-family: var(--font-sans);
       transition: border-color 0.1s ease-out, background-color 0.1s ease-out;
     }
 
-    input:hover {
+    input[type="text"]:hover {
       border-color: var(--border-strong);
     }
 
@@ -147,7 +286,7 @@
       background-color: #fffafb;
     }
 
-    .error-msg {
+    .error-inline {
       display: none;
       align-items: center;
       gap: 6px;
@@ -157,40 +296,89 @@
       margin-top: 6px;
     }
 
-    .form-group[data-error="true"] .error-msg {
+    .form-group[data-error="true"] .error-inline {
       display: flex;
     }
 
-    .btn-submit {
+    /* Receipt Breakdown Sidebar */
+    .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 24px;
+    }
+
+    .summary-title {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 12px;
+    }
+
+    .ledger-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .ledger-table td {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      font-size: 13px;
+    }
+
+    .ledger-table td:last-child {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .ledger-total {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      border-top: 1px solid var(--border-strong);
+      padding-top: 12px;
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .ledger-total span:last-child {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Tactile CTA */
+    button.btn-execute {
       width: 100%;
       min-height: 44px;
-      font-family: inherit;
-      font-size: 14px;
-      font-weight: 600;
       background: var(--accent);
       color: #ffffff;
       border: 1px solid transparent;
       border-radius: 6px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 6px rgba(27, 117, 207, 0.25);
       transition: background-color 0.1s ease-out, transform 0.1s ease-out;
     }
 
-    .btn-submit:hover {
+    button.btn-execute:hover {
       background: var(--accent-hover);
     }
 
-    .btn-submit:active {
+    button.btn-execute:active {
       transform: scale(0.98);
-    }
-
-    .btn-submit:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -198,103 +386,159 @@
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
       }
     }
   </style>
 </head>
 <body>
-  <main class="card">
-    <h1>Invoice Routing Profile</h1>
-    <p class="subtitle">Demonstrates accessible validation summary, input error states, aria-describedby links, and tap targets.</p>
+  <header class="ledger-masthead">
+    <div class="brand-group">
+      <span class="brand-mark">AURELIUS &amp; CO.</span>
+      <span class="ledger-badge">TREASURY GATEWAY</span>
+    </div>
+    <div class="masthead-meta">
+      SETTLEMENT LEDGER · RTGS PROTOCOL
+    </div>
+  </header>
 
-    <div id="error-summary" class="alert-summary" role="alert" aria-labelledby="summary-title" tabindex="-1">
-      <h2 id="summary-title">
+  <main class="workspace">
+    <div class="hero-lead">
+      <span class="meta-lead">DISBURSEMENT ARCHITECTURE &amp; RECONCILIATION</span>
+      <h1 class="hero-title">Capital Routing Instruction</h1>
+      <p class="hero-desc">Direct institutional wire execution with automated sovereign tax clearance and multi-signatory escrow locking.</p>
+    </div>
+
+    <!-- Accessible Validation Summary -->
+    <div id="error-summary" class="alert-summary" role="alert" aria-labelledby="summary-heading" tabindex="-1">
+      <div id="summary-heading" class="alert-summary-title">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="12" cy="12" r="10"></circle>
           <line x1="12" y1="8" x2="12" y2="12"></line>
           <line x1="12" y1="16" x2="12.01" y2="16"></line>
         </svg>
-        Please correct 2 errors to continue
-      </h2>
+        Action required: 2 errors must be corrected
+      </div>
       <ul>
-        <li><a href="#company-name">Company name is required</a></li>
-        <li><a href="#billing-email">Billing email address must be a valid email</a></li>
+        <li><a href="#beneficiary-name">Beneficiary legal entity name is required</a></li>
+        <li><a href="#iban-code">IBAN / SWIFT identifier must be valid format</a></li>
       </ul>
     </div>
 
-    <form id="billing-form" novalidate>
-      <div id="group-company" class="form-group" data-error="false">
-        <label for="company-name">Legal Entity / Company Name</label>
-        <p id="company-hint" class="hint">As registered on tax filings.</p>
-        <input id="company-name" type="text" autocomplete="organization" aria-describedby="company-hint company-error" aria-required="true">
-        <div id="company-error" class="error-msg">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-          </svg>
-          Company name is required.
+    <div class="ledger-grid">
+      <section class="card" aria-labelledby="form-card-title">
+        <h2 id="form-card-title" class="card-title">Transfer Specifications</h2>
+        <p class="card-desc">Enter certified legal entity identifier and correspondent banking routes.</p>
+
+        <form id="routing-form" novalidate>
+          <div class="currency-segmented" role="radiogroup" aria-label="Settlement Currency">
+            <button type="button" class="currency-btn" data-active="true" role="radio" aria-checked="true">USD</button>
+            <button type="button" class="currency-btn" data-active="false" role="radio" aria-checked="false">EUR</button>
+            <button type="button" class="currency-btn" data-active="false" role="radio" aria-checked="false">GBP</button>
+            <button type="button" class="currency-btn" data-active="false" role="radio" aria-checked="false">CHF</button>
+          </div>
+
+          <div id="group-name" class="form-group" data-error="false">
+            <label for="beneficiary-name">Legal Beneficiary Name</label>
+            <p id="name-hint" class="field-hint">Must exactly match corporate registration certificate.</p>
+            <input id="beneficiary-name" type="text" autocomplete="organization" aria-describedby="name-hint name-err" aria-required="true">
+            <div id="name-err" class="error-inline">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              Beneficiary corporate name is required.
+            </div>
+          </div>
+
+          <div id="group-iban" class="form-group" data-error="false">
+            <label for="iban-code">IBAN or Routing Swift Code</label>
+            <p id="iban-hint" class="field-hint">International Bank Account Number (e.g. GB29NWBK60161331926819).</p>
+            <input id="iban-code" type="text" autocomplete="off" style="font-family:var(--font-mono);" aria-describedby="iban-hint iban-err" aria-required="true">
+            <div id="iban-err" class="error-inline">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              Enter a valid IBAN or SWIFT routing code.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="reference-memo">Ledger Memo &amp; Reference (Optional)</label>
+            <input id="reference-memo" type="text" placeholder="SERIES-C-DIVIDEND-Q3" autocomplete="off">
+          </div>
+
+          <button type="submit" class="btn-execute">
+            Authenticate &amp; Dispatch Wire ($2,400,000.00)
+          </button>
+        </form>
+      </section>
+
+      <!-- Ledger Summary Sidebar -->
+      <aside class="summary-card" aria-labelledby="summary-title">
+        <h2 id="summary-title" class="summary-title">Disbursement Audit</h2>
+        <table class="ledger-table">
+          <tbody>
+            <tr>
+              <td>Gross Allocation</td>
+              <td>$2,400,000.00</td>
+            </tr>
+            <tr>
+              <td>Correspondent Fee (Fedwire)</td>
+              <td>$45.00</td>
+            </tr>
+            <tr>
+              <td>Escrow Reserve Holdback (1%)</td>
+              <td>$24,000.00</td>
+            </tr>
+            <tr>
+              <td>Sovereign Tax Withholding</td>
+              <td>$0.00</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="ledger-total">
+          <span>Net Disbursed</span>
+          <span>$2,375,955.00</span>
         </div>
-      </div>
-
-      <div id="group-email" class="form-group" data-error="false">
-        <label for="billing-email">Accounts Payable Email</label>
-        <p id="email-hint" class="hint">Invoices and receipt PDFs will be dispatched here.</p>
-        <input id="billing-email" type="email" autocomplete="email" aria-describedby="email-hint email-error" aria-required="true">
-        <div id="email-error" class="error-msg">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="8" x2="12" y2="12"></line>
-            <line x1="12" y1="16" x2="12.01" y2="16"></line>
-          </svg>
-          Enter a valid email address (e.g. ap@acme.corp).
-        </div>
-      </div>
-
-      <div id="group-po" class="form-group">
-        <label for="po-number">Purchase Order (Optional)</label>
-        <input id="po-number" type="text" autocomplete="off">
-      </div>
-
-      <button type="submit" class="btn-submit">
-        Save & Verify Routing
-      </button>
-    </form>
+      </aside>
+    </div>
   </main>
 
   <script>
-    const form = document.getElementById('billing-form');
+    const form = document.getElementById('routing-form');
     const summary = document.getElementById('error-summary');
-    const nameInput = document.getElementById('company-name');
-    const emailInput = document.getElementById('billing-email');
-    const groupCompany = document.getElementById('group-company');
-    const groupEmail = document.getElementById('group-email');
+    const nameInput = document.getElementById('beneficiary-name');
+    const ibanInput = document.getElementById('iban-code');
+    const groupName = document.getElementById('group-name');
+    const groupIban = document.getElementById('group-iban');
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       let hasError = false;
 
-      // Validate company name
+      // Validate name
       if (!nameInput.value.trim()) {
-        groupCompany.setAttribute('data-error', 'true');
+        groupName.setAttribute('data-error', 'true');
         nameInput.setAttribute('aria-invalid', 'true');
         hasError = true;
       } else {
-        groupCompany.setAttribute('data-error', 'false');
+        groupName.setAttribute('data-error', 'false');
         nameInput.removeAttribute('aria-invalid');
       }
 
-      // Validate email
-      const emailVal = emailInput.value.trim();
-      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
-      if (!emailValid) {
-        groupEmail.setAttribute('data-error', 'true');
-        emailInput.setAttribute('aria-invalid', 'true');
+      // Validate IBAN
+      const ibanVal = ibanInput.value.trim().replace(/\s+/g, '');
+      if (ibanVal.length < 8) {
+        groupIban.setAttribute('data-error', 'true');
+        ibanInput.setAttribute('aria-invalid', 'true');
         hasError = true;
       } else {
-        groupEmail.setAttribute('data-error', 'false');
-        emailInput.removeAttribute('aria-invalid');
+        groupIban.setAttribute('data-error', 'false');
+        ibanInput.removeAttribute('aria-invalid');
       }
 
       if (hasError) {
@@ -302,8 +546,20 @@
         summary.focus();
       } else {
         summary.setAttribute('data-visible', 'false');
-        alert('Form submitted successfully!');
+        alert('Wire authorization submitted to dual-custody approval quorum.');
       }
+    });
+
+    // Currency button selection
+    document.querySelectorAll('.currency-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.currency-btn').forEach(b => {
+          b.setAttribute('data-active', 'false');
+          b.setAttribute('aria-checked', 'false');
+        });
+        e.currentTarget.setAttribute('data-active', 'true');
+        e.currentTarget.setAttribute('aria-checked', 'true');
+      });
     });
   </script>
 </body>

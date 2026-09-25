@@ -3,24 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Turtleneck Specimen — Accessible Dialog & Command Palette</title>
+  <title>KILN-OS — Cryptographic Enclave Orchestrator</title>
   <style>
     :root {
-      --canvas: #08090a;
-      --surface: #12151c;
-      --surface-elevated: #1a1e28;
+      --canvas: #08090b;
+      --surface: #11141c;
+      --surface-elevated: #181d29;
+      --surface-hover: #1f2533;
+      --border-subtle: #222838;
+      --border-strong: #363e54;
       --text-primary: #f0f4f8;
-      --text-secondary: #c0cad6;
-      --text-muted: #8c96a5;
+      --text-secondary: #a2b0c4;
+      --text-muted: #77869d;
       --focus-ring: #6875f5;
       --accent: #6875f5;
       --accent-hover: #5865f2;
       --danger: #ef4444;
-      --border-subtle: #222733;
-      --border-strong: #363e52;
+      --danger-hover: #dc2626;
+      --danger-glow: rgba(239, 68, 68, 0.18);
+      --status-emerald: #10b981;
+      --status-amber: #f59e0b;
+      --hairline: rgba(255, 255, 255, 0.04);
+      --font-mono: "SF Mono", ui-monospace, "CommitMono", Menlo, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -29,50 +37,91 @@
     body {
       background-color: var(--canvas);
       color: var(--text-primary);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      line-height: 1.5;
+      background-image: 
+        radial-gradient(ellipse 70% 40% at 50% -10%, rgba(104, 117, 245, 0.08), transparent 75%),
+        linear-gradient(to right, var(--hairline) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--hairline) 1px, transparent 1px);
+      background-size: 100% 100%, 64px 64px, 64px 64px;
     }
 
-    .container {
-      max-width: 640px;
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border-subtle);
-      border-radius: 10px;
-      padding: 32px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-    }
-
-    h1 {
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 8px;
-    }
-
-    p.lead {
-      color: var(--text-muted);
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-
-    .btn-row {
+    /* Architectural Header */
+    header.masthead {
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(8, 9, 11, 0.85);
+      backdrop-filter: blur(16px);
+      padding: 16px 36px;
       display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 40;
     }
 
+    .brand-section {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .chassis-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      background: rgba(104, 117, 245, 0.12);
+      border: 1px solid rgba(104, 117, 245, 0.35);
+      border-radius: 4px;
+      color: var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      background-color: var(--status-emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--status-emerald);
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-version {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Tactile Buttons */
     button {
-      font-family: inherit;
-      font-size: 14px;
+      font-family: var(--font-sans);
+      font-size: 13px;
       font-weight: 500;
-      padding: 10px 18px;
+      padding: 8px 16px;
       border-radius: 6px;
       cursor: pointer;
       min-height: 44px;
@@ -81,7 +130,8 @@
       justify-content: center;
       gap: 8px;
       border: 1px solid transparent;
-      transition: background-color 0.1s ease-out, transform 0.1s ease-out, border-color 0.1s ease-out;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      transition: background-color 0.1s ease-out, border-color 0.1s ease-out, transform 0.1s ease-out;
     }
 
     button:active {
@@ -96,6 +146,7 @@
     .btn-primary {
       background: var(--accent);
       color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     .btn-primary:hover {
@@ -103,13 +154,13 @@
     }
 
     .btn-secondary {
-      background: var(--surface-elevated);
+      background: var(--surface);
       color: var(--text-primary);
       border-color: var(--border-subtle);
     }
 
     .btn-secondary:hover {
-      background: var(--border-subtle);
+      background: var(--surface-hover);
       border-color: var(--border-strong);
     }
 
@@ -120,7 +171,9 @@
     }
 
     .btn-danger:hover {
-      background: rgba(239, 68, 68, 0.25);
+      background: var(--danger);
+      color: #ffffff;
+      border-color: var(--danger-hover);
     }
 
     .btn-icon {
@@ -128,28 +181,191 @@
       height: 44px;
       padding: 0;
       background: transparent;
-      color: var(--text-muted);
-      border: 1px solid transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      color: var(--text-secondary);
     }
 
     .btn-icon:hover {
+      background: var(--surface-hover);
       color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+
+    .kbd-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 2px 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 4px;
+      color: var(--text-secondary);
+    }
+
+    /* Main Deck Layout */
+    main.deck {
+      max-width: 1120px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 24px;
+      flex: 1;
+    }
+
+    .hero-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 24px;
+    }
+
+    .hero-title-group {
+      max-width: 680px;
+    }
+
+    .meta-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--accent);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    h1.hero-title {
+      font-size: 38px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    p.hero-desc {
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+
+    /* Telemetry Grid */
+    .telemetry-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 16px 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 26px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+
+    /* Active Keys Table */
+    .table-container {
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .table-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background: var(--surface-elevated);
     }
 
+    .table-title {
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    td {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .key-ident {
+      font-family: var(--font-mono);
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 13px;
+    }
+
+    .badge-scope {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--border-strong);
+      color: var(--text-primary);
+    }
+
+    /* Modal Dialogs */
     dialog {
       background: var(--surface-elevated);
       color: var(--text-primary);
       border: 1px solid var(--border-strong);
-      border-radius: 8px;
+      border-radius: 10px;
       max-width: 520px;
       width: calc(100% - 32px);
-      padding: 24px;
+      padding: 28px;
       margin: auto;
-      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
       opacity: 0;
       transform: scale(0.96);
-      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.15s cubic-bezier(0.16, 1, 0.3, 1), transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     dialog[open] {
@@ -158,27 +374,69 @@
     }
 
     dialog::backdrop {
-      background: rgba(4, 5, 8, 0.75);
-      backdrop-filter: blur(2px);
+      background: rgba(4, 5, 8, 0.82);
+      backdrop-filter: blur(4px);
     }
 
     .dialog-header {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: space-between;
       margin-bottom: 16px;
     }
 
     .dialog-title {
-      font-size: 18px;
+      font-size: 19px;
       font-weight: 600;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.02em;
     }
 
-    .dialog-body {
+    .dialog-desc {
       color: var(--text-secondary);
       font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .callout-warning {
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 6px;
+      padding: 12px 16px;
       margin-bottom: 24px;
+      font-size: 13px;
+      color: #fca5a5;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      min-height: 44px;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: 6px;
+      color: var(--text-primary);
+      padding: 10px 14px;
+      font-size: 14px;
+      font-family: var(--font-mono);
+      transition: border-color 0.1s ease-out;
+    }
+
+    input[type="text"]:hover {
+      border-color: var(--focus-ring);
     }
 
     .dialog-actions {
@@ -187,33 +445,48 @@
       gap: 12px;
     }
 
-    .input-group {
-      margin-bottom: 16px;
+    /* Command Palette Specific */
+    dialog#cmd-dialog {
+      max-width: 620px;
+      padding: 12px;
     }
 
-    label {
-      display: block;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      margin-bottom: 6px;
+    .cmd-search-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 4px 12px 12px;
     }
 
-    input[type="text"] {
-      width: 100%;
-      min-height: 44px;
-      background: var(--surface);
-      border: 1px solid var(--border-subtle);
+    .cmd-list {
+      list-style: none;
+      margin-top: 12px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .cmd-item {
+      padding: 12px 14px;
       border-radius: 6px;
-      color: var(--text-primary);
-      padding: 10px 14px;
-      font-size: 14px;
-      font-family: inherit;
-      transition: border-color 0.1s ease-out;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: background-color 0.1s ease-out, color 0.1s ease-out;
     }
 
-    input[type="text"]:hover {
-      border-color: var(--border-strong);
+    .cmd-item:hover, .cmd-item[data-selected="true"] {
+      background: rgba(104, 117, 245, 0.15);
+      color: var(--text-primary);
+    }
+
+    .cmd-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -221,7 +494,6 @@
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
       }
       dialog {
         transition: none !important;
@@ -230,44 +502,133 @@
   </style>
 </head>
 <body>
-  <main class="container">
-    <h1>Accessible Dialog & Command Palette</h1>
-    <p class="lead">Demonstrates trap-free keyboard navigation, Escape dismissal, focus restoration, 5-state controls, and WCAG 2.2 AA contrast.</p>
-
-    <div class="btn-row">
-      <button id="open-confirm-btn" class="btn-danger">
-        Delete Production Secret
+  <header class="masthead">
+    <div class="brand-section">
+      <div class="chassis-badge">
+        <span class="status-dot" aria-hidden="true"></span>
+        HSM-ENCLAVE-04
+      </div>
+      <div class="brand-title">
+        KILN CRYPTO VAULT
+        <span class="brand-version">v2.4.9</span>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <button id="open-cmd-btn" class="btn-secondary" aria-label="Open Command Palette">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        Command Bar
+        <span class="kbd-pill">⌘K</span>
       </button>
-      <button id="open-cmd-btn" class="btn-secondary">
-        Search Commands (Cmd+K)
+      <button id="open-revoke-modal-btn" class="btn-danger">
+        Revoke Master Root
       </button>
     </div>
+  </header>
+
+  <main class="deck">
+    <div class="hero-banner">
+      <div class="hero-title-group">
+        <span class="meta-tag">HARDWARE SECURITY MODULE INFRASTRUCTURE</span>
+        <h1 class="hero-title">Enclave Secret Authority</h1>
+        <p class="hero-desc">Hardware-isolated entropy generation and root key revocation with zero-latency quorum ratification.</p>
+      </div>
+    </div>
+
+    <section class="telemetry-strip" aria-label="Cluster Telemetry">
+      <div class="stat-card">
+        <div class="stat-label">Active Nodes</div>
+        <div class="stat-value">64 / 64</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Entropy Pool</div>
+        <div class="stat-value">4,096 B/s</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Attestation Latency</div>
+        <div class="stat-value">1.42 ms</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Rotated Secrets (24h)</div>
+        <div class="stat-value">1,280</div>
+      </div>
+    </section>
+
+    <section class="table-container">
+      <div class="table-header">
+        <h2 class="table-title">Registered Cryptographic Credentials</h2>
+        <span class="badge-scope">FIPS 140-3 LEVEL 4</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Key Identifier</th>
+            <th>Algorithm</th>
+            <th>Enclave Affinity</th>
+            <th>Expires</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="key-ident">ed25519-prod-signer-01</td>
+            <td>Ed25519 / Curve25519</td>
+            <td><span class="badge-scope">us-east-hsm</span></td>
+            <td>18 days</td>
+            <td><button class="btn-danger btn-row-revoke" data-key="ed25519-prod-signer-01">Revoke</button></td>
+          </tr>
+          <tr>
+            <td class="key-ident">rsa4096-ledger-root</td>
+            <td>RSA-PSS 4096</td>
+            <td><span class="badge-scope">eu-west-hsm</span></td>
+            <td>94 days</td>
+            <td><button class="btn-danger btn-row-revoke" data-key="rsa4096-ledger-root">Revoke</button></td>
+          </tr>
+          <tr>
+            <td class="key-ident">aes256-gcm-disk-master</td>
+            <td>AES-256-GCM</td>
+            <td><span class="badge-scope">ap-south-hsm</span></td>
+            <td>312 days</td>
+            <td><button class="btn-danger btn-row-revoke" data-key="aes256-gcm-disk-master">Revoke</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
   </main>
 
-  <!-- Specimen 1: Confirmation Modal Dialog -->
-  <dialog id="confirm-dialog" aria-labelledby="confirm-dialog-title" aria-describedby="confirm-dialog-desc">
+  <!-- Specimen 1: Accessible Confirmation Dialog -->
+  <dialog id="revoke-dialog" aria-labelledby="revoke-dialog-title" aria-describedby="revoke-dialog-desc">
     <div class="dialog-header">
-      <h2 id="confirm-dialog-title" class="dialog-title">Revoke API Key?</h2>
-      <button class="btn-icon" id="confirm-close-btn" aria-label="Close revoke dialog">
+      <h2 id="revoke-dialog-title" class="dialog-title">Revoke Cryptographic Secret?</h2>
+      <button class="btn-icon" id="revoke-close-btn" aria-label="Close revocation dialog">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
         </svg>
       </button>
     </div>
-    <p id="confirm-dialog-desc" class="dialog-body">
-      This action will immediately invalidate the token <code>prod_sec_99a</code>. Any active cluster node making telemetry requests with this secret will receive HTTP 401 Unauthorized.
+    <p id="revoke-dialog-desc" class="dialog-desc">
+      You are about to purge <strong id="target-key-label" style="color:var(--text-primary)">ed25519-prod-signer-01</strong> from all peer hardware enclaves. This operation is cryptographically irreversible.
     </p>
+    <div class="callout-warning">
+      <strong>CRITICAL:</strong> Connected cluster nodes will immediately drop active TLS verification sessions until an emergency root certificate is broadcast.
+    </div>
+    <div class="form-group">
+      <label for="confirm-phrase">Type "CONFIRM PURGE" to proceed</label>
+      <input id="confirm-phrase" type="text" placeholder="CONFIRM PURGE" autocomplete="off">
+    </div>
     <div class="dialog-actions">
-      <button id="confirm-cancel-btn" class="btn-secondary">Cancel</button>
-      <button id="confirm-delete-btn" class="btn-danger">Yes, Revoke Token</button>
+      <button id="revoke-cancel-btn" class="btn-secondary">Cancel</button>
+      <button id="revoke-confirm-btn" class="btn-danger">Purge Secret</button>
     </div>
   </dialog>
 
-  <!-- Specimen 2: Command Palette Dialog -->
+  <!-- Specimen 2: Keyboard Command Palette -->
   <dialog id="cmd-dialog" aria-labelledby="cmd-dialog-title">
     <div class="dialog-header">
-      <h2 id="cmd-dialog-title" class="dialog-title">Command Palette</h2>
+      <h2 id="cmd-dialog-title" class="dialog-title">Enclave Command Interface</h2>
       <button class="btn-icon" id="cmd-close-btn" aria-label="Close command palette">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -275,59 +636,112 @@
         </svg>
       </button>
     </div>
-    <div class="input-group">
-      <label for="cmd-input">Type a command or filter</label>
-      <input id="cmd-input" type="text" placeholder="e.g. restart pod, export telemetry..." autocomplete="off">
+    <div class="cmd-search-bar">
+      <label for="cmd-input" style="margin:0;">Search:</label>
+      <input id="cmd-input" type="text" placeholder="Type a command or filter (e.g. rotate, export, re-attest)..." autocomplete="off">
     </div>
-    <div class="dialog-actions">
-      <button id="cmd-cancel-btn" class="btn-secondary">Dismiss</button>
-      <button id="cmd-run-btn" class="btn-primary">Execute</button>
+    <ul class="cmd-list" id="cmd-list" role="listbox">
+      <li class="cmd-item" role="option" data-selected="true" tabindex="0">
+        <span class="cmd-label">Rotate Hardware Security Master Root</span>
+        <span class="kbd-pill">↵</span>
+      </li>
+      <li class="cmd-item" role="option" tabindex="0">
+        <span class="cmd-label">Force Cryptographic Quorum Re-attestation</span>
+        <span class="kbd-pill">↵</span>
+      </li>
+      <li class="cmd-item" role="option" tabindex="0">
+        <span class="cmd-label">Flush Volatile Memory Key Caches</span>
+        <span class="kbd-pill">↵</span>
+      </li>
+      <li class="cmd-item" role="option" tabindex="0">
+        <span class="cmd-label">Export FIPS Compliance Telemetry Log</span>
+        <span class="kbd-pill">↵</span>
+      </li>
+    </ul>
+    <div class="dialog-actions" style="margin-top:16px;">
+      <button id="cmd-cancel-btn" class="btn-secondary">Close (ESC)</button>
     </div>
   </dialog>
 
   <script>
-    function setupDialog(dialogId, triggerBtnId, closeBtnIds, initialFocusId) {
-      const dialog = document.getElementById(dialogId);
-      const triggerBtn = document.getElementById(triggerBtnId);
+    const revokeDialog = document.getElementById('revoke-dialog');
+    const cmdDialog = document.getElementById('cmd-dialog');
+    const openRevokeBtn = document.getElementById('open-revoke-modal-btn');
+    const openCmdBtn = document.getElementById('open-cmd-btn');
+    const targetKeyLabel = document.getElementById('target-key-label');
+    let lastActiveTrigger = null;
 
-      triggerBtn.addEventListener('click', () => {
-        dialog.showModal();
-        if (initialFocusId) {
-          const el = document.getElementById(initialFocusId);
-          if (el) el.focus();
-        }
-      });
-
-      closeBtnIds.forEach(id => {
-        const btn = document.getElementById(id);
-        if (btn) {
-          btn.addEventListener('click', () => {
-            dialog.close();
-            triggerBtn.focus();
-          });
-        }
-      });
-
-      dialog.addEventListener('close', () => {
-        triggerBtn.focus();
-      });
+    function openModal(dialog, trigger, focusTargetId) {
+      lastActiveTrigger = trigger;
+      dialog.showModal();
+      if (focusTargetId) {
+        document.getElementById(focusTargetId).focus();
+      }
     }
 
-    setupDialog('confirm-dialog', 'open-confirm-btn', ['confirm-close-btn', 'confirm-cancel-btn', 'confirm-delete-btn'], 'confirm-cancel-btn');
-    setupDialog('cmd-dialog', 'open-cmd-btn', ['cmd-close-btn', 'cmd-cancel-btn', 'cmd-run-btn'], 'cmd-input');
+    function closeModal(dialog) {
+      dialog.close();
+      if (lastActiveTrigger) {
+        lastActiveTrigger.focus();
+      }
+    }
 
-    // Hotkey listener for Cmd/Ctrl + K
+    // Revocation triggers
+    openRevokeBtn.addEventListener('click', () => {
+      targetKeyLabel.textContent = 'ALL-PRODUCTION-ROOTS';
+      openModal(revokeDialog, openRevokeBtn, 'confirm-phrase');
+    });
+
+    document.querySelectorAll('.btn-row-revoke').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const key = e.currentTarget.getAttribute('data-key');
+        targetKeyLabel.textContent = key;
+        openModal(revokeDialog, e.currentTarget, 'confirm-phrase');
+      });
+    });
+
+    document.getElementById('revoke-close-btn').addEventListener('click', () => closeModal(revokeDialog));
+    document.getElementById('revoke-cancel-btn').addEventListener('click', () => closeModal(revokeDialog));
+    document.getElementById('revoke-confirm-btn').addEventListener('click', () => {
+      const input = document.getElementById('confirm-phrase');
+      if (input.value.trim() === 'CONFIRM PURGE') {
+        alert('Cryptographic secret purged across all enclaves.');
+        closeModal(revokeDialog);
+      } else {
+        input.focus();
+        input.style.borderColor = 'var(--danger)';
+      }
+    });
+
+    // Command palette triggers
+    openCmdBtn.addEventListener('click', () => {
+      openModal(cmdDialog, openCmdBtn, 'cmd-input');
+    });
+
+    document.getElementById('cmd-close-btn').addEventListener('click', () => closeModal(cmdDialog));
+    document.getElementById('cmd-cancel-btn').addEventListener('click', () => closeModal(cmdDialog));
+
     window.addEventListener('keydown', (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        const cmdDialog = document.getElementById('cmd-dialog');
         if (cmdDialog.open) {
-          cmdDialog.close();
+          closeModal(cmdDialog);
         } else {
-          cmdDialog.showModal();
-          document.getElementById('cmd-input').focus();
+          openModal(cmdDialog, openCmdBtn, 'cmd-input');
         }
       }
+    });
+
+    // Command live filter
+    const cmdInput = document.getElementById('cmd-input');
+    const cmdList = document.getElementById('cmd-list');
+    cmdInput.addEventListener('input', () => {
+      const query = cmdInput.value.toLowerCase();
+      const items = cmdList.querySelectorAll('.cmd-item');
+      items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(query) ? 'flex' : 'none';
+      });
     });
   </script>
 </body>
