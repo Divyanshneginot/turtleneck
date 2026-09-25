@@ -8,7 +8,7 @@
 > **Product Design Intelligence for AI coding agents.** Version 2.0.0.
 > Decide, then make. Do not decorate an undefined product.
 
-Turtleneck is not merely a styling checklist. It is a product-design decision system: it turns an outcome into an information architecture, interaction model, visual direction, state model, and implementation plan before writing the UI across Claude Code, Cursor, Windsurf, Copilot, and Google Antigravity.
+Turtleneck is not merely a styling checklist. It is a product-design decision system: it turns an outcome into an information architecture, interaction model, visual direction, state model, and implementation plan before writing the UI across Claude Code, Cursor, Windsurf, Copilot, Cline, Codex, OpenHands, and all AI coding agents.
 
 ```
 1. Workspace Analysis ──► 2. Requirements Interview ──► 3. Blueprint Alignment ──► 4. Production Build
@@ -36,17 +36,19 @@ file you already own.**
 ```bash
 python path/to/turtleneck/scripts/install.py          # auto-detect
 python path/to/turtleneck/scripts/install.py --all    # every supported agent
+python path/to/turtleneck/scripts/install.py --skill  # universal agent skill (.agents/skills/)
 ```
 
 | Your tool | Install flag | What you get |
 | :--- | :--- | :--- |
-| Any / generic (Codex, Aider, OpenHands) | *(default)* | `AGENTS.md` |
+| Universal Agent Skill (any agent) | `--skill` / `--global-skill` | full skill in `.agents/skills/` or `~/.agents/skills/` |
+| Any repository (`AGENTS.md`) | *(default)* | `AGENTS.md` (Codex, Aider, OpenHands) |
 | Claude Code | `--claude` / `--claude-skill` | rules, or the full skill |
 | Cursor | `--cursor` | `.cursorrules` |
 | Windsurf / Cascade | `--windsurf` | `.windsurfrules` |
 | GitHub Copilot | `--copilot` | `.github/copilot-instructions.md` |
-| Cline | `--cline` | `.clinerules` |
-| Google Antigravity | `--antigravity` | global skill install |
+| Cline & Roo Code | `--cline` | `.clinerules` |
+| Google Antigravity | `--antigravity` | global skill install (`~/.gemini/`) |
 
 ### Compatibility
 
@@ -155,7 +157,7 @@ The full statement of scope, schema specification, and fast-path rules live in `
 
 ```text
 turtleneck/
-├── SKILL.md              # skill entrypoint (Agent Skills / Antigravity spec)
+├── SKILL.md              # universal skill entrypoint (Agent Skills spec for all coding agents)
 ├── rules/                # drop-in rules for Claude, Cursor, Windsurf, Copilot, Cline, AGENTS.md
 ├── references/           # the knowledge base: tokens, archetypes, craft, a11y, heuristics
 │   ├── deep_research/    # committed headless benchmark captures (authoritative)

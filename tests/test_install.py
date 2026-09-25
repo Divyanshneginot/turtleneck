@@ -251,6 +251,15 @@ def test_claude_skill_flag_does_not_drop_rules_files(project: Path):
     assert not (project / ".cursorrules").exists()
 
 
+def test_universal_skill_flag_does_not_drop_rules_files(project: Path):
+    """--skill alone must install into .agents/skills/turtleneck and not drop rules files."""
+    rc = install.main(["--target", str(project), "--skill"])
+    assert rc == 0
+    assert (project / ".agents" / "skills" / "turtleneck" / "SKILL.md").exists()
+    assert not (project / "AGENTS.md").exists()
+    assert not (project / ".cursorrules").exists()
+
+
 # --------------------------------------------------------------------------
 # skill safety contract (manifest ownership, refusal, backups, uninstall)
 # --------------------------------------------------------------------------

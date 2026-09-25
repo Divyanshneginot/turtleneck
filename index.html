@@ -609,11 +609,15 @@
 
   .agent-matrix-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 960px) {
+    .agent-matrix-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 560px) {
     .agent-matrix-grid { grid-template-columns: 1fr; }
   }
 
@@ -949,10 +953,10 @@
       
       <div class="install-box">
         <div>
-          <span class="section-eyebrow">04 // Universal Agent Portability</span>
-          <h2 style="font-family: var(--font-serif); font-size: 38px; font-weight: 400; margin-bottom: 8px;">Install Turtleneck in any repository.</h2>
+          <span class="section-eyebrow">04 // Universal Portability</span>
+          <h2 style="font-family: var(--font-serif); font-size: 38px; font-weight: 400; margin-bottom: 8px;">A single skill across all coding agents.</h2>
           <p style="color: var(--ink-secondary); font-size: 15px;">
-            The installer never destroys foreign content. It follows a refuse-by-default safety contract with numbered backups.
+            Conforms to the open Agent Skills standard. Native support for Claude Code, Cursor, Windsurf, GitHub Copilot, Cline, OpenAI Codex, OpenHands, Aider, Google Antigravity, and any AGENTS.md consumer. The installer never destroys foreign content.
           </p>
         </div>
 
@@ -962,6 +966,10 @@
         </div>
 
         <div class="agent-matrix-grid">
+          <div class="agent-pill">
+            <span class="agent-name">Universal Agent Skill</span>
+            <code class="agent-flag">--skill</code>
+          </div>
           <div class="agent-pill">
             <span class="agent-name">Claude Code</span>
             <code class="agent-flag">--claude-skill</code>
@@ -979,8 +987,12 @@
             <code class="agent-flag">--copilot</code>
           </div>
           <div class="agent-pill">
-            <span class="agent-name">Cline</span>
+            <span class="agent-name">Cline &amp; Roo Code</span>
             <code class="agent-flag">--cline</code>
+          </div>
+          <div class="agent-pill">
+            <span class="agent-name">Codex &amp; OpenHands</span>
+            <code class="agent-flag">AGENTS.md</code>
           </div>
           <div class="agent-pill">
             <span class="agent-name">Google Antigravity</span>

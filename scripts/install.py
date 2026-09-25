@@ -3,8 +3,8 @@
 Turtleneck Universal Installer
 
 Installs Turtleneck rules and the agent skill into any repository or agent
-environment: Claude Code, Cursor, Windsurf, GitHub Copilot, Cline, Google
-Antigravity, or generic AGENTS.md consumers.
+environment: Claude Code, Cursor, Windsurf, GitHub Copilot, Cline, OpenAI Codex,
+OpenHands, Aider, Google Antigravity, or generic AGENTS.md consumers.
 
 Safety contract
 ---------------
@@ -23,7 +23,7 @@ destroys foreign content:
   * `--uninstall` removes marker blocks, restores backups, and deletes files
     only when it can prove Turtleneck owns them.
 
-Full-skill installation (`--claude-skill`, `--antigravity`) obeys the same
+Full-skill installation (`--skill`, `--global-skill`, `--claude-skill`, `--antigravity`) obeys the same
 contract. Ownership of the skill directory is proven with a durable manifest
 (`turtleneck-skill-manifest.json`, schema-versioned, one SHA-256 per shipped
 relative path) rather than by guessing:
@@ -772,6 +772,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--all", "-a", action="store_true", help="install rules for every supported agent")
     for platform in RULE_PLATFORMS:
         parser.add_argument(f"--{platform}", action="store_true", help=f"install {TARGETS[platform][0]}")
+    parser.add_argument("--skill", action="store_true",
+                        help="install the universal agent skill into <target>/.agents/skills/turtleneck/")
+    parser.add_argument("--global-skill", action="store_true",
+                        help="install the universal agent skill into ~/.agents/skills/turtleneck/")
     parser.add_argument("--claude-skill", action="store_true",
                         help="install the full skill into <target>/.claude/skills/turtleneck/")
     parser.add_argument("--antigravity", action="store_true",
@@ -786,7 +790,7 @@ def main(argv: list[str] | None = None) -> int:
                         help="merge into existing files using marker comments instead of replacing")
     parser.add_argument("--dry-run", "-n", action="store_true", help="print the plan, write nothing")
     parser.add_argument("--uninstall", action="store_true",
-                        help="remove what Turtleneck installed (pass --claude-skill/--antigravity "
+                        help="remove what Turtleneck installed (pass --skill/--claude-skill/etc. "
                              "to also remove a skill)")
     args = parser.parse_args(argv)
 
@@ -794,7 +798,7 @@ def main(argv: list[str] | None = None) -> int:
     report = Report(dry_run=args.dry_run)
 
     explicit_rules = [p for p in RULE_PLATFORMS if getattr(args, p)]
-    skill_only = args.claude_skill or args.antigravity
+    skill_only = args.skill or args.global_skill or args.claude_skill or args.antigravity
     if args.all:
         requested = list(RULE_PLATFORMS)
     elif explicit_rules:
@@ -814,6 +818,12 @@ def main(argv: list[str] | None = None) -> int:
             if not args.dry_run:
                 shutil.rmtree(kb)
             report.add("references", kb, DELETED, "knowledge base removed")
+        if args.skill:
+            uninstall_skill(target_dir / ".agents" / "skills" / "turtleneck",
+                            dry_run=args.dry_run, report=report)
+        if args.global_skill:
+            uninstall_skill(Path.home() / ".agents" / "skills" / "turtleneck",
+                            dry_run=args.dry_run, report=report)
         if args.claude_skill:
             uninstall_skill(target_dir / ".claude" / "skills" / "turtleneck",
                             dry_run=args.dry_run, report=report)
@@ -829,6 +839,16 @@ def main(argv: list[str] | None = None) -> int:
                                with_assets=args.with_assets, force=args.force,
                                report=report)
 
+    if args.skill:
+        install_skill(target_dir / ".agents" / "skills" / "turtleneck",
+                      dry_run=args.dry_run, with_assets=args.with_assets,
+                      force=args.force, report=report)
+
+    if args.global_skill:
+        install_skill(Path.home() / ".agents" / "skills" / "turtleneck",
+                      dry_run=args.dry_run, with_assets=args.with_assets,
+                      force=args.force, report=report)
+
     if args.claude_skill:
         install_skill(target_dir / ".claude" / "skills" / "turtleneck",
                       dry_run=args.dry_run, with_assets=args.with_assets,
@@ -840,7 +860,7 @@ def main(argv: list[str] | None = None) -> int:
                       force=args.force, report=report)
 
     if not report.outcomes:
-        print("Nothing to do. Pass a platform flag, --all, --claude-skill or --antigravity.")
+        print("Nothing to do. Pass a platform flag, --all, --skill, --claude-skill, or --antigravity.")
         return 0
 
     print(f"{'Planned' if args.dry_run else 'Installing'} Turtleneck in: {target_dir}")
