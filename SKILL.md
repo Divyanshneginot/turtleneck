@@ -51,10 +51,7 @@ The gates in `scripts/` assert that they obey the accessibility and craft baseli
 | File | What it demonstrates |
 | :--- | :--- |
 | `./examples/index.html` | The 5-archetype workbench: Compare token systems, density, and chrome across archetypes. |
-| `./examples/high-density-tracker.html` | High-density keyboard-first operational UI: dense telemetry tables, command palette, hotkeys. |
-| `./examples/creative-craft.html` | Editorial & instrument craft: serif display tension, tactile button physics, warm surfaces. |
-| `./examples/accessible-dialog-palette.html` | Accessible dialogs & command palette: focus trapping, Escape dismissal, trigger restoration, 5-state buttons. |
-| `./examples/form-validation-states.html` | Accessible form validation: error summary, inline field states, aria-describedby links, and tap targets. |
+| `./examples/creative-craft.html` | KRONOS MK-VII physical-digital acoustic synthesizer: extreme scale tension, 60fps phosphor CRT oscilloscope, real Web Audio DSP, and tactile rotary dials. |
 
 ---
 
