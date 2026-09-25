@@ -56,6 +56,8 @@ obey it.
 | `./examples/index.html` | The 5-archetype workbench. Switch `data-archetype` between corporate / editorial / fluid / starlight / minimal and compare token systems, density, and chrome. |
 | `./examples/high-density-tracker.html` | High-Density Starlight, keyboard-first operational UI: dense tables, command palette, hotkeys, tab and focus states. |
 | `./examples/creative-craft.html` | Editorial / instrument craft: serif display tension, tactile button physics, warm dark surfaces. |
+| `./examples/accessible-dialog-palette.html` | Accessible dialogs & command palette: focus trapping, Escape dismissal, trigger restoration, 5-state buttons. |
+| `./examples/form-validation-states.html` | Accessible form validation: error summary, inline field states, aria-describedby links, and tap targets. |
 
 ---
 

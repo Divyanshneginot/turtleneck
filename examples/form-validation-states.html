@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turtleneck Specimen — Accessible Form Validation States</title>
+  <style>
+    :root {
+      --canvas: #f6f9fc;
+      --surface: #ffffff;
+      --surface-elevated: #ffffff;
+      --text-primary: #0a2540;
+      --text-secondary: #425466;
+      --text-muted: #627489;
+      --focus-ring: #6259ff;
+      --accent: #6259ff;
+      --accent-hover: #4f46e5;
+      --border-subtle: #e3e8ee;
+      --border-strong: #7f97b5;
+      --error-ink: #b91c1c;
+      --error-bg: #fef2f2;
+      --error-border: #f87171;
+      --success-ink: #15803d;
+      --success-bg: #f0fdf4;
+      --success-border: #86efac;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--canvas);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      line-height: 1.5;
+    }
+
+    .card {
+      max-width: 540px;
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 32px;
+      box-shadow: 0 4px 12px rgba(10, 37, 64, 0.05);
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    p.subtitle {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+
+    .alert-summary {
+      background: var(--error-bg);
+      border: 1px solid var(--error-border);
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin-bottom: 24px;
+      display: none;
+    }
+
+    .alert-summary[data-visible="true"] {
+      display: block;
+    }
+
+    .alert-summary h2 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--error-ink);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .alert-summary ul {
+      margin-left: 20px;
+      font-size: 13px;
+      color: var(--error-ink);
+    }
+
+    .alert-summary a {
+      color: var(--error-ink);
+      text-decoration: underline;
+      font-weight: 500;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      min-height: 44px;
+      background: var(--surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      color: var(--text-primary);
+      padding: 10px 14px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: border-color 0.1s ease-out, background-color 0.1s ease-out;
+    }
+
+    input:hover {
+      border-color: var(--border-strong);
+    }
+
+    input:focus-visible, button:focus-visible {
+      outline: 2px solid var(--focus-ring);
+      outline-offset: 2px;
+    }
+
+    input[aria-invalid="true"] {
+      border-color: var(--error-border);
+      background-color: #fffafb;
+    }
+
+    .error-msg {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      color: var(--error-ink);
+      font-size: 12px;
+      font-weight: 500;
+      margin-top: 6px;
+    }
+
+    .form-group[data-error="true"] .error-msg {
+      display: flex;
+    }
+
+    .btn-submit {
+      width: 100%;
+      min-height: 44px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      background: var(--accent);
+      color: #ffffff;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color 0.1s ease-out, transform 0.1s ease-out;
+    }
+
+    .btn-submit:hover {
+      background: var(--accent-hover);
+    }
+
+    .btn-submit:active {
+      transform: scale(0.98);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Invoice Routing Profile</h1>
+    <p class="subtitle">Demonstrates accessible validation summary, input error states, aria-describedby links, and tap targets.</p>
+
+    <div id="error-summary" class="alert-summary" role="alert" aria-labelledby="summary-title" tabindex="-1">
+      <h2 id="summary-title">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        Please correct 2 errors to continue
+      </h2>
+      <ul>
+        <li><a href="#company-name">Company name is required</a></li>
+        <li><a href="#billing-email">Billing email address must be a valid email</a></li>
+      </ul>
+    </div>
+
+    <form id="billing-form" novalidate>
+      <div id="group-company" class="form-group" data-error="false">
+        <label for="company-name">Legal Entity / Company Name</label>
+        <p id="company-hint" class="hint">As registered on tax filings.</p>
+        <input id="company-name" type="text" autocomplete="organization" aria-describedby="company-hint company-error" aria-required="true">
+        <div id="company-error" class="error-msg">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          Company name is required.
+        </div>
+      </div>
+
+      <div id="group-email" class="form-group" data-error="false">
+        <label for="billing-email">Accounts Payable Email</label>
+        <p id="email-hint" class="hint">Invoices and receipt PDFs will be dispatched here.</p>
+        <input id="billing-email" type="email" autocomplete="email" aria-describedby="email-hint email-error" aria-required="true">
+        <div id="email-error" class="error-msg">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          Enter a valid email address (e.g. ap@acme.corp).
+        </div>
+      </div>
+
+      <div id="group-po" class="form-group">
+        <label for="po-number">Purchase Order (Optional)</label>
+        <input id="po-number" type="text" autocomplete="off">
+      </div>
+
+      <button type="submit" class="btn-submit">
+        Save & Verify Routing
+      </button>
+    </form>
+  </main>
+
+  <script>
+    const form = document.getElementById('billing-form');
+    const summary = document.getElementById('error-summary');
+    const nameInput = document.getElementById('company-name');
+    const emailInput = document.getElementById('billing-email');
+    const groupCompany = document.getElementById('group-company');
+    const groupEmail = document.getElementById('group-email');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let hasError = false;
+
+      // Validate company name
+      if (!nameInput.value.trim()) {
+        groupCompany.setAttribute('data-error', 'true');
+        nameInput.setAttribute('aria-invalid', 'true');
+        hasError = true;
+      } else {
+        groupCompany.setAttribute('data-error', 'false');
+        nameInput.removeAttribute('aria-invalid');
+      }
+
+      // Validate email
+      const emailVal = emailInput.value.trim();
+      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+      if (!emailValid) {
+        groupEmail.setAttribute('data-error', 'true');
+        emailInput.setAttribute('aria-invalid', 'true');
+        hasError = true;
+      } else {
+        groupEmail.setAttribute('data-error', 'false');
+        emailInput.removeAttribute('aria-invalid');
+      }
+
+      if (hasError) {
+        summary.setAttribute('data-visible', 'true');
+        summary.focus();
+      } else {
+        summary.setAttribute('data-visible', 'false');
+        alert('Form submitted successfully!');
+      }
+    });
+  </script>
+</body>
+</html>

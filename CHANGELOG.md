@@ -16,6 +16,8 @@ All notable changes to Turtleneck are documented here.
   Extended `scripts/check_contrast.py` with `--tokens <path.json>` while preserving default repository token checks. Defined and documented a minimal JSON schema (`name`, `foreground`, `background`, `role`, `threshold`, `exemption_rationale`). Rejects malformed colors, unknown threshold classes, empty inputs, unjustified exemptions, and failing ratios with non-zero exit codes. Updated `verification-scope.md` to precisely distinguish mathematical contrast verification from rendered DOM accessibility.
 * **Behavioral evaluation benchmark scaffold (`evals/`).**
   Added `evals/cases/` with 10 representative briefs (vague greenfield, dense dashboard, mobile form, tiny CSS fix, exact supplied-design replication, modal keyboard behavior, low-contrast regression, explicit time-box, non-UI negative trigger test, and accessibility review). Added `evals/rubric.md` with observable scoring across 9 dimensions, and `evals/README.md` documenting the baseline vs. treatment benchmark protocol with unmeasured status marked truthfully.
+* **Behavioral reference specimens (`examples/`).**
+  Added `examples/accessible-dialog-palette.html` (accessible `<dialog>` command palette, focus trap, Escape dismissal, focus restoration) and `examples/form-validation-states.html` (accessible validation summary, inline input errors, `aria-describedby` links, 44px tap targets). Verified against examples gate and wired into `SKILL.md`.
 
 ### Fixed — skill installation now obeys the same safety contract as rule installation
 
