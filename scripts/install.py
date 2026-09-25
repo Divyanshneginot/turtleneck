@@ -138,7 +138,8 @@ class Report:
             elif o.action == BACKED_UP:
                 print(f"  + [{o.platform}] backed up {rel} -> {rel}{BACKUP_SUFFIX}")
             else:
-                print(f"  {'~' if self.dry_run else '✓'} [{o.platform}] {verb.split()[0].lower()} "
+                mark = "~" if self.dry_run else "+"
+                print(f"  {mark} [{o.platform}] {verb.split()[0].lower()} "
                       f"{o.action} {rel}")
 
 
