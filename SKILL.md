@@ -55,8 +55,6 @@ The gates in `scripts/` assert that they obey the accessibility and craft baseli
 | `./examples/creative-craft.html` | Editorial & instrument craft: serif display tension, tactile button physics, warm surfaces. |
 | `./examples/accessible-dialog-palette.html` | Accessible dialogs & command palette: focus trapping, Escape dismissal, trigger restoration, 5-state buttons. |
 | `./examples/form-validation-states.html` | Accessible form validation: error summary, inline field states, aria-describedby links, and tap targets. |
-| `./examples/guided-decision-recommender.html` | Guided decision recommender: multi-step flow contract, deterministic scoring, explainable rationale, dynamic topology preview. |
-| `./examples/template-builder-chooser.html` | Template chooser & builder: intent gallery, instant fuzzy search, split-pane live typography preview, immutable clone flow. |
 
 ---
 
