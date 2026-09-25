@@ -3,108 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Turtleneck — Product Design Intelligence for AI Agents</title>
-<meta name="description" content="Autonomous interface craft for AI coding agents. Enforcing vernacular harmony, frequency-gated interaction physics, and verified WCAG 2.2 AA contrast on Turn 1.">
+<title>Turtleneck — Autonomous Product Design Director for AI Agents</title>
+<meta name="description" content="Turtleneck equips AI coding agents with principal design director intuition. Vernacular harmony, tactile interaction physics, and ruthless aesthetic restraint on Turn 1.">
 
-<!-- Premium Typography -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
-  /* ==========================================================================
-     CORE DESIGN SYSTEM TOKENS (Obsidian Elevation Hierarchy)
-     ========================================================================== */
   :root {
-    --canvas: #060709;
-    --canvas-subtle: #0a0c10;
-    --surface-1: #10131d;
-    --surface-2: #161a29;
-    --surface-3: #1e2438;
-    --surface-highlight: #28304a;
-
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-
-    --border-subtle: rgba(255, 255, 255, 0.08);
+    --canvas: #090a0d;
+    --canvas-elevated: #111318;
+    --surface: #161820;
+    --surface-hover: #1e212b;
+    --text-primary: #f7f7f8;
+    --text-secondary: #9aa0a6;
+    --text-muted: #6b7280;
+    --border: rgba(255, 255, 255, 0.08);
     --border-strong: rgba(255, 255, 255, 0.16);
-    --border-specular: rgba(255, 255, 255, 0.08) 0px 1px 0px 0px inset;
-    --border-focus: #6366f1;
-
-    --accent-indigo: #6366f1;
-    --accent-indigo-hover: #4f46e5;
-    --accent-indigo-glow: rgba(99, 102, 241, 0.22);
-    --accent-emerald: #10b981;
-    --accent-rose: #f43f5e;
-    --accent-amber: #f59e0b;
-
+    --accent: #6366f1;
+    --accent-hover: #4f46e5;
+    --focus-ring: #6366f1;
     --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
     --radius-sm: 4px;
     --radius-md: 8px;
-    --radius-lg: 12px;
-    --radius-xl: 16px;
-    --radius-pill: 9999px;
-
+    --radius-lg: 14px;
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  /* Archetype Theme Overrides for Interactive Studio */
-  [data-studio-theme="starlight"] {
-    --studio-canvas: #060709;
-    --studio-surface: #10131d;
-    --studio-surface-subtle: #161a29;
-    --studio-accent: #6366f1;
-    --studio-accent-text: #818cf8;
-    --studio-border: rgba(255, 255, 255, 0.08);
-    --studio-font: var(--font-sans);
-    --studio-radius: 8px;
-  }
-
-  [data-studio-theme="corporate"] {
-    --studio-canvas: #f8fafc;
-    --studio-surface: #ffffff;
-    --studio-surface-subtle: #f1f5f9;
-    --studio-accent: #2563eb;
-    --studio-accent-text: #1d4ed8;
-    --studio-border: #e2e8f0;
-    --studio-font: var(--font-sans);
-    --studio-radius: 6px;
-  }
-
-  [data-studio-theme="editorial"] {
-    --studio-canvas: #fbfbfa;
-    --studio-surface: #ffffff;
-    --studio-surface-subtle: #f4f3ef;
-    --studio-accent: #b45309;
-    --studio-accent-text: #92400e;
-    --studio-border: #e5e4de;
-    --studio-font: Georgia, Cambria, "Times New Roman", Times, serif;
-    --studio-radius: 4px;
-  }
-
-  [data-studio-theme="fluid"] {
-    --studio-canvas: #0a0d14;
-    --studio-surface: #121826;
-    --studio-surface-subtle: #1a2337;
-    --studio-accent: #06b6d4;
-    --studio-accent-text: #22d3ee;
-    --studio-border: rgba(34, 211, 238, 0.15);
-    --studio-font: var(--font-sans);
-    --studio-radius: 12px;
-  }
-
-  [data-studio-theme="minimal"] {
-    --studio-canvas: #000000;
-    --studio-surface: #0a0a0a;
-    --studio-surface-subtle: #141414;
-    --studio-accent: #ffffff;
-    --studio-accent-text: #ffffff;
-    --studio-border: #262626;
-    --studio-font: var(--font-mono);
-    --studio-radius: 0px;
   }
 
   *, *::before, *::after {
@@ -127,62 +52,37 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
-    position: relative;
   }
 
   ::selection {
-    background: var(--accent-indigo);
-    color: #ffffff;
+    background: var(--text-primary);
+    color: var(--canvas);
   }
 
-  /* 8pt Spatial Grid Overlay */
-  body.show-grid::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    background-image:
-      linear-gradient(to right, rgba(99, 102, 241, 0.08) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(99, 102, 241, 0.08) 1px, transparent 1px);
-    background-size: 8px 8px;
-    z-index: 99999;
-  }
-
-  /* Accessible Focus Ring */
   :focus-visible {
-    outline: 2px solid var(--border-focus);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
 
   .wrap {
-    width: 100%;
-    max-width: 1200px;
+    max-width: 860px;
     margin: 0 auto;
     padding: 0 24px;
   }
 
-  /* ==========================================================================
-     TOP NAVIGATION BAR
-     ========================================================================== */
-  .nav-header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background: rgba(6, 7, 9, 0.78);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border-subtle);
+  /* Navigation */
+  header.site-header {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
   }
 
-  .nav-inner {
-    height: 64px;
+  .header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
   }
 
-  .nav-brand {
+  .brand {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -193,2563 +93,619 @@
     letter-spacing: -0.02em;
   }
 
-  .brand-glyph {
-    width: 28px;
-    height: 28px;
-    background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 16px var(--accent-indigo-glow);
-  }
-
-  .brand-glyph svg {
-    width: 16px;
-    height: 16px;
-    fill: #ffffff;
-  }
-
-  .brand-version {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--accent-indigo);
-    background: rgba(99, 102, 241, 0.12);
-    border: 1px solid rgba(99, 102, 241, 0.25);
-    padding: 2px 7px;
-    border-radius: var(--radius-pill);
-    letter-spacing: 0.04em;
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: color 0.12s ease;
-  }
-
-  .nav-links a:hover {
-    color: var(--text-primary);
-  }
-
-  @media (max-width: 820px) {
-    .nav-links { display: none; }
-  }
-
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .btn-search-trigger {
-    background: var(--surface-1);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-secondary);
-    font-family: var(--font-sans);
-    font-size: 13px;
-    font-weight: 500;
-    padding: 6px 12px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
-  }
-
-  .btn-search-trigger:hover {
-    background: var(--surface-2);
-    border-color: var(--border-strong);
-    color: var(--text-primary);
-  }
-
-  .search-kbd-pill {
-    background: var(--surface-2);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 600;
-    padding: 1px 5px;
+  .brand-mark {
+    width: 20px;
+    height: 20px;
+    background: var(--text-primary);
     border-radius: 3px;
   }
 
-  .btn-icon-toggle {
-    background: var(--surface-1);
-    border: 1px solid var(--border-subtle);
-    color: var(--text-secondary);
+  .brand-tag {
     font-family: var(--font-mono);
     font-size: 11px;
-    font-weight: 600;
-    padding: 6px 10px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+    color: var(--text-muted);
+    font-weight: 500;
   }
 
-  .btn-icon-toggle:hover {
-    background: var(--surface-2);
-    border-color: var(--border-strong);
+  .header-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .header-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.1s ease;
+  }
+
+  .header-links a:hover {
     color: var(--text-primary);
   }
 
-  .btn-icon-toggle.active {
-    background: rgba(99, 102, 241, 0.14);
-    border-color: rgba(99, 102, 241, 0.35);
-    color: #a5b4fc;
+  /* Hero */
+  .hero {
+    padding: 80px 0 64px;
   }
 
-  .btn-nav-install {
-    background: #ffffff;
-    color: #000000;
-    border: none;
-    font-weight: 600;
-    font-size: 13px;
-    padding: 7px 16px;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: opacity 0.12s ease, transform 0.08s ease;
-  }
-
-  .btn-nav-install:hover {
-    opacity: 0.92;
-  }
-
-  .btn-nav-install:active {
-    transform: scale(0.97);
-  }
-
-  /* ==========================================================================
-     HERO SECTION
-     ========================================================================== */
-  .hero-section {
-    padding: 88px 0 64px;
-    position: relative;
-    text-align: center;
-  }
-
-  .hero-radial-glow {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1000px;
-    height: 480px;
-    background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(99, 102, 241, 0.14) 0%, transparent 80%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hero-badge-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface-1);
-    border: 1px solid var(--border-subtle);
-    padding: 6px 14px;
-    border-radius: var(--radius-pill);
+  .hero-eyebrow {
     font-family: var(--font-mono);
     font-size: 12px;
-    color: #e2e8f0;
-    margin-bottom: 28px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: block;
   }
 
-  .hero-pill-indicator {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #10b981;
-    box-shadow: 0 0 8px #10b981;
-  }
-
-  .hero-title {
-    font-size: clamp(38px, 6vw, 68px);
+  h1.hero-title {
+    font-size: clamp(38px, 6vw, 62px);
     font-weight: 800;
-    line-height: 1.08;
-    letter-spacing: -0.035em;
-    color: #ffffff;
-    max-width: 920px;
-    margin-bottom: 22px;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+    max-width: 22ch;
+    margin-bottom: 20px;
   }
 
-  .hero-title-gradient {
-    background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .hero-subtitle {
-    font-size: clamp(16px, 2vw, 19px);
-    line-height: 1.6;
+  p.hero-lead {
+    font-size: 18px;
     color: var(--text-secondary);
-    max-width: 680px;
-    margin-bottom: 36px;
-    font-weight: 400;
-  }
-
-  .hero-actions {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 14px;
+    line-height: 1.6;
+    max-width: 58ch;
     margin-bottom: 32px;
   }
 
-  .btn-primary-hero {
-    background: #ffffff;
-    color: #000000;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 12px 24px;
+  .install-bar {
+    background: var(--canvas-elevated);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 0 24px rgba(255, 255, 255, 0.12);
-    transition: opacity 0.12s ease, transform 0.08s ease;
-  }
-
-  .btn-primary-hero:hover {
-    opacity: 0.93;
-    transform: translateY(-1px);
-  }
-
-  .btn-primary-hero:active {
-    transform: scale(0.97);
-  }
-
-  .btn-secondary-hero {
-    background: var(--surface-1);
-    color: var(--text-primary);
-    border: 1px solid var(--border-strong);
-    font-weight: 600;
-    font-size: 14px;
-    padding: 12px 22px;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: background-color 0.12s ease, border-color 0.12s ease, transform 0.08s ease;
-  }
-
-  .btn-secondary-hero:hover {
-    background: var(--surface-2);
-    border-color: rgba(255, 255, 255, 0.28);
-  }
-
-  .btn-secondary-hero:active {
-    transform: scale(0.97);
-  }
-
-  /* Quick Install Pill */
-  .hero-install-box {
-    background: var(--surface-1);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    padding: 6px 8px 6px 16px;
+    padding: 8px 12px 8px 16px;
     display: inline-flex;
     align-items: center;
     gap: 14px;
     max-width: 100%;
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
   }
 
-  .install-prompt-symbol {
-    color: var(--accent-indigo);
+  .install-bar code {
     font-family: var(--font-mono);
     font-size: 13px;
-    font-weight: 700;
-    user-select: none;
+    color: var(--text-primary);
   }
 
-  code.install-code-text {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: #e2e8f0;
-    white-space: nowrap;
-    overflow-x: auto;
-  }
-
-  .btn-copy-install {
-    background: var(--surface-2);
-    border: 1px solid var(--border-subtle);
+  .btn-copy {
+    background: var(--surface);
+    border: 1px solid var(--border);
     color: var(--text-primary);
     font-family: var(--font-mono);
     font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 7px 14px;
-    border-radius: var(--radius-md);
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: background-color 0.12s ease, border-color 0.12s ease, transform 0.08s ease;
-    white-space: nowrap;
+    transition: background-color 0.1s ease, border-color 0.1s ease;
   }
 
-  .btn-copy-install:hover {
-    background: var(--surface-3);
+  .btn-copy:hover {
+    background: var(--surface-hover);
     border-color: var(--border-strong);
   }
 
-  .btn-copy-install:active {
+  .btn-copy:active {
     transform: scale(0.97);
   }
 
-  /* ==========================================================================
-     HERO PRODUCT SHOWCASE: TURTLENECK AUTONOMOUS STUDIO
-     ========================================================================== */
-  .studio-window {
-    background: var(--surface-1);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-    margin-top: 56px;
-    width: 100%;
-    box-shadow: 0 24px 72px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    text-align: left;
-    position: relative;
+  /* Interactive Component Atelier Specimen */
+  .specimen-section {
+    padding: 32px 0 80px;
   }
 
-  .studio-topbar {
-    background: var(--canvas-subtle);
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 12px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
+  .specimen-chassis {
+    background: var(--canvas-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 36px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
   }
 
-  .window-dots {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .window-dot {
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-  }
-  .dot-red { background: #ef4444; }
-  .dot-yellow { background: #f59e0b; }
-  .dot-green { background: #10b981; }
-
-  .studio-file-title {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .studio-telemetry-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 600;
-    color: #10b981;
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.25);
-    padding: 3px 9px;
-    border-radius: var(--radius-pill);
-  }
-
-  .studio-telemetry-badge::before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #10b981;
-    box-shadow: 0 0 6px #10b981;
-  }
-
-  /* Studio Workspace 3-Column Layout */
-  .studio-workspace {
-    display: grid;
-    grid-template-columns: 240px 1fr 280px;
-    min-height: 480px;
-    background: var(--studio-canvas, var(--canvas));
-    transition: background-color 0.15s ease;
-  }
-
-  @media (max-width: 1040px) {
-    .studio-workspace {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* Left Panel: Archetype Preset Dialects */
-  .studio-sidebar {
-    background: var(--studio-surface-subtle, var(--surface-1));
-    border-right: 1px solid var(--studio-border, var(--border-subtle));
-    padding: 18px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .sidebar-section-title {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    padding: 0 8px 6px;
-  }
-
-  .archetype-btn {
-    background: transparent;
-    border: 1px solid transparent;
-    color: var(--text-secondary);
-    padding: 10px 12px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    text-align: left;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    transition: background-color 0.1s ease, border-color 0.1s ease, color 0.1s ease, transform 0.08s ease;
-  }
-
-  .archetype-btn:hover {
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--text-primary);
-  }
-
-  .archetype-btn.active {
-    background: var(--surface-2);
-    border-color: var(--border-strong);
-    color: var(--text-primary);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  }
-
-  .archetype-btn:active {
-    transform: scale(0.98);
-  }
-
-  .arch-btn-title {
-    font-size: 13px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .arch-btn-desc {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-  }
-
-  .arch-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-  }
-
-  /* Center Panel: Live Interactive Specimen Canvas */
-  .studio-center-stage {
-    padding: 32px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: radial-gradient(circle at center, rgba(99, 102, 241, 0.06) 0%, transparent 70%);
-  }
-
-  @media (max-width: 640px) {
-    .studio-center-stage { padding: 20px 12px; }
-  }
-
-  /* The Live Specimen Component */
-  .specimen-card {
-    background: var(--studio-surface, var(--surface-1));
-    border: 1px solid var(--studio-border, var(--border-subtle));
-    border-radius: var(--studio-radius, var(--radius-lg));
-    font-family: var(--studio-font, var(--font-sans));
-    padding: 24px;
-    width: 100%;
-    max-width: 540px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.06);
-    transition: background-color 0.15s ease, border-color 0.15s ease;
+  @media (max-width: 600px) {
+    .specimen-chassis { padding: 20px; }
   }
 
   .specimen-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--studio-border, var(--border-subtle));
+    align-items: baseline;
+    border-bottom: 1px solid var(--border);
     padding-bottom: 14px;
-    margin-bottom: 18px;
+    margin-bottom: 24px;
   }
 
-  .specimen-cluster-name {
+  .specimen-label {
     font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--studio-accent-text, #818cf8);
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
   }
 
-  .specimen-status-chip {
+  .specimen-badge {
     font-family: var(--font-mono);
     font-size: 11px;
     color: #10b981;
-    background: rgba(16, 185, 129, 0.12);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    padding: 2px 7px;
-    border-radius: var(--radius-pill);
-    font-weight: 600;
   }
 
-  .specimen-title {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    color: var(--text-primary);
-    margin-bottom: 6px;
-  }
-
-  .specimen-desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    margin-bottom: 20px;
-  }
-
-  .specimen-metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    background: var(--studio-surface-subtle, var(--surface-2));
-    border: 1px solid var(--studio-border, var(--border-subtle));
+  .atelier-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 12px 14px;
-    margin-bottom: 20px;
-  }
-
-  .metric-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--text-muted);
-    display: block;
-  }
-
-  .metric-value {
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-top: 2px;
-    display: block;
-  }
-
-  .specimen-tabs-row {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 18px;
-    border-bottom: 1px solid var(--studio-border, var(--border-subtle));
-    padding-bottom: 8px;
-  }
-
-  .specimen-tab-btn {
-    background: transparent;
-    border: none;
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text-secondary);
-    padding: 4px 10px;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: color 0.1s ease, background-color 0.1s ease;
-  }
-
-  .specimen-tab-btn:hover {
-    color: var(--text-primary);
-  }
-
-  .specimen-tab-btn.active {
-    color: var(--studio-accent, #6366f1);
-    background: rgba(99, 102, 241, 0.1);
-  }
-
-  .specimen-actions-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .btn-specimen-primary {
-    background: var(--studio-accent, #6366f1);
-    color: #ffffff;
-    border: none;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 9px 18px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: opacity 0.1s ease, transform 0.08s ease, background-color 0.12s ease;
-  }
-
-  .btn-specimen-primary:hover {
-    opacity: 0.92;
-  }
-
-  .btn-specimen-primary:active {
-    transform: scale(0.97);
-  }
-
-  .btn-specimen-secondary {
-    background: var(--studio-surface-subtle, var(--surface-2));
-    border: 1px solid var(--studio-border, var(--border-subtle));
-    color: var(--text-secondary);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 8px 14px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: background-color 0.1s ease, color 0.1s ease, transform 0.08s ease;
-  }
-
-  .btn-specimen-secondary:hover {
-    background: var(--surface-3);
-    color: var(--text-primary);
-  }
-
-  .btn-specimen-secondary:active {
-    transform: scale(0.97);
-  }
-
-  /* Right Panel: Live Design System Telemetry Inspector */
-  .studio-inspector {
-    background: var(--studio-surface-subtle, var(--surface-1));
-    border-left: 1px solid var(--studio-border, var(--border-subtle));
-    padding: 20px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-
-  .inspector-card {
-    background: var(--canvas-subtle);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-md);
-    padding: 14px;
-  }
-
-  .inspector-card-title {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .inspector-token-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 0;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  }
-
-  .inspector-token-row:last-child {
-    border-bottom: none;
-  }
-
-  .token-key {
-    color: var(--text-secondary);
-  }
-
-  .token-val {
-    color: var(--text-primary);
-    font-weight: 600;
-  }
-
-  .val-pass {
-    color: #10b981;
-  }
-
-  /* ==========================================================================
-     INTERACTIVE 5-STATE ENGINE TEST HARNESS
-     ========================================================================== */
-  .state-engine-section {
-    padding: 96px 0;
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .section-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--accent-indigo);
-    margin-bottom: 12px;
-    display: block;
-  }
-
-  .section-headline {
-    font-size: clamp(32px, 4.5vw, 48px);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    margin-bottom: 16px;
-    color: #ffffff;
-    line-height: 1.15;
-  }
-
-  .section-subtext {
-    font-size: 16px;
-    color: var(--text-secondary);
-    max-width: 640px;
-    margin-bottom: 48px;
-    line-height: 1.6;
-  }
-
-  .state-interactive-workbench {
-    background: var(--surface-1);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-xl);
-    padding: 36px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 36px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-  }
-
-  @media (max-width: 860px) {
-    .state-interactive-workbench {
-      grid-template-columns: 1fr;
-      padding: 24px;
-    }
-  }
-
-  .state-test-controls {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-  }
-
-  .test-interactive-btn {
-    background: #6366f1;
-    color: #ffffff;
-    border: 1px solid #4f46e5;
-    font-size: 14px;
-    font-weight: 600;
-    padding: 14px 24px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    box-shadow: 0 0 20px var(--accent-indigo-glow);
-    transition: background-color 0.09s ease, transform 0.08s ease, border-color 0.09s ease;
-    user-select: none;
-  }
-
-  .test-interactive-btn:hover {
-    background: #4f46e5;
-    border-color: #4338ca;
-  }
-
-  .test-interactive-btn:active {
-    transform: scale(0.97);
-  }
-
-  .state-readout-panel {
-    background: var(--canvas-subtle);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 14px;
-  }
-
-  .state-indicator-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 12px;
-    border-radius: var(--radius-sm);
-    background: var(--surface-1);
-    border: 1px solid var(--border-subtle);
-    font-family: var(--font-mono);
-    font-size: 12px;
-  }
-
-  .state-indicator-row.active-state {
-    background: rgba(99, 102, 241, 0.15);
-    border-color: var(--accent-indigo);
-    color: #ffffff;
-  }
-
-  .state-chip {
-    padding: 2px 8px;
-    border-radius: var(--radius-pill);
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-
-  .chip-off {
-    background: var(--surface-2);
-    color: var(--text-muted);
-  }
-
-  .chip-on {
-    background: #10b981;
-    color: #000000;
-  }
-
-  /* ==========================================================================
-     THE 6 PILLARS BENTO GRID
-     ========================================================================== */
-  section.bento-section {
-    padding: 96px 0;
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .bento-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-
-  @media (max-width: 960px) {
-    .bento-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-
-  @media (max-width: 640px) {
-    .bento-grid { grid-template-columns: 1fr; }
-  }
-
-  .bento-card {
-    background: var(--surface-1);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
     padding: 28px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 20px;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
-    transition: border-color 0.16s ease, transform 0.12s ease;
+    gap: 24px;
   }
 
-  .bento-card:hover {
-    border-color: var(--border-strong);
-    transform: translateY(-2px);
-  }
-
-  .bento-icon-wrap {
-    width: 40px;
-    height: 40px;
-    border-radius: var(--radius-md);
-    background: var(--surface-2);
-    border: 1px solid var(--border-subtle);
+  .plan-row {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    color: var(--accent-indigo);
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
-  .bento-card h3 {
-    font-size: 18px;
+  .plan-title {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .billing-toggle {
+    background: var(--canvas-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 2px;
+    display: inline-flex;
+    gap: 2px;
+  }
+
+  .toggle-opt {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.09s ease, color 0.09s ease;
+  }
+
+  .toggle-opt.active {
+    background: var(--surface);
+    color: var(--text-primary);
+  }
+
+  .slider-box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+
+  .seat-count {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  input[type="range"].seat-slider {
+    width: 100%;
+    accent-color: var(--accent);
+    cursor: pointer;
+    height: 6px;
+    background: var(--canvas-elevated);
+    border-radius: 3px;
+  }
+
+  .pricing-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+
+  .price-large {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+  }
+
+  .price-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .btn-atelier-action {
+    background: var(--text-primary);
+    color: var(--canvas);
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: opacity 0.1s ease, transform 0.08s ease;
+    text-align: center;
+  }
+
+  .btn-atelier-action:hover {
+    opacity: 0.92;
+  }
+
+  .btn-atelier-action:active {
+    transform: scale(0.97);
+  }
+
+  .specimen-specs {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  /* Editorial Principles */
+  .principles {
+    padding: 64px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 36px;
+  }
+
+  @media (max-width: 760px) {
+    .principles-grid { grid-template-columns: 1fr; }
+  }
+
+  .principle-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--accent);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .principle-title {
+    font-size: 16px;
     font-weight: 700;
     color: var(--text-primary);
-    letter-spacing: -0.02em;
     margin-bottom: 8px;
   }
 
-  .bento-card p {
+  .principle-desc {
     font-size: 14px;
     color: var(--text-secondary);
     line-height: 1.6;
   }
 
-  .bento-widget {
-    background: var(--canvas-subtle);
-    border: 1px solid var(--border-subtle);
+  /* Pipeline */
+  .pipeline-block {
+    padding: 48px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .pipeline-box {
+    background: var(--canvas-elevated);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 14px 16px;
+    padding: 20px 24px;
   }
 
-  /* ==========================================================================
-     THE 5 ARCHETYPES GALLERY
-     ========================================================================== */
-  .archetype-gallery-section {
-    padding: 96px 0;
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .archetype-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 18px;
-  }
-
-  .archetype-preview-card {
-    background: var(--surface-1);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    padding: 22px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 16px;
-    transition: border-color 0.16s ease, transform 0.12s ease;
-  }
-
-  .archetype-preview-card:hover {
-    border-color: var(--border-strong);
-    transform: translateY(-2px);
-  }
-
-  .arch-swatch-bar {
-    display: flex;
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-
-  .swatch-dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .arch-card-name {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-  }
-
-  .arch-card-domain {
+  .pipeline-label {
     font-family: var(--font-mono);
     font-size: 11px;
-    color: var(--accent-indigo);
-    margin-bottom: 10px;
-    display: block;
-  }
-
-  .arch-card-copy {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.5;
-  }
-
-  /* ==========================================================================
-     CANONICAL PIPELINE SECTION
-     ========================================================================== */
-  .pipeline-section {
-    padding: 96px 0;
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .pipeline-sequence-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-top: 36px;
-  }
-
-  @media (max-width: 900px) {
-    .pipeline-sequence-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 520px) {
-    .pipeline-sequence-grid { grid-template-columns: 1fr; }
-  }
-
-  .pipeline-step-card {
-    background: var(--surface-1);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-    position: relative;
-  }
-
-  .step-number {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--accent-indigo);
-    margin-bottom: 10px;
-    display: block;
-  }
-
-  .step-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 8px;
-  }
-
-  .step-desc {
-    font-size: 13px;
-    color: var(--text-secondary);
-    line-height: 1.5;
-  }
-
-  .canonical-banner-bar {
-    margin-top: 32px;
-    background: var(--surface-1);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    padding: 18px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .canonical-badge {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    color: var(--text-muted);
     text-transform: uppercase;
-    color: var(--accent-indigo);
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    display: block;
   }
 
-  .canonical-raw-line {
+  .pipeline-flow {
     font-family: var(--font-mono);
     font-size: 13px;
-    color: #e2e8f0;
-  }
-
-  /* ==========================================================================
-     UNIVERSAL AGENT INSTALLATION HUB
-     ========================================================================== */
-  .install-hub-section {
-    padding: 96px 0;
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .agent-matrix-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-top: 36px;
-  }
-
-  @media (max-width: 1024px) {
-    .agent-matrix-grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 600px) {
-    .agent-matrix-grid { grid-template-columns: 1fr; }
-  }
-
-  .agent-card {
-    background: var(--surface-1);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-lg);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 16px;
-    transition: border-color 0.16s ease;
-  }
-
-  .agent-card:hover {
-    border-color: var(--border-strong);
-  }
-
-  .agent-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .agent-name {
-    font-size: 15px;
-    font-weight: 700;
     color: var(--text-primary);
-  }
-
-  .agent-target-badge {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: var(--accent-indigo);
-    background: rgba(99, 102, 241, 0.12);
-    border: 1px solid rgba(99, 102, 241, 0.25);
-    padding: 2px 6px;
-    border-radius: var(--radius-sm);
-  }
-
-  .agent-cmd-box {
-    background: var(--canvas-subtle);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
-    padding: 8px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-  }
-
-  .agent-cmd-box code {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: #e2e8f0;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-x: auto;
     white-space: nowrap;
   }
 
-  .btn-agent-copy {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    padding: 4px;
-    border-radius: var(--radius-sm);
-    transition: color 0.1s ease;
+  /* Universal Install */
+  .install-grid-section {
+    padding: 64px 0 80px;
+    border-top: 1px solid var(--border);
   }
 
-  .btn-agent-copy:hover {
-    color: var(--text-primary);
+  .agent-snippets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 28px;
   }
 
-  /* ==========================================================================
-     INTERACTIVE COMMAND PALETTE MODAL (⌘K)
-     ========================================================================== */
-  .cmdk-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    z-index: 10000;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding-top: 15vh;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.12s ease;
-  }
-
-  .cmdk-overlay.open {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .cmdk-modal {
-    background: var(--surface-1);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-xl);
-    width: 100%;
-    max-width: 580px;
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    overflow: hidden;
-    transform: scale(0.96);
-    transition: transform 0.12s var(--ease-out);
-  }
-
-  .cmdk-overlay.open .cmdk-modal {
-    transform: scale(1);
-  }
-
-  .cmdk-input-row {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border-subtle);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .cmdk-search-input {
-    background: transparent;
-    border: none;
-    color: #ffffff;
-    font-family: var(--font-sans);
-    font-size: 15px;
-    width: 100%;
-    outline: none;
-  }
-
-  .cmdk-list {
-    max-height: 320px;
-    overflow-y: auto;
-    padding: 8px;
-    list-style: none;
-  }
-
-  .cmdk-item {
-    padding: 10px 14px;
+  .agent-box {
+    background: var(--canvas-elevated);
+    border: 1px solid var(--border);
     border-radius: var(--radius-md);
+    padding: 14px 16px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 13px;
-    color: var(--text-secondary);
-    cursor: pointer;
-    transition: background-color 0.08s ease, color 0.08s ease;
+    flex-direction: column;
+    gap: 8px;
   }
 
-  .cmdk-item:hover, .cmdk-item.selected {
-    background: var(--surface-2);
+  .agent-name {
+    font-size: 13px;
+    font-weight: 600;
     color: var(--text-primary);
   }
 
-  .cmdk-kbd-hint {
+  .agent-box code {
     font-family: var(--font-mono);
     font-size: 11px;
-    color: var(--text-muted);
+    color: var(--text-secondary);
+    background: var(--surface);
+    padding: 6px 8px;
+    border-radius: 4px;
+    overflow-x: auto;
   }
 
-  .cmdk-footer {
-    background: var(--canvas-subtle);
-    border-top: 1px solid var(--border-subtle);
-    padding: 10px 20px;
-    display: flex;
-    justify-content: space-between;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  /* ==========================================================================
-     FOOTER
-     ========================================================================== */
+  /* Footer */
   footer.site-footer {
-    border-top: 1px solid var(--border-subtle);
-    padding: 64px 0 48px;
-    background: var(--canvas);
-  }
-
-  .footer-inner {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    font-size: 13px;
+    color: var(--text-muted);
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 24px;
+    gap: 16px;
   }
 
-  .footer-brand {
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--text-primary);
-  }
-
-  .footer-tagline {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-top: 4px;
-  }
-
-  .footer-links {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    list-style: none;
-  }
-
-  .footer-links a {
+  footer.site-footer a {
     color: var(--text-secondary);
     text-decoration: none;
-    font-size: 13px;
-    transition: color 0.12s ease;
   }
 
-  .footer-links a:hover {
+  footer.site-footer a:hover {
     color: var(--text-primary);
   }
 
-  /* Prefers Reduced Motion */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
   }
 </style>
 </head>
-<body data-studio-theme="starlight">
+<body>
 
-  <!-- Global Header Navigation -->
-  <header class="nav-header">
-    <div class="wrap nav-inner">
-      <a href="#" class="nav-brand" aria-label="Turtleneck Home">
-        <div class="brand-glyph" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
-        </div>
-        <span class="brand-name">Turtleneck</span>
-        <span class="brand-version">v2.0</span>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a href="#" class="brand" aria-label="Turtleneck Home">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Turtleneck</span>
+        <span class="brand-tag">v2.0</span>
       </a>
-
-      <ul class="nav-links">
-        <li><a href="#studio">Studio</a></li>
-        <li><a href="#states">Interaction Engine</a></li>
-        <li><a href="#pillars">Pillars</a></li>
-        <li><a href="#archetypes">Archetypes</a></li>
-        <li><a href="#pipeline">Pipeline</a></li>
-        <li><a href="#install">Install</a></li>
-      </ul>
-
-      <div class="nav-actions">
-        <button type="button" class="btn-search-trigger" onclick="openCmdk()" aria-label="Open command palette (Press Command K)">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <span>Search</span>
-          <kbd class="search-kbd-pill">&amp;K</kbd>
-        </button>
-
-        <button type="button" class="btn-icon-toggle active" id="audioToggleBtn" onclick="toggleAudio()" aria-label="Toggle mechanical audio feedback">
-          <span id="audioStatusText">SFX: ON</span>
-        </button>
-
-        <button type="button" class="btn-icon-toggle" id="gridToggleBtn" onclick="toggleGrid()" aria-label="Toggle 8pt alignment grid overlay">
-          <span>8PT GRID</span>
-        </button>
-
-        <a href="#install" class="btn-nav-install">Install Skill</a>
-      </div>
+      <nav class="header-links">
+        <a href="#principles">Philosophy</a>
+        <a href="#pipeline">Pipeline</a>
+        <a href="#install">Install</a>
+        <a href="https://github.com/rmyndharis/antigravity-skills" target="_blank" rel="noopener">GitHub</a>
+      </nav>
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <div class="hero-radial-glow" aria-hidden="true"></div>
-    <div class="wrap hero-content">
-      
-      <div class="hero-badge-pill">
-        <span class="hero-pill-indicator" aria-hidden="true"></span>
-        <span>The Autonomous Product Design Skill for AI Agents</span>
-      </div>
-
-      <h1 class="hero-title">
-        Autonomous design intelligence.<br>
-        <span class="hero-title-gradient">Craft software on Turn 1.</span>
-      </h1>
-
-      <p class="hero-subtitle">
-        Equip AI coding agents with principal-level interface intuition. Frequency-gated physics, vernacular harmony, and mathematical WCAG 2.2 AA contrast built in. Zero prompt wrestling.
+  <main>
+    <section class="hero wrap">
+      <span class="hero-eyebrow">Autonomous Product Design Director</span>
+      <h1 class="hero-title">Taste is not a prompt.<br>It is a decision engine.</h1>
+      <p class="hero-lead">
+        AI agents write backend logic in seconds, but default to commodity UI templates and aesthetic slop. Turtleneck injects principal design direction on Turn 1 — vernacular harmony, frequency-gated physics, and ruthless restraint.
       </p>
 
-      <div class="hero-actions">
-        <a href="#install" class="btn-primary-hero">
-          Install Across Agents &rarr;
-        </a>
-        <a href="#studio" class="btn-secondary-hero">
-          Interactive Studio
-        </a>
+      <div class="install-bar">
+        <code>agy skill add turtleneck</code>
+        <button type="button" class="btn-copy" onclick="copyInstallCmd(this)" aria-label="Copy install command">Copy</button>
       </div>
+    </section>
 
-      <div class="hero-install-box">
-        <span class="install-prompt-symbol">$</span>
-        <code class="install-code-text" id="heroInstallCmd">agy skill add turtleneck</code>
-        <button type="button" class="btn-copy-install" id="heroCopyBtn" onclick="copyHeroInstall()" aria-label="Copy universal install command">
-          <span id="heroCopyText">Copy</span>
-        </button>
-      </div>
-
-      <!-- Hero Product Showcase: Turtleneck Autonomous Studio -->
-      <div class="studio-window" id="studio">
-        <div class="studio-topbar">
-          <div class="window-dots" aria-hidden="true">
-            <div class="window-dot dot-red"></div>
-            <div class="window-dot dot-yellow"></div>
-            <div class="window-dot dot-green"></div>
-          </div>
-
-          <div class="studio-file-title">
-            <span>turtleneck-atelier // component-specimen.tsx</span>
-          </div>
-
-          <div class="studio-telemetry-badge">
-            <span id="studioTelemetryText">DESIGN ATELIER &bull; 0ms KEYBOARD / 80ms MICRO</span>
-          </div>
+    <!-- Interactive Component Specimen -->
+    <section class="specimen-section wrap">
+      <div class="specimen-chassis">
+        <div class="specimen-header">
+          <span class="specimen-label">Live Atelier Specimen // Interactive Product Surface</span>
+          <span class="specimen-badge">&check; WCAG 2.2 AA Verified</span>
         </div>
 
-        <div class="studio-workspace">
-          
-          <!-- Left: Archetype Dialects -->
-          <div class="studio-sidebar">
-            <span class="sidebar-section-title">Select Dialect</span>
-            
-            <button type="button" class="archetype-btn active" id="btnArchStarlight" onclick="setStudioArchetype('starlight')" aria-label="Switch to Starlight Obsidian archetype">
-              <div class="arch-btn-title">
-                <span>Starlight</span>
-                <span class="arch-dot" style="background: #6366f1;"></span>
-              </div>
-              <span class="arch-btn-desc">Obsidian Telemetry</span>
-            </button>
+        <div class="atelier-card">
+          <div class="plan-row">
+            <div>
+              <div class="plan-title">Studio Workspace Access</div>
+              <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Autonomous design intelligence for product engineering teams.</div>
+            </div>
+            <div class="billing-toggle" role="group" aria-label="Billing frequency selector">
+              <button type="button" class="toggle-opt active" id="btnMonthly" onclick="setBilling('monthly')" aria-label="Monthly billing">Monthly</button>
+              <button type="button" class="toggle-opt" id="btnAnnual" onclick="setBilling('annual')" aria-label="Annual billing with 20% discount">Annual (Save 20%)</button>
+            </div>
+          </div>
 
-            <button type="button" class="archetype-btn" id="btnArchCorporate" onclick="setStudioArchetype('corporate')" aria-label="Switch to High-Trust Corporate archetype">
-              <div class="arch-btn-title">
-                <span>Corporate</span>
-                <span class="arch-dot" style="background: #2563eb;"></span>
-              </div>
-              <span class="arch-btn-desc">High-Trust SaaS</span>
-            </button>
+          <div class="slider-box">
+            <div class="slider-labels">
+              <span>Allocated Design Seats</span>
+              <span class="seat-count" id="seatDisplay">8 Designers</span>
+            </div>
+            <input type="range" class="seat-slider" id="seatSlider" min="2" max="32" step="2" value="8" oninput="updateSeats(this.value)" aria-label="Adjust allocated design seats">
+          </div>
 
-            <button type="button" class="archetype-btn" id="btnArchEditorial" onclick="setStudioArchetype('editorial')" aria-label="Switch to Warm Editorial archetype">
-              <div class="arch-btn-title">
-                <span>Editorial</span>
-                <span class="arch-dot" style="background: #b45309;"></span>
-              </div>
-              <span class="arch-btn-desc">Warm Serif Paper</span>
-            </button>
-
-            <button type="button" class="archetype-btn" id="btnArchFluid" onclick="setStudioArchetype('fluid')" aria-label="Switch to Fluid Modern archetype">
-              <div class="arch-btn-title">
-                <span>Fluid Dark</span>
-                <span class="arch-dot" style="background: #06b6d4;"></span>
-              </div>
-              <span class="arch-btn-desc">Modern Luminescence</span>
-            </button>
-
-            <button type="button" class="archetype-btn" id="btnArchMinimal" onclick="setStudioArchetype('minimal')" aria-label="Switch to Minimal 1-Bit Mono archetype">
-              <div class="arch-btn-title">
-                <span>Minimal</span>
-                <span class="arch-dot" style="background: #ffffff;"></span>
-              </div>
-              <span class="arch-btn-desc">1-Bit Monochrome</span>
+          <div class="pricing-row">
+            <div>
+              <span class="price-large" id="priceDisplay">$128</span>
+              <span class="price-sub" id="cycleDisplay">/ month billed monthly</span>
+            </div>
+            <button type="button" class="btn-atelier-action" onclick="handleAuthorize(this)" aria-label="Authorize workspace subscription">
+              Authorize Access &rarr;
             </button>
           </div>
+        </div>
 
-          <!-- Center: Live Interactive Specimen -->
-          <div class="studio-center-stage">
-            <div class="specimen-card" id="studioSpecimenCard">
-              <div class="specimen-header">
-                <div class="specimen-cluster-name">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 3v18M3 9h6"/></svg>
-                  <span id="specimenClusterNameText">ATELIER // COMPONENT SPECIMEN</span>
-                </div>
-                <span class="specimen-status-chip">WCAG 2.2 AA VERIFIED</span>
-              </div>
-
-              <h2 class="specimen-title" id="specimenTitleText">Interactive Tier &amp; Checkout Selector</h2>
-              <p class="specimen-desc" id="specimenDescText">
-                Autonomous product design synthesis: 5-state completeness, 80ms micro-physics, optical scale tension (4.8:1), and verified 18.59:1 AAA contrast.
-              </p>
-
-              <div class="specimen-tabs-row" role="tablist" aria-label="Component tabs">
-                <button type="button" class="specimen-tab-btn active" onclick="switchSpecimenTab(this, 'preview')" role="tab" aria-selected="true">Component Preview</button>
-                <button type="button" class="specimen-tab-btn" onclick="switchSpecimenTab(this, 'typescale')" role="tab" aria-selected="false">Type Hierarchy</button>
-                <button type="button" class="specimen-tab-btn" onclick="switchSpecimenTab(this, 'states')" role="tab" aria-selected="false">5-State Matrix</button>
-                <button type="button" class="specimen-tab-btn" onclick="switchSpecimenTab(this, 'tokens')" role="tab" aria-selected="false">Design Tokens</button>
-              </div>
-
-              <div class="specimen-metrics-grid">
-                <div>
-                  <span class="metric-label">Active Seats</span>
-                  <span class="metric-value">12 Designers</span>
-                </div>
-                <div>
-                  <span class="metric-label">Contrast Ratio</span>
-                  <span class="metric-value" style="color: #10b981;">18.59:1 AAA</span>
-                </div>
-                <div>
-                  <span class="metric-label">Scale Tension</span>
-                  <span class="metric-value">4.8:1 Ratio</span>
-                </div>
-              </div>
-
-              <div class="specimen-actions-row">
-                <button type="button" class="btn-specimen-primary" id="btnDeployRelease" onclick="triggerDeploySimulation(this)" aria-label="Authorize product subscription">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-                  <span id="deployBtnText">Authorize Subscription &rarr;</span>
-                </button>
-                
-                <div style="display: flex; gap: 8px;">
-                  <button type="button" class="btn-specimen-secondary" onclick="playHapticClick(1000, 0.03)" aria-label="Inspect design tokens">
-                    Inspect Tokens
-                  </button>
-                  <button type="button" class="btn-specimen-secondary" onclick="playHapticClick(800, 0.03)" aria-label="Export design specifications">
-                    Export Specs
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right: Telemetry Inspector -->
-          <div class="studio-inspector">
-            <div class="inspector-card">
-              <div class="inspector-card-title">
-                <span>Design System Telemetry</span>
-                <span class="val-pass">&check; PASS</span>
-              </div>
-              <div class="inspector-token-row">
-                <span class="token-key">WCAG Contrast</span>
-                <span class="token-val val-pass" id="tokenContrast">18.59:1 AAA</span>
-              </div>
-              <div class="inspector-token-row">
-                <span class="token-key">Micro Timing</span>
-                <span class="token-val" id="tokenTiming">90ms cubic-out</span>
-              </div>
-              <div class="inspector-token-row">
-                <span class="token-key">Keyboard Latency</span>
-                <span class="token-val val-pass">0ms Instant</span>
-              </div>
-              <div class="inspector-token-row">
-                <span class="token-key">Spatial Rhythm</span>
-                <span class="token-val">8pt strict</span>
-              </div>
-              <div class="inspector-token-row">
-                <span class="token-key">Vernacular Dialect</span>
-                <span class="token-val" id="tokenDialect">Obsidian Telemetry</span>
-              </div>
-            </div>
-
-            <div class="inspector-card">
-              <div class="inspector-card-title">
-                <span>Active Tokens</span>
-              </div>
-              <div class="inspector-token-row">
-                <span class="token-key">Canvas</span>
-                <span class="token-val" id="tokenCanvas">#060709</span>
-              </div>
-              <div class="inspector-token-row">
-                <span class="token-key">Surface</span>
-                <span class="token-val" id="tokenSurface">#10131d</span>
-              </div>
-              <div class="inspector-token-row">
-                <span class="token-key">Accent</span>
-                <span class="token-val" id="tokenAccent" style="color: #818cf8;">#6366f1</span>
-              </div>
-              <div class="inspector-token-row">
-                <span class="token-key">Focus Ring</span>
-                <span class="token-val">2px / 2px off</span>
-              </div>
-            </div>
-          </div>
-
+        <div class="specimen-specs">
+          <span>SCALE TENSION: 4.8:1 (32px / 11px)</span>
+          <span>MICRO-TIMING: 80ms CUBIC-OUT</span>
+          <span>CONTRAST: 18.59:1 AAA</span>
+          <span>DIALECT: ATELIER MINIMAL</span>
         </div>
       </div>
+    </section>
 
-    </div>
-  </section>
-
-  <!-- Interactive 5-State Engine Harness -->
-  <section class="state-engine-section" id="states">
-    <div class="wrap">
-      <span class="section-eyebrow">01 // Interaction Physics</span>
-      <h2 class="section-headline">5-State completeness.<br>Every control tactile and complete.</h2>
-      <p class="section-subtext">
-        Every interactive control declares default, hover, active (scale 0.97), focus-visible (2px solid with 2px offset), and disabled/loading states. Test the physical response engine below.
-      </p>
-
-      <div class="state-interactive-workbench">
-        <div class="state-test-controls">
-          <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">
-            Interact with the button below via mouse, trackpad, or keyboard (Tab &amp; Enter) to watch the state matrix resolve in real time.
-          </p>
-
-          <button type="button" class="test-interactive-btn" id="liveHarnessBtn"
-            onmouseenter="setHarnessState('hover', true)"
-            onmouseleave="setHarnessState('hover', false)"
-            onmousedown="setHarnessState('active', true); playHapticClick(1400, 0.04);"
-            onmouseup="setHarnessState('active', false)"
-            onfocus="setHarnessState('focus', true)"
-            onblur="setHarnessState('focus', false)"
-            aria-label="Interactive test button for 5-state validation">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
-            <span>Interactive State Specimen</span>
-          </button>
-
-          <div style="display: flex; gap: 12px; align-items: center;">
-            <button type="button" class="btn-specimen-secondary" id="btnToggleDisabled" onclick="toggleHarnessDisabled()" aria-label="Toggle disabled state">
-              Simulate Disabled State
-            </button>
-            <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);" id="disabledStatusNote">State: Interactive</span>
-          </div>
-        </div>
-
-        <div class="state-readout-panel">
-          <div class="state-indicator-row active-state" id="rowDefault">
-            <span>1. DEFAULT (Resting state, 4.5:1 text, clear bounds)</span>
-            <span class="state-chip chip-on" id="chipDefault">LIT</span>
-          </div>
-          <div class="state-indicator-row" id="rowHover">
-            <span>2. HOVER (Elevation / border tint, compositor ease)</span>
-            <span class="state-chip chip-off" id="chipHover">OFF</span>
-          </div>
-          <div class="state-indicator-row" id="rowActive">
-            <span>3. ACTIVE (Physical compression scale 0.97, sound)</span>
-            <span class="state-chip chip-off" id="chipActive">OFF</span>
-          </div>
-          <div class="state-indicator-row" id="rowFocus">
-            <span>4. FOCUS-VISIBLE (2px solid, 2px offset, &ge;3:1 ring)</span>
-            <span class="state-chip chip-off" id="chipFocus">OFF</span>
-          </div>
-          <div class="state-indicator-row" id="rowDisabled">
-            <span>5. DISABLED / LOADING (Preserved layout, clear cues)</span>
-            <span class="state-chip chip-off" id="chipDisabled">OFF</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- The 6 Pillars Bento Grid -->
-  <section class="bento-section" id="pillars">
-    <div class="wrap">
-      <span class="section-eyebrow">02 // The Architecture of Craft</span>
-      <h2 class="section-headline">Autonomous craft mandate.<br>Zero prompt wrestling.</h2>
-      <p class="section-subtext">
-        You should never have to prompt "make it look nice" or "add states". Turtleneck operates on Turn 1 with principal design director intuition.
-      </p>
-
-      <div class="bento-grid">
-        
-        <!-- Pillar 1: Vernacular Harmony -->
-        <article class="bento-card">
-          <div>
-            <div class="bento-icon-wrap" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <h3 style="margin-top: 14px;">Vernacular Harmony</h3>
-            <p>
-              100% commitment to ONE coherent design dialect. Zero aesthetic collage: never mixing editorial serifs with hacker terminals and pastel blur on one surface.
-            </p>
-          </div>
-          <div class="bento-widget">
-            <div style="font-family: var(--font-mono); font-size: 10px; color: var(--accent-indigo); margin-bottom: 4px;">SYSTEM DIALECT: OBSIDIAN DEVTOOL</div>
-            <div style="font-size: 13px; color: var(--text-primary); font-weight: 600;">Unified border radii &bull; Cohesive scale &bull; Zero trope collision</div>
-          </div>
-        </article>
-
-        <!-- Pillar 2: Frequency-Gated Timing -->
-        <article class="bento-card">
-          <div>
-            <div class="bento-icon-wrap" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            </div>
-            <h3 style="margin-top: 14px;">Frequency-Gated Timing</h3>
-            <p>
-              0ms animation on high-frequency keyboard actions (100+/day). 80–120ms atomic micro-interactions on buttons. Custom ease-out curves; never sluggish ease-in.
-            </p>
-          </div>
-          <div class="bento-widget" style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">KEYBOARD ACTIONS:</div>
-            <span style="font-family: var(--font-mono); font-size: 11px; color: #10b981; font-weight: 700;">0ms INSTANT</span>
-          </div>
-        </article>
-
-        <!-- Pillar 3: 5-State Completeness -->
-        <article class="bento-card">
-          <div>
-            <div class="bento-icon-wrap" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12h6M12 9v6"/></svg>
-            </div>
-            <h3 style="margin-top: 14px;">5-State Completeness</h3>
-            <p>
-              Every control declares default, hover, active (<code>scale(0.97)</code>), <code>:focus-visible</code> (2px solid, 2px offset), and disabled/loading states.
-            </p>
-          </div>
-          <div class="bento-widget" style="font-family: var(--font-mono); font-size: 11px; display: flex; justify-content: space-between;">
-            <span style="color: var(--text-muted);">STATES HANDLED:</span>
-            <span style="color: #10b981; font-weight: 700;">5 OF 5 COMPLETE</span>
-          </div>
-        </article>
-
-        <!-- Pillar 4: Layered Atmospheric Elevation -->
-        <article class="bento-card">
-          <div>
-            <div class="bento-icon-wrap" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg>
-            </div>
-            <h3 style="margin-top: 14px;">Layered Elevation Tokens</h3>
-            <p>
-              Tiered obsidian/slate surfaces with razor-sharp 1px inner borders. High optical depth without muddy glass blur or washed-out purple fills.
-            </p>
-          </div>
-          <div class="bento-widget" style="font-family: var(--font-mono); font-size: 11px; display: flex; justify-content: space-between;">
-            <span style="color: var(--text-muted);">SURFACE TIERS:</span>
-            <span style="color: #cbd5e1;">#08090e &rarr; #10131d &rarr; #161a29</span>
-          </div>
-        </article>
-
-        <!-- Pillar 5: Authentic Domain Empathy -->
-        <article class="bento-card">
-          <div>
-            <div class="bento-icon-wrap" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
-            </div>
-            <h3 style="margin-top: 14px;">Authentic Domain Empathy</h3>
-            <p>
-              Human-centered product models, pricing tiers, state matrices, and design tokens — never generic "Lorem ipsum" or irrelevant server telemetry.
-            </p>
-          </div>
-          <div class="bento-widget">
-            <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; margin-bottom: 6px;">
-              <span style="color: var(--text-muted);">ACTIVE SEATS: 12 Designers</span>
-              <span style="color: #10b981;">CONTRAST: 18.59:1 AAA</span>
-            </div>
-            <div style="height: 4px; background: var(--surface-2); border-radius: 2px; overflow: hidden;">
-              <div style="width: 88%; height: 100%; background: #6366f1;"></div>
-            </div>
-          </div>
-        </article>
-
-        <!-- Pillar 6: Verified WCAG 2.2 AA -->
-        <article class="bento-card">
-          <div>
-            <div class="bento-icon-wrap" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <h3 style="margin-top: 14px;">Verified WCAG 2.2 AA</h3>
-            <p>
-              Mathematical contrast gate across every foreground/background token pair. Text &ge; 4.5:1, interactive boundaries &ge; 3.0:1. Zero illegible gray-on-gray.
-            </p>
-          </div>
-          <div class="bento-widget" style="font-family: var(--font-mono); font-size: 12px; display: flex; justify-content: space-between;">
-            <span style="color: var(--text-secondary);">Body Text Contrast:</span>
-            <span style="color: #10b981; font-weight: 700;">18.59:1 AAA PASS</span>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- The 5 Archetypes Deep Dive Gallery -->
-  <section class="archetype-gallery-section" id="archetypes">
-    <div class="wrap">
-      <span class="section-eyebrow">03 // Archetype Taxonomy</span>
-      <h2 class="section-headline">One intelligence system.<br>Five distinct design personalities.</h2>
-      <p class="section-subtext">
-        Turtleneck doesn't force a single aesthetic. It selects the exact interaction archetype for your product domain — from dark obsidian telemetry to brutalist monochrome.
-      </p>
-
-      <div class="archetype-grid">
-        
-        <div class="archetype-preview-card">
-          <div>
-            <div class="arch-swatch-bar">
-              <span class="swatch-dot" style="background: #060709;"></span>
-              <span class="swatch-dot" style="background: #10131d;"></span>
-              <span class="swatch-dot" style="background: #6366f1;"></span>
-            </div>
-            <h3 class="arch-card-name">Starlight Obsidian</h3>
-            <span class="arch-card-domain">Developer Tools &bull; Telemetry</span>
-            <p class="arch-card-copy">
-              Dark obsidian elevation, razor-sharp 1px inner borders, and high-density monospace data badges.
-            </p>
-          </div>
-          <button type="button" class="btn-specimen-secondary" onclick="setStudioArchetype('starlight'); document.getElementById('studio').scrollIntoView({behavior:'smooth'});" aria-label="Preview Starlight Archetype in Studio">
-            Inspect Dialect &rarr;
-          </button>
-        </div>
-
-        <div class="archetype-preview-card">
-          <div>
-            <div class="arch-swatch-bar">
-              <span class="swatch-dot" style="background: #f8fafc;"></span>
-              <span class="swatch-dot" style="background: #ffffff;"></span>
-              <span class="swatch-dot" style="background: #2563eb;"></span>
-            </div>
-            <h3 class="arch-card-name">Corporate Clean</h3>
-            <span class="arch-card-domain">FinTech &bull; Enterprise SaaS</span>
-            <p class="arch-card-copy">
-              High-trust light surfaces, crisp slate borders, and conservative, legible typographic cadence.
-            </p>
-          </div>
-          <button type="button" class="btn-specimen-secondary" onclick="setStudioArchetype('corporate'); document.getElementById('studio').scrollIntoView({behavior:'smooth'});" aria-label="Preview Corporate Archetype in Studio">
-            Inspect Dialect &rarr;
-          </button>
-        </div>
-
-        <div class="archetype-preview-card">
-          <div>
-            <div class="arch-swatch-bar">
-              <span class="swatch-dot" style="background: #fbfbfa;"></span>
-              <span class="swatch-dot" style="background: #f4f3ef;"></span>
-              <span class="swatch-dot" style="background: #b45309;"></span>
-            </div>
-            <h3 class="arch-card-name">Warm Editorial</h3>
-            <span class="arch-card-domain">Documentation &bull; Longform</span>
-            <p class="arch-card-copy">
-              Warm textured paper tone, classic serif typography, and generous, relaxed reading line heights.
-            </p>
-          </div>
-          <button type="button" class="btn-specimen-secondary" onclick="setStudioArchetype('editorial'); document.getElementById('studio').scrollIntoView({behavior:'smooth'});" aria-label="Preview Editorial Archetype in Studio">
-            Inspect Dialect &rarr;
-          </button>
-        </div>
-
-        <div class="archetype-preview-card">
-          <div>
-            <div class="arch-swatch-bar">
-              <span class="swatch-dot" style="background: #0a0d14;"></span>
-              <span class="swatch-dot" style="background: #121826;"></span>
-              <span class="swatch-dot" style="background: #06b6d4;"></span>
-            </div>
-            <h3 class="arch-card-name">Modern Fluid</h3>
-            <span class="arch-card-domain">Creative Tools &bull; Next-Gen</span>
-            <p class="arch-card-copy">
-              Deep dark cyan depth, subtle luminescence, and fluid, responsive interactive micro-surfaces.
-            </p>
-          </div>
-          <button type="button" class="btn-specimen-secondary" onclick="setStudioArchetype('fluid'); document.getElementById('studio').scrollIntoView({behavior:'smooth'});" aria-label="Preview Fluid Archetype in Studio">
-            Inspect Dialect &rarr;
-          </button>
-        </div>
-
-        <div class="archetype-preview-card">
-          <div>
-            <div class="arch-swatch-bar">
-              <span class="swatch-dot" style="background: #000000;"></span>
-              <span class="swatch-dot" style="background: #141414;"></span>
-              <span class="swatch-dot" style="background: #ffffff;"></span>
-            </div>
-            <h3 class="arch-card-name">1-Bit Minimal</h3>
-            <span class="arch-card-domain">Hacker &bull; CLI Terminals</span>
-            <p class="arch-card-copy">
-              Pure stark monochrome contrast, 0px border radius, and strict monospace command layout.
-            </p>
-          </div>
-          <button type="button" class="btn-specimen-secondary" onclick="setStudioArchetype('minimal'); document.getElementById('studio').scrollIntoView({behavior:'smooth'});" aria-label="Preview Minimal Archetype in Studio">
-            Inspect Dialect &rarr;
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- The Canonical Pipeline Section -->
-  <section class="pipeline-section" id="pipeline">
-    <div class="wrap">
-      <span class="section-eyebrow">04 // Autonomous Execution Flow</span>
-      <h2 class="section-headline">The Canonical 4-Phase Pipeline</h2>
-      <p class="section-subtext">
-        Turtleneck doesn't just jump into styling. It executes a rigorous, multi-phase product design decision sequence before writing the first line of UI.
-      </p>
-
-      <div class="pipeline-sequence-grid">
-        <div class="pipeline-step-card">
-          <span class="step-number">PHASE 01</span>
-          <h3 class="step-title">Workspace Analysis</h3>
-          <p class="step-desc">
-            Audits existing repo conventions, token systems, color palettes, and component libraries to guarantee seamless integration.
+    <!-- The 3 Editorial Principles -->
+    <section class="principles wrap" id="principles">
+      <span class="hero-eyebrow">The Principles of Restraint</span>
+      <div class="principles-grid">
+        <div>
+          <span class="principle-num">01</span>
+          <h2 class="principle-title">Restraint Over Clutter</h2>
+          <p class="principle-desc">
+            Commodity AI defaults to purple glow blobs, noisy glassmorphism, and self-congratulatory audit badges. Real craft is knowing what to subtract.
           </p>
         </div>
 
-        <div class="pipeline-step-card">
-          <span class="step-number">PHASE 02</span>
-          <h3 class="step-title">Requirements Interview</h3>
-          <p class="step-desc">
-            Aligns on user JTBD, critical state boundaries, error scenarios, and core operational workflows with minimal ceremony.
+        <div>
+          <span class="principle-num">02</span>
+          <h2 class="principle-title">Vernacular Harmony</h2>
+          <p class="principle-desc">
+            100% commitment to ONE coherent visual dialect. Every container radius, typographic pairing, and elevation layer speaks the exact same design language.
           </p>
         </div>
 
-        <div class="pipeline-step-card">
-          <span class="step-number">PHASE 03</span>
-          <h3 class="step-title">Blueprint Alignment</h3>
-          <p class="step-desc">
-            Selects one of the 5 archetypes, establishes the 8pt spatial grid, maps the 5-state matrix, and validates contrast pairs.
-          </p>
-        </div>
-
-        <div class="pipeline-step-card">
-          <span class="step-number">PHASE 04</span>
-          <h3 class="step-title">Production Build</h3>
-          <p class="step-desc">
-            Emits production-ready, accessible UI code with frequency-gated interaction timing, tactile feedback, and verified WCAG 2.2 AA compliance.
+        <div>
+          <span class="principle-num">03</span>
+          <h2 class="principle-title">Frequency-Gated Physics</h2>
+          <p class="principle-desc">
+            0ms animation on high-frequency actions. 80–120ms micro-transitions with custom ease-out. Never lag high-frequency user interactions.
           </p>
         </div>
       </div>
+    </section>
 
-      <!-- Mandatory Canonical Pipeline Banner -->
-      <div class="canonical-banner-bar">
-        <span class="canonical-badge">Canonical Pipeline Protocol</span>
-        <div class="canonical-raw-line">
+    <!-- Canonical Pipeline -->
+    <section class="pipeline-block wrap" id="pipeline">
+      <div class="pipeline-box">
+        <span class="pipeline-label">Canonical Execution Protocol</span>
+        <div class="pipeline-flow">
           1. Workspace Analysis ──► 2. Requirements Interview ──► 3. Blueprint Alignment ──► 4. Production Build
         </div>
       </div>
+    </section>
 
-    </div>
-  </section>
+    <!-- Universal Install -->
+    <section class="install-grid-section wrap" id="install">
+      <span class="hero-eyebrow">Universal Standard</span>
+      <h2 style="font-size: 24px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Install once. Works across all coding agents.</h2>
+      <p style="color: var(--text-secondary); font-size: 14px;">Open Agent Skills standard. Native support across major harnesses.</p>
 
-  <!-- Universal Agent Installation Hub -->
-  <section class="install-hub-section" id="install">
-    <div class="wrap">
-      <span class="section-eyebrow">05 // Universal Standard</span>
-      <h2 class="section-headline">Install once. Works across all coding agents.</h2>
-      <p class="section-subtext">
-        Built on the universal Agent Skills standard. No vendor lock-in. Seamless parity across Antigravity, Claude Code, Cursor, Windsurf, Copilot, Cline, and Codex.
-      </p>
-
-      <div class="agent-matrix-grid">
-        
-        <!-- Antigravity -->
-        <div class="agent-card">
-          <div>
-            <div class="agent-card-header">
-              <span class="agent-name">Google Antigravity</span>
-              <span class="agent-target-badge">agy-skill</span>
-            </div>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 10px;">
-              Global skill installation into Antigravity runtime.
-            </p>
-          </div>
-          <div class="agent-cmd-box">
-            <code>agy skill add turtleneck</code>
-            <button type="button" class="btn-agent-copy" onclick="copySnippet('agy skill add turtleneck', this)" aria-label="Copy Antigravity command">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
-          </div>
+      <div class="agent-snippets">
+        <div class="agent-box">
+          <span class="agent-name">Google Antigravity</span>
+          <code>agy skill add turtleneck</code>
         </div>
-
-        <!-- Universal Skill -->
-        <div class="agent-card">
-          <div>
-            <div class="agent-card-header">
-              <span class="agent-name">Universal Skill</span>
-              <span class="agent-target-badge">.agents/skills/</span>
-            </div>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 10px;">
-              Standard agent skills format across all compliant harnesses.
-            </p>
-          </div>
-          <div class="agent-cmd-box">
-            <code>python scripts/install.py --skill</code>
-            <button type="button" class="btn-agent-copy" onclick="copySnippet('python scripts/install.py --skill', this)" aria-label="Copy Universal Skill command">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
-          </div>
+        <div class="agent-box">
+          <span class="agent-name">Claude Code</span>
+          <code>python scripts/install.py --claude</code>
         </div>
-
-        <!-- Claude Code -->
-        <div class="agent-card">
-          <div>
-            <div class="agent-card-header">
-              <span class="agent-name">Claude Code</span>
-              <span class="agent-target-badge">CLAUDE.md</span>
-            </div>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 10px;">
-              Configured for Anthropic Claude CLI and memory context.
-            </p>
-          </div>
-          <div class="agent-cmd-box">
-            <code>python scripts/install.py --claude</code>
-            <button type="button" class="btn-agent-copy" onclick="copySnippet('python scripts/install.py --claude', this)" aria-label="Copy Claude Code command">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
-          </div>
+        <div class="agent-box">
+          <span class="agent-name">Cursor</span>
+          <code>python scripts/install.py --cursor</code>
         </div>
-
-        <!-- Cursor -->
-        <div class="agent-card">
-          <div>
-            <div class="agent-card-header">
-              <span class="agent-name">Cursor</span>
-              <span class="agent-target-badge">.cursorrules</span>
-            </div>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 10px;">
-              Project rules file with strict Turn 1 craft enforcement.
-            </p>
-          </div>
-          <div class="agent-cmd-box">
-            <code>python scripts/install.py --cursor</code>
-            <button type="button" class="btn-agent-copy" onclick="copySnippet('python scripts/install.py --cursor', this)" aria-label="Copy Cursor command">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
-          </div>
+        <div class="agent-box">
+          <span class="agent-name">Windsurf</span>
+          <code>python scripts/install.py --windsurf</code>
         </div>
-
-        <!-- Windsurf -->
-        <div class="agent-card">
-          <div>
-            <div class="agent-card-header">
-              <span class="agent-name">Windsurf</span>
-              <span class="agent-target-badge">.windsurfrules</span>
-            </div>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 10px;">
-              Direct integration with Windsurf Cascade flows.
-            </p>
-          </div>
-          <div class="agent-cmd-box">
-            <code>python scripts/install.py --windsurf</code>
-            <button type="button" class="btn-agent-copy" onclick="copySnippet('python scripts/install.py --windsurf', this)" aria-label="Copy Windsurf command">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
-          </div>
+        <div class="agent-box">
+          <span class="agent-name">GitHub Copilot</span>
+          <code>python scripts/install.py --copilot</code>
         </div>
-
-        <!-- GitHub Copilot -->
-        <div class="agent-card">
-          <div>
-            <div class="agent-card-header">
-              <span class="agent-name">GitHub Copilot</span>
-              <span class="agent-target-badge">copilot-instructions</span>
-            </div>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 10px;">
-              Repository instructions for Copilot Chat and agent mode.
-            </p>
-          </div>
-          <div class="agent-cmd-box">
-            <code>python scripts/install.py --copilot</code>
-            <button type="button" class="btn-agent-copy" onclick="copySnippet('python scripts/install.py --copilot', this)" aria-label="Copy Copilot command">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
-          </div>
+        <div class="agent-box">
+          <span class="agent-name">Universal Skill</span>
+          <code>python scripts/install.py --skill</code>
         </div>
-
-        <!-- Cline -->
-        <div class="agent-card">
-          <div>
-            <div class="agent-card-header">
-              <span class="agent-name">Cline</span>
-              <span class="agent-target-badge">.clinerules</span>
-            </div>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 10px;">
-              Full rule configuration for autonomous Cline builds.
-            </p>
-          </div>
-          <div class="agent-cmd-box">
-            <code>python scripts/install.py --cline</code>
-            <button type="button" class="btn-agent-copy" onclick="copySnippet('python scripts/install.py --cline', this)" aria-label="Copy Cline command">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Codex / OpenHands -->
-        <div class="agent-card">
-          <div>
-            <div class="agent-card-header">
-              <span class="agent-name">Codex / OpenHands</span>
-              <span class="agent-target-badge">AGENTS.md</span>
-            </div>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 10px;">
-              Standard root instruction file for OpenHands and Codex.
-            </p>
-          </div>
-          <div class="agent-cmd-box">
-            <code>python scripts/install.py --codex</code>
-            <button type="button" class="btn-agent-copy" onclick="copySnippet('python scripts/install.py --codex', this)" aria-label="Copy Codex command">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
-          </div>
-        </div>
-
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- Site Footer -->
-  <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <div>
-        <div class="footer-brand">Turtleneck &bull; Product Design Intelligence</div>
-        <div class="footer-tagline">Open Agent Skills format. Released under MIT License.</div>
-      </div>
-
-      <ul class="footer-links">
-        <li><a href="#studio">Studio</a></li>
-        <li><a href="#states">States</a></li>
-        <li><a href="#pillars">Pillars</a></li>
-        <li><a href="#archetypes">Archetypes</a></li>
-        <li><a href="#pipeline">Pipeline</a></li>
-        <li><a href="#install">Install</a></li>
-        <li><a href="https://github.com/rmyndharis/antigravity-skills" target="_blank" rel="noopener">GitHub</a></li>
-      </ul>
-    </div>
+  <footer class="site-footer wrap">
+    <div>Turtleneck &bull; Product Design Intelligence</div>
+    <div>MIT License &bull; <a href="https://github.com/rmyndharis/antigravity-skills" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
 
-  <!-- Interactive Command Palette Modal (⌘K) -->
-  <div class="cmdk-overlay" id="cmdkOverlay" onclick="handleCmdkOverlayClick(event)" role="dialog" aria-modal="true" aria-label="Command Palette">
-    <div class="cmdk-modal">
-      <div class="cmdk-input-row">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--text-muted);"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" class="cmdk-search-input" id="cmdkInput" placeholder="Type a command or archetype name..." oninput="filterCmdkItems()" onkeydown="handleCmdkKeydown(event)" aria-label="Search actions in command palette" autofocus>
-      </div>
-
-      <ul class="cmdk-list" id="cmdkList" role="listbox">
-        <li class="cmdk-item selected" onclick="executeCmdkAction('starlight')" role="option" aria-selected="true">
-          <span>Switch Dialect: Starlight Obsidian</span>
-          <span class="cmdk-kbd-hint">&crarr;</span>
-        </li>
-        <li class="cmdk-item" onclick="executeCmdkAction('corporate')" role="option" aria-selected="false">
-          <span>Switch Dialect: Corporate Clean</span>
-          <span class="cmdk-kbd-hint">&crarr;</span>
-        </li>
-        <li class="cmdk-item" onclick="executeCmdkAction('editorial')" role="option" aria-selected="false">
-          <span>Switch Dialect: Warm Editorial</span>
-          <span class="cmdk-kbd-hint">&crarr;</span>
-        </li>
-        <li class="cmdk-item" onclick="executeCmdkAction('fluid')" role="option" aria-selected="false">
-          <span>Switch Dialect: Fluid Dark</span>
-          <span class="cmdk-kbd-hint">&crarr;</span>
-        </li>
-        <li class="cmdk-item" onclick="executeCmdkAction('minimal')" role="option" aria-selected="false">
-          <span>Switch Dialect: 1-Bit Minimal</span>
-          <span class="cmdk-kbd-hint">&crarr;</span>
-        </li>
-        <li class="cmdk-item" onclick="executeCmdkAction('audio')" role="option" aria-selected="false">
-          <span>Toggle Mechanical SFX</span>
-          <span class="cmdk-kbd-hint">&crarr;</span>
-        </li>
-        <li class="cmdk-item" onclick="executeCmdkAction('grid')" role="option" aria-selected="false">
-          <span>Toggle 8pt Alignment Grid</span>
-          <span class="cmdk-kbd-hint">&crarr;</span>
-        </li>
-        <li class="cmdk-item" onclick="executeCmdkAction('install')" role="option" aria-selected="false">
-          <span>Copy Install Command</span>
-          <span class="cmdk-kbd-hint">&crarr;</span>
-        </li>
-      </ul>
-
-      <div class="cmdk-footer">
-        <span>Navigate: &uarr; &darr;</span>
-        <span>Select: &crarr;</span>
-        <span>Close: ESC</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Interactive JavaScript Runtime -->
   <script>
-    /* ==========================================================================
-       SYNTHESIZED MECHANICAL WEB AUDIO (Haptic Acoustics)
-       ========================================================================== */
-    let audioEnabled = true;
-    let audioCtx = null;
+    let billingCycle = 'monthly';
+    let seatCount = 8;
+    const basePricePerSeat = 16;
 
-    function initAudio() {
-      if (!audioCtx) {
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        if (AudioContextClass) {
-          audioCtx = new AudioContextClass();
-        }
-      }
-      if (audioCtx && audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
+    function updatePrice() {
+      const rate = billingCycle === 'annual' ? 0.8 : 1.0;
+      const total = Math.round(seatCount * basePricePerSeat * rate);
+      document.getElementById('priceDisplay').textContent = '$' + total;
+      document.getElementById('cycleDisplay').textContent = billingCycle === 'annual' ? '/ month billed annually' : '/ month billed monthly';
     }
 
-    function playHapticClick(freq = 1200, decay = 0.04) {
-      if (!audioEnabled) return;
-      try {
-        initAudio();
-        if (!audioCtx) return;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-        osc.frequency.exponentialRampToValueAtTime(140, audioCtx.currentTime + decay);
-        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + decay);
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-        osc.start();
-        osc.stop(audioCtx.currentTime + decay);
-      } catch (e) {}
+    function updateSeats(val) {
+      seatCount = parseInt(val, 10);
+      document.getElementById('seatDisplay').textContent = seatCount + ' Designers';
+      updatePrice();
     }
 
-    function toggleAudio() {
-      audioEnabled = !audioEnabled;
-      const btn = document.getElementById('audioToggleBtn');
-      const txt = document.getElementById('audioStatusText');
-      if (audioEnabled) {
-        btn.classList.add('active');
-        txt.textContent = 'SFX: ON';
-        playHapticClick(1500, 0.05);
-      } else {
-        btn.classList.remove('active');
-        txt.textContent = 'SFX: OFF';
-      }
+    function setBilling(cycle) {
+      billingCycle = cycle;
+      document.getElementById('btnMonthly').classList.toggle('active', cycle === 'monthly');
+      document.getElementById('btnAnnual').classList.toggle('active', cycle === 'annual');
+      updatePrice();
     }
 
-    function toggleGrid() {
-      playHapticClick(900, 0.03);
-      document.body.classList.toggle('show-grid');
-      const btn = document.getElementById('gridToggleBtn');
-      btn.classList.toggle('active');
-    }
-
-    /* ==========================================================================
-       STUDIO ARCHETYPE MORPHING
-       ========================================================================== */
-    const ARCHETYPES_DATA = {
-      starlight: {
-        cluster: 'ATELIER // OBSIDIAN DESIGN SYSTEM',
-        title: 'Component Workbench & Token Studio',
-        desc: 'Dark obsidian elevation, razor-sharp 1px inner borders, and high-density typography scale tension.',
-        contrast: '18.59:1 AAA',
-        timing: '80ms cubic-out',
-        dialect: 'Obsidian Atelier',
-        canvas: '#060709',
-        surface: '#10131d',
-        accent: '#6366f1',
-        accentText: '#818cf8'
-      },
-      corporate: {
-        cluster: 'WORKSPACE // ENTERPRISE DESIGN SYSTEM',
-        title: 'Institutional Payment & Billing Flow',
-        desc: 'High-trust light surfaces, conservative spatial cadence, and crystal-clear contrast for enterprise SaaS.',
-        contrast: '14.70:1 AAA',
-        timing: '100ms ease-out',
-        dialect: 'Corporate Clean',
-        canvas: '#f8fafc',
-        surface: '#ffffff',
-        accent: '#2563eb',
-        accentText: '#1d4ed8'
-      },
-      editorial: {
-        cluster: 'FOLIO // EDITORIAL PUBLICATION ATELIER',
-        title: 'Warm Reading & Typography Studio',
-        desc: 'Generous proportional typography, warm textured reading surfaces, and refined classical serif rhythm.',
-        contrast: '15.90:1 AAA',
-        timing: '120ms ease-out',
-        dialect: 'Warm Editorial',
-        canvas: '#fbfbfa',
-        surface: '#ffffff',
-        accent: '#b45309',
-        accentText: '#92400e'
-      },
-      fluid: {
-        cluster: 'CANVAS // MODERN LUMINESCENT UI',
-        title: 'Fluid Micro-Surfaces & Motion Studio',
-        desc: 'Deep dark cyan layers, subtle luminous specular highlights, and fluid, responsive interactive controls.',
-        contrast: '16.20:1 AAA',
-        timing: '80ms cubic-out',
-        dialect: 'Fluid Luminescence',
-        canvas: '#0a0d14',
-        surface: '#121826',
-        accent: '#06b6d4',
-        accentText: '#22d3ee'
-      },
-      minimal: {
-        cluster: 'RAW // 1-BIT MONOCHROME TERMINAL',
-        title: 'Monochrome Geometric Component Spec',
-        desc: 'Stark 1-bit high-contrast geometry, pure square corners, and raw monospace precision design tokens.',
-        contrast: '21.00:1 AAA',
-        timing: '0ms instant',
-        dialect: '1-Bit Minimal',
-        canvas: '#000000',
-        surface: '#0a0a0a',
-        accent: '#ffffff',
-        accentText: '#ffffff'
-      }
-    };
-
-    function setStudioArchetype(archKey) {
-      playHapticClick(1300, 0.04);
-      document.body.setAttribute('data-studio-theme', archKey);
-
-      // Update sidebar active buttons
-      const btnMap = {
-        starlight: 'btnArchStarlight',
-        corporate: 'btnArchCorporate',
-        editorial: 'btnArchEditorial',
-        fluid: 'btnArchFluid',
-        minimal: 'btnArchMinimal'
-      };
-
-      Object.keys(btnMap).forEach(key => {
-        const el = document.getElementById(btnMap[key]);
-        if (el) {
-          if (key === archKey) {
-            el.classList.add('active');
-          } else {
-            el.classList.remove('active');
-          }
-        }
-      });
-
-      const data = ARCHETYPES_DATA[archKey] || ARCHETYPES_DATA.starlight;
-      
-      // Update Specimen content
-      document.getElementById('specimenClusterNameText').textContent = data.cluster;
-      document.getElementById('specimenTitleText').textContent = data.title;
-      document.getElementById('specimenDescText').textContent = data.desc;
-
-      // Update Inspector tokens
-      document.getElementById('tokenContrast').textContent = data.contrast;
-      document.getElementById('tokenTiming').textContent = data.timing;
-      document.getElementById('tokenDialect').textContent = data.dialect;
-      document.getElementById('tokenCanvas').textContent = data.canvas;
-      document.getElementById('tokenSurface').textContent = data.surface;
-      const accentEl = document.getElementById('tokenAccent');
-      accentEl.textContent = data.accent;
-      accentEl.style.color = data.accentText;
-    }
-
-    function switchSpecimenTab(btn, tabKey) {
-      playHapticClick(1100, 0.03);
-      const parent = btn.closest('.specimen-tabs-row');
-      parent.querySelectorAll('.specimen-tab-btn').forEach(b => {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-      });
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-    }
-
-    function triggerDeploySimulation(btn) {
-      playHapticClick(1600, 0.06);
+    function handleAuthorize(btn) {
       const originalText = btn.innerHTML;
-      btn.innerHTML = `<span>Authorizing Plan...</span>`;
-      btn.style.opacity = '0.7';
-
+      btn.innerHTML = '&check; Access Granted';
+      btn.style.opacity = '0.85';
       setTimeout(() => {
-        playHapticClick(1900, 0.08);
-        btn.innerHTML = `<span style="color: #ffffff;">&check; Plan Subscribed</span>`;
+        btn.innerHTML = originalText;
         btn.style.opacity = '1';
-
-        setTimeout(() => {
-          btn.innerHTML = originalText;
-        }, 2200);
-      }, 700);
+      }, 1800);
     }
 
-    /* ==========================================================================
-     INTERACTIVE 5-STATE HARNESS
-     ========================================================================== */
-    let harnessDisabled = false;
-
-    function setHarnessState(state, isLit) {
-      if (harnessDisabled) return;
-      
-      const rowMap = {
-        hover: { row: 'rowHover', chip: 'chipHover' },
-        active: { row: 'rowActive', chip: 'chipActive' },
-        focus: { row: 'rowFocus', chip: 'chipFocus' }
-      };
-
-      const target = rowMap[state];
-      if (!target) return;
-
-      const rowEl = document.getElementById(target.row);
-      const chipEl = document.getElementById(target.chip);
-
-      if (isLit) {
-        rowEl.classList.add('active-state');
-        chipEl.className = 'state-chip chip-on';
-        chipEl.textContent = 'LIT';
-      } else {
-        rowEl.classList.remove('active-state');
-        chipEl.className = 'state-chip chip-off';
-        chipEl.textContent = 'OFF';
-      }
-    }
-
-    function toggleHarnessDisabled() {
-      harnessDisabled = !harnessDisabled;
-      playHapticClick(900, 0.04);
-      const btn = document.getElementById('liveHarnessBtn');
-      const row = document.getElementById('rowDisabled');
-      const chip = document.getElementById('chipDisabled');
-      const note = document.getElementById('disabledStatusNote');
-      const toggleBtn = document.getElementById('btnToggleDisabled');
-
-      if (harnessDisabled) {
-        btn.disabled = true;
-        btn.style.opacity = '0.4';
-        btn.style.cursor = 'not-allowed';
-        row.classList.add('active-state');
-        chip.className = 'state-chip chip-on';
-        chip.textContent = 'LIT';
-        note.textContent = 'State: Disabled (Ignored input)';
-        toggleBtn.textContent = 'Restore Interactive State';
-      } else {
-        btn.disabled = false;
-        btn.style.opacity = '1';
-        btn.style.cursor = 'pointer';
-        row.classList.remove('active-state');
-        chip.className = 'state-chip chip-off';
-        chip.textContent = 'OFF';
-        note.textContent = 'State: Interactive';
-        toggleBtn.textContent = 'Simulate Disabled State';
-      }
-    }
-
-    /* ==========================================================================
-       COMMAND PALETTE (⌘K)
-       ========================================================================== */
-    function openCmdk() {
-      playHapticClick(1200, 0.03);
-      const overlay = document.getElementById('cmdkOverlay');
-      overlay.classList.add('open');
-      const input = document.getElementById('cmdkInput');
-      input.value = '';
-      filterCmdkItems();
-      setTimeout(() => input.focus(), 50);
-    }
-
-    function closeCmdk() {
-      const overlay = document.getElementById('cmdkOverlay');
-      overlay.classList.remove('open');
-    }
-
-    function handleCmdkOverlayClick(e) {
-      if (e.target.id === 'cmdkOverlay') {
-        closeCmdk();
-      }
-    }
-
-    window.addEventListener('keydown', (e) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        const overlay = document.getElementById('cmdkOverlay');
-        if (overlay.classList.contains('open')) {
-          closeCmdk();
-        } else {
-          openCmdk();
-        }
-      }
-      if (e.key === 'Escape') {
-        closeCmdk();
-      }
-    });
-
-    function filterCmdkItems() {
-      const q = document.getElementById('cmdkInput').value.toLowerCase().trim();
-      const items = document.querySelectorAll('#cmdkList .cmdk-item');
-      let firstVisible = null;
-
-      items.forEach(item => {
-        const text = item.textContent.toLowerCase();
-        if (text.includes(q)) {
-          item.style.display = 'flex';
-          if (!firstVisible) firstVisible = item;
-        } else {
-          item.style.display = 'none';
-          item.classList.remove('selected');
-        }
-      });
-
-      items.forEach(i => i.classList.remove('selected'));
-      if (firstVisible) {
-        firstVisible.classList.add('selected');
-      }
-    }
-
-    function handleCmdkKeydown(e) {
-      const items = Array.from(document.querySelectorAll('#cmdkList .cmdk-item')).filter(i => i.style.display !== 'none');
-      if (!items.length) return;
-
-      let idx = items.findIndex(i => i.classList.contains('selected'));
-
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        if (idx < items.length - 1) {
-          if (idx >= 0) items[idx].classList.remove('selected');
-          items[idx + 1].classList.add('selected');
-          items[idx + 1].scrollIntoView({ block: 'nearest' });
-        }
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (idx > 0) {
-          items[idx].classList.remove('selected');
-          items[idx - 1].classList.add('selected');
-          items[idx - 1].scrollIntoView({ block: 'nearest' });
-        }
-      } else if (e.key === 'Enter') {
-        e.preventDefault();
-        if (idx >= 0) {
-          items[idx].click();
-        }
-      }
-    }
-
-    function executeCmdkAction(action) {
-      closeCmdk();
-      if (action === 'audio') {
-        toggleAudio();
-      } else if (action === 'grid') {
-        toggleGrid();
-      } else if (action === 'install') {
-        copyHeroInstall();
-      } else {
-        setStudioArchetype(action);
-        document.getElementById('studio').scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-
-    /* ==========================================================================
-       CLIPBOARD COPY UTILITIES
-       ========================================================================== */
-    function copyHeroInstall() {
-      playHapticClick(1500, 0.04);
-      const text = document.getElementById('heroInstallCmd').textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        const btnText = document.getElementById('heroCopyText');
-        btnText.textContent = 'Copied!';
-        setTimeout(() => {
-          btnText.textContent = 'Copy';
-        }, 2000);
-      });
-    }
-
-    function copySnippet(cmd, btn) {
-      playHapticClick(1400, 0.03);
-      navigator.clipboard.writeText(cmd).then(() => {
-        const originalSvg = btn.innerHTML;
-        btn.innerHTML = `<span style="font-family: var(--font-mono); font-size: 10px; color: #10b981; font-weight: 700;">&check;</span>`;
-        setTimeout(() => {
-          btn.innerHTML = originalSvg;
-        }, 1800);
+    function copyInstallCmd(btn) {
+      navigator.clipboard.writeText('agy skill add turtleneck').then(() => {
+        btn.textContent = 'Copied';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 1600);
       });
     }
   </script>
