@@ -12,6 +12,14 @@ Turtleneck is not merely a styling checklist. It is a product-design decision sy
 ### Operating principle
 Decide, then make. Do not decorate an undefined product. First determine what the user is trying to accomplish, what they must decide, what can go wrong, and what feedback makes the next action obvious. Then create an original solution that fits the existing codebase.
 
+### Autonomous craft mandate (do not wait to be asked)
+The user must NEVER have to ask to "make it look good", "add craft", "make it interactive", or "elevate the design". When Turtleneck is active, you are the senior design director. On Turn 1 of ANY UI task, autonomously deliver:
+1. **Typographic scale tension**: Dramatic ratio (>=4:1) between large display type (e.g. sharp display serif or brutalist display sans) and minute monospace metadata tags; never uniform bland sans-serif blobs.
+2. **5-state interactive completeness**: Every control must implement default, hover, active (`scale(0.98)`), `:focus-visible` (2px solid, 2px offset, >=3:1 contrast), and disabled/loading/confirmation states.
+3. **Physical tactile feedback**: Instant 80–120ms micro-interactions on compositor-only properties (`transform`, `opacity`), zero `transition: all`, and synthesized Web Audio mechanical acoustics where appropriate.
+4. **Authentic domain density**: Populate interfaces with real, high-fidelity operational data, domain terminology, and state badges — never generic "Lorem ipsum", "Title here", or empty card shells.
+5. **Architectural anti-slop discipline**: Strict 8pt spatial grid, verified WCAG 2.2 AA contrast (>=4.5:1 text, >=3:1 controls), and zero commodity AI slop (no washed-out purple gradients, frosted glass blur, or sluggish 800ms bouncy springs).
+
 Use the smallest process that produces a sound decision. Under a hard deadline, do not ask a long interview: state assumptions, select a viable pattern, build, and leave clear extension points.
 
 ### Core pipeline
