@@ -140,7 +140,7 @@
     padding: 6px 12px;
     border-radius: 3px;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
   }
 
   .btn-grid-toggle:hover {
@@ -160,7 +160,7 @@
     text-decoration: none;
     font-family: var(--font-mono);
     font-size: 12px;
-    transition: color 0.12s;
+    transition: color 0.12s ease;
   }
   .studio-nav a:hover { color: var(--ink-primary); }
 
@@ -238,6 +238,7 @@
   .hero-actions {
     margin-top: 40px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 20px;
   }
@@ -258,7 +259,7 @@
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    transition: all 0.15s ease;
+    transition: background-color 0.12s ease, transform 0.12s ease;
   }
 
   .btn-exhibition:hover {
@@ -282,11 +283,74 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    transition: all 0.15s ease;
+    transition: background-color 0.12s ease, border-color 0.12s ease;
   }
 
   .btn-secondary:hover {
     background: var(--surface);
+  }
+
+  /* Quick Install Command Bar */
+  .hero-quick-install {
+    margin-top: 24px;
+    display: inline-flex;
+    align-items: center;
+    background: #090a0d;
+    border: 1px solid #1f232d;
+    border-radius: 3px;
+    padding: 6px 6px 6px 16px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: #f5f3ef;
+    max-width: 100%;
+  }
+
+  .prompt-sym {
+    color: var(--accent-vermilion);
+    margin-right: 12px;
+    user-select: none;
+    font-weight: 700;
+  }
+
+  .btn-copy-code {
+    background: #1c1f26;
+    color: #f5f3ef;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    padding: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-radius: 2px;
+    cursor: pointer;
+    margin-left: 20px;
+    transition: background-color 0.12s ease, border-color 0.12s ease;
+  }
+
+  .btn-copy-code:hover {
+    background: #2e323e;
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  /* Caliper Overlay Mode */
+  .caliper-tag {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px dashed #ef4444;
+    padding: 2px 6px;
+    border-radius: 2px;
+    position: absolute;
+    pointer-events: none;
+    z-index: 50;
+    white-space: nowrap;
+    letter-spacing: 0.04em;
+  }
+
+  body.show-calipers .caliper-tag {
+    display: inline-flex;
   }
 
   /* SECTION: THE VISUAL ANATOMY CRITIQUE (Side by side Redline comparison) */
@@ -517,17 +581,104 @@
     line-height: 1.6;
   }
 
+  /* Slop Wobble & Diagnostics */
+  @keyframes slopWobble {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.08) rotate(1.5deg); }
+    50% { transform: scale(0.95) rotate(-1.5deg); }
+    75% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+  .slop-wobble {
+    animation: slopWobble 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
   /* SECTION: THE 6 INTERACTION ARCHETYPES */
   section.archetypes-section {
     padding: 96px 0;
     border-bottom: 1px solid var(--hairline);
   }
 
+  /* Archetype Studio Workbench */
+  .archetype-studio {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    margin-top: 40px;
+    margin-bottom: 48px;
+    overflow: hidden;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.04);
+  }
+
+  .archetype-tabs {
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--surface-raised);
+  }
+
+  .arch-tab-btn {
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--hairline);
+    padding: 16px 22px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.12s ease, color 0.12s ease;
+  }
+
+  .arch-tab-btn:hover {
+    background: var(--surface);
+    color: var(--ink-primary);
+  }
+
+  .arch-tab-btn.active {
+    background: var(--surface);
+    color: var(--ink-primary);
+    border-bottom: 2px solid var(--accent-vermilion);
+  }
+
+  .archetype-stage-wrap {
+    padding: 36px 40px;
+    min-height: 380px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .archetype-telemetry-bar {
+    background: var(--surface-sunken);
+    border-top: 1px solid var(--hairline);
+    padding: 14px 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 36px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+  .arch-telemetry-item span {
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-right: 8px;
+  }
+
+  .arch-telemetry-item strong {
+    color: var(--ink-primary);
+  }
+
   .archetype-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-    margin-top: 40px;
+    margin-top: 20px;
   }
 
   @media (max-width: 960px) {
@@ -542,7 +693,7 @@
     display: flex;
     flex-direction: column;
     gap: 14px;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
   }
 
   .archetype-card:hover {
@@ -676,13 +827,19 @@
     </div>
 
     <div class="studio-controls">
-      <button type="button" class="btn-grid-toggle" id="gridToggleBtn" onclick="toggleBaselineGrid()">
-        <span aria-hidden="true">&#x25A6;</span> 8pt Grid Overlay
+      <button type="button" class="btn-grid-toggle" id="audioToggleBtn" onclick="toggleAudio()" aria-label="Toggle mechanical sound effects">
+        <span aria-hidden="true">&#x1F508;</span> Audio: <span id="audioStatus">Off</span>
+      </button>
+      <button type="button" class="btn-grid-toggle" id="caliperToggleBtn" onclick="toggleCalipers()" aria-label="Toggle redline architectural calipers">
+        <span aria-hidden="true">&#x2299;</span> Redlines
+      </button>
+      <button type="button" class="btn-grid-toggle" id="gridToggleBtn" onclick="toggleBaselineGrid()" aria-label="Toggle 8pt architectural alignment grid">
+        <span aria-hidden="true">&#x25A6;</span> 8pt Grid
       </button>
       <nav class="studio-nav">
         <a href="#critique">The Critique</a> &middot;
         <a href="#principles">10 Principles</a> &middot;
-        <a href="#archetypes">Archetypes</a> &middot;
+        <a href="#archetypes">Archetype Studio</a> &middot;
         <a href="examples/creative-craft.html">Synthesizer</a> &middot;
         <a href="https://github.com/Divyanshneginot/turtleneck">GitHub &rarr;</a>
       </nav>
@@ -716,6 +873,14 @@
         <a href="#critique" class="btn-secondary">Inspect the Visual Critique</a>
       </div>
 
+      <div class="hero-quick-install">
+        <span class="prompt-sym">$</span>
+        <code id="heroInstallCmd">python scripts/install.py --skill</code>
+        <button type="button" class="btn-copy-code" id="heroCopyBtn" onclick="copyHeroInstall()" aria-label="Copy universal skill install command">
+          <span id="heroCopyText">Copy</span>
+        </button>
+      </div>
+
     </div>
   </section>
 
@@ -730,6 +895,9 @@
         
         <!-- Left: Commodity AI Slop -->
         <article class="critique-plate plate-slop">
+          <span class="caliper-tag" style="top: 10px; right: 12px;">WCAG: 2.1:1 FAIL</span>
+          <span class="caliper-tag" style="bottom: 10px; left: 12px;">LAG: 800ms JITTER</span>
+
           <div class="plate-header">
             <span class="plate-verdict verdict-slop">&#x2717; Commodity AI Slop Default</span>
             <span style="font-family: var(--font-mono); font-size: 10px; color: #f43f5e;">WCAG CONTRAST: 2.1:1 FAIL</span>
@@ -744,7 +912,10 @@
             <p style="color: #64748b; font-size: 13px; line-height: 1.5;">
               Hypercharge your automated enterprise workflows with frictionless cognitive intelligence cloud paradigms.
             </p>
-            <button type="button" class="slop-btn">Get Started Free &rarr;</button>
+            <button type="button" class="slop-btn" id="slopDemoBtn" onclick="triggerSlopDemo()">Get Started Free &rarr;</button>
+            <div class="slop-diagnostic" id="slopDiagnostic" style="display:none; font-family: var(--font-mono); font-size: 11px; color: #f43f5e; background: rgba(244,63,94,0.12); border: 1px solid rgba(244,63,94,0.3); padding: 8px 12px; border-radius: 4px; line-height: 1.5;">
+              ⚠️ SLOP PENALTY: 800ms Spring Jitter &bull; 2.1:1 Contrast Fail &bull; Missing :focus-visible &bull; Color-only state
+            </div>
           </div>
 
           <div class="redline-note">
@@ -754,6 +925,9 @@
 
         <!-- Right: Turtleneck Product Architecture -->
         <article class="critique-plate plate-craft">
+          <span class="caliper-tag" style="top: 10px; right: 12px; color: #065f46; background: #ecfdf5; border-color: #6ee7b7;">WCAG: 18.59:1 AAA PASS</span>
+          <span class="caliper-tag" style="bottom: 10px; left: 12px; color: #065f46; background: #ecfdf5; border-color: #6ee7b7;">FEEDBACK: 120ms ATOMIC</span>
+
           <div class="plate-header">
             <span class="plate-verdict verdict-craft">&#x2713; Turtleneck Product Architecture</span>
             <span style="font-family: var(--font-mono); font-size: 10px; color: var(--accent-emerald);">WCAG CONTRAST: 18.5:1 PASS</span>
@@ -784,7 +958,10 @@
               </div>
             </div>
 
-            <button type="button" class="craft-btn">Authorize Eviction &rarr;</button>
+            <button type="button" class="craft-btn" id="craftDemoBtn" onclick="triggerCraftDemo()">Authorize Eviction &rarr;</button>
+            <div class="craft-diagnostic" id="craftDiagnostic" style="display:none; font-family: var(--font-mono); font-size: 11px; color: #065f46; background: #ecfdf5; border: 1px solid #6ee7b7; padding: 8px 12px; border-radius: 4px; line-height: 1.5;">
+              ✓ ATOMIC CONFIRMATION &bull; 118ms COMPOSITOR TRANSITION &bull; 18.59:1 AAA VERIFIED
+            </div>
           </div>
 
           <div class="craft-note">
@@ -898,6 +1075,41 @@
       <span class="section-eyebrow">03 // The Diagnostic Lenses</span>
       <h2 class="section-heading">Archetypes derived from the user's task.</h2>
 
+      <!-- Interactive Archetype Studio Workbench -->
+      <div class="archetype-studio" id="studio">
+        <div class="archetype-tabs" role="tablist" aria-label="Archetype selection tabs">
+          <button type="button" class="arch-tab-btn active" role="tab" aria-selected="true" id="tab-telemetry" onclick="switchArchetype('telemetry', this)">01 // Telemetry Dark</button>
+          <button type="button" class="arch-tab-btn" role="tab" aria-selected="false" id="tab-editorial" onclick="switchArchetype('editorial', this)">02 // Editorial Paper</button>
+          <button type="button" class="arch-tab-btn" role="tab" aria-selected="false" id="tab-chooser" onclick="switchArchetype('chooser', this)">03 // Guided Chooser</button>
+          <button type="button" class="arch-tab-btn" role="tab" aria-selected="false" id="tab-template" onclick="switchArchetype('template', this)">04 // Template Chooser</button>
+          <button type="button" class="arch-tab-btn" role="tab" aria-selected="false" id="tab-minimal" onclick="switchArchetype('minimal', this)">05 // Geometric Minimal</button>
+          <button type="button" class="arch-tab-btn" role="tab" aria-selected="false" id="tab-corporate" onclick="switchArchetype('corporate', this)">06 // High-Trust Corporate</button>
+        </div>
+
+        <div class="archetype-stage-wrap" id="archetypeStageContainer">
+          <div id="archetypeStage" style="width: 100%;"></div>
+        </div>
+
+        <div class="archetype-telemetry-bar">
+          <div class="arch-telemetry-item">
+            <span>CANVAS / CONTRAST:</span>
+            <strong id="telContrast">#08090a &middot; 18.59:1 (WCAG AAA)</strong>
+          </div>
+          <div class="arch-telemetry-item">
+            <span>TYPOGRAPHY:</span>
+            <strong id="telType">Instrument Serif + JetBrains Mono</strong>
+          </div>
+          <div class="arch-telemetry-item">
+            <span>RADIUS:</span>
+            <strong id="telRadius">4px control / 8px window</strong>
+          </div>
+          <div class="arch-telemetry-item">
+            <span>MOTION:</span>
+            <strong id="telMotion">120ms compositor micro-feedback</strong>
+          </div>
+        </div>
+      </div>
+
       <div class="archetype-grid">
         
         <div class="archetype-card">
@@ -961,40 +1173,49 @@
         </div>
 
         <div class="install-cli-row">
-          <code>python scripts/install.py --all</code>
-          <span style="color: var(--accent-vermilion); font-size: 11px;">AUTO-DETECTS 15+ AGENTS</span>
+          <div style="display: flex; align-items: center; gap: 12px; overflow-x: auto; flex: 1;">
+            <span style="color: var(--accent-vermilion); font-weight: 700;">$</span>
+            <code id="activeAgentCmd" style="white-space: nowrap;">python scripts/install.py --skill</code>
+          </div>
+          <button type="button" class="btn-copy-code" id="agentCopyBtn" onclick="copyAgentInstall()" aria-label="Copy selected agent install command">
+            <span id="agentCopyText">Copy</span>
+          </button>
+        </div>
+
+        <div id="agentTargetInfo" style="font-family: var(--font-mono); font-size: 11px; color: var(--ink-secondary); margin-top: -12px; margin-bottom: 4px;">
+          TARGET DESTINATION: <strong id="agentTargetPath" style="color: var(--ink-primary);">.agents/skills/turtleneck/SKILL.md</strong> &bull; <span id="agentDesc">Universal open Agent Skills standard</span>
         </div>
 
         <div class="agent-matrix-grid">
-          <div class="agent-pill">
+          <div class="agent-pill active" onclick="selectAgent('skill', this)" role="button" tabindex="0">
             <span class="agent-name">Universal Agent Skill</span>
             <code class="agent-flag">--skill</code>
           </div>
-          <div class="agent-pill">
+          <div class="agent-pill" onclick="selectAgent('claude', this)" role="button" tabindex="0">
             <span class="agent-name">Claude Code</span>
             <code class="agent-flag">--claude-skill</code>
           </div>
-          <div class="agent-pill">
+          <div class="agent-pill" onclick="selectAgent('cursor', this)" role="button" tabindex="0">
             <span class="agent-name">Cursor</span>
             <code class="agent-flag">--cursor</code>
           </div>
-          <div class="agent-pill">
+          <div class="agent-pill" onclick="selectAgent('windsurf', this)" role="button" tabindex="0">
             <span class="agent-name">Windsurf / Cascade</span>
             <code class="agent-flag">--windsurf</code>
           </div>
-          <div class="agent-pill">
+          <div class="agent-pill" onclick="selectAgent('copilot', this)" role="button" tabindex="0">
             <span class="agent-name">GitHub Copilot</span>
             <code class="agent-flag">--copilot</code>
           </div>
-          <div class="agent-pill">
+          <div class="agent-pill" onclick="selectAgent('cline', this)" role="button" tabindex="0">
             <span class="agent-name">Cline &amp; Roo Code</span>
             <code class="agent-flag">--cline</code>
           </div>
-          <div class="agent-pill">
+          <div class="agent-pill" onclick="selectAgent('agents', this)" role="button" tabindex="0">
             <span class="agent-name">Codex &amp; OpenHands</span>
             <code class="agent-flag">AGENTS.md</code>
           </div>
-          <div class="agent-pill">
+          <div class="agent-pill" onclick="selectAgent('antigravity', this)" role="button" tabindex="0">
             <span class="agent-name">Google Antigravity</span>
             <code class="agent-flag">--antigravity</code>
           </div>
@@ -1017,11 +1238,478 @@
   </footer>
 
   <script>
+    // Web Audio Synthesizer (Mechanical Acoustic Feedback)
+    let audioCtx = null;
+    let soundEnabled = false;
+
+    function toggleAudio() {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById('audioToggleBtn');
+      const status = document.getElementById('audioStatus');
+      if (soundEnabled) {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        btn.classList.add('active');
+        status.textContent = 'On';
+        playClick(1100, 0.02);
+      } else {
+        btn.classList.remove('active');
+        status.textContent = 'Off';
+      }
+    }
+
+    function playClick(freq = 900, duration = 0.015) {
+      if (!soundEnabled || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(120, audioCtx.currentTime + duration);
+        gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function playThud() {
+      if (!soundEnabled || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(90, audioCtx.currentTime);
+        osc.frequency.linearRampToValueAtTime(35, audioCtx.currentTime + 0.35);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.35);
+      } catch (e) {}
+    }
+
+    // Grid Overlay Toggle
     function toggleBaselineGrid() {
       const btn = document.getElementById('gridToggleBtn');
       document.body.classList.toggle('show-grid');
       btn.classList.toggle('active');
+      playClick(800, 0.015);
     }
+
+    // Calipers Redline Toggle
+    function toggleCalipers() {
+      const btn = document.getElementById('caliperToggleBtn');
+      document.body.classList.toggle('show-calipers');
+      btn.classList.toggle('active');
+      playClick(1000, 0.015);
+    }
+
+    // Hero Install Command Copy
+    function copyHeroInstall() {
+      const cmd = document.getElementById('heroInstallCmd').textContent.trim();
+      navigator.clipboard.writeText(cmd).then(() => {
+        playClick(1200, 0.02);
+        const text = document.getElementById('heroCopyText');
+        text.textContent = '✓ Copied';
+        setTimeout(() => { text.textContent = 'Copy'; }, 2000);
+      });
+    }
+
+    // Section 01: Interactive Critique Demos
+    function triggerSlopDemo() {
+      const btn = document.getElementById('slopDemoBtn');
+      const diag = document.getElementById('slopDiagnostic');
+      btn.classList.remove('slop-wobble');
+      void btn.offsetWidth;
+      btn.classList.add('slop-wobble');
+      playThud();
+      diag.style.display = 'block';
+    }
+
+    function triggerCraftDemo() {
+      const btn = document.getElementById('craftDemoBtn');
+      const diag = document.getElementById('craftDiagnostic');
+      playClick(900, 0.015);
+      btn.textContent = '⏳ ATTESTING ENCLAVE (100ms)...';
+      btn.style.opacity = '0.8';
+      setTimeout(() => {
+        playClick(1300, 0.02);
+        btn.textContent = '✓ KEY REVOKED — AUDIT #9281';
+        btn.style.opacity = '1';
+        btn.style.background = '#065f46';
+        btn.style.borderColor = '#059669';
+        btn.style.color = '#ecfdf5';
+        diag.style.display = 'block';
+      }, 120);
+    }
+
+    // Archetype Studio Data & Switcher
+    const ARCHETYPES = {
+      telemetry: {
+        contrast: "#08090a · 18.59:1 (WCAG AAA)",
+        type: "Instrument Serif + JetBrains Mono",
+        radius: "4px control / 8px window",
+        motion: "120ms compositor micro-feedback",
+        html: `
+          <div style="background: #08090a; color: #f0f0f0; border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 28px; width: 100%; box-shadow: 0 20px 48px rgba(0,0,0,0.6);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 16px; margin-bottom: 20px;">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 10px #10b981;"></span>
+                <span style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; color: #a1a4a5; text-transform: uppercase;">CLUSTER US-EAST-01 // TELEMETRY KERNEL</span>
+              </div>
+              <span style="font-family: var(--font-mono); font-size: 11px; color: #10b981; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); padding: 3px 8px; border-radius: 3px;">100% NOMINAL</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+              <div style="background: #121316; border: 1px solid rgba(255,255,255,0.06); padding: 14px 18px; border-radius: 6px;">
+                <div style="font-family: var(--font-mono); font-size: 10px; color: #717577; text-transform: uppercase;">INGEST RATE</div>
+                <div style="font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: #ffffff; margin-top: 4px; font-variant-numeric: tabular-nums;" id="streamRate">148,290 ops/s</div>
+              </div>
+              <div style="background: #121316; border: 1px solid rgba(255,255,255,0.06); padding: 14px 18px; border-radius: 6px;">
+                <div style="font-family: var(--font-mono); font-size: 10px; color: #717577; text-transform: uppercase;">P99 LATENCY</div>
+                <div style="font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: #6ee7b7; margin-top: 4px; font-variant-numeric: tabular-nums;">0.78 ms</div>
+              </div>
+              <div style="background: #121316; border: 1px solid rgba(255,255,255,0.06); padding: 14px 18px; border-radius: 6px;">
+                <div style="font-family: var(--font-mono); font-size: 10px; color: #717577; text-transform: uppercase;">ACTIVE PEERS</div>
+                <div style="font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: #ffffff; margin-top: 4px; font-variant-numeric: tabular-nums;">1,024 NODE</div>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+              <div style="display: flex; gap: 8px;">
+                <button type="button" class="specimen-chip active" onclick="clickSpecimenChip(this)">INGEST BUS</button>
+                <button type="button" class="specimen-chip" onclick="clickSpecimenChip(this)">MEMPOOL</button>
+                <button type="button" class="specimen-chip" onclick="clickSpecimenChip(this)">RAFT LOGS</button>
+              </div>
+              <span style="font-family: var(--font-mono); font-size: 11px; color: #717577;">Press <kbd style="background: #1c1d22; border: 1px solid #333; padding: 2px 5px; border-radius: 3px; color: #ccc;">⌘K</kbd> for command palette</span>
+            </div>
+          </div>
+        `
+      },
+      editorial: {
+        contrast: "#fbfbfa · 17.85:1 (WCAG AAA)",
+        type: "Instrument Serif + Plus Jakarta Sans",
+        radius: "0px (Sharp Archival Folio)",
+        motion: "Gentle opacity transitions (no spring physics)",
+        html: `
+          <div style="background: #fbfbfa; color: #121316; border: 1px solid #e5e3da; padding: 36px 44px; width: 100%; box-shadow: 0 12px 36px rgba(0,0,0,0.03);">
+            <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #e5e3da; padding-bottom: 12px; margin-bottom: 24px; font-family: var(--font-mono); font-size: 11px; color: #6f737d;">
+              <span>ESSAY // FOLIO ISSUE 04</span>
+              <span>ESTIMATED READING: 3 MIN</span>
+            </div>
+            <h3 style="font-family: var(--font-serif); font-size: 38px; font-weight: 400; line-height: 1.1; margin-bottom: 16px; color: #121316;">
+              The Architecture of Restraint
+            </h3>
+            <p style="font-size: 16px; line-height: 1.7; color: #4b4e57; margin-bottom: 20px;">
+              <span style="float: left; font-family: var(--font-serif); font-size: 52px; line-height: 0.8; padding-right: 12px; padding-top: 4px; color: #121316;">D</span>ecoration is the universal reflex of an engineering team attempting to compensate for an ill-defined product. When user outcomes are not mathematically understood, software developers reach for purple gradients, frosted glass cards, and meaningless charts.
+            </p>
+            <blockquote style="border-left: 2px solid var(--accent-vermilion); padding-left: 20px; margin: 24px 0; font-family: var(--font-serif); font-size: 20px; font-style: italic; color: #121316;">
+              "Good design is as little design as possible. Less, but better — because it concentrates on the essential aspects."
+            </blockquote>
+            <div style="font-family: var(--font-mono); font-size: 11px; color: #6f737d; border-top: 1px solid #e5e3da; padding-top: 12px;">
+              [1] Dieter Rams, Ten Principles for Good Design, 1976.
+            </div>
+          </div>
+        `
+      },
+      chooser: {
+        contrast: "#090a0d · 18.50:1 (WCAG AAA)",
+        type: "Plus Jakarta Sans + JetBrains Mono",
+        radius: "6px control / 8px container",
+        motion: "Deterministic state scoring (120ms)",
+        html: `
+          <div style="background: #090a0d; color: #f5f3ef; border: 1px solid #232733; border-radius: 8px; padding: 32px; width: 100%; box-shadow: 0 20px 48px rgba(0,0,0,0.5);">
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--accent-vermilion); margin-bottom: 8px; letter-spacing: 0.1em;">GUIDED RECOMMENDER // QUESTION 2 OF 3</div>
+            <h3 style="font-family: var(--font-serif); font-size: 28px; font-weight: 400; margin-bottom: 8px;">What is your database latency tolerance?</h3>
+            <p style="font-size: 13px; color: #8e93a0; margin-bottom: 24px;">Select the operational threshold to synthesize an optimal persistence topology.</p>
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
+              <label class="chooser-option active" onclick="selectChooserOption(this, 'Ultra-Low Latency (<2ms)', 'Memory-Mapped Ring Buffer (LMDB/RocksDB) with deterministic zero-GC throughput.', 98)">
+                <input type="radio" name="chooser_q" checked style="accent-color: var(--accent-vermilion);" aria-label="Ultra-Low Latency Option">
+                <div>
+                  <strong style="display: block; font-size: 14px;">Extreme Low Latency (&lt; 2 ms)</strong>
+                  <span style="font-size: 12px; color: #8e93a0;">High-frequency market making, distributed consensus pipelines, telemetry ingestion.</span>
+                </div>
+              </label>
+              <label class="chooser-option" onclick="selectChooserOption(this, 'Standard ACID (<25ms)', 'PostgreSQL with Read Replicas & Connection Pooling.', 94)">
+                <input type="radio" name="chooser_q" style="accent-color: var(--accent-vermilion);" aria-label="Standard ACID Option">
+                <div>
+                  <strong style="display: block; font-size: 14px;">Standard Relational ACID (&lt; 25 ms)</strong>
+                  <span style="font-size: 12px; color: #8e93a0;">Transactional billing, user authentication, customer metadata records.</span>
+                </div>
+              </label>
+            </div>
+            <div id="chooserResult" style="background: #141720; border: 1px solid #2a3040; border-radius: 6px; padding: 16px 20px; font-family: var(--font-mono); font-size: 12px;">
+              <div style="color: #10b981; font-weight: 700; margin-bottom: 4px;">RECOMMENDATION: Memory-Mapped Ring Buffer (Score: 98%)</div>
+              <div style="color: #a1a4a5;">Rationale: Chosen due to strict sub-2ms constraint requiring zero garbage collection overhead.</div>
+            </div>
+          </div>
+        `
+      },
+      template: {
+        contrast: "#ffffff · 17.50:1 (WCAG AAA)",
+        type: "Plus Jakarta Sans + JetBrains Mono",
+        radius: "6px control / 8px card",
+        motion: "Clone snapshot micro-feedback (100ms)",
+        html: `
+          <div style="background: #ffffff; color: #121316; border: 1px solid #cbd5e1; border-radius: 8px; padding: 32px; width: 100%; box-shadow: 0 16px 40px rgba(0,0,0,0.04);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+              <div>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--accent-vermilion); text-transform: uppercase; letter-spacing: 0.1em;">TEMPLATE CHOOSER // PROVEN ARCHITECTURES</span>
+                <h3 style="font-family: var(--font-serif); font-size: 28px; font-weight: 400; margin-top: 4px;">Select an architectural starting point.</h3>
+              </div>
+              <button type="button" class="btn-exhibition" style="padding: 10px 20px; font-size: 11px;" id="cloneTemplateBtn" onclick="cloneTemplateDemo()">Clone Blueprint &rarr;</button>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+              <div class="template-card active" onclick="selectTemplateCard(this, 'Raft Consensus Kernel')">
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--accent-cobalt);">CONSENSUS // 01</span>
+                <h4 style="font-size: 15px; margin: 6px 0;">Raft Consensus Kernel</h4>
+                <p style="font-size: 12px; color: #64748b;">Deterministic leader election with append-only replicated log storage.</p>
+              </div>
+              <div class="template-card" onclick="selectTemplateCard(this, 'Event Sourcing Bus')">
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--accent-cobalt);">MESSAGING // 02</span>
+                <h4 style="font-size: 15px; margin: 6px 0;">Event Sourcing Bus</h4>
+                <p style="font-size: 12px; color: #64748b;">CQRS architecture with immutable event history and materialised read models.</p>
+              </div>
+              <div class="template-card" onclick="selectTemplateCard(this, 'Zero-Trust Enclave')">
+                <span style="font-family: var(--font-mono); font-size: 10px; color: var(--accent-cobalt);">SECURITY // 03</span>
+                <h4 style="font-size: 15px; margin: 6px 0;">Zero-Trust Enclave</h4>
+                <p style="font-size: 12px; color: #64748b;">Hardware-attested cryptographic boundary with ephemeral session token keys.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      minimal: {
+        contrast: "#000000 · 21.00:1 (WCAG AAA)",
+        type: "JetBrains Mono (1-bit stark monochrome)",
+        radius: "0px strict geometric discipline",
+        motion: "0ms instant state inversion (zero spring delay)",
+        html: `
+          <div style="background: #000000; color: #ffffff; border: 1px solid #ffffff; padding: 32px; width: 100%; font-family: var(--font-mono);">
+            <div style="border-bottom: 1px solid #ffffff; padding-bottom: 12px; margin-bottom: 20px; display: flex; justify-content: space-between;">
+              <span>[SYS_DAEMON_MONITOR_V2]</span>
+              <span>STATUS: ONLINE</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; font-size: 12px; margin-bottom: 24px;">
+              <div>
+                <div style="margin-bottom: 6px;">&gt; MEM_ALLOC: 256.00 MB</div>
+                <div style="margin-bottom: 6px;">&gt; SYSCALLS : 48,291 / SEC</div>
+                <div style="margin-bottom: 6px;">&gt; INTERRUPT: VECTORED</div>
+              </div>
+              <div>
+                <div style="margin-bottom: 6px;">&gt; SHADOW_PG: ENABLED</div>
+                <div style="margin-bottom: 6px;">&gt; HARD_FAULT: 0</div>
+                <div style="margin-bottom: 6px;">&gt; COMPLIANCE: 100% PASS</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+              <button type="button" class="minimal-btn active" onclick="clickMinimalBtn(this)">[ PURGE MEMORY POOL ]</button>
+              <button type="button" class="minimal-btn" onclick="clickMinimalBtn(this)">[ CYCLE THREAD SCHEDULER ]</button>
+            </div>
+          </div>
+        `
+      },
+      corporate: {
+        contrast: "#f6f9fc · 15.90:1 (WCAG AAA)",
+        type: "Plus Jakarta Sans + JetBrains Mono",
+        radius: "4px ledger / 6px container",
+        motion: "Crisp cryptographic audit sign-off (120ms)",
+        html: `
+          <div style="background: #ffffff; color: #1e293b; border: 1px solid #cbd5e1; border-radius: 6px; padding: 28px; width: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0; padding-bottom: 14px; margin-bottom: 20px;">
+              <div>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: #64748b; letter-spacing: 0.1em; text-transform: uppercase;">TREASURY ESCROW LEDGER</span>
+                <h4 style="font-size: 20px; font-weight: 700; margin-top: 2px;">Wire Transfer Authorization</h4>
+              </div>
+              <span style="background: #eff6ff; color: var(--accent-cobalt); border: 1px solid #bfdbfe; font-family: var(--font-mono); font-size: 11px; padding: 4px 10px; border-radius: 4px; font-weight: 600;">ESCROW #882-901</span>
+            </div>
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 16px 20px; margin-bottom: 20px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; font-size: 13px;">
+              <div>
+                <span style="display: block; font-size: 11px; color: #64748b; font-family: var(--font-mono);">BENEFICIARY</span>
+                <strong>Foundation Research AG</strong>
+              </div>
+              <div>
+                <span style="display: block; font-size: 11px; color: #64748b; font-family: var(--font-mono);">AMOUNT</span>
+                <strong style="color: var(--accent-cobalt);">$1,850,000.00 USD</strong>
+              </div>
+              <div>
+                <span style="display: block; font-size: 11px; color: #64748b; font-family: var(--font-mono);">MULTI-SIG QUORUM</span>
+                <strong>3 of 4 Keys Validated</strong>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+              <span style="font-family: var(--font-mono); font-size: 11px; color: #64748b;" id="corpStatusText">STATUS: PENDING ARCHITECTURAL SIGN-OFF</span>
+              <button type="button" class="btn-exhibition" style="background: var(--accent-cobalt); border-color: var(--accent-cobalt); padding: 10px 22px; font-size: 11px;" id="corpSignBtn" onclick="signCorporateDemo()">Authorize Wire &rarr;</button>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    function switchArchetype(key, btn) {
+      document.querySelectorAll('.arch-tab-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      if (btn) {
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+      }
+      playClick(900, 0.015);
+      const data = ARCHETYPES[key];
+      if (!data) return;
+      document.getElementById('archetypeStage').innerHTML = data.html;
+      document.getElementById('telContrast').textContent = data.contrast;
+      document.getElementById('telType').textContent = data.type;
+      document.getElementById('telRadius').textContent = data.radius;
+      document.getElementById('telMotion').textContent = data.motion;
+    }
+
+    // Interactive Archetype Helper Callbacks
+    function clickSpecimenChip(btn) {
+      playClick(1000, 0.015);
+      btn.parentElement.querySelectorAll('.specimen-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function selectChooserOption(label, title, rationale, score) {
+      playClick(850, 0.015);
+      document.querySelectorAll('.chooser-option').forEach(l => l.classList.remove('active'));
+      label.classList.add('active');
+      const radio = label.querySelector('input[type="radio"]');
+      if (radio) radio.checked = true;
+      const res = document.getElementById('chooserResult');
+      if (res) {
+        res.innerHTML = `
+          <div style="color: #10b981; font-weight: 700; margin-bottom: 4px;">RECOMMENDATION: \${title} (Score: \${score}%)</div>
+          <div style="color: #a1a4a5;">Rationale: \${rationale}</div>
+        `;
+      }
+    }
+
+    function selectTemplateCard(card, name) {
+      playClick(950, 0.015);
+      document.querySelectorAll('.template-card').forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+    }
+
+    function cloneTemplateDemo() {
+      const btn = document.getElementById('cloneTemplateBtn');
+      playClick(1200, 0.02);
+      btn.textContent = '✓ CLONED TO WORKSPACE';
+      btn.style.background = '#065f46';
+      btn.style.borderColor = '#059669';
+      btn.style.color = '#ecfdf5';
+      setTimeout(() => {
+        btn.textContent = 'Clone Blueprint →';
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }, 2000);
+    }
+
+    function clickMinimalBtn(btn) {
+      playClick(1400, 0.01);
+      btn.parentElement.querySelectorAll('.minimal-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function signCorporateDemo() {
+      const btn = document.getElementById('corpSignBtn');
+      const status = document.getElementById('corpStatusText');
+      playClick(1100, 0.02);
+      btn.textContent = '✓ RELEASED TO FEDWIRE #881290';
+      btn.style.background = '#065f46';
+      btn.style.borderColor = '#059669';
+      btn.style.color = '#ecfdf5';
+      if (status) {
+        status.textContent = 'STATUS: AUDIT SIGNED & BROADCAST VERIFIED';
+        status.style.color = '#065f46';
+      }
+    }
+
+    // Section 04: Interactive Agent Selector
+    const AGENTS_INFO = {
+      skill: {
+        cmd: "python scripts/install.py --skill",
+        target: ".agents/skills/turtleneck/SKILL.md",
+        desc: "Open Agent Skills standard — universal for all coding agents"
+      },
+      claude: {
+        cmd: "python scripts/install.py --claude-skill",
+        target: ".claude/skills/turtleneck/SKILL.md",
+        desc: "Native Anthropic Claude Code skill directory with manifest validation"
+      },
+      cursor: {
+        cmd: "python scripts/install.py --cursor",
+        target: ".cursorrules & .turtleneck/references/",
+        desc: "Cursor AI editor configuration with local craft references"
+      },
+      windsurf: {
+        cmd: "python scripts/install.py --windsurf",
+        target: ".windsurfrules & .turtleneck/references/",
+        desc: "Codeium Windsurf / Cascade rules with local craft references"
+      },
+      copilot: {
+        cmd: "python scripts/install.py --copilot",
+        target: ".github/copilot-instructions.md",
+        desc: "GitHub Copilot instructions with architectural craft guidelines"
+      },
+      cline: {
+        cmd: "python scripts/install.py --cline",
+        target: ".clinerules & .turtleneck/references/",
+        desc: "Cline and Roo Code autonomous agent rules"
+      },
+      agents: {
+        cmd: "python scripts/install.py --agents",
+        target: "AGENTS.md",
+        desc: "Universal markdown instructions for Codex, OpenHands, Aider, etc."
+      },
+      antigravity: {
+        cmd: "python scripts/install.py --antigravity",
+        target: "~/.gemini/config/skills/turtleneck/SKILL.md",
+        desc: "Google Antigravity global skill installation"
+      }
+    };
+
+    function selectAgent(key, pill) {
+      playClick(900, 0.015);
+      document.querySelectorAll('.agent-pill').forEach(p => p.classList.remove('active'));
+      if (pill) pill.classList.add('active');
+      const info = AGENTS_INFO[key];
+      if (!info) return;
+      document.getElementById('activeAgentCmd').textContent = info.cmd;
+      document.getElementById('agentTargetPath').textContent = info.target;
+      document.getElementById('agentDesc').textContent = info.desc;
+    }
+
+    function copyAgentInstall() {
+      const cmd = document.getElementById('activeAgentCmd').textContent.trim();
+      navigator.clipboard.writeText(cmd).then(() => {
+        playClick(1200, 0.02);
+        const text = document.getElementById('agentCopyText');
+        text.textContent = '✓ Copied';
+        setTimeout(() => { text.textContent = 'Copy'; }, 2000);
+      });
+    }
+
+    // Initialize Telemetry Archetype on Page Load
+    window.addEventListener('DOMContentLoaded', () => {
+      switchArchetype('telemetry', document.getElementById('tab-telemetry'));
+      setInterval(() => {
+        const rateEl = document.getElementById('streamRate');
+        if (rateEl) {
+          const rand = 148000 + Math.floor(Math.random() * 2400);
+          rateEl.textContent = rand.toLocaleString() + ' ops/s';
+        }
+      }, 1800);
+    });
   </script>
 </body>
 </html>
