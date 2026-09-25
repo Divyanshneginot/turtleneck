@@ -1,10 +1,10 @@
 ---
 name: turtleneck
 description: >-
-  Autonomous Senior UI/UX Architect agent skill. Use when asked to design, build, or modernize
-  interfaces. Autonomously analyzes the current workspace stack (Tailwind, React, Vue,
-  CSS tokens, component trees), conducts interactive requirement interviews with the user,
-  aligns on layout architecture, and implements production-grade anti-slop UI.
+  Use when designing, building, restyling, or reviewing a user-facing web or
+  native interface where visual direction, interaction quality, accessibility,
+  responsive behavior, or design-system consistency matters. Skip for non-visual
+  backend/CLI work and exact reproduction of an already supplied design.
 ---
 
 # Autonomous UI/UX Architect Protocol
@@ -34,9 +34,10 @@ not the default:
 
 | Mode | When | What to do |
 | :--- | :--- | :--- |
-| **Direct Phase 4** | One component, one style tweak, a fix, or the user says "just do it" | Skip Phases 1–3; apply Phase 4 craft rules (5-state, motion budgets, contrast) directly. |
-| **Time-boxed Fast Path** | Hard deadline, or a brief that already names scope + stack | Skip the interview. Infer archetype/density from the codebase + request; state your call and ONE alternative in a single line; build. |
-| **Full pipeline** | Vague, greenfield, or consequential surface (flagship page, design system) | Run all four phases, including the interview. |
+| **Direct Phase 4** | One component, one style tweak, a fix, or the user says "just do it" | Skip Phases 1–3; apply Phase 4 craft rules directly; emit compact completion report. |
+| **Time-boxed Fast Path** | Hard deadline, or a brief that already names scope + stack | Skip the interview. Infer archetype/density from codebase + request; state call + 1 alternative in 1 line; build. |
+| **Fast Path** | Explicit brief supplying surface, density, layout, and direction | Skip multi-question interview. Restate inferred constraints in 1 preflight line; surface <= 1 ambiguity; build. |
+| **Full Pipeline** | Vague, greenfield, or consequential surface (flagship page, design system) | Run all four phases end-to-end, including structured interview and blueprint alignment. |
 
 Under time pressure, self-check *tempo* explicitly: if the task is a small or well-scoped change,
 say so in one line and take the Direct Phase 4 / Time-boxed route. Burning a full interview cycle
@@ -104,28 +105,27 @@ Before asking questions or drafting UI, inspect the repository and the committed
 
 ---
 
-### Phase 2: Interactive Requirements & Archetype Selection
-Engage the user to clarify intent, archetype, and layout before writing code. Never skip this
-phase and never assume a dark developer aesthetic.
+### Phase 2: Requirements Interview & Architectural Direction
 
-**Fast path.** If the user's brief already supplies the archetype, target surface, density, and
-layout/content direction, do not block on the multi-question interview. Restate the inferred
-constraints in one short preflight, surface at most one genuine ambiguity, then build. Keep the
-full interview for vague or consequential design decisions — see
-[Verification Scope & Fast Path](./references/verification-scope.md).
+The authoritative Execution Modes table determines whether this phase runs. Do not run a multi-question
+interview when the brief earns a fast path or Direct Phase 4. Never assume a dark developer aesthetic by
+default. See [Verification Scope & Fast Path](./references/verification-scope.md).
 
-1. **Visual Archetype Selection** — refer to the [Design Archetypes Catalog](./references/design-archetypes.md):
-     * **A. High-Trust Corporate**: Clean high-trust light mode (`#f6f9fc`), crisp slate borders, fintech/SaaS clarity.
-     * **B. Warm Editorial Paper**: Warm paper canvas (`#fbfbfa`), serif headlines, minimal chrome, distraction-free docs.
-     * **C. Fluid Organics**: Fluid system UI, tactile segmented controls, soft squircle radiuses (`10-14px`).
-     * **D. High-Density Starlight**: Dark starlight engineering (`#08090a`), high data density, keyboard hotkeys.
-     * **E. Stark Geometric Minimal**: Stark black/white minimalism, zero ornamentation, monospaced metadata.
-2. **Core Job-To-Be-Done & Target Density**:
-   * Identify the primary outcome (monitoring, triage, editing, onboarding).
-   * Confirm density: high-density operational vs balanced SaaS vs consumer guided flow.
-3. **Present 2-3 Concrete Architecture Options** and wait for a choice:
-   * Use the [Requirements Interview Framework](./references/requirements-interview-framework.md)
-     to run JTBD discovery and pitch the layout options.
+1. **Derive Direction from Subject Matter First (Before Archetypes)**:
+   * **Audience & Context**: Who uses this interface, in what physical/cognitive environment, and under what load?
+   * **Primary Job-To-Be-Done**: Identify the single decisive outcome (monitoring, triage, editing, onboarding).
+   * **Domain Materials & Vernacular**: Ground visual choices in the product's real-world subject matter (e.g. clinical precision, financial ledger clarity, technical telemetry, physical publication). Spend boldness in one intentional place.
+   * **Genericity Check**: *Could this visual direction and layout be reused unchanged for another product in this category?* If yes, revise it. Reject interchangeable template defaults.
+2. **Archetypes as Constraint Lenses (Not Themes or Presets)** — refer to the [Design Archetypes Catalog](./references/design-archetypes.md):
+   Use archetypes as diagnostic constraint lenses to govern trust, density, chrome, and interaction physics—never as cosmetic skins or theme presets:
+   * **A. High-Trust Corporate**: Lens for institutional trust, clean slate canvas (`#f6f9fc`), crisp borders, fintech/SaaS clarity.
+   * **B. Warm Editorial Paper**: Lens for reading focus, warm cream canvas (`#fbfbfa`), serif headlines, minimal chrome.
+   * **C. Fluid Organics**: Lens for mobile ergonomics, squircle geometry (`10-14px`), tactile segmented controls.
+   * **D. High-Density Starlight**: Lens for keyboard-first telemetry, deep dark canvas (`#08090a`), dense tables, hotkeys.
+   * **E. Stark Geometric Minimal**: Lens for architectural discipline, pitch black canvas (`#000000`), razor borders, monochrome semaphores.
+3. **Present 2-3 Concrete Architecture Options** (Full Pipeline):
+   * Confirm target density: high-density operational vs balanced SaaS vs consumer guided flow.
+   * Use the [Requirements Interview Framework](./references/requirements-interview-framework.md) to pitch 2-3 concrete layout options and wait for user selection before building.
 
 ---
 
@@ -156,7 +156,9 @@ Once the user approves a layout choice:
    [Engineering Craft Recipes](./references/engineering-craft-recipes.md) and
    [Framework Integrations](./references/framework-integrations.md):
    * Emit idiomatic code matching the detected stack: React (TSX/hooks), Vue (`<script setup>`),
-     Svelte 5 (runes), or Native Platform (zero-dependency HTML/CSS/JS).
+     Svelte 5 (runes), or Vanilla Web Platform (zero-dependency HTML/CSS/JS). When targeting
+     mobile/desktop native (React Native, Flutter, SwiftUI), apply platform mappings from
+     [Mobile, Touch & Native Ergonomics](./references/mobile-touch-and-native.md).
    * Generate modular, clean components following the discovered repo conventions.
    * **Motion & Timing**: `80-120ms` state feedback, `200-240ms` enter, `100-140ms` exit
      (asymmetric exit rule), `cubic-bezier(0.16, 1, 0.3, 1)` or critical springs (damping ratio
@@ -183,24 +185,34 @@ Once the user approves a layout choice:
      certify an arbitrary generated UI as WCAG 2.2 AA compliant. Do not claim WCAG compliance off
      a token/example gate; claim only what a specific check actually ran
      ([Verification Scope & Fast Path](./references/verification-scope.md)).
-   * Close with the **Output Contract** below — no un-audited claims.
+   * Close with the **Output Contract** or **Compact Completion Report** below — no un-audited claims.
 
 ### Output Contract
 
-End every build with this summary so the user can audit each decision. Every value marked
-"verified" must come from running the corresponding check, not from assertion.
+End consequential builds (Full Pipeline, Fast Path, Time-boxed) with this audit contract:
 
 ```text
-Archetype        : <chosen> — and the one-line reason
+Archetype Lens   : <chosen lens> — and the one-line rationale
 Stack detected   : <framework> + <styling engine>
-Layout           : <option picked in the interview>
+Layout           : <option picked or inferred architecture>
 Density          : operational / balanced / guided
 Tokens           : canvas <hex> · surface <hex> · accent <hex> · muted <hex> (<ratio>:1, verified)
 Accessibility    : focus-visible [yes] · reduced-motion [yes] · tap targets >=44px [yes]
                    · text contrast >=4.5:1 [verified by scripts/check_contrast.py]
 Reference used   : <examples/*.html mirrored, if any>
 Files changed    : <list>
-Deliberate breaks: <any rule you intentionally violated, and why — empty is the goal>
-Execution mode   : full-pipeline / fast-path / time-boxed / direct-phase-4 — and why
+Deliberate breaks: <any rule intentionally violated, and why — empty is the goal>
+Execution mode   : full-pipeline / fast-path / time-boxed — and why
 Interview        : conducted [yes/no] · if skipped, reason: <one line>
+```
+
+#### Compact Completion Report (Direct Phase 4)
+
+For single components, one-line style tweaks, and direct fixes, do not emit the full 11-line contract. Use this compact report:
+
+```text
+Mode             : Direct Phase 4 (<one-line reason>)
+Files changed    : <list>
+Checks run       : contrast (<ratio>:1, verified) · focus-visible [yes] · reduced-motion [yes]
+Deliberate breaks: <any rule intentionally violated, or "none">
 ```

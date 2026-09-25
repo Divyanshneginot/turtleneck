@@ -4,6 +4,19 @@ All notable changes to Turtleneck are documented here.
 
 ## Unreleased
 
+### Added — discovery metadata, subject-matter-first protocol, custom contrast verification, and behavioral evals
+
+* **Trigger-only discovery frontmatter (`scripts/check_frontmatter.py`).**
+  Rewrote `SKILL.md` frontmatter description to contain triggering conditions only (starts with "Use when", specifies design/build/restyle/review and a11y/responsive/token concerns, explicitly excludes non-visual backend/CLI work and exact supplied-design replication). Added a standard-library CI gate `scripts/check_frontmatter.py` enforcing valid YAML frontmatter, name, trigger-only phrasing, and length constraints.
+* **Authoritative execution modes & Compact Completion Report.**
+  Removed contradictions between Phase 2 and fast-path execution. Established one authoritative mode table (Direct Phase 4, Time-boxed Fast Path, Fast Path, Full Pipeline). Added a 4-line Compact Completion Report for Direct Phase 4 fixes to reduce ceremony on small changes.
+* **Subject-matter-driven direction & genericity test.**
+  Required agents to derive visual direction and typography tension from the product's real-world subject matter, audience, and job-to-be-done before archetype selection. Added the Genericity Check (*"Could this direction be reused unchanged for another product in this category?"*). Re-anchored the 5 archetypes as diagnostic constraint lenses for density and chrome rather than selectable cosmetic presets.
+* **Arbitrary palette contrast verification (`check_contrast.py --tokens <path.json>`).**
+  Extended `scripts/check_contrast.py` with `--tokens <path.json>` while preserving default repository token checks. Defined and documented a minimal JSON schema (`name`, `foreground`, `background`, `role`, `threshold`, `exemption_rationale`). Rejects malformed colors, unknown threshold classes, empty inputs, unjustified exemptions, and failing ratios with non-zero exit codes. Updated `verification-scope.md` to precisely distinguish mathematical contrast verification from rendered DOM accessibility.
+* **Behavioral evaluation benchmark scaffold (`evals/`).**
+  Added `evals/cases/` with 10 representative briefs (vague greenfield, dense dashboard, mobile form, tiny CSS fix, exact supplied-design replication, modal keyboard behavior, low-contrast regression, explicit time-box, non-UI negative trigger test, and accessibility review). Added `evals/rubric.md` with observable scoring across 9 dimensions, and `evals/README.md` documenting the baseline vs. treatment benchmark protocol with unmeasured status marked truthfully.
+
 ### Fixed — skill installation now obeys the same safety contract as rule installation
 
 `--claude-skill` / `--antigravity` previously backed up an existing skill directory exactly once

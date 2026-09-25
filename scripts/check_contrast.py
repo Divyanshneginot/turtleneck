@@ -1,39 +1,68 @@
-#!/usr/bin/env python3
 """
 Turtleneck contrast gate.
 
 Verifies every colour pair declared in the design token documentation against
 WCAG 2.2 AA, and refuses to let the docs drift away from the values it checks.
 
-Design of the gate
-------------------
-Each pair is classified:
+Also supports verifying arbitrary generated palettes supplied via `--tokens <path.json>`.
 
-  text        normal-size body copy / links  -> must clear 4.5:1
-  ui          interactive component boundary -> must clear 3.0:1 (WCAG 1.4.11)
-  decorative  card edges, section dividers, chassis lines -> exempt from 1.4.11,
-              but the source document MUST carry an explicit exemption note on the
-              same line, otherwise the gate fails. This stops a boundary being
-              silently downgraded to "decorative" to dodge the threshold.
+Minimal JSON Schema for `--tokens`
+----------------------------------
+A JSON file containing an object with a `"pairs"` array (or a top-level array):
 
-Every pair also names the file it is declared in plus a `locate` substring. The
-gate confirms the foreground hex really appears on a line containing `locate`,
-so a doc edit that renames or deletes a token breaks the build instead of
-silently passing.
+  {
+    "pairs": [
+      {
+        "name": "text-primary",
+        "foreground": "#0F172A",
+        "background": "#FFFFFF",
+        "role": "body text",
+        "threshold": "text",
+        "exemption_rationale": ""
+      },
+      {
+        "name": "card-border",
+        "foreground": "#E2E8F0",
+        "background": "#FFFFFF",
+        "role": "decorative border",
+        "threshold": "decorative",
+        "exemption_rationale": "non-interactive card container edge"
+      }
+    ]
+  }
 
-Exit code 0 = all pairs pass. Non-zero = at least one violation.
+Fields:
+  name                 string, required. Identifier for the token pair.
+  foreground           string, required. Hex colour (#RGB or #RRGGBB).
+  background           string, required. Hex colour (#RGB or #RRGGBB).
+  role                 string, required. Semantic role description.
+  threshold            string, required. One of:
+                         - "text": requires contrast >= 4.5:1 (normal text)
+                         - "ui": requires contrast >= 3.0:1 (UI boundaries / graphical objects)
+                         - "decorative": exempt from ratio, requires non-empty exemption_rationale.
+  exemption_rationale  string, required if threshold is "decorative".
+
+Exit code 0 = all pairs pass. Non-zero = at least one violation or malformed input.
 """
 
 from __future__ import annotations
 
+import argparse
+import json
 import re
 import sys
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 
 TEXT_MIN = 4.5
 UI_MIN = 3.0
+
+TEXT_CLASSES = {"text", "text-aa", "normal-text"}
+UI_CLASSES = {"ui", "large-text", "ui-component", "graphical"}
+DECORATIVE_CLASSES = {"decorative", "exempt"}
+HEX_COLOR_RE = re.compile(r"^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$")
 
 # label, foreground, background, kind, source file, locate substring
 PAIRS: list[tuple[str, str, str, str, str, str]] = [
@@ -177,10 +206,195 @@ def check(verbose: bool = True) -> int:
     return 0
 
 
-def main() -> int:
+
+def validate_token_pairs(data: Any) -> tuple[list[dict[str, Any]], list[str]]:
+    """Validate JSON data against the minimal token pairs schema.
+
+    Returns:
+        (valid_pairs, validation_errors)
+    """
+    errors: list[str] = []
+    pairs_list: list[Any]
+
+    if isinstance(data, dict):
+        if "pairs" in data:
+            pairs_list = data["pairs"]
+        elif "tokens" in data:
+            pairs_list = data["tokens"]
+        else:
+            errors.append("Invalid schema root: object must contain 'pairs' or 'tokens' list")
+            return [], errors
+    elif isinstance(data, list):
+        pairs_list = data
+    else:
+        errors.append("Invalid schema root: expected list or object with 'pairs'")
+        return [], errors
+
+    if not isinstance(pairs_list, list) or len(pairs_list) == 0:
+        errors.append("Empty input: no token pairs found to verify")
+        return [], errors
+
+    validated: list[dict[str, Any]] = []
+
+    for idx, item in enumerate(pairs_list):
+        prefix = f"pair[{idx}]"
+        if not isinstance(item, dict):
+            errors.append(f"{prefix}: expected object, got {type(item).__name__}")
+            continue
+
+        name = item.get("name") or item.get("label") or f"pair-{idx+1}"
+        if not isinstance(name, str) or not name.strip():
+            errors.append(f"{prefix}: missing or empty 'name'")
+            name = f"pair-{idx+1}"
+        else:
+            name = name.strip()
+
+        role = item.get("role")
+        if not isinstance(role, str) or not role.strip():
+            errors.append(f"{name}: missing or empty 'role'")
+            role = ""
+        else:
+            role = role.strip()
+
+        fg = item.get("foreground") or item.get("fg")
+        if not isinstance(fg, str) or not HEX_COLOR_RE.match(fg.strip()):
+            errors.append(f"{name}: malformed foreground color: {fg!r} (expected #RGB or #RRGGBB)")
+            fg = ""
+        else:
+            fg = fg.strip()
+
+        bg = item.get("background") or item.get("bg")
+        if not isinstance(bg, str) or not HEX_COLOR_RE.match(bg.strip()):
+            errors.append(f"{name}: malformed background color: {bg!r} (expected #RGB or #RRGGBB)")
+            bg = ""
+        else:
+            bg = bg.strip()
+
+        raw_thresh = item.get("threshold") or item.get("threshold_class") or item.get("class") or item.get("kind")
+        if not isinstance(raw_thresh, str):
+            errors.append(f"{name}: missing or non-string threshold class")
+            threshold = ""
+        else:
+            threshold = raw_thresh.strip().lower()
+
+        exemption = item.get("exemption_rationale") or item.get("rationale") or item.get("exemption")
+        exemption_str = str(exemption).strip() if exemption is not None else ""
+
+        if threshold in TEXT_CLASSES:
+            kind = "text"
+        elif threshold in UI_CLASSES:
+            kind = "ui"
+        elif threshold in DECORATIVE_CLASSES:
+            kind = "decorative"
+            if not exemption_str:
+                errors.append(
+                    f"{name}: classified decorative/exempt but missing exemption rationale (unjustified exemption)"
+                )
+                kind = "unknown"
+        else:
+            errors.append(f"{name}: unknown threshold class {raw_thresh!r} (expected 'text', 'ui', or 'decorative')")
+            kind = "unknown"
+
+        if fg and bg and kind != "unknown":
+            validated.append({
+                "name": name,
+                "role": role,
+                "foreground": fg,
+                "background": bg,
+                "kind": kind,
+                "exemption_rationale": exemption_str,
+            })
+
+    return validated, errors
+
+
+def check_tokens_file(path: Path, verbose: bool = True) -> int:
+    """Check a custom tokens JSON file against WCAG 2.2 AA."""
+    if not path.exists():
+        print(f"FAIL: tokens file not found: {path}")
+        return 1
+
+    try:
+        raw_text = path.read_text(encoding="utf-8")
+        if not raw_text.strip():
+            print("FAIL: Empty input: tokens file is empty")
+            return 1
+        data = json.loads(raw_text)
+    except json.JSONDecodeError as exc:
+        print(f"FAIL: malformed JSON in {path}: {exc}")
+        return 1
+
+    pairs, validation_errors = validate_token_pairs(data)
+    if validation_errors:
+        print()
+        print(f"{len(validation_errors)} validation error(s) found in {path.name}:")
+        for f in validation_errors:
+            print(f"  x {f}")
+        return 1
+
+    failures: list[str] = []
+    checked = 0
+
+    for item in pairs:
+        name = item["name"]
+        fg = item["foreground"]
+        bg = item["background"]
+        kind = item["kind"]
+        rationale = item["exemption_rationale"]
+
+        checked += 1
+        try:
+            ratio = contrast_ratio(fg, bg)
+        except ValueError as err:
+            failures.append(f"{name}: {err}")
+            continue
+
+        if kind == "decorative":
+            if verbose:
+                print(f"  exempt  {name:<36} {ratio:>6.2f}:1  (decorative: {rationale})")
+            continue
+
+        required = TEXT_MIN if kind == "text" else UI_MIN
+        ok = ratio >= required
+        if not ok:
+            failures.append(f"{name}: {fg} on {bg} = {ratio:.2f}:1, needs >= {required:.1f}:1")
+        if verbose:
+            print(f"  {'PASS' if ok else 'FAIL'}    {name:<36} {ratio:>6.2f}:1  (needs {required:.1f}:1)")
+
+    print()
+    if failures:
+        print(f"{len(failures)} failure(s) found in {path.name}:")
+        for f in failures:
+            print(f"  x {f}")
+        return 1
+
+    print(f"All {checked} token pair(s) in {path.name} meet WCAG 2.2 AA.")
+    return 0
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Turtleneck contrast gate (WCAG 2.2 AA) - verifies declared pairs or custom token JSON."
+    )
+    parser.add_argument(
+        "--tokens",
+        metavar="PATH",
+        type=Path,
+        help="Path to JSON file containing color pairs to verify against WCAG 2.2 AA.",
+    )
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        help="Suppress per-pair output on pass.",
+    )
+    args = parser.parse_args(argv)
+
     print("Turtleneck contrast gate (WCAG 2.2 AA)")
     print("-" * 60)
-    return check()
+
+    if args.tokens is not None:
+        return check_tokens_file(args.tokens, verbose=not args.quiet)
+    return check(verbose=not args.quiet)
 
 
 if __name__ == "__main__":

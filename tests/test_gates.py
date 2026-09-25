@@ -10,6 +10,7 @@ Run with:  pytest tests/ -q
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
@@ -29,6 +30,7 @@ def _load(name: str, filename: str):
 contrast = _load("tn_gate_contrast", "check_contrast.py")
 consistency = _load("tn_gate_consistency", "check_consistency.py")
 examples = _load("tn_gate_examples", "check_examples.py")
+frontmatter = _load("tn_gate_frontmatter", "check_frontmatter.py")
 
 
 # --------------------------------------------------------------------------
@@ -219,3 +221,138 @@ def test_no_reference_doc_is_orphaned():
     on_disk = {p.name for p in (ROOT / "references").glob("*.md")}
     assert on_disk - linked == set(), "orphaned reference docs"
     assert linked - on_disk == set(), "SKILL.md links to missing docs"
+
+
+# --------------------------------------------------------------------------
+# frontmatter gate
+# --------------------------------------------------------------------------
+
+def test_frontmatter_gate_passes_on_repository():
+    assert frontmatter.check_skill_frontmatter(verbose=False) == 0
+
+
+def test_frontmatter_fails_when_name_is_invalid(tmp_path: Path):
+    doc = tmp_path / "SKILL.md"
+    doc.write_text(
+        "---\nname: other-skill\ndescription: Use when designing user interfaces.\n---\n",
+        encoding="utf-8",
+    )
+    assert frontmatter.check_skill_frontmatter(doc, verbose=False) == 1
+
+
+def test_frontmatter_fails_when_description_missing_trigger_prefix(tmp_path: Path):
+    doc = tmp_path / "SKILL.md"
+    doc.write_text(
+        "---\nname: turtleneck\ndescription: Designed for building user interfaces.\n---\n",
+        encoding="utf-8",
+    )
+    assert frontmatter.check_skill_frontmatter(doc, verbose=False) == 1
+
+
+def test_frontmatter_fails_on_workflow_narration(tmp_path: Path):
+    doc = tmp_path / "SKILL.md"
+    doc.write_text(
+        "---\nname: turtleneck\ndescription: >-\n  Use when designing interfaces. Conducts interactive requirement interviews and implements anti-slop code.\n---\n",
+        encoding="utf-8",
+    )
+    assert frontmatter.check_skill_frontmatter(doc, verbose=False) == 1
+
+
+def test_frontmatter_fails_when_description_too_long(tmp_path: Path):
+    doc = tmp_path / "SKILL.md"
+    doc.write_text(
+        f"---\nname: turtleneck\ndescription: Use when designing interfaces. {'x' * 550}\n---\n",
+        encoding="utf-8",
+    )
+    assert frontmatter.check_skill_frontmatter(doc, verbose=False) == 1
+
+
+# --------------------------------------------------------------------------
+# contrast gate with custom tokens (--tokens)
+# --------------------------------------------------------------------------
+
+def _write_json(tmp_path: Path, data: Any, filename: str = "tokens.json") -> Path:
+    p = tmp_path / filename
+    p.write_text(json.dumps(data), encoding="utf-8")
+    return p
+
+
+def test_custom_tokens_valid_palette_passes(tmp_path: Path):
+    data = {
+        "pairs": [
+            {"name": "text-primary", "foreground": "#000000", "background": "#ffffff", "role": "body copy", "threshold": "text"},
+            {"name": "input-border", "foreground": "#767676", "background": "#ffffff", "role": "field boundary", "threshold": "ui"},
+            {"name": "card-edge", "foreground": "#e0e0e0", "background": "#ffffff", "role": "container chassis", "threshold": "decorative", "exemption_rationale": "non-semantic card edge"},
+        ]
+    }
+    p = _write_json(tmp_path, data)
+    assert contrast.check_tokens_file(p, verbose=False) == 0
+
+
+def test_custom_tokens_boundary_ratios(tmp_path: Path):
+    # Text threshold boundary (4.5:1)
+    pass_text = {"pairs": [{"name": "t-pass", "foreground": "#767676", "background": "#ffffff", "role": "text", "threshold": "text"}]}
+    fail_text = {"pairs": [{"name": "t-fail", "foreground": "#777777", "background": "#ffffff", "role": "text", "threshold": "text"}]}
+    assert contrast.check_tokens_file(_write_json(tmp_path, pass_text, "t_pass.json"), verbose=False) == 0
+    assert contrast.check_tokens_file(_write_json(tmp_path, fail_text, "t_fail.json"), verbose=False) == 1
+
+    # UI threshold boundary (3.0:1)
+    pass_ui = {"pairs": [{"name": "u-pass", "foreground": "#949494", "background": "#ffffff", "role": "ui", "threshold": "ui"}]}
+    fail_ui = {"pairs": [{"name": "u-fail", "foreground": "#959595", "background": "#ffffff", "role": "ui", "threshold": "ui"}]}
+    assert contrast.check_tokens_file(_write_json(tmp_path, pass_ui, "u_pass.json"), verbose=False) == 0
+    assert contrast.check_tokens_file(_write_json(tmp_path, fail_ui, "u_fail.json"), verbose=False) == 1
+
+
+def test_custom_tokens_rejects_empty_inputs(tmp_path: Path):
+    empty_file = tmp_path / "empty.json"
+    empty_file.write_text("   \n", encoding="utf-8")
+    assert contrast.check_tokens_file(empty_file, verbose=False) == 1
+
+    empty_obj = _write_json(tmp_path, {}, "empty_obj.json")
+    assert contrast.check_tokens_file(empty_obj, verbose=False) == 1
+
+    empty_list = _write_json(tmp_path, [], "empty_list.json")
+    assert contrast.check_tokens_file(empty_list, verbose=False) == 1
+
+    empty_pairs = _write_json(tmp_path, {"pairs": []}, "empty_pairs.json")
+    assert contrast.check_tokens_file(empty_pairs, verbose=False) == 1
+
+
+def test_custom_tokens_rejects_malformed_colors(tmp_path: Path):
+    bad_colors = [
+        {"name": "bad-fg", "foreground": "blue", "background": "#ffffff", "role": "text", "threshold": "text"},
+        {"name": "bad-bg", "foreground": "#000000", "background": "#xyz123", "role": "text", "threshold": "text"},
+        {"name": "short-fg", "foreground": "#12", "background": "#ffffff", "role": "text", "threshold": "text"},
+    ]
+    for idx, item in enumerate(bad_colors):
+        p = _write_json(tmp_path, {"pairs": [item]}, f"bad_color_{idx}.json")
+        assert contrast.check_tokens_file(p, verbose=False) == 1
+
+
+def test_custom_tokens_rejects_unknown_threshold_class(tmp_path: Path):
+    data = {"pairs": [{"name": "unknown", "foreground": "#000000", "background": "#ffffff", "role": "text", "threshold": "mystical"}]}
+    p = _write_json(tmp_path, data)
+    assert contrast.check_tokens_file(p, verbose=False) == 1
+
+
+def test_custom_tokens_rejects_unjustified_exemption(tmp_path: Path):
+    # Missing rationale
+    data1 = {"pairs": [{"name": "no-rationale", "foreground": "#ccc", "background": "#fff", "role": "border", "threshold": "decorative"}]}
+    assert contrast.check_tokens_file(_write_json(tmp_path, data1, "no_rat.json"), verbose=False) == 1
+
+    # Empty whitespace rationale
+    data2 = {"pairs": [{"name": "empty-rationale", "foreground": "#ccc", "background": "#fff", "role": "border", "threshold": "decorative", "exemption_rationale": "   "}]}
+    assert contrast.check_tokens_file(_write_json(tmp_path, data2, "empty_rat.json"), verbose=False) == 1
+
+
+def test_custom_tokens_cli_invocation(tmp_path: Path):
+    import subprocess
+    valid_data = {
+        "pairs": [
+            {"name": "cli-test", "foreground": "#000000", "background": "#ffffff", "role": "text", "threshold": "text"}
+        ]
+    }
+    p = _write_json(tmp_path, valid_data, "cli_valid.json")
+    res = subprocess.run([sys.executable, str(ROOT / "scripts" / "check_contrast.py"), "--tokens", str(p)], capture_output=True, text=True)
+    assert res.returncode == 0
+    assert "meet WCAG 2.2 AA" in res.stdout

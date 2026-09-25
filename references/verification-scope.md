@@ -13,13 +13,44 @@ declared inputs*, not a certification of an arbitrary product UI.
 
 ### `scripts/check_contrast.py`
 
-* **Verifies:** every colour pair **declared in this repository's token table** against WCAG 2.2 AA
-  thresholds (4.5:1 for text, 3:1 for UI component boundaries and graphical objects). It also fails
-  the build if a declared pair drifts from the value the documentation actually contains, so a token
-  cannot be silently weakened.
-* **Does not verify:** colour usage that is never declared. A generated UI that introduces a new,
-  unlisted hex colour — or computes colours at runtime, re-tints an image, or relies on opacity
-  stacking — is outside this gate's scope. It also does not compute DOM-level rendered contrast.
+* **Default mode:** verifies every colour pair **declared in this repository's token table** against WCAG 2.2 AA
+  thresholds (4.5:1 for normal text, 3:1 for UI component boundaries and graphical objects). It fails
+  the build if a declared pair drifts from the value the documentation actually contains, preventing silent token erosion.
+* **Custom palette mode (`--tokens <path.json>`):** validates user- or agent-generated token sets against a minimal JSON schema:
+  ```json
+  {
+    "pairs": [
+      {
+        "name": "text-primary",
+        "foreground": "#0F172A",
+        "background": "#FFFFFF",
+        "role": "body text",
+        "threshold": "text",
+        "exemption_rationale": ""
+      },
+      {
+        "name": "card-border",
+        "foreground": "#E2E8F0",
+        "background": "#FFFFFF",
+        "role": "decorative border",
+        "threshold": "decorative",
+        "exemption_rationale": "non-interactive card container edge"
+      }
+    ]
+  }
+  ```
+  Schema rules:
+  - `name`: string identifier.
+  - `foreground`, `background`: hex colour strings (`#RGB` or `#RRGGBB`).
+  - `role`: descriptive purpose of the colour pair.
+  - `threshold`: `"text"` (>= 4.5:1), `"ui"` (>= 3.0:1), or `"decorative"` (exempt).
+  - `exemption_rationale`: non-empty string required whenever `threshold` is `"decorative"`.
+  The script rejects malformed colors, unknown threshold classes, empty inputs, unjustified exemptions, and failing ratios with non-zero exit codes.
+* **Does not verify:** rendered DOM accessibility. Calculating mathematical contrast between two static hex strings does not certify how a browser actually renders pixels:
+  - It does NOT evaluate computed CSS values, inherited colours, or CSS custom variable cascades.
+  - It does NOT evaluate alpha channel composition (`opacity`, `rgba()`, `hsla()`), glassmorphism backdrop filters, or stacking contexts.
+  - It does NOT account for background images, CSS gradients, subpixel anti-aliasing, or font weight/size thresholds in actual layout.
+  - It does NOT test hover, focus, active, or dark-mode theme switching states as rendered by a browser engine.
 
 ### `scripts/check_examples.py`
 
@@ -57,7 +88,9 @@ The interview is the protocol's *ceiling*, not its default. Four modes, chosen b
 earns:
 
 * **Direct Phase 4** — one component, one style tweak, a fix, or the user said "just do it".
-  Skip Phases 1–3; apply the Phase 4 craft rules (5-state, motion budgets, contrast) directly.
+  Skip Phases 1–3; apply the Phase 4 craft rules (5-state, motion budgets, contrast) directly;
+  emit the Compact Completion Report (mode, files changed, verified checks, deliberate breaks)
+  instead of the full 11-line contract.
 * **Time-boxed fast path** — a hard deadline, or a brief that already names scope and stack.
   Skip the interview; infer archetype/density from the codebase and the request; state the
   inferred choice and ONE alternative in a single line; proceed without waiting unless the brief
@@ -68,7 +101,7 @@ earns:
 * **Full interview** — vague, greenfield, or consequential surfaces (a flagship marketing page, a
   design system). Ask the four questions and pitch 2–3 layouts.
 
-Whichever mode is used, the Output Contract must record it (`Execution mode:` line) plus, when the
+Whichever mode is used, the completion report must record it (`Execution mode:` or `Mode:` line) plus, when the
 interview was skipped, `Interview: skipped, reason: <one line>` — so the shortcut is auditable,
 not silent. A full interview on a two-minute fix is a protocol violation, not thoroughness.
 

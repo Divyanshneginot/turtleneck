@@ -63,21 +63,20 @@ trigger applies — never preload the whole set.
 
 ## Phase 2: Requirements Interview
 
-Ask before you assume. Never skip this phase, and never infer a dark developer aesthetic by default.
-Fast path: if the brief already names archetype, surface, density, and layout direction, restate
-them in one preflight, raise at most one genuine ambiguity, then build — no multi-question interview.
-Tempo: a full interview on a two-minute fix is a protocol violation — apply Phase 4 craft rules
-directly and skip Phases 1–3.
+Follow the authoritative execution mode: Direct Phase 4 skips Phases 1–3 directly; Time-boxed and Fast Path preflight inferred constraints without a multi-question interview; Full Pipeline runs the interview for vague/consequential surfaces. Never assume a dark developer aesthetic by default.
 
-1. **Confirm the product archetype** (details in `design-archetypes.md`):
+1. **Derive direction from subject matter first**:
+   * Ground visual choices in audience, context, Job-To-Be-Done (JTBD), and domain materials/vernacular. Spend boldness in one intentional place.
+   * **Genericity Check**: if the direction could be reused unchanged for another product in the category, revise it.
+2. **Use archetypes as constraint lenses (not cosmetic presets)** (details in `.turtleneck/references/design-archetypes.md`):
    * **High-Trust Corporate** — clean slate canvas (`#f6f9fc`), dark ink (`#0a2540`), fintech clarity.
    * **Warm Editorial Paper** — warm cream paper (`#fbfbfa`), serif headlines, reading-focused.
    * **Fluid Organics** — soft squircles (`10-14px`), tactile segmented controls, fluid elevation.
    * **High-Density Starlight** — deep starlight background (`#08090a`), high density, hotkeys.
    * **Stark Geometric Minimal** — stark monochrome, zero ornamentation, monospaced metadata.
-2. **Establish the Job-To-Be-Done** — the primary outcome (monitoring, triage, editing, onboarding)
-   and the target density (high-density operational / balanced SaaS / consumer guided flow).
-3. **Pitch 2-3 concrete layout options** and wait for a choice before building.
+3. **Establish JTBD & Target Density**:
+   * Confirm primary outcome and density (high-density operational / balanced SaaS / consumer guided flow).
+4. **Pitch 2-3 concrete layout options** (Full Pipeline) and wait for a choice before building.
 
 ## Phase 3: Blueprint Alignment
 
@@ -106,3 +105,4 @@ directly and skip Phases 1–3.
 * **Concentric radiuses**: `R_outer = R_inner + Padding`.
 * **WCAG 2.2 AA**: 4.5:1 text contrast, 3:1 on UI component boundaries. Verify with
   `scripts/check_contrast.py` before claiming compliance.
+* **Completion Reporting**: Emit full Output Contract for consequential work; emit Compact Completion Report (mode, files, verified checks, deliberate breaks) for Direct Phase 4 fixes.

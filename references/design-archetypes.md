@@ -4,6 +4,21 @@ Token specifications and layout guidelines for major design paradigms.
 
 ---
 
+## 0. Archetypes as Constraint Lenses (Not Presets)
+
+Before selecting an archetype, derive visual direction from the product's real-world subject matter,
+audience, and job-to-be-done. Never treat these archetypes as cosmetic themes or copy-paste templates.
+
+1. **Subject Matter & Context First**: Ground visual choices in the audience's reality, environment,
+   and cognitive load. Draw from domain vernacular and physical materials (e.g. clinical telemetry,
+   ledger books, technical consoles, editorial print).
+2. **Genericity Check**: *Could this direction and layout be reused unchanged for another product in
+   this category?* If yes, revise it. Spend boldness in one intentional place.
+3. **Archetype as Diagnostic Lens**: Use archetypes to constrain trust level, data density, chrome
+   weight, and interaction character—not as interchangeable skins.
+
+---
+
 ## 1. The 5 Core Visual Archetypes
 
 ```

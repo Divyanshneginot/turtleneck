@@ -85,14 +85,14 @@ code for what it finds. It reads the committed benchmark captures — it never s
 Mobile and native targets additionally load `references/mobile-touch-and-native.md` for thumb
 zones, touch targets, gesture timing, and the native-stack token mapping.
 
-**Phase 2 — Requirements Interview.** Four questions: archetype, job-to-be-done, density, and a
-choice between 2–3 concrete layouts. See
-`references/requirements-interview-framework.md`. The interview is the *ceiling*, not the default:
-a **fast path** skips it when your brief already names the archetype, surface, density, and layout
-direction — the skill restates the inferred constraints in one preflight, raises at most one
-genuine ambiguity, and builds. A **time-boxed** run compresses Phases 1–2 the same way, and a
-small/one-component request skips straight to Phase 4. Every build's Output Contract records which
-mode it used, so skipping the interview is auditable, not silent.
+**Phase 2 — Requirements Interview & Architectural Direction.** The interview is the *ceiling*, not the default.
+The four modes govern tempo:
+* **Direct Phase 4:** Small fixes or single components skip Phases 1–3 and emit a 4-line Compact Completion Report.
+* **Time-boxed Fast Path:** Deadlines skip the interview; infer archetype/density and proceed with a 1-line call + alternative.
+* **Fast Path:** Explicit briefs (surface, density, layout, direction) skip the multi-question interview via a 1-line preflight.
+* **Full Pipeline:** Vague, greenfield, or consequential surfaces run the full interview and pitch 2–3 concrete layouts.
+
+Before choosing an archetype, the agent derives direction from the product's **real-world subject matter, audience, and job-to-be-done**, then runs the **Genericity Check** (*"Could this direction be reused unchanged for another product in this category?"*). The five archetypes serve as **diagnostic constraint lenses** for density, chrome, and physics—not interchangeable cosmetic themes.
 
 **Phase 3 — Blueprint Alignment.** Locks realistic mock data and design tokens drawn from your
 existing patterns, then runs the anti-slop gate (`references/taste-vs-slop-matrix.md`).
@@ -101,53 +101,60 @@ existing patterns, then runs the anti-slop gate (`references/taste-vs-slop-matri
 compositor-only motion, `prefers-reduced-motion` fallbacks, and WCAG 2.2 AA contrast — then
 verifies the palette with `scripts/check_contrast.py` before claiming compliance.
 
-### The five archetypes
+### The five archetype lenses
 
-Every design decision starts from one of five fully-tokened archetypes
-(`references/design-archetypes.md`):
+Archetypes act as constraint lenses (`references/design-archetypes.md`):
 
-| Archetype | Feel |
+| Archetype Lens | Feel & Constraint |
 | :--- | :--- |
-| High-Trust Corporate | Clean slate, fintech clarity |
-| Warm Editorial Paper | Cream canvas, serif headlines |
-| Fluid Organics | Soft squircles, tactile controls |
-| High-Density Starlight | Dark engineering, keyboard-first |
-| Stark Geometric Minimal | Monochrome, zero ornament |
+| High-Trust Corporate | Clean slate (`#f6f9fc`), crisp borders, fintech clarity |
+| Warm Editorial Paper | Cream canvas (`#fbfbfa`), serif display, reading focus |
+| Fluid Organics | Soft squircles (`10-14px`), tactile segmented controls |
+| High-Density Starlight | Dark engineering (`#08090a`), dense tables, hotkeys |
+| Stark Geometric Minimal | Monochrome (`#000000`), zero ornament, razor chassis |
 
 ---
 
 ## Proof over promises
 
-Three zero-dependency gates assert the repository obeys its own protocol. CI runs all three plus
-`pytest`.
+Four zero-dependency gates assert the repository obeys its own protocol. CI runs all four across
+Python 3.11 and 3.12, alongside the pytest suite.
 
 ```bash
+python scripts/check_frontmatter.py   # SKILL.md trigger-only discovery format & length
 python scripts/check_consistency.py   # pipeline parity, interview step, reference graph, no LaTeX
 python scripts/check_contrast.py      # all 46 declared colour pairs vs WCAG 2.2 AA
+python scripts/check_contrast.py --tokens <path.json>  # verify arbitrary generated palettes
 python scripts/check_examples.py      # examples honour focus-visible, reduced-motion, no `transition: all`
-pytest tests/ -q                      # installer safety contract + gates (74 tests)
+pytest tests/ -q                      # installer safety contract + gates (86 tests)
 ```
 
 `check_contrast.py` fails if the documentation ever drifts from the values it verifies, so a
-token can't be quietly weakened. `check_examples.py` keeps the reference implementations honest.
+token can't be quietly weakened. Passing `--tokens <json>` validates generated palettes against
+the minimal contrast schema. `check_examples.py` keeps the reference implementations honest.
+
+### Behavioral evaluations (`evals/`)
+
+Turtleneck includes a 10-brief evaluation benchmark in `evals/cases/` and an observable 9-dimension scoring rubric in `evals/rubric.md`:
+* **Cases:** Vague greenfield UI, dense telemetry dashboard, mobile form, tiny CSS fix, exact supplied-design replication, modal keyboard behavior, low-contrast regression, explicit time-box, non-UI task (negative trigger test), and accessibility review.
+* **Status:** Scaffold and test cases published; initial comparative baseline-vs-treatment benchmark runs are pending execution. Claims remain strictly scoped to what automated gates prove.
 
 ### What this guarantees — and what it does not
 
 The gates are scoped, heuristic checks on *declared* inputs, not a certification of an arbitrary
 product UI:
 
-* **Guaranteed:** this repository's declared colour pairs meet WCAG 2.2 AA thresholds; the
-  reference examples carry the `:focus-visible`, `prefers-reduced-motion`, compositor-only
-  transitions, and accessible names the protocol mandates; and the protocol text is consistent
-  across every prompt file.
+* **Guaranteed:** this repository's declared colour pairs meet WCAG 2.2 AA thresholds; custom palettes
+  checked via `--tokens` meet mathematical contrast thresholds; the reference examples carry the
+  `:focus-visible`, `prefers-reduced-motion`, compositor-only transitions, and accessible names the
+  protocol mandates; and the protocol text is consistent across every prompt file.
 * **Not guaranteed:** that any UI an agent later generates is WCAG 2.2 AA compliant. The example
   checker is regex-based — it does not validate semantic structure, keyboard behaviour, runtime
   states, ARIA correctness, responsive layouts, DOM-computed contrast, or visual regressions; and
   the contrast gate only sees colour pairs someone declared. Do not claim "WCAG compliant" off a
   token/example gate — claim only what a specific check actually ran.
 
-The full statement of scope, plus the fast-path rules for skipping the interview on an explicit
-brief, lives in `references/verification-scope.md`.
+The full statement of scope, schema specification, and fast-path rules live in `references/verification-scope.md`.
 
 ---
 
@@ -161,7 +168,8 @@ turtleneck/
 │   ├── deep_research/    # committed headless benchmark captures (authoritative)
 │   └── award_research/   # award-site synthesis (authoritative)
 ├── examples/             # live reference implementations the skill mirrors
-├── scripts/              # install.py + the three verification gates (+ maintainer-only scrapers)
+├── evals/                # behavioral evaluation suite: 10 test cases, rubric, protocol
+├── scripts/              # install.py + the four verification gates (+ maintainer scrapers)
 └── tests/                # installer + gate test suite
 ```
 

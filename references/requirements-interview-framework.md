@@ -10,8 +10,9 @@ The interview is a ceiling, not a default. Pick the route the brief earns before
 
 | Situation | Route |
 | :--- | :--- |
-| One component, one style tweak, a fix, or the user said "just do it" | **Direct Phase 4** — no interview; apply craft rules, build. |
-| Hard deadline, or a brief already naming scope + stack across all four dimensions (archetype, surface, density, layout direction) | **Fast path** — restate inferred constraints in one preflight line, raise at most one real ambiguity, build. |
+| One component, one style tweak, a fix, or user said "just do it" | **Direct Phase 4** — no interview; apply craft rules; emit Compact Completion Report. |
+| Hard deadline, or brief naming scope + stack | **Time-boxed Fast Path** — infer constraints; state call + 1 alternative in 1 line; build. |
+| Brief already supplies surface, density, layout, and direction | **Fast Path** — restate inferred constraints in 1 preflight line; surface <= 1 ambiguity; build. |
 | Vague or consequential (greenfield, flagship marketing, design system) | **Full interview** below. |
 
 Under a hard time budget, compress the pipeline deliberately:
@@ -32,12 +33,17 @@ protocol, not following it.
 
 ---
 
-## 1. The 4 Essential Discovery Questions
+## 1. Discovery Protocol (Full Interview)
 
-Never jump straight to writing code based on ambiguous prompts. Ask the user 4 structured questions:
+Ground visual direction in subject matter before asking questions or proposing archetypes:
+* **Subject Matter & Context First**: Identify audience, environment, and physical/cognitive load.
+* **Genericity Check**: Could this direction be reused unchanged for another product in the category? If yes, revise.
+* **Archetype as Constraint Lens**: Use archetype to constrain density, chrome, and physics.
 
-### Q1: Visual Archetype & DNA
-* "Based on your project domain, should this feel like A) High-Trust Corporate, B) Warm Editorial Paper, C) Fluid Organics, D) High-Density Starlight, or E) Stark Geometric?"
+Never jump straight to writing code based on ambiguous prompts. Ask the user structured questions:
+
+### Q1: Visual Archetype Lens & DNA
+* "Grounding this in your domain, which archetype lens best constrains the feel and density: A) High-Trust Corporate, B) Warm Editorial Paper, C) Fluid Organics, D) High-Density Starlight, or E) Stark Geometric Minimal?"
 * (Or agent researches domain to recommend one.)
 
 ### Q2: Job-To-Be-Done (JTBD) & Primary Outcome

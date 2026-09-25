@@ -25,7 +25,10 @@ jobs:
       - name: Install test dependencies
         run: python -m pip install --upgrade pip && pip install pytest==9.1.1
 
-      # The three gates assert the repository obeys its own protocol.
+      # The gates assert the repository obeys its own protocol.
+      - name: Frontmatter gate (valid YAML frontmatter, skill name, trigger-only description)
+        run: python scripts/check_frontmatter.py
+
       - name: Consistency gate (pipeline parity, interview step, reference graph, no LaTeX)
         run: python scripts/check_consistency.py
 
@@ -35,5 +38,5 @@ jobs:
       - name: Examples gate (focus-visible, reduced motion, transitions, a11y names, contrast)
         run: python scripts/check_examples.py
 
-      - name: Installer safety contract
+      - name: Installer safety contract & gate test suite
         run: pytest tests/ -v
