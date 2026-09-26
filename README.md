@@ -54,10 +54,9 @@ python path/to/turtleneck/scripts/install.py --skill  # universal agent skill (.
 
 | Component | Runtime requirements |
 | :--- | :--- |
-| `scripts/install.py` + all three gates | Python **3.9+**, standard library only |
-| `tests/` | Python **3.9+**, `pytest` (CI pins `pytest==9.1.1` on 3.11 and 3.12; also passes on Windows, Python 3.13 tested) |
-| Agent rules (`rules/`, `SKILL.md`) | Markdown/plain-text consumers — no runtime; framework detection covers React/Next.js, Vue 3, Svelte 5, Tailwind CSS, vanilla HTML/CSS, plus React Native / Flutter / SwiftUI via `references/mobile-touch-and-native.md` |
-| Playwright scrapers (maintainer-only) | `python 3.x` + `requirements-dev.txt` (Playwright) — not part of any install |
+| `scripts/install.py` + all gates | Python **3.9+**, standard library only |
+| `tests/` | Python **3.9+**, `pytest` (standard library + pytest alone) |
+| Agent rules (`rules/`, `SKILL.md`) | Markdown/plain-text consumers — zero runtime dependencies |
 
 **Safety first.** If a destination already holds *your* content, the installer refuses (exit 2)
 and prints the protected line. Escapes: `--dry-run` (plan only), `--append` (merge between
@@ -166,19 +165,6 @@ turtleneck/
 ├── evals/                # behavioral evaluation suite: 10 test cases, rubric, protocol
 ├── scripts/              # install.py + the four verification gates (+ maintainer scrapers)
 └── tests/                # installer + gate test suite
-```
-
----
-
-## Maintainer notes
-
-The Playwright scrapers in `scripts/` are **not** part of a normal build — the committed captures
-are authoritative and `SKILL.md` tells agents not to run scrapers. To regenerate:
-
-```bash
-pip install -r requirements-dev.txt
-playwright install chromium
-python scripts/research_award_sites.py
 ```
 
 ---

@@ -138,66 +138,10 @@ A UI is incomplete if its happy path alone is designed. Validate against [Taste 
 
 ---
 
-## 3. Special capability: quizzes, recommenders, and template builders
-
-When users do not know what they need, make the interface help them decide instead of presenting an overwhelming blank canvas.
-
-### 3.1 Guided quiz / recommender
-Use a quiz only when answers genuinely alter the recommendation. Do not disguise a marketing form as a quiz.
-
-**Flow contract:**
-* Establish the desired outcome in the first question.
-* Ask 3–7 independent, plain-language questions; every question must affect scoring, filters, or the resulting setup.
-* Use one decision per step. Offer "Not sure" when uncertainty is valid.
-* Show progress as Step n of m, allow Back, preserve answers, and make Exit/cancel obvious.
-* Explain the result using the user's own answers: "Recommended because you chose…"
-* Offer a primary next step plus alternatives and an editable answer summary.
-
-**Recommendation model:**
-* Define options as data, not scattered conditional JSX.
-* Give each option explicit fit rules/weights and a deterministic tie-breaker.
-* Never claim false precision. If inputs are insufficient, return a shortlist and explain what would differentiate it.
-* Keep scoring client-side when possible; do not collect sensitive data unless the product needs it and consent is clear.
-
-Example schema:
-```typescript
-type Answer = string | number | boolean;
-type Template = {
-  id: string;
-  name: string;
-  description: string;
-  tags: string[];
-  preview: string;
-  score: (answers: Record<string, Answer>) => number;
-  rationale: (answers: Record<string, Answer>) => string[];
-};
-```
-
-### 3.2 Template chooser
-A template selection surface must enable action, not act as a static card grid.
-
-**Required behavior:**
-* 6–12 realistic starter templates grouped by user intent; include Blank only as a deliberate expert option.
-* Search, category filters, and clear selected state when the collection warrants them.
-* A fast preview (side panel, modal, or live canvas) containing actual structure/content, not a generic image rectangle.
-* "Use template" creates an editable copy; template remains immutable.
-* The chosen template may be tailored by quiz answers or a few lightweight controls (tone, color, sections, audience).
-* Preserve selection and customization across navigation/reload when the host product supports persistence.
-
-Choose between gallery-first and quiz-first:
-* **Gallery-first**: users recognize what they want; show templates immediately, filters refine.
-* **Quiz-first**: users describe needs better than they recognize layouts; recommend 1–3 templates, then let them browse all.
-* **Hybrid**: show a gallery plus "Help me choose" when both populations matter.
-
-### 3.3 Dynamic UI should have purpose
-Use dynamic behavior to reveal cause and effect:
-* selection updates a real preview;
-* a step answer updates recommendation confidence or downstream options;
-* form validation appears at the field at an appropriate time;
-* filters update count and preserve scroll/context;
-* changes are undoable when consequential.
-
-Do not add animation that delays choice, hides navigation, or exists only as decoration. See [Full Product Design System](./references/full-product-design-system.md).
+### 2.4 Decision flows, choosers, and dynamic UI
+* When guiding users through choices (configurators, forms, template pickers), every step must alter downstream options or the final setup.
+* Separate state/data from presentation; selection updates a real preview, never a blank card.
+* Dynamic behavior reveals cause and effect: form validation appears contextually, changes are undoable when consequential. (See [Full Product Design System](./references/full-product-design-system.md)).
 
 ---
 
@@ -291,31 +235,3 @@ Deliberate breaks: <any rule intentionally violated, or "none">
 ```
 
 For a design-only request, provide: the brief, 2–3 directions when discovery is warranted, recommended direction, information architecture, interaction/state model, and an implementation-ready prompt. Do not pretend code or verification occurred.
-
----
-
-## Implementation-ready prompt template
-
-Use this prompt when handing Turtleneck a concrete build task:
-
-```text
-Use the turtleneck skill in [fast path/discovery] mode. Inspect the existing project before editing.
-
-Build: [surface and primary user outcome].
-Users: [audience/context].
-Required content/data: [real schema or fixtures].
-Platform/constraints: [framework, routes, dependencies, deadline].
-
-The experience must [choose one: let users browse templates / guide unsure users through a 3–7 question recommender / support both].
-Templates/options: [list, categories, or domain].
-For a recommender, make every question change a deterministic, explainable result. Preserve Back,
-progress, answers, accessible keyboard navigation, and an editable result. For templates, provide
-search/filter when useful, a real preview, selected state, and an editable copy after "Use template."
-
-Create an original direction informed by patterns, not a clone of any named site. Use purposeful
-responsive motion, all meaningful UI states, semantic HTML, focus-visible styles, and
-prefers-reduced-motion support. Do not ask more than three questions; if blocked by ambiguity,
-state assumptions and ship the strongest reversible default.
-
-Run the relevant checks. End with Turtleneck's response contract, listing only verification you ran.
-```

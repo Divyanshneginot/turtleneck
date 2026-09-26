@@ -67,16 +67,13 @@ Paths are relative to the repository root. The knowledge base is installed to
 | Phase 4 — spotlight cards, hairline borders, editorial and native recipes | `.turtleneck/references/engineering-craft-recipes.md` |
 | Phase 4 — usability rules and response latencies | `.turtleneck/references/ux-heuristics.md` |
 | Phase 4 — the WCAG 2.2 AA audit | `.turtleneck/references/accessibility-checklist.md` |
-| Phase 1 — curated headless benchmark captures (do not re-scrape) | `.turtleneck/references/deep_research/`, `.turtleneck/references/award_research/` |
 
 ---
 
 ## Rules
 
 1. **Phase 1 — Workspace Analysis**: inspect `package.json` first and emit idiomatic React, Next.js,
-   Vue, Svelte, Tailwind or vanilla CSS. Review the committed captures in
-   `.turtleneck/references/deep_research/` and `.turtleneck/references/award_research/`;
-   do not run scrapers against live sites. For React Native, Flutter or SwiftUI targets, follow
+   Vue, Svelte, Tailwind or vanilla CSS. For React Native, Flutter or SwiftUI targets, follow
    `.turtleneck/references/mobile-touch-and-native.md`.
 2. **Phase 2 — Requirements Interview**: ask before assuming. Confirm the archetype, establish the
    Job-To-Be-Done and target density, then pitch 2-3 layout options and wait for a choice.

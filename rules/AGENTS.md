@@ -68,7 +68,6 @@ trigger applies — never preload the whole set.
 | Phase 4 — spotlight cards, hairline borders, editorial and native recipes | `.turtleneck/references/engineering-craft-recipes.md` |
 | Phase 4 — usability rules and response latencies | `.turtleneck/references/ux-heuristics.md` |
 | Phase 4 — the WCAG 2.2 AA audit | `.turtleneck/references/accessibility-checklist.md` |
-| Phase 1 — curated headless benchmark captures (do not re-scrape) | `.turtleneck/references/deep_research/`, `.turtleneck/references/award_research/` |
 
 ---
 
@@ -76,8 +75,6 @@ trigger applies — never preload the whole set.
 
 * Inspect `package.json`, lockfiles and the styling engine before writing any code.
 * Identify the frontend framework and the styling system actually in use.
-* Review the committed headless captures in `.turtleneck/references/deep_research/` and
-  `.turtleneck/references/award_research/`. Do NOT run scrapers against live sites.
 * Match code output directly to the discovered stack:
   * **React / Next.js**: TSX, semantic props, 5-state accessible components.
   * **Vue 3**: `<script setup>`, scoped Tailwind / transitions.
