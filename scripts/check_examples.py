@@ -201,15 +201,20 @@ def check_example(path: Path) -> list[str]:
 def main() -> int:
     print("Turtleneck examples gate")
     print("-" * 60)
-    if not EXAMPLES:
-        print("no examples found")
+    targets = [Path(p) for p in sys.argv[1:]] if len(sys.argv) > 1 else list(EXAMPLES)
+    if len(sys.argv) <= 1 and (ROOT / "index.html").exists() and (ROOT / "index.html") not in targets:
+        targets.append(ROOT / "index.html")
+
+    if not targets:
+        print("no targets found")
         return 1
 
     all_problems: list[str] = []
-    for path in EXAMPLES:
+    for path in targets:
         problems = check_example(path)
         status = "ok" if not problems else f"{len(problems)} problem(s)"
-        print(f"  {path.name:<30} {status}")
+        display_name = str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else path.name
+        print(f"  {display_name:<30} {status}")
         all_problems.extend(problems)
 
     print()
@@ -219,7 +224,7 @@ def main() -> int:
             print(f"  x {p}")
         return 1
 
-    print(f"All {len(EXAMPLES)} examples honour focus-visible, reduced motion, "
+    print(f"All {len(targets)} targets honour focus-visible, reduced motion, "
           f"compositor-only transitions, accessible names and WCAG 2.2 AA text contrast.")
     return 0
 
