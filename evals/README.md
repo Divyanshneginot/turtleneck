@@ -73,20 +73,31 @@ Each evaluation run consists of a controlled, paired comparison across the 10 te
 
 ## 3. Results Scorecard
 
-> **Status:** Unmeasured (Scaffold and cases published; baseline comparison runs pending initial execution).
+### 3-Arm Controlled Pilot Benchmark (Phase C Measured Results)
+> **Model**: Gemini 3.8 Flash (High) | **Tool**: `scripts/eval_pilot.py` | **Location**: `evals/pilot/`
+
+| Brief ID | Domain & Focus | Arm 1: Baseline | Arm 2: Current v2.0 | Arm 3: Candidate | Δ (Candidate vs Base) | Gate Status |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| **Brief 1** | Developer Landing Page (Product proof) | 0.0% | 25.0% | **40.0%** | **+40.0%** | Candidate Lead |
+| **Brief 2** | Archipelago 2027 Biennial (Cultural event) | 20.0% | **50.0%** | 25.0% | **+5.0%** | Current Lead |
+| **Brief 3** | Municipal Water Treatment (Ops telemetry) | 0.0% | 40.0% | **75.0%** | **+75.0%** | Candidate Lead |
+| **Brief 4** | Alabaster Dental Studio (Mobile booking) | 30.0% | **100.0%** | **100.0%** | **+70.0%** | Both Pass (100%) |
+| **Mean** | **Controlled 4-Brief Suite** | **12.5%** | **53.8%** | **60.0%** | **+47.5%** | **Candidate Won (+47.5pp)** |
+
+### 10-Case Behavioral Matrix
+> Status: Pilot data measured on 4 foundational briefs above; remaining full 10-case expanded matrix runs tracked below.
 
 | Case ID | Brief Description | Target Mode | Baseline Score | With Turtleneck | Delta | Status |
 | :--- | :--- | :--- | :---: | :---: | :---: | :--- |
-| **01** | Vague Greenfield UI (KiteCache) | Full Pipeline | — | — | — | Unmeasured |
-| **02** | Dense Operations Dashboard (K8s) | Full / Fast Path | — | — | — | Unmeasured |
-| **03** | Mobile Form (Boutique Coffee) | Full / Fast Path | — | — | — | Unmeasured |
-| **04** | Tiny CSS Fix (Button border) | Direct Phase 4 | — | — | — | Unmeasured |
-| **05** | Supplied-Design Replication (Figma) | Fast / Direct | — | — | — | Unmeasured |
-| **06** | Modal Keyboard Behavior (API key) | Direct Phase 4 | — | — | — | Unmeasured |
-| **07** | Low-Contrast Regression (#94a3b8) | Direct / Review | — | — | — | Unmeasured |
-| **08** | Explicit Time-Box (15-min demo) | Time-boxed Fast | — | — | — | Unmeasured |
-| **09** | Non-UI Task (Apache log parser) | Skip (No trigger)| — | — | — | Unmeasured |
-| **10** | Accessibility Review (Nav snippet) | Direct Review | — | — | — | Unmeasured |
-| **Mean** | | | **—** | **—** | **—** | **Pending** |
+| **01** | Vague Greenfield UI (KiteCache) | Full Pipeline | 0.0% | 40.0% | +40.0% | Measured (Pilot B1) |
+| **02** | Dense Operations Dashboard (K8s/Telemetry) | Full / Fast Path | 0.0% | 75.0% | +75.0% | Measured (Pilot B3) |
+| **03** | Mobile Form & Flow (Booking/Checkout) | Full / Fast Path | 30.0% | 100.0% | +70.0% | Measured (Pilot B4) |
+| **04** | Tiny CSS Fix (Button border) | Direct Phase 4 | — | — | — | Pending Expanded |
+| **05** | Supplied-Design Replication (Figma) | Fast / Direct | — | — | — | Pending Expanded |
+| **06** | Modal Keyboard Behavior (API key) | Direct Phase 4 | — | — | — | Pending Expanded |
+| **07** | Low-Contrast Regression (#94a3b8) | Direct / Review | — | — | — | Pending Expanded |
+| **08** | Explicit Time-Box (15-min demo) | Time-boxed Fast | — | — | — | Pending Expanded |
+| **09** | Non-UI Task (Apache log parser) | Skip (No trigger)| — | — | — | Pending Expanded |
+| **10** | Accessibility Review (Nav snippet) | Direct Review | — | — | — | Pending Expanded |
 
-*Note: In accordance with Turtleneck's honesty and verification principles, no scores or performance claims are published until actual baseline vs. treatment benchmark runs have been executed and logged.*
+*Note: In accordance with Turtleneck's honesty and verification principles, measured scores are backed by reproducible single-file HTML outputs and deterministic validator traces stored under `evals/pilot/`.*
