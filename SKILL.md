@@ -17,14 +17,18 @@ The user must not have to supply every micro-decision or remind you to "make it 
 1. **Understand the job & identify the Product Proof Centerpiece**:
    - Determine what the user must accomplish, device, and context.
    - **Banish commodity templates**: Never default to `Hero ──► 3-Box Feature Grid ──► Generic Pricing Card ──► Footer`.
-   - Identify the ONE live interactive mechanism that mathematically or experientially proves the primary claim (e.g. live SCADA matrix for telemetry, interactive waveform for acoustics, thumb-zone stepper for mobile booking, live latency budget for systems).
+   - **Formulate the Rejection Principle (Aesthetic Thesis)**: What lazy industry cliché is this interface rejecting? (e.g. *"Good design is not purple"* rejects generic AI blobs; *"No dashboards, only decisions"* rejects metric bloat). A design without a thesis defaults to safe template slop.
+   - **Identify the Toy Factor**: Design the ONE live interactive mechanism that mathematically or experientially proves the primary claim (e.g. live SCADA matrix for telemetry, interactive waveform for acoustics, thumb-zone stepper for mobile booking, live latency budget for systems). Users must be able to test and break the claim with their hands.
 2. **The 3-Step Translation Algorithm (how to use references without cloning)**:
    - *A. Extract Relational Principle*: What structural logic transfers? (density, progressive disclosure, contrast tension, feedback timing).
-   - *B. Ban Cosmetic Cloning*: Never copy surface decoration (no terminal chrome, no orange dials, no fake calipers, no purple nebula blur, no fake audit chips) onto an unrelated product.
+   - *B. Ban the Dual Slop Trap*:
+     - **No Dark Neon Slop**: No purple radial blobs, no floating low-opacity glass cards, no fake dials.
+     - **No Dusty Museum Slop**: No faded yellowed paper, no tiny serif manifestos nobody reads, no static print-catalog layouts.
+     - **Target Modern High-Precision Craft**: Crisp canvas (`#fafafa` / `#090a0f`), deep ink typography (`#0f172a`), razor-sharp 1px borders (`#e2e8f0` / `rgba(255,255,255,0.08)`), tight tracking (`-0.03em`), and sub-120ms transitions.
    - *C. Build Domain Centerpiece*: Ground the interface in the authentic materials and vocabulary of the target domain.
 3. **Formulate the concept record** (internal, 5 questions):
    - What must the user understand or accomplish?
-   - What organizing idea fits that requirement, and why?
+   - What is the Aesthetic Thesis (what cliché are we rejecting)?
    - Which reference principle transfers? Which styling must NOT be copied?
    - Which single interactive centerpiece proves the product works?
    - What would make this concept wrong for this task?

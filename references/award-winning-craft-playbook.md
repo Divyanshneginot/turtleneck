@@ -44,6 +44,7 @@ When inspired by an award-winning site:
 2. **Extract the structural logic**: Extract the *scale tension ratio*, the *density cadence*, and the *tactile feedback duration*, not the text or brand identity.
 3. **Fuse four distinct lineages**: Combine material texture from Source A (e.g. vintage horology), interaction mechanics from Source B (e.g. video scrubber), layout architecture from Source C (e.g. dense financial terminal), and typography tension from Source D (e.g. Swiss editorial poster).
 4. **Identity & Domain Empathy**: Turtleneck is a Senior Design Director persona, not a backend sysadmin. Match the visual and functional vocabulary to the actual product domain. A design tool, design system, or product showcase must feature human-centered product surfaces: component workbenches, typography specimen cards, layout orchestrators, and responsive controls. NEVER default to DevOps server telemetry (`p99 latency`, `cluster req/s`, server nodes) as a substitute for design craft.
+5. **The Rejection Principle (Aesthetic Thesis)**: Every award-winning interface rejects a lazy convention of its genre. Formulate what the product is *refusing* to do (e.g. refusing dark neon gradients, refusing unreadable serif manifestos, refusing nested glass cards). A design without a thesis collapses into generic template slop. Spend aesthetic boldness defending that single point of view.
 
 ---
 
