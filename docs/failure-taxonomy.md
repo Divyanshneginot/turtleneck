@@ -1,6 +1,6 @@
 # Turtleneck Failure Taxonomy
 
-Catalogued from the 653-turn development conversation (exported to `turtleneck_conversation_export.txt`).
+Catalogued from earlier development sessions.
 Preserved as evidence for Phase C evaluation design.
 
 ---
@@ -9,7 +9,7 @@ Preserved as evidence for Phase C evaluation design.
 
 **Pattern**: When told to draw inspiration from a reference site, the model copied its literal visual treatment instead of extracting transferable principles.
 
-**Example**: Directed to emulate `ponytail.dev`'s character → model produced dark terminal chrome, monospace fonts, and shell prompts on a design skill's landing page. The useful lesson (presentation expresses product character) was lost; the surface decoration was duplicated.
+**Example**: Directed to emulate an engineering utility site's character → model produced dark terminal chrome, monospace fonts, and shell prompts on a design skill's landing page. The useful lesson (presentation expresses product character) was lost; the surface decoration was duplicated.
 
 **Root cause**: Model treats "be inspired by X" as "reproduce X's CSS."
 

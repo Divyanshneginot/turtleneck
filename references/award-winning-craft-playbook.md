@@ -1,6 +1,6 @@
 # Award-Winning UI/UX Craft Playbook
 
-Synthesized from direct headless browser extractions of global benchmark award winners (Awwwards SOTM/SOTD, FWA, CSS Design Awards, leading creative studios).
+Synthesized from empirical analysis of global digital design benchmarks and high-craft product interfaces.
 
 ---
 
