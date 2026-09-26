@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Turtleneck — Product Design Intelligence for AI Coding Agents</title>
+  <title>Turtleneck &mdash; Product Design Intelligence for AI Coding Agents</title>
   <meta name="description" content="An agent skill that injects product design judgment into Claude Code, Cursor, and Windsurf. Eliminate generic AI slop with typographic cadence, disciplined density, and resilient 5-state controls.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -388,7 +388,7 @@
       align-items: center;
       gap: var(--space-2);
       padding: 6px 12px;
-      min-height: 32px;
+      min-height: 44px;
       border-radius: 999px;
       font-size: 0.8125rem;
       font-weight: 600;
@@ -436,7 +436,7 @@
       border: 1px solid var(--border-base);
       border-radius: var(--radius-lg);
       padding: var(--space-3) var(--space-4);
-      max-width: 640px;
+      max-width: 660px;
     }
     .install-tabs {
       display: flex;
@@ -465,6 +465,10 @@
     }
     .tab-btn:hover {
       color: var(--text-primary);
+    }
+    .tab-btn:active {
+      color: var(--text-primary);
+      background-color: var(--bg-surface-2);
     }
     .tab-btn[aria-selected="true"] {
       color: var(--accent-base);
@@ -613,6 +617,7 @@
       display: flex;
       align-items: center;
       gap: var(--space-2);
+      flex-wrap: wrap;
     }
     .scenario-label {
       font-size: 0.8125rem;
@@ -622,7 +627,7 @@
     }
     .pill-btn {
       min-height: 44px;
-      padding: 0 var(--space-3);
+      padding: 0 var(--space-4);
       background: var(--bg-surface-1);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
@@ -640,6 +645,9 @@
       color: var(--text-primary);
       border-color: var(--border-base);
     }
+    .pill-btn:active {
+      transform: translateY(1px);
+    }
     .pill-btn[aria-pressed="true"] {
       background: var(--accent-surface);
       border-color: var(--accent-base);
@@ -651,6 +659,7 @@
       display: flex;
       align-items: center;
       gap: var(--space-3);
+      flex-wrap: wrap;
     }
     .mode-toggle-group {
       display: inline-flex;
@@ -660,7 +669,7 @@
       padding: 2px;
     }
     .mode-btn {
-      min-height: 40px;
+      min-height: 44px;
       padding: 0 var(--space-4);
       background: transparent;
       border: none;
@@ -676,6 +685,9 @@
     }
     .mode-btn:hover {
       color: var(--text-primary);
+    }
+    .mode-btn:active {
+      background-color: var(--bg-surface-2);
     }
     .mode-btn[aria-pressed="true"] {
       background: var(--bg-surface-3);
@@ -715,7 +727,6 @@
        PREVIEW CARD 1: THE RAW AGENT OUTPUT (COMMON AI MISTAKES DEMONSTRATED)
        -------------------------------------------------------------------------- */
     .slop-preview {
-      /* Demonstrating AI slop: arbitrary padding, purple gradient cliches, weak hierarchy */
       background: linear-gradient(135deg, #1A102A 0%, #101625 100%);
       border: 1px solid #6D28D9;
       border-radius: 20px;
@@ -742,12 +753,11 @@
       margin-bottom: 6px;
     }
     .slop-sub {
-      color: #6B7280; /* Failing contrast: ~2.8:1 on #1A102A! */
+      color: #6B7280; /* Failing contrast: ~2.8:1 on #1A102A */
       font-size: 0.72rem;
       margin-bottom: 24px;
     }
     .slop-inner-box {
-      /* Card inside card gratuitous nesting */
       background: #0D0F17;
       border: 1px solid #374151;
       border-radius: 12px;
@@ -776,7 +786,6 @@
       margin-top: 20px;
     }
     .slop-btn-primary {
-      /* Giant neon button with no explicit focus-visible or active state */
       background: linear-gradient(90deg, #8B5CF6, #EC4899);
       color: #FFFFFF;
       border: none;
@@ -1420,7 +1429,7 @@
           <span class="tag-pill">
             <span class="tag-pill-status" aria-hidden="true"></span>
             <span>Agent Skill Runtime</span>
-            <span class="tag-pill-dim">• Anthropic MCP & Cursor Native</span>
+            <span class="tag-pill-dim">&bull; Anthropic MCP &amp; Cursor Native</span>
           </span>
           <span class="tag-pill">
             <span>WCAG 2.2 AA Verified</span>
@@ -1502,7 +1511,7 @@
           <div class="workbench-toolbar" role="toolbar" aria-label="Demo controls">
             <div class="workbench-scenarios">
               <span class="scenario-label" id="scenario-selector-label">Scenario:</span>
-              <button type="button" class="pill-btn" aria-pressed="true" data-scenario="billing" aria-labelledby="scenario-selector-label">SaaS Usage & Billing</button>
+              <button type="button" class="pill-btn" aria-pressed="true" data-scenario="billing" aria-labelledby="scenario-selector-label">SaaS Usage &amp; Billing</button>
               <button type="button" class="pill-btn" aria-pressed="false" data-scenario="telemetry" aria-labelledby="scenario-selector-label">Real-time Metrics</button>
               <button type="button" class="pill-btn" aria-pressed="false" data-scenario="team" aria-labelledby="scenario-selector-label">Permission Access Modal</button>
             </div>
@@ -1512,7 +1521,7 @@
                 <button type="button" class="mode-btn" id="mode-slop" aria-pressed="false">Raw Agent Slop</button>
                 <button type="button" class="mode-btn" id="mode-calibrated" aria-pressed="true">Turtleneck Calibrated</button>
               </div>
-              <button type="button" class="btn btn-primary" id="btn-re-evaluate" style="min-height: 40px; padding: 0 14px; font-size: 0.8125rem;">
+              <button type="button" class="btn btn-primary" id="btn-re-evaluate">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
                 <span>Re-run Agent Pass</span>
               </button>
@@ -1536,7 +1545,7 @@
                   <div class="calibrated-header">
                     <div>
                       <h3 class="calibrated-title" id="card-title">Production Compute Usage</h3>
-                      <p class="calibrated-sub" id="card-sub">Cluster us-east-1 • Billing period closes in 4 days</p>
+                      <p class="calibrated-sub" id="card-sub">Cluster us-east-1 &bull; Billing period closes in 4 days</p>
                     </div>
                     <span class="status-tag status-tag-active" id="card-tag">Active Tier</span>
                   </div>
@@ -1557,8 +1566,8 @@
                   </div>
 
                   <div class="calibrated-footer-actions">
-                    <button type="button" class="btn btn-secondary" style="min-height: 44px;">View Invoices</button>
-                    <button type="button" class="btn btn-primary" style="min-height: 44px;">Manage Quotas</button>
+                    <button type="button" class="btn btn-secondary">View Invoices</button>
+                    <button type="button" class="btn btn-primary">Manage Quotas</button>
                   </div>
                 </div>
               </div>
@@ -1581,12 +1590,12 @@
                     <span>Contrast Compliance</span>
                     <span class="audit-badge pass" id="audit-contrast-badge">15.8:1 (AA PASS)</span>
                   </div>
-                  <p class="audit-point-desc" id="audit-contrast-desc">All typography surpasses 4.5:1 text threshold; borders maintain >=3:1 against adjacent surfaces.</p>
+                  <p class="audit-point-desc" id="audit-contrast-desc">All typography surpasses 4.5:1 text threshold; borders maintain &gt;=3:1 against adjacent surfaces.</p>
                 </div>
 
                 <div class="audit-point pass" id="audit-density">
                   <div class="audit-point-header">
-                    <span>Spatial Rhythm & Padding</span>
+                    <span>Spatial Rhythm &amp; Padding</span>
                     <span class="audit-badge pass" id="audit-density-badge">8pt GRID HARMONY</span>
                   </div>
                   <p class="audit-point-desc" id="audit-density-desc">Card padding normalized to 24px with 16px internal row cadence. Eliminates arbitrary 34px float.</p>
@@ -1716,7 +1725,7 @@
             <p class="agent-desc">Connects via Anthropic's Model Context Protocol. Intercepts frontend generation tasks with design evaluation rubrics.</p>
             <div class="agent-snippet">
               <code>claude mcp add turtleneck -- npx -y @turtleneck/agent-skill</code>
-              <button type="button" class="btn btn-ghost" style="min-height: 44px; min-width: 44px; padding: 0 8px;" aria-label="Copy Claude Code command" onclick="copySnippet('claude mcp add turtleneck -- npx -y @turtleneck/agent-skill', this)">
+              <button type="button" class="btn btn-ghost" aria-label="Copy Claude Code command" onclick="copySnippet('claude mcp add turtleneck -- npx -y @turtleneck/agent-skill', this)">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
               </button>
             </div>
@@ -1730,7 +1739,7 @@
             <p class="agent-desc">Generates a modular design rule system in your project root that informs Composer and Chat agents during every code edit.</p>
             <div class="agent-snippet">
               <code>npx @turtleneck/agent-skill init --cursor</code>
-              <button type="button" class="btn btn-ghost" style="min-height: 44px; min-width: 44px; padding: 0 8px;" aria-label="Copy Cursor command" onclick="copySnippet('npx @turtleneck/agent-skill init --cursor', this)">
+              <button type="button" class="btn btn-ghost" aria-label="Copy Cursor command" onclick="copySnippet('npx @turtleneck/agent-skill init --cursor', this)">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
               </button>
             </div>
@@ -1744,7 +1753,7 @@
             <p class="agent-desc">Injects contextual UI design constraints into Cascade's deep memory layer, guaranteeing state resilience across full stack tasks.</p>
             <div class="agent-snippet">
               <code>npx @turtleneck/agent-skill init --windsurf</code>
-              <button type="button" class="btn btn-ghost" style="min-height: 44px; min-width: 44px; padding: 0 8px;" aria-label="Copy Windsurf command" onclick="copySnippet('npx @turtleneck/agent-skill init --windsurf', this)">
+              <button type="button" class="btn btn-ghost" aria-label="Copy Windsurf command" onclick="copySnippet('npx @turtleneck/agent-skill init --windsurf', this)">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
               </button>
             </div>
@@ -1758,7 +1767,7 @@
             <p class="agent-desc">Automatically inspects PRs written by AI agents. Blocks merge if low contrast or incomplete keyboard focus rings are detected.</p>
             <div class="agent-snippet">
               <code>npx @turtleneck/agent-skill audit --strict</code>
-              <button type="button" class="btn btn-ghost" style="min-height: 44px; min-width: 44px; padding: 0 8px;" aria-label="Copy CI command" onclick="copySnippet('npx @turtleneck/agent-skill audit --strict', this)">
+              <button type="button" class="btn btn-ghost" aria-label="Copy CI command" onclick="copySnippet('npx @turtleneck/agent-skill audit --strict', this)">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
               </button>
             </div>
@@ -1791,7 +1800,7 @@
             <label class="check-label">
               <input type="checkbox" class="audit-check" data-penalty="25" checked>
               <span class="check-label-text">
-                <strong>Missing :focus-visible outlines on buttons & inputs</strong>
+                <strong>Missing :focus-visible outlines on buttons &amp; inputs</strong>
                 <span class="check-label-sub">Keyboard navigation disappears entirely because agent uses outline: none.</span>
               </span>
             </label>
@@ -1854,7 +1863,7 @@
               <span class="faq-icon" aria-hidden="true">+</span>
             </summary>
             <div class="faq-answer">
-              Yes. Turtleneck is framework-agnostic. It does not replace your styling layer; it dictates the <em>judgment rules</em> your agent applies when writing Tailwind classes, CSS Modules, or shadcn component wrappers. For example, it prevents arbitrary arbitrary utility chains like <code>p-[33px] text-[#777]</code> and ensures semantic tokens, accessible states, and correct line heights are used.
+              Yes. Turtleneck is framework-agnostic. It does not replace your styling layer; it dictates the <em>judgment rules</em> your agent applies when writing Tailwind classes, CSS Modules, or shadcn component wrappers. For example, it prevents arbitrary utility chains like <code>p-[33px] text-[#777]</code> and ensures semantic tokens, accessible states, and correct line heights are used.
             </div>
           </details>
 
@@ -1978,7 +1987,7 @@
         billing: {
           calibrated: {
             title: "Production Compute Usage",
-            sub: "Cluster us-east-1 • Billing period closes in 4 days",
+            sub: "Cluster us-east-1 &bull; Billing period closes in 4 days",
             tag: "Active Tier",
             tagClass: "status-tag-active",
             items: [
@@ -2044,7 +2053,7 @@
         telemetry: {
           calibrated: {
             title: "API Ingress Throughput",
-            sub: "Edge gateway ap-southeast-1 • Sampled over 60 seconds",
+            sub: "Edge gateway ap-southeast-1 &bull; Sampled over 60 seconds",
             tag: "Normal Latency",
             tagClass: "status-tag-active",
             items: [
@@ -2303,8 +2312,8 @@
                 `).join('')}
               </div>
               <div class="calibrated-footer-actions">
-                <button type="button" class="btn btn-secondary" style="min-height: 44px;">${d.btn1}</button>
-                <button type="button" class="btn btn-primary" style="min-height: 44px;">${d.btn2}</button>
+                <button type="button" class="btn btn-secondary">${d.btn1}</button>
+                <button type="button" class="btn btn-primary">${d.btn2}</button>
               </div>
             </div>
           `;
@@ -2324,8 +2333,8 @@
                 `).join('')}
               </div>
               <div class="slop-btn-row">
-                <button type="button" class="slop-btn-secondary">${d.btn1}</button>
-                <button type="button" class="slop-btn-primary">${d.btn2}</button>
+                <button type="button" class="slop-btn-secondary btn">${d.btn1}</button>
+                <button type="button" class="slop-btn-primary btn">${d.btn2}</button>
               </div>
             </div>
           `;
