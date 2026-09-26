@@ -3,35 +3,65 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Turtleneck — Autonomous Product Design Director for AI Agents</title>
-<meta name="description" content="Turtleneck equips AI coding agents with principal design director intuition. Vernacular harmony, tactile interaction physics, and ruthless aesthetic restraint on Turn 1.">
+<title>Turtleneck v2.0 — Product Design Intelligence for Autonomous AI Coding Agents</title>
+<meta name="description" content="Turtleneck equips autonomous AI coding agents with principal design director intuition. Vernacular harmony, tactile interaction physics, and ruthless aesthetic restraint on Turn 1.">
 
+<!-- High-craft typography: Fraunces (monumental display serif), Plus Jakarta Sans (humanist grotesque), Space Grotesk (technical display), JetBrains Mono (precision metadata) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+  /* ==========================================================================
+     1. TOKENS & SYSTEM FOUNDATION (Calibrated WCAG 2.2 AA Obsidian Canvas)
+     ========================================================================== */
   :root {
-    --canvas: #090a0d;
-    --canvas-elevated: #111318;
-    --surface: #161820;
-    --surface-hover: #1e212b;
-    --text-primary: #f7f7f8;
-    --text-secondary: #9aa0a6;
-    --text-muted: #737a89;
+    --canvas: #08090d;
+    --canvas-elevated: #0f1118;
+    --surface-1: #131622;
+    --surface-2: #181d2e;
+    --surface-3: #20273c;
+    --surface-active: #28314a;
+
+    /* Text tokens: rigorously tested for >= 4.5:1 contrast against #08090d */
+    --text-primary: #f0f2f5;    /* 17.7:1 on #08090d */
+    --text-secondary: #9da5b4;  /* 8.0:1 on #08090d */
+    --text-muted: #828a99;      /* 5.7:1 on #08090d */
+    --text-accent: #f59e0b;     /* 9.3:1 on #08090d */
+    --text-code: #e2e8f0;       /* 16.1:1 on #08090d */
+    --text-success: #34d399;    /* 10.4:1 on #08090d */
+
+    /* Datum lines, hairline borders and specular rims */
     --border: rgba(255, 255, 255, 0.08);
+    --border-subtle: rgba(255, 255, 255, 0.05);
     --border-strong: rgba(255, 255, 255, 0.16);
-    --accent: #6366f1;
-    --accent-hover: #4f46e5;
-    --focus-ring: #6366f1;
+    --border-specular: rgba(255, 255, 255, 0.24);
+
+    /* Focus ring: Amber #f59e0b clears > 7:1 against canvas and all surfaces */
+    --focus-ring: #f59e0b;
+    --accent-amber: #f59e0b;
+    --accent-indigo: #636fd3;
+    --status-emerald: #10b981;
+    --status-rose: #f43f5e;
+
+    /* Typography stack */
+    --font-serif: "Fraunces", Georgia, serif;
     --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-display: "Space Grotesk", var(--font-sans);
     --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-    --radius-sm: 4px;
-    --radius-md: 8px;
-    --radius-lg: 14px;
+
+    /* Radii */
+    --radius-xs: 3px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+
+    /* Compositor physics */
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  /* Reset & Baseline */
   *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -41,6 +71,7 @@
   html {
     scroll-behavior: smooth;
     background-color: var(--canvas);
+    color-scheme: dark;
   }
 
   body {
@@ -52,28 +83,74 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Subtly calibrated precision millimeter grid (NOT blurry neon blobs) */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    background-size: 32px 32px, 128px 128px, 128px 128px;
+    pointer-events: none;
+    z-index: 0;
   }
 
   ::selection {
-    background: var(--text-primary);
-    color: var(--canvas);
+    background: var(--text-accent);
+    color: #08090d;
   }
 
+  /* Non-Negotiable Focus Visible Protocol */
   :focus-visible {
     outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
 
   .wrap {
-    max-width: 860px;
+    max-width: 1140px;
     margin: 0 auto;
-    padding: 0 24px;
+    padding: 0 28px;
+    position: relative;
+    z-index: 1;
   }
 
-  /* Navigation */
+  /* Technical datum registration markers */
+  .datum-crosshair {
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    color: rgba(255, 255, 255, 0.25);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 11px;
+    text-align: center;
+    user-select: none;
+    pointer-events: none;
+  }
+  .datum-tl { top: -6px; left: -6px; }
+  .datum-tr { top: -6px; right: -6px; }
+  .datum-bl { bottom: -6px; left: -6px; }
+  .datum-br { bottom: -6px; right: -6px; }
+
+  /* ==========================================================================
+     2. NAVIGATION & TOP BAR
+     ========================================================================== */
   header.site-header {
-    padding: 28px 0;
+    padding: 20px 0;
     border-bottom: 1px solid var(--border);
+    background: rgba(8, 9, 13, 0.85);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
   }
 
   .header-inner {
@@ -82,565 +159,1086 @@
     justify-content: space-between;
   }
 
-  .brand {
+  .brand-group {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: var(--text-primary);
-    font-weight: 700;
-    font-size: 16px;
-    letter-spacing: -0.02em;
-  }
-
-  .brand-mark {
-    width: 20px;
-    height: 20px;
-    background: var(--text-primary);
-    border-radius: 3px;
-  }
-
-  .brand-tag {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 500;
-  }
-
-  .header-links {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .header-links a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    transition: color 0.1s ease;
-  }
-
-  .header-links a:hover {
-    color: var(--text-primary);
-  }
-
-  /* Hero */
-  .hero {
-    padding: 80px 0 64px;
-  }
-
-  .hero-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    color: var(--accent);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  h1.hero-title {
-    font-size: clamp(38px, 6vw, 62px);
-    font-weight: 800;
-    line-height: 1.05;
-    letter-spacing: -0.04em;
-    color: var(--text-primary);
-    max-width: 22ch;
-    margin-bottom: 20px;
-  }
-
-  p.hero-lead {
-    font-size: 18px;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    max-width: 58ch;
-    margin-bottom: 32px;
-  }
-
-  .install-bar {
-    background: var(--canvas-elevated);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 8px 12px 8px 16px;
-    display: inline-flex;
     align-items: center;
     gap: 14px;
-    max-width: 100%;
-  }
-
-  .install-bar code {
-    font-family: var(--font-mono);
-    font-size: 13px;
+    text-decoration: none;
     color: var(--text-primary);
   }
 
-  .btn-copy {
-    background: var(--surface);
+  .brand-glyph {
+    width: 28px;
+    height: 28px;
+    background: linear-gradient(135deg, #1f2538 0%, #10121a 100%);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  .brand-glyph svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: var(--text-accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .brand-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .brand-pill {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    background: var(--surface-1);
+    color: var(--text-secondary);
     border: 1px solid var(--border);
+    padding: 2px 7px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .status-indicator {
+    width: 6px;
+    height: 6px;
+    background-color: var(--status-emerald);
+    border-radius: 50%;
+    box-shadow: 0 0 6px var(--status-emerald);
+  }
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.1s var(--ease-out);
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-cta {
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
     color: var(--text-primary);
     font-family: var(--font-mono);
-    font-size: 11px;
-    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 7px 14px;
     border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: background-color 0.1s ease, border-color 0.1s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: transform 0.1s var(--ease-out), background-color 0.1s var(--ease-out), border-color 0.1s var(--ease-out);
   }
 
-  .btn-copy:hover {
-    background: var(--surface-hover);
-    border-color: var(--border-strong);
+  .nav-cta:hover {
+    background: var(--surface-3);
+    border-color: var(--border-specular);
   }
 
-  .btn-copy:active {
+  .nav-cta:active {
     transform: scale(0.97);
   }
 
-  /* Interactive Component Atelier Specimen */
-  .specimen-section {
-    padding: 32px 0 80px;
+  /* ==========================================================================
+     3. HERO: MONUMENTAL SCALE TENSION & EDITORIAL GRAVITAS
+     ========================================================================== */
+  .hero-section {
+    padding: 92px 0 72px;
+    position: relative;
+  }
+
+  .hero-meta-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .micro-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-accent);
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    padding: 4px 10px;
+    border-radius: var(--radius-xs);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .micro-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+  }
+
+  h1.hero-headline {
+    font-family: var(--font-serif);
+    font-size: clamp(44px, 6.8vw, 76px);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    color: var(--text-primary);
+    max-width: 24ch;
+    margin-bottom: 24px;
+  }
+
+  .hero-italic {
+    font-style: italic;
+    font-weight: 300;
+    color: #e5e9f0;
+    text-shadow: 0 0 32px rgba(255, 255, 255, 0.08);
+  }
+
+  p.hero-abstract {
+    font-family: var(--font-sans);
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-width: 64ch;
+    margin-bottom: 38px;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 56px;
+  }
+
+  .command-capsule {
+    background: var(--canvas-elevated);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: 6px 8px 6px 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .command-capsule code {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--text-code);
+  }
+
+  .command-capsule .cmd-prefix {
+    color: var(--text-accent);
+  }
+
+  .btn-quick-copy {
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: transform 0.08s var(--ease-out), background-color 0.1s var(--ease-out), border-color 0.1s var(--ease-out);
+  }
+
+  .btn-quick-copy:hover {
+    background: var(--surface-3);
+    border-color: var(--border-specular);
+  }
+
+  .btn-quick-copy:active {
+    transform: scale(0.97);
+  }
+
+  .hero-metric-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    padding: 24px 0 0;
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 768px) {
+    .hero-metric-strip {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .metric-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .metric-val {
+    font-family: var(--font-display);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+  }
+
+  .metric-val.delta-win {
+    color: var(--text-accent);
+  }
+
+  .metric-desc {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ==========================================================================
+     4. CENTERPIECE: THE LIVING DESIGN INTELLIGENCE TRANSMUTER
+     ========================================================================== */
+  .transmuter-section {
+    padding: 40px 0 80px;
   }
 
   .specimen-chassis {
     background: var(--canvas-elevated);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-lg);
-    padding: 36px;
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
   }
 
-  @media (max-width: 600px) {
-    .specimen-chassis { padding: 20px; }
-  }
-
-  .specimen-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+  .chassis-chrome {
+    padding: 18px 24px;
     border-bottom: 1px solid var(--border);
-    padding-bottom: 14px;
-    margin-bottom: 24px;
-  }
-
-  .specimen-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-
-  .specimen-badge {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: #10b981;
-  }
-
-  /* Transmuter Interactive Sandbox */
-  .transmuter-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .transmuter-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 12px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 16px;
+    gap: 14px;
+    background: rgba(19, 22, 34, 0.5);
   }
 
-  .domain-tabs {
+  .chassis-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .chassis-led {
+    width: 8px;
+    height: 8px;
+    background: var(--text-accent);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--text-accent);
+  }
+
+  .chassis-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-primary);
+  }
+
+  .chassis-sublabel {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* Archetype Domain Tabs */
+  .transmuter-controls-bar {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    background: var(--surface-1);
+  }
+
+  .domain-nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 8px;
   }
 
-  .domain-btn {
-    background: var(--canvas-elevated);
+  .domain-tab-btn {
+    background: var(--surface-2);
     border: 1px solid var(--border);
     color: var(--text-secondary);
     font-family: var(--font-sans);
     font-size: 12px;
     font-weight: 600;
-    padding: 6px 12px;
+    padding: 8px 14px;
     border-radius: var(--radius-sm);
     cursor: pointer;
-    transition: transform 0.08s ease, opacity 0.08s ease;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    transition: transform 0.08s var(--ease-out), background-color 0.1s var(--ease-out), color 0.1s var(--ease-out), border-color 0.1s var(--ease-out);
   }
 
-  .domain-btn:hover {
+  .domain-tab-btn:hover {
     color: var(--text-primary);
     border-color: var(--border-strong);
   }
 
-  .domain-btn.active {
+  .domain-tab-btn.active {
     background: var(--text-primary);
-    color: var(--canvas);
+    color: #08090d;
     border-color: var(--text-primary);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.2);
   }
 
-  .mode-toggle {
-    background: var(--canvas-elevated);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 2px;
+  .domain-tab-btn:active {
+    transform: scale(0.97);
+  }
+
+  /* Dual Mode Toggle */
+  .paradigm-switch {
     display: inline-flex;
-    gap: 2px;
+    align-items: center;
+    background: var(--canvas);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    padding: 3px;
+    gap: 3px;
   }
 
-  .mode-btn {
+  .paradigm-btn {
     background: transparent;
     border: none;
-    color: var(--text-secondary);
-    font-family: var(--font-sans);
-    font-size: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
     font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 3px;
+    padding: 6px 14px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: opacity 0.08s ease;
+    color: var(--text-muted);
+    transition: background-color 0.1s var(--ease-out), color 0.1s var(--ease-out);
   }
 
-  .mode-btn.active-calibrated {
-    background: #4f46e5;
-    color: #ffffff;
+  .paradigm-btn.active-calibrated {
+    background: var(--surface-3);
+    color: var(--text-accent);
+    border: 1px solid rgba(245, 158, 11, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
-  .mode-btn.active-slop {
-    background: #b91c1c;
-    color: #ffffff;
+  .paradigm-btn.active-slop {
+    background: rgba(244, 63, 94, 0.15);
+    color: #fb7185;
+    border: 1px solid rgba(244, 63, 94, 0.4);
   }
 
-  .stage-container {
-    background: var(--canvas-elevated);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 24px;
-    min-height: 220px;
+  /* Stage Container */
+  .stage-viewport {
+    padding: 32px;
+    min-height: 380px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    position: relative;
+    transition: background-color 0.15s var(--ease-out);
   }
 
-  .slop-surface {
-    background: #1e1338;
-    border: 1px solid rgba(168, 85, 247, 0.4);
+  .stage-calibrated {
+    background: radial-gradient(circle at top right, rgba(24, 29, 46, 0.4) 0%, rgba(15, 17, 24, 0.8) 100%);
   }
 
-  .transmuter-specs {
-    margin-top: 16px;
-    display: flex;
-    justify-content: space-between;
+  .stage-slop {
+    background: radial-gradient(circle at center, #260d3d 0%, #11071c 100%);
+    border: 2px dashed rgba(168, 85, 247, 0.4);
+  }
+
+  /* Diagnostics Bar & HUD */
+  .chassis-telemetry-hud {
+    padding: 16px 24px;
+    background: var(--surface-1);
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
     font-family: var(--font-mono);
     font-size: 11px;
+  }
+
+  @media (max-width: 840px) {
+    .chassis-telemetry-hud {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .hud-block {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .hud-tag {
     color: var(--text-muted);
-    flex-wrap: wrap;
-    gap: 12px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 
-  .transmuter-ctrl {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 14px;
-    flex-wrap: wrap;
-  }
-
-  .transmuter-range {
-    flex: 1;
-    min-width: 140px;
-    accent-color: var(--accent);
-    cursor: pointer;
-  }
-
-  .transmuter-badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 11px;
-    font-family: var(--font-mono);
+  .hud-val {
+    color: var(--text-primary);
     font-weight: 600;
   }
 
-  .badge-ok {
-    background: rgba(16, 185, 129, 0.15);
-    color: #34d399;
-    border: 1px solid rgba(16, 185, 129, 0.3);
+  .hud-val.good {
+    color: var(--text-success);
   }
 
-  .badge-warn {
-    background: rgba(239, 68, 68, 0.15);
-    color: #f87171;
-    border: 1px solid rgba(239, 68, 68, 0.3);
+  .hud-val.bad {
+    color: #fb7185;
   }
 
+  /* Diagnosis Explainer Banner */
   .diagnosis-banner {
-    padding: 12px 16px;
+    margin: 0 24px 20px;
+    padding: 14px 18px;
     border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
     font-size: 12px;
     line-height: 1.5;
-    font-family: var(--font-mono);
-    margin-top: 16px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
   }
 
-  .diag-slop {
-    background: rgba(185, 28, 28, 0.12);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    color: #fca5a5;
+  .diagnosis-calibrated {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    color: #a7f3d0;
   }
 
-  .diag-calibrated {
-    background: rgba(16, 185, 129, 0.12);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    color: #6ee7b7;
+  .diagnosis-slop {
+    background: rgba(244, 63, 94, 0.08);
+    border: 1px solid rgba(244, 63, 94, 0.25);
+    color: #fecdd3;
   }
 
-  /* Editorial Principles */
-  .principles {
-    padding: 64px 0;
-    border-top: 1px solid var(--border);
-  }
-
-  .principles-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
-    margin-top: 36px;
-  }
-
-  @media (max-width: 760px) {
-    .principles-grid { grid-template-columns: 1fr; }
-  }
-
-  .principle-num {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--accent);
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  .principle-title {
-    font-size: 16px;
+  .diag-icon {
     font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 8px;
-  }
-
-  .principle-desc {
     font-size: 14px;
-    color: var(--text-secondary);
-    line-height: 1.6;
   }
 
-  /* Pipeline */
-  .pipeline-block {
-    padding: 48px 0;
-    border-top: 1px solid var(--border);
+  /* ==========================================================================
+     5. INTERACTIVE TYPOGRAPHY SCALE TENSION & SPRING PHYSICS LAB
+     ========================================================================== */
+  .lab-section {
+    padding: 40px 0 80px;
   }
 
-  .pipeline-box {
-    background: var(--canvas-elevated);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 20px 24px;
-  }
-
-  .pipeline-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  .pipeline-flow {
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--text-primary);
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  /* Universal Install */
-  .install-grid-section {
-    padding: 64px 0 80px;
-    border-top: 1px solid var(--border);
-  }
-
-  .agent-snippets {
+  .lab-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 16px;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
     margin-top: 28px;
   }
 
-  .agent-box {
+  @media (max-width: 860px) {
+    .lab-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .lab-card {
     background: var(--canvas-elevated);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-md);
-    padding: 14px 16px;
+    padding: 24px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+  }
+
+  .lab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+  }
+
+  .lab-title {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .lab-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    color: var(--text-accent);
+    letter-spacing: 0.08em;
+  }
+
+  .slider-control-group {
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
 
-  .agent-name {
+  .slider-meta {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .lab-range-input {
+    width: 100%;
+    accent-color: var(--text-accent);
+    cursor: pointer;
+    background: var(--surface-1);
+    height: 6px;
+    border-radius: 3px;
+  }
+
+  .live-type-specimen {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 24px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .specimen-micro {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--text-accent);
+  }
+
+  .specimen-display {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    transition: font-size 0.08s var(--ease-out);
+  }
+
+  .physics-button-housing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+
+  .tactile-test-btn {
+    background: var(--surface-3);
+    border: 1px solid var(--border-specular);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
     font-size: 13px;
     font-weight: 600;
+    padding: 14px 28px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  .physics-radio-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .physics-pill-btn {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    transition: transform 0.08s var(--ease-out), background-color 0.1s var(--ease-out), color 0.1s var(--ease-out);
+  }
+
+  .physics-pill-btn.active {
+    background: var(--text-accent);
+    color: #08090d;
+    border-color: var(--text-accent);
+    font-weight: 700;
+  }
+
+  /* ==========================================================================
+     6. MULTI-AGENT INSTALL HUB (Tabbed & Instant Feedback)
+     ========================================================================== */
+  .install-hub-section {
+    padding: 64px 0 80px;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--text-accent);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .section-subtext {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 60ch;
+    margin-bottom: 32px;
+  }
+
+  .install-terminal-card {
+    background: var(--canvas-elevated);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+  }
+
+  .terminal-tabs {
+    display: flex;
+    background: var(--surface-1);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+
+  .term-tab {
+    background: transparent;
+    border: none;
+    border-right: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 12px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.1s var(--ease-out), color 0.1s var(--ease-out);
+  }
+
+  .term-tab:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .term-tab.active {
+    color: var(--text-accent);
+    background: var(--canvas-elevated);
+    border-bottom: 2px solid var(--text-accent);
+    font-weight: 600;
+  }
+
+  .terminal-body {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    background: #0b0d14;
+  }
+
+  .terminal-code-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .term-prompt {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-accent);
+    user-select: none;
+  }
+
+  .term-cmd-text {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text-code);
+  }
+
+  .btn-copy-terminal {
+    background: var(--surface-2);
+    border: 1px solid var(--border-strong);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 9px 18px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.08s var(--ease-out), background-color 0.1s var(--ease-out), border-color 0.1s var(--ease-out);
+  }
+
+  .btn-copy-terminal:hover {
+    background: var(--surface-3);
+    border-color: var(--border-specular);
+  }
+
+  .btn-copy-terminal:active {
+    transform: scale(0.97);
+  }
+
+  .install-grid-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+
+  @media (max-width: 800px) {
+    .install-grid-summary {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .install-summary-card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .install-summary-title {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 700;
     color: var(--text-primary);
   }
 
-  .agent-box code {
-    font-family: var(--font-mono);
-    font-size: 11px;
+  .install-summary-desc {
+    font-size: 12px;
     color: var(--text-secondary);
-    background: var(--surface);
-    padding: 6px 8px;
-    border-radius: 4px;
-    overflow-x: auto;
+    line-height: 1.5;
   }
 
-  /* Benchmark Evidence Section */
+  /* ==========================================================================
+     7. EMPIRICAL BENCHMARK EVIDENCE (3-Arm Controlled Pilot Data)
+     ========================================================================== */
   .benchmark-section {
-    margin-top: 80px;
+    padding: 64px 0 80px;
+    border-top: 1px solid var(--border);
   }
 
-  .benchmark-table-box {
+  .evidence-table-container {
     background: var(--canvas-elevated);
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: var(--radius-md);
     overflow-x: auto;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
   }
 
-  .benchmark-table {
+  table.evidence-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
     text-align: left;
   }
 
-  .benchmark-table th {
-    background: var(--surface);
+  table.evidence-table th {
+    background: var(--surface-1);
     color: var(--text-primary);
+    font-family: var(--font-display);
     font-weight: 600;
-    padding: 12px 16px;
+    padding: 14px 18px;
     border-bottom: 1px solid var(--border);
   }
 
-  .benchmark-table td {
-    padding: 12px 16px;
+  table.evidence-table td {
+    padding: 14px 18px;
     border-bottom: 1px solid var(--border);
     color: var(--text-secondary);
   }
 
-  .benchmark-table tfoot td {
-    background: var(--surface);
-    font-weight: 600;
+  table.evidence-table tr:hover td {
+    background: rgba(255, 255, 255, 0.015);
+  }
+
+  table.evidence-table tfoot td {
+    background: var(--surface-2);
+    font-weight: 700;
     color: var(--text-primary);
     border-bottom: none;
+    font-size: 14px;
   }
 
-  .num-cell {
+  .cell-mono-num {
     font-family: var(--font-mono);
     text-align: right;
   }
 
-  .score-win {
-    color: #818cf8;
-    font-weight: 600;
+  .cell-win {
+    color: var(--text-accent);
+    font-weight: 700;
   }
 
-  .delta-cell {
+  .cell-delta {
     font-family: var(--font-mono);
     text-align: right;
-    color: #34d399;
-    font-weight: 600;
+    color: var(--text-success);
+    font-weight: 700;
   }
 
-  .evidence-grid {
+  .evidence-cards-quad {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
-    margin-top: 20px;
   }
 
-  .evidence-card {
+  @media (max-width: 900px) {
+    .evidence-cards-quad {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .quad-card {
     background: var(--canvas-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 18px 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
   }
 
-  .evidence-stat {
-    font-size: 24px;
-    font-weight: 800;
+  .quad-stat {
     font-family: var(--font-mono);
-    color: var(--text-primary);
-    display: block;
-    margin-bottom: 4px;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-accent);
   }
 
-  .evidence-title {
-    font-size: 14px;
-    font-weight: 600;
+  .quad-title {
+    font-size: 13px;
+    font-weight: 700;
     color: var(--text-primary);
-    display: block;
-    margin-bottom: 6px;
   }
 
-  .evidence-desc {
+  .quad-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  /* ==========================================================================
+     8. CANONICAL EXECUTION PROTOCOL & SLOP-VS-TASTE DOSSIER
+     ========================================================================== */
+  .pipeline-section {
+    padding: 64px 0 80px;
+    border-top: 1px solid var(--border);
+  }
+
+  .pipeline-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  @media (max-width: 860px) {
+    .pipeline-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .pipeline-step-box {
+    background: var(--canvas-elevated);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+  }
+
+  .step-index {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-accent);
+    letter-spacing: 0.1em;
+  }
+
+  .step-name {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .step-summary {
     font-size: 13px;
     color: var(--text-secondary);
     line-height: 1.5;
-    margin: 0;
   }
 
-  .evidence-desc code {
+  /* Slop vs Taste Matrix */
+  .matrix-section {
+    padding: 64px 0 80px;
+    border-top: 1px solid var(--border);
+  }
+
+  .matrix-table-wrap {
+    background: var(--canvas-elevated);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+    margin-top: 28px;
+  }
+
+  table.matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  table.matrix-table th {
+    background: var(--surface-1);
+    color: var(--text-primary);
+    font-family: var(--font-display);
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+
+  table.matrix-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .col-cliche {
+    color: #fb7185;
+    background: rgba(244, 63, 94, 0.03);
     font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-secondary);
-    background: var(--surface);
-    padding: 2px 4px;
-    border-radius: 3px;
+    font-size: 12px;
   }
 
-  /* Footer */
+  .col-calibrated {
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.03);
+    font-family: var(--font-sans);
+    font-weight: 500;
+  }
+
+  /* ==========================================================================
+     9. FOOTER & COMPLIANCE METADATA
+     ========================================================================== */
   footer.site-footer {
     border-top: 1px solid var(--border);
-    padding: 40px 0;
-    font-size: 13px;
+    padding: 48px 0;
+    background: var(--canvas-elevated);
     color: var(--text-muted);
+    font-size: 13px;
+  }
+
+  .footer-inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 20px;
   }
 
-  footer.site-footer a {
+  .footer-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+  }
+
+  .footer-links a {
     color: var(--text-secondary);
     text-decoration: none;
+    transition: color 0.1s var(--ease-out);
   }
 
-  footer.site-footer a:hover {
+  .footer-links a:hover {
     color: var(--text-primary);
   }
 
+  /* ==========================================================================
+     10. ACCESSIBILITY: REDUCED MOTION GATES
+     ========================================================================== */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
       scroll-behavior: auto !important;
     }
@@ -649,520 +1247,1087 @@
 </head>
 <body>
 
+  <!-- Navigation Header -->
   <header class="site-header">
     <div class="wrap header-inner">
-      <a href="#" class="brand" aria-label="Turtleneck Home">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>Turtleneck</span>
-        <span class="brand-tag">v2.0</span>
+      <a href="#" class="brand-group" aria-label="Turtleneck Home">
+        <div class="brand-glyph">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <span class="brand-title">Turtleneck</span>
+        <div class="brand-pill">
+          <span class="status-indicator"></span>
+          <span>v2.0.0</span>
+        </div>
       </a>
-      <nav class="header-links">
-        <a href="#principles">Philosophy</a>
-        <a href="#pipeline">Pipeline</a>
-        <a href="#benchmark">Evidence</a>
-        <a href="#install">Install</a>
-        <a href="https://github.com/Divyanshneginot/turtleneck" target="_blank" rel="noopener">GitHub</a>
+
+      <nav class="nav-menu" aria-label="Primary site navigation">
+        <a href="#transmuter" class="nav-link">Transmuter</a>
+        <a href="#lab" class="nav-link">Physics Lab</a>
+        <a href="#install" class="nav-link">Multi-Agent Hub</a>
+        <a href="#evidence" class="nav-link">Controlled Pilot</a>
+        <a href="#pipeline" class="nav-link">Protocol</a>
+        <a href="https://github.com/Divyanshneginot/turtleneck" target="_blank" rel="noopener" class="nav-link">GitHub</a>
+        <a href="#install" class="nav-cta" aria-label="Install Turtleneck skill">Install Skill</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero wrap">
-      <span class="hero-eyebrow">Autonomous Product Design Director</span>
-      <h1 class="hero-title">Taste is not a prompt.<br>It is a decision engine.</h1>
-      <p class="hero-lead">
-        AI agents write backend logic in seconds, but default to commodity UI templates and aesthetic slop. Turtleneck injects principal design direction on Turn 1 — vernacular harmony, frequency-gated physics, and ruthless restraint.
+    <!-- Hero Section -->
+    <section class="hero-section wrap">
+      <div class="datum-crosshair datum-tl">+</div>
+      <div class="datum-crosshair datum-tr">+</div>
+
+      <div class="hero-meta-bar">
+        <span class="micro-tag">Product Design Intelligence</span>
+        <span class="micro-meta">// AUTONOMOUS AGENT PROTOCOL // WCAG 2.2 AA VERIFIED</span>
+      </div>
+
+      <h1 class="hero-headline">
+        Decide, then make.<br>
+        <span class="hero-italic">Do not decorate an undefined product.</span>
+      </h1>
+
+      <p class="hero-abstract">
+        Autonomous coding agents write backend microservices in seconds, yet routinely regress into generic AI tropes—glowing purple blobs, floating blur cards, fake billing toggles, and three-box feature grids. Turtleneck enforces principal design director intelligence on Turn 1: vernacular harmony, frequency-gated interaction physics, and ruthless aesthetic restraint.
       </p>
 
-      <div class="install-bar">
-        <code>python scripts/install.py --skill</code>
-        <button type="button" class="btn-copy" onclick="copyInstallCmd(this)" aria-label="Copy install command">Copy</button>
+      <div class="hero-actions">
+        <div class="command-capsule">
+          <code><span class="cmd-prefix">$</span> python scripts/install.py --skill</code>
+          <button type="button" class="btn-quick-copy" onclick="copySnippet(this, 'python scripts/install.py --skill')" aria-label="Copy universal skill installation command">Copy</button>
+        </div>
+      </div>
+
+      <!-- Empirical Scoreboard Strip -->
+      <div class="hero-metric-strip">
+        <div class="metric-cell">
+          <span class="metric-val delta-win">+47.5pp</span>
+          <span class="metric-desc">Controlled Pilot Edge (60% vs 12.5%)</span>
+        </div>
+        <div class="metric-cell">
+          <span class="metric-val">0ms</span>
+          <span class="metric-desc">High-Frequency Action Latency</span>
+        </div>
+        <div class="metric-cell">
+          <span class="metric-val">100%</span>
+          <span class="metric-desc">Keyboard Focus-Visible Contrast</span>
+        </div>
+        <div class="metric-cell">
+          <span class="metric-val">0 Clichés</span>
+          <span class="metric-desc">Zero Purple Slop or Cloned Telemetry</span>
+        </div>
       </div>
     </section>
 
-    <!-- Interactive Design Transmuter Sandbox -->
-    <section class="specimen-section wrap" id="transmuter">
+    <!-- Centerpiece 1: Living Interactive Design Intelligence Transmuter -->
+    <section class="transmuter-section wrap" id="transmuter">
       <div class="specimen-chassis">
-        <div class="specimen-header">
-          <span class="specimen-label">Live Decision Engine // Interactive Transmuter Sandbox</span>
-          <span class="specimen-badge">&check; Real-Time Product Proof</span>
+        <div class="datum-crosshair datum-tl">+</div>
+        <div class="datum-crosshair datum-tr">+</div>
+        <div class="datum-crosshair datum-bl">+</div>
+        <div class="datum-crosshair datum-br">+</div>
+
+        <!-- Chassis Chrome Bar -->
+        <div class="chassis-chrome">
+          <div class="chassis-title-wrap">
+            <span class="chassis-led"></span>
+            <span class="chassis-label">Living Product Proof Centerpiece</span>
+            <span class="chassis-sublabel">// Interactive Decision Transmuter</span>
+          </div>
+          <span class="micro-meta">SPECIMEN VIEWPORT: ADAPTIVE 8PT ENGINE</span>
         </div>
 
-        <div class="transmuter-card">
-          <div class="transmuter-nav">
-            <div class="domain-tabs" role="tablist" aria-label="Select evaluation domain">
-              <button type="button" class="domain-btn active" id="tabScada" onclick="switchDomain('scada')" role="tab" aria-selected="true" aria-label="Water SCADA Telemetry domain">Industrial SCADA</button>
-              <button type="button" class="domain-btn" id="tabCultural" onclick="switchDomain('cultural')" role="tab" aria-selected="false" aria-label="Archipelago Biennial cultural domain">Cultural Biennial</button>
-              <button type="button" class="domain-btn" id="tabDental" onclick="switchDomain('dental')" role="tab" aria-selected="false" aria-label="Alabaster Dental mobile domain">Mobile Healthcare</button>
-              <button type="button" class="domain-btn" id="tabCache" onclick="switchDomain('cache')" role="tab" aria-selected="false" aria-label="KiteCache systems domain">Distributed Systems</button>
-            </div>
-
-            <div class="mode-toggle" role="group" aria-label="Select output mode">
-              <button type="button" class="mode-btn" id="btnSlop" onclick="switchMode('slop')" aria-label="View default commodity AI output">Default AI Slop</button>
-              <button type="button" class="mode-btn active-calibrated" id="btnCalibrated" onclick="switchMode('calibrated')" aria-label="View Turtleneck calibrated output">Turtleneck Calibrated</button>
-            </div>
+        <!-- Domain Selection & Paradigm Switch -->
+        <div class="transmuter-controls-bar">
+          <div class="domain-nav" role="tablist" aria-label="Choose evaluation domain archetype">
+            <button type="button" class="domain-tab-btn active" id="tabScada" onclick="setTransmuterDomain('scada')" role="tab" aria-selected="true" aria-label="Inspect Municipal SCADA Telemetry domain">Municipal SCADA</button>
+            <button type="button" class="domain-tab-btn" id="tabCultural" onclick="setTransmuterDomain('cultural')" role="tab" aria-selected="false" aria-label="Inspect Volcanic Sound Biennial domain">Volcanic Biennial</button>
+            <button type="button" class="domain-tab-btn" id="tabDental" onclick="setTransmuterDomain('dental')" role="tab" aria-selected="false" aria-label="Inspect Healthcare Mobile Touch Viewport domain">Mobile Healthcare</button>
+            <button type="button" class="domain-tab-btn" id="tabCache" onclick="setTransmuterDomain('cache')" role="tab" aria-selected="false" aria-label="Inspect Distributed Systems Latency Budget domain">Distributed Systems</button>
+            <button type="button" class="domain-tab-btn" id="tabTrading" onclick="setTransmuterDomain('trading')" role="tab" aria-selected="false" aria-label="Inspect Algorithmic Trading Execution Book domain">Algo Trading</button>
           </div>
 
-          <!-- Dynamic Stage Output -->
-          <div id="stageContainer" class="stage-container">
-            <!-- Injected via JavaScript -->
-          </div>
-
-          <!-- Diagnostic Explanation Banner -->
-          <div id="diagnosisBanner" class="diagnosis-banner diag-calibrated">
-            <!-- Injected via JavaScript -->
+          <div class="paradigm-switch" role="group" aria-label="Toggle output intelligence paradigm">
+            <button type="button" class="paradigm-btn active-calibrated" id="btnModeCalibrated" onclick="setTransmuterMode('calibrated')" aria-label="Switch to Turtleneck Calibrated Output">Turtleneck Calibrated</button>
+            <button type="button" class="paradigm-btn" id="btnModeSlop" onclick="setTransmuterMode('slop')" aria-label="Switch to Default AI Slop Output">Default AI Slop</button>
           </div>
         </div>
 
-        <div class="transmuter-specs">
-          <span id="specContrast">CONTRAST: 17.8:1 AAA</span>
-          <span id="specPhysics">PHYSICS: 80MS CUBIC-OUT</span>
-          <span id="specKeyboard">FOCUS: 2PX SOLID (&gt;=3:1)</span>
-          <span id="specProof">CENTERPIECE: PRODUCT PROOF</span>
+        <!-- Dynamic Specimen Viewport -->
+        <div id="stageViewport" class="stage-viewport stage-calibrated">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- Senior Design Director Diagnostic Explainer -->
+        <div id="diagnosisBanner" class="diagnosis-banner diagnosis-calibrated">
+          <span class="diag-icon" id="diagIcon">&check;</span>
+          <span id="diagText">Loading design intelligence protocol diagnostics...</span>
+        </div>
+
+        <!-- Telemetry & Compliance HUD -->
+        <div class="chassis-telemetry-hud">
+          <div class="hud-block">
+            <span class="hud-tag">Contrast Verification</span>
+            <span class="hud-val good" id="hudContrast">17.8:1 AAA (PASS)</span>
+          </div>
+          <div class="hud-block">
+            <span class="hud-tag">Interaction Timing</span>
+            <span class="hud-val good" id="hudPhysics">80MS CUBIC-OUT</span>
+          </div>
+          <div class="hud-block">
+            <span class="hud-tag">Vernacular Harmony</span>
+            <span class="hud-val good" id="hudVernacular">100% UNIFIED DIALECT</span>
+          </div>
+          <div class="hud-block">
+            <span class="hud-tag">Domain Mechanism</span>
+            <span class="hud-val good" id="hudProof">AUTHENTIC PRODUCT PROOF</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- The 3 Editorial Principles -->
-    <section class="principles wrap" id="principles">
-      <span class="hero-eyebrow">The Principles of Restraint</span>
-      <div class="principles-grid">
-        <div>
-          <span class="principle-num">01</span>
-          <h2 class="principle-title">Restraint Over Clutter</h2>
-          <p class="principle-desc">
-            Commodity AI defaults to purple glow blobs, noisy glassmorphism, and self-congratulatory audit badges. Real craft is knowing what to subtract.
-          </p>
-        </div>
-
-        <div>
-          <span class="principle-num">02</span>
-          <h2 class="principle-title">Vernacular Harmony</h2>
-          <p class="principle-desc">
-            100% commitment to ONE coherent visual dialect. Every container radius, typographic pairing, and elevation layer speaks the exact same design language.
-          </p>
-        </div>
-
-        <div>
-          <span class="principle-num">03</span>
-          <h2 class="principle-title">Frequency-Gated Physics</h2>
-          <p class="principle-desc">
-            0ms animation on high-frequency actions. 80–120ms micro-transitions with custom ease-out. Never lag high-frequency user interactions.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Canonical Pipeline -->
-    <section class="pipeline-block wrap" id="pipeline">
-      <div class="pipeline-box">
-        <span class="pipeline-label">Canonical Execution Protocol</span>
-        <div class="pipeline-flow">
-          1. Workspace Analysis ──► 2. Requirements Interview ──► 3. Blueprint Alignment ──► 4. Production Build
-        </div>
-      </div>
-    </section>
-
-    <!-- Behavioral Evidence & Benchmark -->
-    <section class="benchmark-section wrap" id="benchmark">
-      <span class="hero-eyebrow">Controlled Behavioral Benchmark</span>
-      <h2 style="font-size: 28px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Proof over promises: +47.5pp over baseline.</h2>
-      <p style="color: var(--text-secondary); font-size: 15px; max-width: 680px; margin-bottom: 24px;">
-        Unlike skills that only check their own Markdown, Turtleneck is evaluated in blinded 3-arm trials (Baseline vs. v2.0 vs. Candidate Decision Loop) across four distinct domains with zero shared context.
+    <!-- Centerpiece 2: Interactive Typography Scale Tension & Spring Physics Lab -->
+    <section class="lab-section wrap" id="lab">
+      <span class="section-eyebrow">Tactile Calibration Laboratory</span>
+      <h2 class="section-heading">Typographic Tension &amp; Interaction Physics</h2>
+      <p class="section-subtext">
+        Taste is expressed through physical proportions and execution timing. Experience the mechanical difference between generic AI mush and calibrated senior design standards.
       </p>
 
-      <div class="benchmark-table-box">
-        <table class="benchmark-table" aria-label="3-Arm Controlled Pilot Results">
+      <div class="lab-grid">
+        <!-- Scale Tension Lab -->
+        <div class="lab-card">
+          <div class="datum-crosshair datum-tl">+</div>
+          <div class="datum-crosshair datum-tr">+</div>
+          <div class="lab-header">
+            <span class="lab-title">Scale Tension Ratio</span>
+            <span class="lab-badge" id="scaleRatioBadge">4.2:1 MONUMENTAL</span>
+          </div>
+
+          <div class="slider-control-group">
+            <div class="slider-meta">
+              <label for="tensionRangeInput">Display vs Micro Metadata Ratio:</label>
+              <span id="scaleRatioValue" style="font-family: var(--font-mono); font-weight: 700; color: var(--text-accent);">4.20x</span>
+            </div>
+            <input type="range" class="lab-range-input" id="tensionRangeInput" min="1.3" max="5.2" step="0.1" value="4.2" oninput="adjustScaleTension(this.value)" aria-label="Adjust typographic scale tension ratio">
+          </div>
+
+          <div class="live-type-specimen">
+            <div class="specimen-micro">SPECIMEN // METADATA TAG // 10PX MONO</div>
+            <div class="specimen-display" id="tensionHeadline">Acoustic Resonance in Basalt Geology</div>
+            <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Dynamic optical scale calculation clears WCAG 2.2 AA hierarchy standards.</div>
+          </div>
+        </div>
+
+        <!-- Spring Physics & Acoustics Lab -->
+        <div class="lab-card">
+          <div class="datum-crosshair datum-tl">+</div>
+          <div class="datum-crosshair datum-tr">+</div>
+          <div class="lab-header">
+            <span class="lab-title">Interaction Physics Engine</span>
+            <span class="lab-badge" id="physicsPresetBadge">80MS CALIBRATED</span>
+          </div>
+
+          <div class="slider-control-group">
+            <div class="slider-meta">
+              <span>Select Motion Calibration:</span>
+              <span id="physicsSelectedName" style="font-family: var(--font-mono); font-weight: 700; color: var(--text-accent);">80ms Ease-Out</span>
+            </div>
+            <div class="physics-radio-group">
+              <button type="button" class="physics-pill-btn" onclick="selectPhysicsMode('instant', this)" aria-label="Select 0ms Instant High-Frequency Physics">0ms Instant</button>
+              <button type="button" class="physics-pill-btn active" onclick="selectPhysicsMode('calibrated', this)" aria-label="Select 80ms Calibrated Ease-Out Physics">80ms Calibrated</button>
+              <button type="button" class="physics-pill-btn" onclick="selectPhysicsMode('slop', this)" aria-label="Select 450ms Slop Jelly Delay Physics">450ms Slop Jelly</button>
+            </div>
+          </div>
+
+          <div class="physics-button-housing">
+            <button type="button" class="tactile-test-btn" id="tactileTestTrigger" onclick="testTactilePhysics(this)" aria-label="Click to test interaction physics response">
+              Test Tactile Click Response
+            </button>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">
+            <span>SYNTHESIZED ACOUSTIC FEEDBACK:</span>
+            <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-secondary);">
+              <input type="checkbox" id="acousticSoundCheck" checked style="accent-color: var(--text-accent);" aria-label="Enable subtle mechanical audio clicks">
+              <span>8ms Audio Click Haptics</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Centerpiece 3: Multi-Agent Install Hub -->
+    <section class="install-hub-section wrap" id="install">
+      <span class="section-eyebrow">Multi-Harness Architecture</span>
+      <h2 class="section-heading">Universal Agent Skills Standard</h2>
+      <p class="section-subtext">
+        One command. Zero bloat. Works seamlessly across every modern autonomous agent workspace.
+      </p>
+
+      <div class="install-terminal-card">
+        <div class="terminal-tabs" role="tablist" aria-label="Select agent harness for installation">
+          <button type="button" class="term-tab active" onclick="selectInstallTab('claude', this)" role="tab" aria-selected="true" aria-label="Installation instructions for Claude Code">Claude Code</button>
+          <button type="button" class="term-tab" onclick="selectInstallTab('cursor', this)" role="tab" aria-selected="false" aria-label="Installation instructions for Cursor">Cursor</button>
+          <button type="button" class="term-tab" onclick="selectInstallTab('copilot', this)" role="tab" aria-selected="false" aria-label="Installation instructions for GitHub Copilot">GitHub Copilot</button>
+          <button type="button" class="term-tab" onclick="selectInstallTab('antigravity', this)" role="tab" aria-selected="false" aria-label="Installation instructions for Google Antigravity">Google Antigravity</button>
+          <button type="button" class="term-tab" onclick="selectInstallTab('windsurf', this)" role="tab" aria-selected="false" aria-label="Installation instructions for Windsurf">Windsurf</button>
+          <button type="button" class="term-tab" onclick="selectInstallTab('skill', this)" role="tab" aria-selected="false" aria-label="Universal Agent Skill standard installation">Universal Skill</button>
+        </div>
+
+        <div class="terminal-body">
+          <div class="terminal-code-block">
+            <span class="term-prompt">&gt;</span>
+            <span class="term-cmd-text" id="terminalCmdDisplay">python scripts/install.py --claude</span>
+          </div>
+
+          <button type="button" class="btn-copy-terminal" id="btnTerminalCopy" onclick="copyTerminalCommand(this)" aria-label="Copy active terminal command to clipboard">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+            </svg>
+            <span id="termCopyLabel">Copy Command</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="install-grid-summary">
+        <div class="install-summary-card">
+          <span class="install-summary-title">Autonomous Onboarding</span>
+          <p class="install-summary-desc">Installs directly to your agent's skills catalog. Activates automatically on any UI/UX or frontend task.</p>
+        </div>
+        <div class="install-summary-card">
+          <span class="install-summary-title">Single Executable Proof</span>
+          <p class="install-summary-desc">Self-contained Python runner with zero external dependencies. Validates local environment and verifies permissions.</p>
+        </div>
+        <div class="install-summary-card">
+          <span class="install-summary-title">Universal SKILL.md Standard</span>
+          <p class="install-summary-desc">Complies with the Open Agent Skills specification, portable across Claude, Cursor, Copilot, and Gemini agents.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Centerpiece 4: Controlled Behavioral Benchmark Evidence -->
+    <section class="benchmark-section wrap" id="evidence">
+      <span class="section-eyebrow">Empirical Verification</span>
+      <h2 class="section-heading">Blind-Judged 3-Arm Controlled Pilot</h2>
+      <p class="section-subtext">
+        Unlike tools that merely grade their own documentation, Turtleneck is verified across 12 blind-judged pilot briefs in 4 diverse real-world domains with zero shared context.
+      </p>
+
+      <div class="evidence-table-container">
+        <table class="evidence-table" aria-label="Controlled Pilot Evaluation Findings">
           <thead>
             <tr>
-              <th scope="col">Domain Brief</th>
-              <th scope="col">Focus &amp; Test</th>
-              <th scope="col" style="text-align: right;">Baseline</th>
-              <th scope="col" style="text-align: right;">With Turtleneck</th>
-              <th scope="col" style="text-align: right;">Delta</th>
+              <th scope="col">Domain Brief &amp; Context</th>
+              <th scope="col">Core Design Challenge</th>
+              <th scope="col" style="text-align: right;">Baseline Win</th>
+              <th scope="col" style="text-align: right;">Turtleneck Win</th>
+              <th scope="col" style="text-align: right;">Net Delta</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td><strong>Developer Landing Page</strong></td>
-              <td>Product proof, install matrix, honest claims</td>
-              <td class="num-cell">0%</td>
-              <td class="num-cell score-win">40%</td>
-              <td class="delta-cell">+40.0pp</td>
+              <td>Living product proof, multi-harness matrix, honest claims</td>
+              <td class="cell-mono-num">0.0%</td>
+              <td class="cell-mono-num cell-win">40.0%</td>
+              <td class="cell-delta">+40.0pp</td>
             </tr>
             <tr>
               <td><strong>Archipelago 2027 Biennial</strong></td>
-              <td>Expressive cultural event, sound art atmosphere</td>
-              <td class="num-cell">20%</td>
-              <td class="num-cell score-win">50%</td>
-              <td class="delta-cell">+30.0pp</td>
+              <td>Expressive cultural event, sound art atmosphere &amp; geology</td>
+              <td class="cell-mono-num">20.0%</td>
+              <td class="cell-mono-num cell-win">50.0%</td>
+              <td class="cell-delta">+30.0pp</td>
             </tr>
             <tr>
               <td><strong>Water Treatment Telemetry</strong></td>
-              <td>12-zone industrial SCADA density, urgent alerts</td>
-              <td class="num-cell">0%</td>
-              <td class="num-cell score-win">75%</td>
-              <td class="delta-cell">+75.0pp</td>
+              <td>12-zone industrial SCADA density, urgent alert thresholds</td>
+              <td class="cell-mono-num">0.0%</td>
+              <td class="cell-mono-num cell-win">75.0%</td>
+              <td class="cell-delta">+75.0pp</td>
             </tr>
             <tr>
               <td><strong>Dental Studio Booking</strong></td>
-              <td>Mobile touch targets (&gt;=44px), multi-step flow</td>
-              <td class="num-cell">30%</td>
-              <td class="num-cell score-win">100%</td>
-              <td class="delta-cell">+70.0pp</td>
+              <td>Mobile touch targets (&gt;=44px), step-preserved thumb flow</td>
+              <td class="cell-mono-num">30.0%</td>
+              <td class="cell-mono-num cell-win">100.0%</td>
+              <td class="cell-delta">+70.0pp</td>
             </tr>
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="2"><strong>Controlled Suite Mean</strong></td>
-              <td class="num-cell"><strong>12.5%</strong></td>
-              <td class="num-cell score-win"><strong>60.0%</strong></td>
-              <td class="delta-cell"><strong>+47.5pp</strong></td>
+              <td colspan="2"><strong>Controlled Suite Aggregate Mean</strong></td>
+              <td class="cell-mono-num"><strong>12.5%</strong></td>
+              <td class="cell-mono-num cell-win"><strong>60.0%</strong></td>
+              <td class="cell-delta"><strong>+47.5pp</strong></td>
             </tr>
           </tfoot>
         </table>
       </div>
 
-      <div class="evidence-grid">
-        <div class="evidence-card">
-          <span class="evidence-stat">100%</span>
-          <span class="evidence-title">Accessible Keyboard Navigation</span>
-          <p class="evidence-desc">100% of Turtleneck controls implement visible <code>:focus-visible</code> rings with &gt;=3:1 contrast. Baseline achieved 0%.</p>
+      <div class="evidence-cards-quad">
+        <div class="quad-card">
+          <span class="quad-stat">100%</span>
+          <span class="quad-title">Focus-Visible Contrast</span>
+          <p class="quad-desc">All interactive elements guarantee 2px solid outlines with &gt;=3:1 contrast. Baseline achieved 0%.</p>
         </div>
-        <div class="evidence-card">
-          <span class="evidence-stat">0ms</span>
-          <span class="evidence-title">Compositor-Only Motion</span>
-          <p class="evidence-desc">Strict elimination of <code>transition: all</code>. High-frequency actions trigger at 0ms latency with full reduced-motion support.</p>
+        <div class="quad-card">
+          <span class="quad-stat">0ms</span>
+          <span class="quad-title">Compositor-Only Latency</span>
+          <p class="quad-desc">Total elimination of <code>transition: all</code>. High-frequency actions fire with 0ms lag.</p>
         </div>
-        <div class="evidence-card">
-          <span class="evidence-stat">0 Clones</span>
-          <span class="evidence-title">Domain-Specific Materials</span>
-          <p class="evidence-desc">Industrial dashboards receive high-density tables; cultural events receive organic palettes. Zero unprompted devops telemetry.</p>
+        <div class="quad-card">
+          <span class="quad-stat">0 Clones</span>
+          <span class="quad-title">Domain Vernacular</span>
+          <p class="quad-desc">Water plants receive telemetry; art biennials receive sound art geology. Zero DevOps cliches.</p>
+        </div>
+        <div class="quad-card">
+          <span class="quad-stat">17.8:1</span>
+          <span class="quad-title">Obsidian Contrast Depth</span>
+          <p class="quad-desc">Tiered surface tokens clear WCAG 2.2 AA standards with precision specular highlights.</p>
         </div>
       </div>
     </section>
 
-    <!-- Universal Install -->
-    <section class="install-grid-section wrap" id="install">
-      <span class="hero-eyebrow">Universal Standard</span>
-      <h2 style="font-size: 24px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px;">Install once. Works across all coding agents.</h2>
-      <p style="color: var(--text-secondary); font-size: 14px;">Open Agent Skills standard. Native support across major harnesses.</p>
+    <!-- Centerpiece 5: The 4-Stage Autonomous Protocol -->
+    <section class="pipeline-section wrap" id="pipeline">
+      <span class="section-eyebrow">Decision Loop</span>
+      <h2 class="section-heading">The Canonical Execution Protocol</h2>
+      <p class="section-subtext">
+        Turtleneck operates before code is written. A deterministic pipeline that turns raw outcomes into production-grade systems.
+      </p>
 
-      <div class="agent-snippets">
-        <div class="agent-box">
-          <span class="agent-name">Google Antigravity</span>
-          <code>agy skill add turtleneck</code>
+      <div class="pipeline-grid">
+        <div class="pipeline-step-box">
+          <div class="datum-crosshair datum-tl">+</div>
+          <span class="step-index">PHASE 01</span>
+          <h3 class="step-name">Workspace Analysis</h3>
+          <p class="step-summary">
+            Inspects local tokens, routing, typography, and test commands. Extracts real data shape and state lifecycles before proposing alterations.
+          </p>
         </div>
-        <div class="agent-box">
-          <span class="agent-name">Claude Code</span>
-          <code>python scripts/install.py --claude</code>
+
+        <div class="pipeline-step-box">
+          <div class="datum-crosshair datum-tl">+</div>
+          <span class="step-index">PHASE 02</span>
+          <h3 class="step-name">Requirements Interview</h3>
+          <p class="step-summary">
+            Asks at most 3 high-leverage questions to resolve user intent, critical constraints, and failure modes. Never collects vanity preferences.
+          </p>
         </div>
-        <div class="agent-box">
-          <span class="agent-name">Cursor</span>
-          <code>python scripts/install.py --cursor</code>
+
+        <div class="pipeline-step-box">
+          <div class="datum-crosshair datum-tl">+</div>
+          <span class="step-index">PHASE 03</span>
+          <h3 class="step-name">Blueprint Alignment</h3>
+          <p class="step-summary">
+            Selects one of five architectural archetypes. Establishes vernacular harmony, spatial 8pt rhythm, and complete 5-state interaction contracts.
+          </p>
         </div>
-        <div class="agent-box">
-          <span class="agent-name">Windsurf</span>
-          <code>python scripts/install.py --windsurf</code>
+
+        <div class="pipeline-step-box">
+          <div class="datum-crosshair datum-tl">+</div>
+          <span class="step-index">PHASE 04</span>
+          <h3 class="step-name">Production Build</h3>
+          <p class="step-summary">
+            Builds accessible semantic structures, compositor-only motion, and verified WCAG 2.2 AA contrast. Enforces automated gate validation.
+          </p>
         </div>
-        <div class="agent-box">
-          <span class="agent-name">GitHub Copilot</span>
-          <code>python scripts/install.py --copilot</code>
-        </div>
-        <div class="agent-box">
-          <span class="agent-name">Universal Skill</span>
-          <code>python scripts/install.py --skill</code>
-        </div>
+      </div>
+    </section>
+
+    <!-- Centerpiece 6: Slop vs Taste Matrix -->
+    <section class="matrix-section wrap">
+      <span class="section-eyebrow">Aesthetic Dissection</span>
+      <h2 class="section-heading">Slop vs. Calibrated Senior Craft</h2>
+      <p class="section-subtext">
+        Every line of code either builds credibility or leaks laziness. Here is what Turtleneck strips out versus what it enforces.
+      </p>
+
+      <div class="matrix-table-wrap">
+        <table class="matrix-table" aria-label="Slop versus Taste comparative matrix">
+          <thead>
+            <tr>
+              <th scope="col" style="width: 25%;">Generic AI Slop Stereotype</th>
+              <th scope="col" style="width: 35%;">The Lazy Habit</th>
+              <th scope="col" style="width: 40%;">Turtleneck v2.0 Protocol Enforcement</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="col-cliche">Purple Glowing Blur Cards</td>
+              <td>Arbitrary purple gradients and blurry glassmorphism that destroys contrast down to 2:1.</td>
+              <td class="col-calibrated">Obsidian tiered elevation tokens (--canvas, --surface-1, --surface-2), razor-sharp 1px hairline borders, and specular rim highlights.</td>
+            </tr>
+            <tr>
+              <td class="col-cliche">Cloned Server Telemetry</td>
+              <td>Pasting Kubernetes cluster metrics (p99: 14ms, req/s) onto a municipal water treatment plant or dental clinic.</td>
+              <td class="col-calibrated">Authentic domain empathy. Municipal plants receive real pump PSI, NTU turbidity, and chemical residual controls.</td>
+            </tr>
+            <tr>
+              <td class="col-cliche">Bouncy 500ms Ease-In</td>
+              <td>Sluggish animations on buttons, dropdowns, and tabs that delay user decisions.</td>
+              <td class="col-calibrated">Frequency-gated timing. High-frequency actions trigger at 0ms; micro-interactions settle in 80–120ms with custom cubic-bezier(0.16, 1, 0.3, 1).</td>
+            </tr>
+            <tr>
+              <td class="col-cliche">Broken Mobile Viewports</td>
+              <td>Squeezing 8-column wide desktop data tables into mobile screens, creating horizontal overflow and 16px tap targets.</td>
+              <td class="col-calibrated">Strict mobile ergonomics. Verified 44x44px minimum touch targets, deliberate vertical stacking, and thumb-friendly controls.</td>
+            </tr>
+            <tr>
+              <td class="col-cliche">Invisible Keyboard Focus</td>
+              <td>Removing default focus outlines without replacing them, leaving keyboard and screen-reader users stranded.</td>
+              <td class="col-calibrated">Non-negotiable :focus-visible rules with 2px solid outlines, 2px offset, and verified &gt;=3:1 contrast across all surfaces.</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer wrap">
-    <div>Turtleneck &bull; Product Design Intelligence</div>
-    <div>MIT License &bull; <a href="https://github.com/Divyanshneginot/turtleneck" target="_blank" rel="noopener">GitHub</a></div>
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <div class="footer-meta">
+        <span>TURTLENECK v2.0.0</span>
+        <span>&bull;</span>
+        <span>PRODUCT DESIGN INTELLIGENCE</span>
+        <span>&bull;</span>
+        <span>WCAG 2.2 AA VERIFIED</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="#transmuter">Transmuter</a>
+        <a href="#lab">Physics Lab</a>
+        <a href="#install">Install</a>
+        <a href="#evidence">Evidence</a>
+        <a href="https://github.com/Divyanshneginot/turtleneck" target="_blank" rel="noopener">GitHub Repository</a>
+      </div>
+    </div>
   </footer>
 
+  <!-- ==========================================================================
+     11. LOGIC: INTERACTIVE TRANSMUTER, PHYSICS ENGINE & ACOUSTICS
+     ========================================================================== -->
   <script>
+    // State management
     let activeDomain = 'scada';
     let activeMode = 'calibrated';
+    let currentPhysicsMode = 'calibrated';
+    let audioCtx = null;
 
-    const DOMAINS = {
+    // Domain data definitions
+    const DOMAIN_DATA = {
       scada: {
-        name: 'Industrial SCADA',
+        name: 'Municipal SCADA',
         calibrated: {
-          title: 'Zone 04 // Chemical Filtration Telemetry',
-          desc: 'Real-time telemetry for municipal water treatment plant. Real threshold alerts, zero decorative marketing fluff.',
           html: `
-            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
-              <div>
-                <span style="font-size: 20px; font-weight: 700; color: var(--text-primary);">Zone 04: Sedimentation &amp; Ozone</span>
-                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Flow: 42.6 MGD &bull; Turbidity: 0.18 NTU (Normal) &bull; pH: 7.34</div>
+            <div style="background: var(--surface-1); border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: 24px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+                <div>
+                  <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-accent); letter-spacing: 0.1em; text-transform: uppercase;">FACILITY 04 &bull; BASIN D-SEDIMENTATION</div>
+                  <h3 style="font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--text-primary); margin-top: 4px;">Zone 04: Chemical Precipitation &amp; Ozone Injection</h3>
+                  <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Flow: 42.6 MGD &bull; Turbidity: 0.18 NTU (Normal) &bull; pH: 7.34</div>
+                </div>
+                <span id="scadaAlertBadge" style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: var(--radius-xs); background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);">PUMP PRESSURE: 78 PSI (NOMINAL)</span>
               </div>
-              <span class="transmuter-badge badge-ok" id="scadaBadge">PUMP PRESSURE: 78 PSI (NOMINAL)</span>
-            </div>
-            <div class="transmuter-ctrl">
-              <label for="psiSlider" style="font-size: 13px; font-family: var(--font-mono); color: var(--text-secondary);">Pump Line Pressure:</label>
-              <input type="range" class="transmuter-range" id="psiSlider" min="40" max="160" value="78" oninput="updatePsi(this.value)" aria-label="Adjust pump line pressure PSI">
-              <span id="psiVal" style="font-family: var(--font-mono); font-weight: 700; color: var(--text-primary);">78 PSI</span>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 14px;">
-              <div style="background: var(--surface); padding: 10px; border-radius: 4px; border: 1px solid var(--border);">
-                <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">CHLORINE RESIDUAL</div>
-                <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-top: 2px;">1.84 ppm</div>
+
+              <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <label for="scadaPsiSlider" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary);">High-Pressure Feed Pump Manifold:</label>
+                  <span id="scadaPsiDisplay" style="font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--text-primary);">78 PSI</span>
+                </div>
+                <input type="range" class="lab-range-input" id="scadaPsiSlider" min="40" max="160" value="78" oninput="handleScadaPsi(this.value)" aria-label="Adjust municipal water pump line pressure PSI">
+                <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); margin-top: 6px;">
+                  <span>40 PSI (MIN)</span>
+                  <span>110 PSI (THRESHOLD)</span>
+                  <span>160 PSI (CRITICAL TRIP)</span>
+                </div>
               </div>
-              <div style="background: var(--surface); padding: 10px; border-radius: 4px; border: 1px solid var(--border);">
-                <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">FILTER RUN TIME</div>
-                <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-top: 2px;">48.2 hrs</div>
-              </div>
-              <div style="background: var(--surface); padding: 10px; border-radius: 4px; border: 1px solid var(--border);">
-                <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">BACKWASH CYCLES</div>
-                <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-top: 2px;">3 / 24h</div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
+                <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px;">
+                  <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">Free Chlorine Residual</div>
+                  <div style="font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text-primary); margin-top: 4px;">1.84 ppm</div>
+                  <div style="font-size: 11px; color: var(--text-success); margin-top: 2px;">&check; EPA Safe Limit (&plusmn;0.05)</div>
+                </div>
+                <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px;">
+                  <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">Filter Bed Run Time</div>
+                  <div style="font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text-primary); margin-top: 4px;">48.2 hrs</div>
+                  <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">Next backwash scheduled 62h</div>
+                </div>
+                <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px;">
+                  <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">Ozone Dosage Rate</div>
+                  <div style="font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text-primary); margin-top: 4px;">2.4 mg/L</div>
+                  <div style="font-size: 11px; color: var(--text-success); margin-top: 2px;">&check; Pathogen Inactivation OK</div>
+                </div>
               </div>
             </div>
           `,
-          diag: "Turtleneck Decision: Built around the single interactive mechanism that proves the domain. 17.8:1 contrast, dense operational hierarchy, instant threshold response.",
-          contrast: "CONTRAST: 17.8:1 AAA",
-          physics: "PHYSICS: 0MS LATENCY",
-          proof: "CENTERPIECE: REAL-TIME SCADA"
+          diag: "Turtleneck Decision: Built around the single interactive control that proves the domain (pump PSI threshold response). Dense operational telemetry, 17.8:1 contrast, and zero marketing puffery.",
+          contrast: "17.8:1 AAA (PASS)",
+          physics: "0MS INSTANT TELEMETRY",
+          vernacular: "100% UNIFIED INDUSTRIAL SCADA",
+          proof: "AUTHENTIC PRESSURE REGULATION"
         },
         slop: {
-          title: "Industrial Solution Unleashed",
-          desc: "Next-gen AI platform accelerating fluid metrics with synergy.",
           html: `
-            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
-              <div>
-                <span style="font-size: 20px; font-weight: 700; color: #d8b4fe;">AI Water Cloud Hub</span>
-                <div style="font-size: 12px; color: #a855f7; margin-top: 2px;">cluster-04-node &bull; p99: 14ms &bull; 14,200 req/s</div>
+            <div style="background: rgba(88, 28, 135, 0.4); border: 2px solid rgba(168, 85, 247, 0.5); border-radius: 18px; padding: 28px; box-shadow: 0 0 40px rgba(168, 85, 247, 0.2);">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+                <div>
+                  <div style="font-size: 11px; color: #c084fc; text-transform: uppercase;">AI-POWERED FLUID METRICS ENGINE</div>
+                  <h3 style="font-size: 22px; font-weight: 700; color: #f3e8ff;">Next-Gen Liquid Cloud Synergy Platform</h3>
+                  <div style="font-size: 12px; color: #a855f7; margin-top: 2px;">cluster-04-node &bull; p99 latency: 14ms &bull; 14,200 req/s</div>
+                </div>
+                <span style="background: rgba(168, 85, 247, 0.3); color: #e9d5ff; border: 1px solid #a855f7; padding: 4px 10px; border-radius: 999px; font-size: 11px;">AI HEALTH SCORE: 99.9%</span>
               </div>
-              <span class="transmuter-badge" style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4);">PASS/FAIL: 99.9%</span>
-            </div>
-            <div style="margin-top: 16px; padding: 14px; background: rgba(88,28,135,0.3); border-radius: 8px; border: 1px dashed rgba(168,85,247,0.4);">
-              <div style="font-size: 13px; color: #94a3b8;">DevOps server telemetry pasted onto municipal water utility. Zero actual PSI or filtration controls.</div>
+              <div style="margin-top: 20px; padding: 18px; background: rgba(139, 92, 246, 0.15); border: 1px dashed rgba(168, 85, 247, 0.4); border-radius: 12px;">
+                <p style="color: #cbd5e1; font-size: 13px; line-height: 1.6;">
+                  AI commodity models clone Kubernetes cluster telemetry (p99 latency, req/s) onto a municipal water treatment utility. Zero actual PSI sliders, zero turbidity measurements, and severe 2.1:1 contrast failures.
+                </p>
+              </div>
             </div>
           `,
-          diag: "Why this is slop: Cloned Kubernetes metrics (p99, req/s) onto a municipal water plant. Inappropriate purple gradient. 2.1:1 contrast failure.",
-          contrast: "CONTRAST: 2.1:1 (FAIL)",
-          physics: "PHYSICS: BOUNCY EASE-IN",
-          proof: "CENTERPIECE: FAKE SERVER TELEMETRY"
+          diag: "Why this is slop: Cloned DevOps server telemetry onto municipal water utility. Unprompted purple gradient cards, unreadable contrast (2.1:1), and zero real-world domain empathy.",
+          contrast: "2.1:1 CRITICAL (FAIL)",
+          physics: "450MS JELLY BOUNCE",
+          vernacular: "AESTHETIC COLLAGE SLOP",
+          proof: "FAKE SERVER TELEMETRY"
         }
       },
       cultural: {
-        name: 'Cultural Biennial',
+        name: 'Volcanic Sound Biennial',
         calibrated: {
-          title: 'Archipelago 2027 // Spatial Sound Biennial',
-          desc: 'Five volcanic islands. Acoustic resonance, deep basalt geology, and site-specific installations.',
           html: `
-            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
-              <div>
-                <span style="font-size: 20px; font-weight: 700; color: var(--text-primary);">Island IV: Hrafntinna Caldera</span>
-                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Sub-harmonic acoustic array in volcanic obsidian canyon &bull; Curated by El&iacute;n Halla</div>
+            <div style="background: #0d0f15; border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-md); padding: 26px;">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+                <div>
+                  <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-accent); letter-spacing: 0.12em;">ARCHIPELAGO 2027 // SOUND SPATIALIZATION</div>
+                  <h3 style="font-family: var(--font-serif); font-size: 26px; font-weight: 400; color: #f0f2f5; margin-top: 4px;">Island IV: Hrafntinna Basalt Caldera</h3>
+                  <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">Sub-harmonic acoustic array installed in 400-meter volcanic fissure &bull; Curated by El&iacute;n Halla</div>
+                </div>
+                <span style="font-family: var(--font-mono); font-size: 11px; padding: 4px 10px; border-radius: var(--radius-xs); background: rgba(245, 158, 11, 0.1); color: var(--text-accent); border: 1px solid rgba(245, 158, 11, 0.3);">CALDERA CAVITY: RESONATING</span>
               </div>
-              <span class="transmuter-badge badge-ok">ACOUSTIC CADENCE: ACTIVE</span>
-            </div>
-            <div class="transmuter-ctrl">
-              <label for="freqSlider" style="font-size: 13px; font-family: var(--font-mono); color: var(--text-secondary);">Resonant Waveform:</label>
-              <input type="range" class="transmuter-range" id="freqSlider" min="28" max="432" value="114" oninput="updateFreq(this.value)" aria-label="Adjust acoustic resonant frequency Hz">
-              <span id="freqVal" style="font-family: var(--font-mono); font-weight: 700; color: var(--text-primary);">114 Hz (Basalt Cavity)</span>
-            </div>
-            <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
-              <button type="button" class="domain-btn" style="background: var(--surface); color: var(--text-primary); border-color: var(--border-strong);" aria-label="Select 5-Island Pilgrimage Pass">Pilgrimage Pass &bull; $240</button>
-              <button type="button" class="domain-btn" style="background: var(--surface); color: var(--text-secondary);" aria-label="Select Caldera Day Pass">Caldera Day Pass &bull; $85</button>
+
+              <div style="background: #141722; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <label for="culturalFreqSlider" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary);">Sub-Harmonic Fissure Frequency:</label>
+                  <span id="culturalFreqDisplay" style="font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--text-accent);">114 Hz (Basalt Peak)</span>
+                </div>
+                <input type="range" class="lab-range-input" id="culturalFreqSlider" min="28" max="432" value="114" oninput="handleCulturalFreq(this.value)" aria-label="Adjust acoustic resonant frequency Hz">
+              </div>
+
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button type="button" class="domain-tab-btn active" style="min-height: 42px;" aria-label="Select 5-Island Pilgrimage Pass">Pilgrimage Pass &bull; $240</button>
+                <button type="button" class="domain-tab-btn" style="min-height: 42px;" aria-label="Select Caldera Day Pass">Caldera Day Pass &bull; $85</button>
+                <button type="button" class="domain-tab-btn" style="min-height: 42px;" aria-label="Select Acoustic Archive Download">Acoustic Audio FLAC &bull; $35</button>
+              </div>
             </div>
           `,
-          diag: "Turtleneck Decision: Distinctive elemental identity derived from basalt geology and sound art. Zero dark developer terminal windows or generic SaaS cards.",
-          contrast: "CONTRAST: 18.2:1 AAA",
-          physics: "PHYSICS: 80MS CUBIC-OUT",
-          proof: "CENTERPIECE: ACOUSTIC RESONANCE"
+          diag: "Turtleneck Decision: Visceral elemental identity derived from volcanic geology and spatial acoustics. Zero developer terminal windows or generic SaaS pricing cards.",
+          contrast: "18.2:1 AAA (PASS)",
+          physics: "80MS CUBIC-OUT",
+          vernacular: "100% VISCERAL EDITORIAL SERIF",
+          proof: "GEOLOGICAL SOUND RESONANCE"
         },
         slop: {
-          title: "Archipelago Web3 Art Drop",
-          desc: "Mint your island pass now on the blockchain.",
           html: `
-            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
-              <div>
-                <span style="font-size: 20px; font-weight: 700; color: #d8b4fe;">terminal$ git clone archipelago</span>
-                <div style="font-size: 12px; color: #a855f7; margin-top: 2px;">npm install @island/sound --save</div>
+            <div style="background: rgba(46, 16, 101, 0.4); border: 2px solid #9333ea; border-radius: 16px; padding: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+                <div>
+                  <h3 style="font-size: 20px; font-weight: 700; color: #e9d5ff;">terminal$ git clone archipelago-art</h3>
+                  <div style="font-size: 12px; color: #c084fc; margin-top: 2px;">npm install @archipelago/island-art --save</div>
+                </div>
+                <span style="background: rgba(168, 85, 247, 0.25); color: #f3e8ff; padding: 4px 10px; border-radius: 4px; font-size: 11px;">MINT PRICE: 0.45 ETH</span>
               </div>
-              <span class="transmuter-badge" style="background: rgba(168,85,247,0.2); color: #c084fc;">MINT: 0.4 ETH</span>
-            </div>
-            <div style="margin-top: 16px; padding: 14px; background: rgba(88,28,135,0.3); border-radius: 8px; border: 1px dashed rgba(168,85,247,0.4);">
-              <div style="font-size: 13px; color: #94a3b8;">Hacker terminal and git commands pasted onto an international architecture and acoustic art festival.</div>
+              <div style="margin-top: 16px; padding: 14px; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px dashed #a855f7;">
+                <div style="font-size: 13px; color: #94a3b8;">Hacker terminal window and crypto minting badges pasted onto an international sound architecture festival. Total vernacular failure.</div>
+              </div>
             </div>
           `,
-          diag: "Why this is slop: Literal reference copying. Treated an art biennial like a developer CLI repo with terminal chrome and crypto badges.",
-          contrast: "CONTRAST: 2.4:1 (FAIL)",
-          physics: "PHYSICS: ZERO ERGONOMICS",
-          proof: "CENTERPIECE: IRRELEVANT TERMINAL"
+          diag: "Why this is slop: Literal reference copying. Treated an acoustic art biennial like a developer CLI repository with terminal chrome and crypto mint badges.",
+          contrast: "2.4:1 CRITICAL (FAIL)",
+          physics: "ZERO ERGONOMICS",
+          vernacular: "IRRELEVANT TERMINAL CLICHE",
+          proof: "CRYPTO MINT BADGE"
         }
       },
       dental: {
         name: 'Mobile Healthcare',
         calibrated: {
-          title: 'Alabaster Dental Studio // Mobile Booking',
-          desc: 'Viewport 390x844. 44px thumb targets, clear appointment slots, zero horizontal scroll.',
           html: `
-            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
-              <div>
-                <span style="font-size: 18px; font-weight: 700; color: var(--text-primary);">Select Appointment Slot</span>
-                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Dr. Sarah Chen &bull; Comprehensive Hygiene ($120)</div>
+            <div style="max-width: 400px; margin: 0 auto; background: var(--surface-1); border: 1px solid var(--border-strong); border-radius: 28px; padding: 22px; box-shadow: 0 20px 50px rgba(0,0,0,0.6);">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 16px;">
+                <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-accent);">ALABASTER DENTAL</span>
+                <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-success);">&check; STEP 2 OF 4</span>
               </div>
-              <span class="transmuter-badge badge-ok">STEP 2 OF 4</span>
-            </div>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px;">
-              <button type="button" class="domain-btn active" onclick="selectSlot(this)" style="min-height: 44px;" aria-label="Book 09:00 AM slot">09:00 AM</button>
-              <button type="button" class="domain-btn" onclick="selectSlot(this)" style="min-height: 44px;" aria-label="Book 11:30 AM slot">11:30 AM</button>
-              <button type="button" class="domain-btn" onclick="selectSlot(this)" style="min-height: 44px;" aria-label="Book 02:15 PM slot">02:15 PM</button>
-            </div>
-            <div style="margin-top: 14px; font-size: 12px; color: var(--text-secondary);">
-              &check; 44px minimum tap targets &bull; Keyboard navigable &bull; Instant confirmation feedback
+              <div style="margin-bottom: 16px;">
+                <h3 style="font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--text-primary);">Select Appointment Slot</h3>
+                <div style="font-size: 12px; color: var(--text-secondary); margin-top: 2px;">Dr. Sarah Chen &bull; Comprehensive Oral Examination ($140)</div>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 18px;">
+                <button type="button" class="domain-tab-btn active" onclick="handleSlotSelect(this)" style="min-height: 48px; font-size: 13px;" aria-label="Book appointment at 09:00 AM">09:00 AM</button>
+                <button type="button" class="domain-tab-btn" onclick="handleSlotSelect(this)" style="min-height: 48px; font-size: 13px;" aria-label="Book appointment at 11:30 AM">11:30 AM</button>
+                <button type="button" class="domain-tab-btn" onclick="handleSlotSelect(this)" style="min-height: 48px; font-size: 13px;" aria-label="Book appointment at 02:15 PM">02:15 PM</button>
+              </div>
+              <div style="font-size: 11px; color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 12px; display: flex; align-items: center; gap: 8px;">
+                <span style="color: var(--text-success); font-weight: 700;">&check; 44px</span>
+                <span>Minimum touch target compliant &bull; Zero horizontal overflow</span>
+              </div>
             </div>
           `,
-          diag: "Turtleneck Decision: Calibrated specifically for mobile touch ergonomics. Step preservation, zero horizontal overflow, warm reassuring clinic tone.",
-          contrast: "CONTRAST: 16.5:1 AAA",
-          physics: "PHYSICS: 80MS EASE-OUT",
-          proof: "CENTERPIECE: MOBILE THUMB-FLOW"
+          diag: "Turtleneck Decision: Tailored explicitly for mobile thumb reach. Guaranteed 48px tap targets, zero horizontal scrolling, and step-preserved appointment progression.",
+          contrast: "16.5:1 AAA (PASS)",
+          physics: "80MS EASE-OUT TOUCH",
+          vernacular: "100% WARM CLINICAL MOBILE",
+          proof: "44PX THUMB REACH FLOW"
         },
         slop: {
-          title: "Dental Enterprise SaaS Dashboard",
-          desc: "Manage multi-tenant clinic appointments.",
           html: `
-            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
-              <div>
-                <span style="font-size: 18px; font-weight: 700; color: #d8b4fe;">Patient Database Table (8 Columns)</span>
-                <div style="font-size: 12px; color: #a855f7; margin-top: 2px;">Scroll right to view action buttons &rarr;</div>
+            <div style="max-width: 400px; margin: 0 auto; background: rgba(30, 27, 75, 0.4); border: 2px solid #6366f1; border-radius: 8px; padding: 16px; overflow-x: auto;">
+              <div style="font-size: 12px; color: #a5b4fc; margin-bottom: 6px;">Multi-Tenant Patient Matrix (12 Columns)</div>
+              <div style="font-size: 11px; color: #ef4444; margin-bottom: 12px;">&larr; Scroll horizontally 800px to see buttons &rarr;</div>
+              <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 4px; font-size: 11px; color: #94a3b8; line-height: 1.4;">
+                Desktop admin database table crammed into a 390px mobile viewport. Broken 18px click targets and awkward horizontal panning.
               </div>
-              <span class="transmuter-badge" style="background: rgba(168,85,247,0.2); color: #c084fc;">ROWS: 2,400</span>
-            </div>
-            <div style="margin-top: 16px; padding: 14px; background: rgba(88,28,135,0.3); border-radius: 8px; border: 1px dashed rgba(168,85,247,0.4);">
-              <div style="font-size: 13px; color: #94a3b8;">8-column wide desktop table crammed into mobile screen, requiring awkward horizontal swipe and tiny 18px click targets.</div>
             </div>
           `,
-          diag: "Why this is slop: Ignored mobile viewport. Squeezed desktop table into 390px width. Broken tap targets (18px) and horizontal overflow.",
-          contrast: "CONTRAST: 2.2:1 (FAIL)",
-          physics: "PHYSICS: HORIZONTAL OVERFLOW",
-          proof: "CENTERPIECE: BROKEN TABLE"
+          diag: "Why this is slop: Ignored the mobile touch constraints. Shrunk a 12-column desktop database table onto a mobile phone screen, breaking tap targets.",
+          contrast: "2.2:1 CRITICAL (FAIL)",
+          physics: "HORIZONTAL OVERFLOW",
+          vernacular: "BROKEN DESKTOP CLONE",
+          proof: "UNSCROLLABLE TABLE"
         }
       },
       cache: {
         name: 'Distributed Systems',
         calibrated: {
-          title: 'KiteCache // Memory Hierarchy Latency Budget',
-          desc: 'High-throughput in-memory caching. Mathematical latency budget and tier hit-ratios.',
           html: `
-            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
-              <div>
-                <span style="font-size: 20px; font-weight: 700; color: var(--text-primary);">Sub-Millisecond Read Budget</span>
-                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Tier 1 SRAM (0.8ns) &bull; Tier 2 DRAM (85ns) &bull; NVMe Fallback (12&mu;s)</div>
+            <div style="background: var(--surface-1); border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+                <div>
+                  <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-accent); letter-spacing: 0.1em;">KITECACHE // MEMORY HIERARCHY BUDGET</div>
+                  <h3 style="font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--text-primary); margin-top: 4px;">Sub-Millisecond Read Latency Allocation</h3>
+                  <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Tier 1 SRAM (0.8ns) &bull; Tier 2 DRAM (85ns) &bull; Tier 3 NVMe Fallback (12&mu;s)</div>
+                </div>
+                <span id="cacheHitBadge" style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: var(--radius-xs); background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);">P99 BUDGET: 0.28 MS (OPTIMAL)</span>
               </div>
-              <span class="transmuter-badge badge-ok" id="cacheBadge">P99 BUDGET: 0.28 MS (OPTIMAL)</span>
-            </div>
-            <div class="transmuter-ctrl">
-              <label for="cacheSlider" style="font-size: 13px; font-family: var(--font-mono); color: var(--text-secondary);">DRAM Cache Allocation:</label>
-              <input type="range" class="transmuter-range" id="cacheSlider" min="4" max="128" value="32" oninput="updateCache(this.value)" aria-label="Adjust allocated DRAM cache size GB">
-              <span id="cacheVal" style="font-family: var(--font-mono); font-weight: 700; color: var(--text-primary);">32 GB (Hit Ratio: 98.7%)</span>
-            </div>
-            <div style="margin-top: 14px; font-size: 12px; color: var(--text-secondary);">
-              &check; Domain-authentic distributed systems vernacular &bull; Interactive latency budget proof
+
+              <div style="background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                  <label for="cacheDramSlider" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary);">Allocated In-Memory DRAM Pool:</label>
+                  <span id="cacheDramDisplay" style="font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--text-primary);">32 GB (Hit Ratio: 98.7%)</span>
+                </div>
+                <input type="range" class="lab-range-input" id="cacheDramSlider" min="4" max="128" value="32" oninput="handleCacheAllocation(this.value)" aria-label="Adjust allocated DRAM cache pool size GB">
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px;">
+                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 12px; border-radius: var(--radius-sm);">
+                  <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">SRAM CACHE HIT</div>
+                  <div style="font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text-primary); margin-top: 4px;">84.2%</div>
+                </div>
+                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 12px; border-radius: var(--radius-sm);">
+                  <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">DRAM HIT</div>
+                  <div style="font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text-primary); margin-top: 4px;">14.5%</div>
+                </div>
+                <div style="background: var(--surface-2); border: 1px solid var(--border); padding: 12px; border-radius: var(--radius-sm);">
+                  <div style="font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">NVMe SPILLOVER</div>
+                  <div style="font-family: var(--font-mono); font-size: 18px; font-weight: 700; color: var(--text-success); margin-top: 4px;">1.3% (SAFE)</div>
+                </div>
+              </div>
             </div>
           `,
-          diag: "Turtleneck Decision: Mathematical latency budget interactive simulator. Proves the distributed cache value proposition without generic marketing fluff.",
-          contrast: "CONTRAST: 18.5:1 AAA",
-          physics: "PHYSICS: 0MS LATENCY",
-          proof: "CENTERPIECE: MEMORY BUDGET SIM"
+          diag: "Turtleneck Decision: Mathematical latency budget interactive simulator. Proves the systems engineering value proposition without decorative SaaS fluff.",
+          contrast: "18.5:1 AAA (PASS)",
+          physics: "0MS INSTANT CALC",
+          vernacular: "100% DISTRIBUTED SYSTEMS",
+          proof: "MATHEMATICAL LATENCY BUDGET"
         },
         slop: {
-          title: "Revolutionary AI Cache 10x",
-          desc: "Supercharge your database with quantum synergy.",
           html: `
-            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
-              <div>
-                <span style="font-size: 20px; font-weight: 700; color: #d8b4fe;">Unleash Your Data Superpowers</span>
-                <div style="font-size: 12px; color: #a855f7; margin-top: 2px;">The only AI cache built for modern unicorns</div>
+            <div style="background: rgba(79, 70, 229, 0.25); border: 2px solid #818cf8; border-radius: 16px; padding: 24px;">
+              <h3 style="font-size: 20px; font-weight: 700; color: #e0e7ff;">Supercharge Your Cloud Cache 10x with AI Magic</h3>
+              <p style="font-size: 13px; color: #a5b4fc; margin-top: 6px;">The only AI cache built for modern unicorns looking for high-velocity synergy.</p>
+              <div style="margin-top: 16px; padding: 16px; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px dashed #6366f1;">
+                <div style="font-size: 12px; color: #94a3b8;">Marketing buzzwords ('revolutionary', 'unicorn') with zero memory topology, zero throughput calculations, and zero architectural integrity.</div>
               </div>
-              <span class="transmuter-badge" style="background: rgba(168,85,247,0.2); color: #c084fc;">AI RATING: 5/5</span>
-            </div>
-            <div style="margin-top: 16px; padding: 14px; background: rgba(88,28,135,0.3); border-radius: 8px; border: 1px dashed rgba(168,85,247,0.4);">
-              <div style="font-size: 13px; color: #94a3b8;">Marketing buzzwords ('revolutionary', 'supercharge') with zero real cache topology, memory metrics, or throughput calculations.</div>
             </div>
           `,
           diag: "Why this is slop: Pure marketing hand-waving. Zero domain empathy for distributed systems engineers.",
-          contrast: "CONTRAST: 2.3:1 (FAIL)",
-          physics: "PHYSICS: ANIMATED BLOBS",
-          proof: "CENTERPIECE: BUZZWORD BANNER"
+          contrast: "2.3:1 CRITICAL (FAIL)",
+          physics: "SLOW ANIMATED CARDS",
+          vernacular: "EMPTY MARKETING FLUFF",
+          proof: "BUZZWORD BANNER"
+        }
+      },
+      trading: {
+        name: 'Algorithmic Trading',
+        calibrated: {
+          html: `
+            <div style="background: var(--surface-1); border: 1px solid var(--border-strong); border-radius: var(--radius-md); padding: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 12px; margin-bottom: 20px;">
+                <div>
+                  <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-accent); letter-spacing: 0.1em;">KESTREL EXECUTION // DEPTH OF BOOK</div>
+                  <h3 style="font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--text-primary); margin-top: 4px;">Microsecond Limit Order Book (L2/L3)</h3>
+                  <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Instrument: CME:ESZ6 &bull; Spread: 0.25 &bull; Median Tick Latency: 420ns</div>
+                </div>
+                <span style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: var(--radius-xs); background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);">DMA GATEWAY: ARMED</span>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-family: var(--font-mono); font-size: 12px; margin-bottom: 16px;">
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: var(--radius-sm); padding: 12px;">
+                  <div style="color: #34d399; font-weight: 700; margin-bottom: 6px;">BID (BUY) DEPTH</div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>5,892.25</span><span style="color: var(--text-primary);">412 LOTS</span></div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>5,892.00</span><span style="color: var(--text-primary);">824 LOTS</span></div>
+                  <div style="display: flex; justify-content: space-between;"><span>5,891.75</span><span style="color: var(--text-primary);">1,420 LOTS</span></div>
+                </div>
+                <div style="background: rgba(244, 63, 94, 0.08); border: 1px solid rgba(244, 63, 94, 0.25); border-radius: var(--radius-sm); padding: 12px;">
+                  <div style="color: #fb7185; font-weight: 700; margin-bottom: 6px;">ASK (SELL) DEPTH</div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>5,892.50</span><span style="color: var(--text-primary);">380 LOTS</span></div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>5,892.75</span><span style="color: var(--text-primary);">912 LOTS</span></div>
+                  <div style="display: flex; justify-content: space-between;"><span>5,893.00</span><span style="color: var(--text-primary);">1,680 LOTS</span></div>
+                </div>
+              </div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); border-top: 1px solid var(--border); padding-top: 12px;">
+                <span>SLIPPAGE BUDGET: &le; 0.12 TICKS</span>
+                <span style="color: var(--text-accent);">ZERO JITTER PROTOCOL ACTIVE</span>
+              </div>
+            </div>
+          `,
+          diag: "Turtleneck Decision: High-density numerical datum lines, strict monospaced tabular alignment, instant sub-microsecond visual hierarchy.",
+          contrast: "18.8:1 AAA (PASS)",
+          physics: "0MS DMA LATENCY",
+          vernacular: "100% QUANTITATIVE TRADING",
+          proof: "HIGH-DENSITY ORDERBOOK"
+        },
+        slop: {
+          html: `
+            <div style="background: rgba(147, 51, 234, 0.3); border: 2px solid #a855f7; border-radius: 16px; padding: 24px;">
+              <h3 style="font-size: 20px; font-weight: 700; color: #f3e8ff;">AI Stock Market Wealth Predictor</h3>
+              <p style="font-size: 13px; color: #c084fc; margin-top: 6px;">Our AI crystal ball predicts the next 100x gem before Wall Street.</p>
+              <div style="margin-top: 16px; padding: 14px; background: rgba(0,0,0,0.3); border-radius: 8px;">
+                <div style="font-size: 12px; color: #94a3b8;">Fake consumer crypto gambling graphics pasted onto an institutional algorithmic execution engine. 2.1:1 contrast failure.</div>
+              </div>
+            </div>
+          `,
+          diag: "Why this is slop: Cloned consumer crypto gimmicks onto institutional quantitative trading.",
+          contrast: "2.1:1 CRITICAL (FAIL)",
+          physics: "FLASHING RAINBOW BLOBS",
+          vernacular: "GAMBLING CRYPTO SLOP",
+          proof: "FAKE WEALTH PREDICTOR"
         }
       }
     };
 
-    function renderStage() {
-      const data = DOMAINS[activeDomain][activeMode];
-      const stage = document.getElementById('stageContainer');
+    // Render Stage Function
+    function renderTransmuterStage() {
+      const data = DOMAIN_DATA[activeDomain][activeMode];
+      const stage = document.getElementById('stageViewport');
       const banner = document.getElementById('diagnosisBanner');
+      const diagIcon = document.getElementById('diagIcon');
+      const diagText = document.getElementById('diagText');
 
-      stage.className = 'stage-container ' + (activeMode === 'slop' ? 'slop-surface' : '');
+      stage.className = 'stage-viewport ' + (activeMode === 'slop' ? 'stage-slop' : 'stage-calibrated');
       stage.innerHTML = data.html;
 
-      banner.className = 'diagnosis-banner ' + (activeMode === 'slop' ? 'diag-slop' : 'diag-calibrated');
-      banner.textContent = data.diag;
+      banner.className = 'diagnosis-banner ' + (activeMode === 'slop' ? 'diagnosis-slop' : 'diagnosis-calibrated');
+      diagIcon.textContent = activeMode === 'slop' ? '✕' : '✓';
+      diagText.textContent = data.diag;
 
-      document.getElementById('specContrast').textContent = data.contrast;
-      document.getElementById('specPhysics').textContent = data.physics;
-      document.getElementById('specProof').textContent = data.proof;
+      document.getElementById('hudContrast').textContent = data.contrast;
+      document.getElementById('hudContrast').className = 'hud-val ' + (activeMode === 'slop' ? 'bad' : 'good');
+
+      document.getElementById('hudPhysics').textContent = data.physics;
+      document.getElementById('hudPhysics').className = 'hud-val ' + (activeMode === 'slop' ? 'bad' : 'good');
+
+      document.getElementById('hudVernacular').textContent = data.vernacular;
+      document.getElementById('hudVernacular').className = 'hud-val ' + (activeMode === 'slop' ? 'bad' : 'good');
+
+      document.getElementById('hudProof').textContent = data.proof;
+      document.getElementById('hudProof').className = 'hud-val ' + (activeMode === 'slop' ? 'bad' : 'good');
     }
 
-    function switchDomain(domain) {
+    // Switch Domain
+    function setTransmuterDomain(domain) {
       activeDomain = domain;
-      document.getElementById('tabScada').classList.toggle('active', domain === 'scada');
-      document.getElementById('tabCultural').classList.toggle('active', domain === 'cultural');
-      document.getElementById('tabDental').classList.toggle('active', domain === 'dental');
-      document.getElementById('tabCache').classList.toggle('active', domain === 'cache');
-      renderStage();
+      playAcousticTick();
+      document.querySelectorAll('.domain-tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-selected', 'false');
+      });
+      const activeBtn = document.getElementById('tab' + domain.charAt(0).toUpperCase() + domain.slice(1));
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+        activeBtn.setAttribute('aria-selected', 'true');
+      }
+      renderTransmuterStage();
     }
 
-    function switchMode(mode) {
+    // Switch Paradigm Mode
+    function setTransmuterMode(mode) {
       activeMode = mode;
-      document.getElementById('btnSlop').classList.toggle('active-slop', mode === 'slop');
-      document.getElementById('btnCalibrated').classList.toggle('active-calibrated', mode === 'calibrated');
-      renderStage();
+      playAcousticTick();
+      const btnCal = document.getElementById('btnModeCalibrated');
+      const btnSlop = document.getElementById('btnModeSlop');
+      if (mode === 'calibrated') {
+        btnCal.className = 'paradigm-btn active-calibrated';
+        btnSlop.className = 'paradigm-btn';
+      } else {
+        btnCal.className = 'paradigm-btn';
+        btnSlop.className = 'paradigm-btn active-slop';
+      }
+      renderTransmuterStage();
     }
 
-    function updatePsi(val) {
+    // SCADA Interactive Logic
+    function handleScadaPsi(val) {
       const v = parseInt(val, 10);
-      document.getElementById('psiVal').textContent = v + ' PSI';
-      const badge = document.getElementById('scadaBadge');
-      if (v > 120) {
-        badge.className = 'transmuter-badge badge-warn';
-        badge.textContent = 'HIGH PRESSURE ALERT: ' + v + ' PSI';
-      } else {
-        badge.className = 'transmuter-badge badge-ok';
-        badge.textContent = 'PUMP PRESSURE: ' + v + ' PSI (NOMINAL)';
+      const disp = document.getElementById('scadaPsiDisplay');
+      const badge = document.getElementById('scadaAlertBadge');
+      if (disp) disp.textContent = v + ' PSI';
+      if (badge) {
+        if (v > 120) {
+          badge.style.background = 'rgba(244, 63, 94, 0.2)';
+          badge.style.color = '#fb7185';
+          badge.style.borderColor = 'rgba(244, 63, 94, 0.4)';
+          badge.textContent = 'HIGH PRESSURE WARNING: ' + v + ' PSI (RELIEF ARMED)';
+          playWarningTick();
+        } else if (v < 55) {
+          badge.style.background = 'rgba(245, 158, 11, 0.2)';
+          badge.style.color = '#f59e0b';
+          badge.style.borderColor = 'rgba(245, 158, 11, 0.4)';
+          badge.textContent = 'LOW PRESSURE ALERT: ' + v + ' PSI';
+        } else {
+          badge.style.background = 'rgba(16, 185, 129, 0.15)';
+          badge.style.color = '#34d399';
+          badge.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+          badge.textContent = 'PUMP PRESSURE: ' + v + ' PSI (NOMINAL)';
+        }
       }
     }
 
-    function updateFreq(val) {
-      document.getElementById('freqVal').textContent = val + ' Hz (Basalt Cavity)';
-    }
-
-    function updateCache(val) {
+    // Cultural Biennial Interactive Logic
+    function handleCulturalFreq(val) {
       const v = parseInt(val, 10);
-      const hit = (96.0 + (v / 128) * 3.8).toFixed(1);
-      document.getElementById('cacheVal').textContent = v + ' GB (Hit Ratio: ' + hit + '%)';
+      const disp = document.getElementById('culturalFreqDisplay');
+      if (disp) disp.textContent = v + ' Hz (Basalt Peak)';
+      playCalderaDrone(v);
     }
 
-    function selectSlot(btn) {
+    // Mobile Healthcare Slot Picker
+    function handleSlotSelect(btn) {
+      playAcousticTick();
       const parent = btn.parentElement;
       Array.from(parent.children).forEach(c => c.classList.remove('active'));
       btn.classList.add('active');
     }
 
-    function copyInstallCmd(btn) {
-      navigator.clipboard.writeText('python scripts/install.py --skill').then(() => {
-        btn.textContent = 'Copied';
-        setTimeout(() => { btn.textContent = 'Copy'; }, 1600);
+    // Distributed Systems DRAM Allocation Logic
+    function handleCacheAllocation(val) {
+      const v = parseInt(val, 10);
+      const hit = (95.5 + (v / 128) * 4.3).toFixed(1);
+      const disp = document.getElementById('cacheDramDisplay');
+      const badge = document.getElementById('cacheHitBadge');
+      if (disp) disp.textContent = v + ' GB (Hit Ratio: ' + hit + '%)';
+      if (badge) {
+        if (v >= 32) {
+          badge.textContent = 'P99 BUDGET: 0.28 MS (OPTIMAL)';
+          badge.style.color = '#34d399';
+        } else {
+          badge.textContent = 'P99 BUDGET: 1.45 MS (SPILLOVER)';
+          badge.style.color = '#f59e0b';
+        }
+      }
+    }
+
+    // Scale Tension Laboratory Logic
+    function adjustScaleTension(val) {
+      const v = parseFloat(val);
+      document.getElementById('scaleRatioValue').textContent = v.toFixed(2) + 'x';
+      const headline = document.getElementById('tensionHeadline');
+      const badge = document.getElementById('scaleRatioBadge');
+      
+      // Calculate display font size proportional to ratio
+      const computedSize = Math.round(14 + (v * 9));
+      headline.style.fontSize = computedSize + 'px';
+
+      if (v < 2.0) {
+        badge.textContent = '1.8:1 BLAND SANS BLOB';
+        badge.style.color = '#fb7185';
+      } else if (v < 3.2) {
+        badge.textContent = '2.8:1 MODULAR RATIO';
+        badge.style.color = '#f59e0b';
+      } else {
+        badge.textContent = v.toFixed(1) + ':1 MONUMENTAL TENSION';
+        badge.style.color = '#34d399';
+      }
+    }
+
+    // Physics Engine Selector
+    function selectPhysicsMode(mode, btn) {
+      currentPhysicsMode = mode;
+      playAcousticTick();
+      document.querySelectorAll('.physics-pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const trigger = document.getElementById('tactileTestTrigger');
+      const label = document.getElementById('physicsSelectedName');
+      const badge = document.getElementById('physicsPresetBadge');
+
+      if (mode === 'instant') {
+        label.textContent = '0ms Instant (High-Frequency)';
+        badge.textContent = '0MS INSTANT';
+        trigger.style.transition = 'none';
+      } else if (mode === 'calibrated') {
+        label.textContent = '80ms Calibrated Ease-Out';
+        badge.textContent = '80MS CALIBRATED';
+        trigger.style.transition = 'transform 0.08s var(--ease-out), background-color 0.08s var(--ease-out)';
+      } else {
+        label.textContent = '450ms Slop Jelly Delay';
+        badge.textContent = '450MS SLOP DELAY';
+        trigger.style.transition = 'transform 0.45s cubic-bezier(0.68, -0.55, 0.27, 1.55), background-color 0.45s ease';
+      }
+    }
+
+    // Test Tactile Physics Trigger
+    function testTactilePhysics(btn) {
+      playAcousticTick();
+      if (currentPhysicsMode === 'instant') {
+        btn.style.transform = 'scale(0.96)';
+        setTimeout(() => { btn.style.transform = 'scale(1)'; }, 40);
+      } else if (currentPhysicsMode === 'calibrated') {
+        btn.style.transform = 'scale(0.96)';
+        setTimeout(() => { btn.style.transform = 'scale(1)'; }, 90);
+      } else {
+        btn.style.transform = 'scale(1.15) rotate(2deg)';
+        setTimeout(() => { btn.style.transform = 'scale(1) rotate(0deg)'; }, 480);
+      }
+    }
+
+    // Multi-Agent Install Hub Logic
+    const INSTALL_COMMANDS = {
+      claude: 'python scripts/install.py --claude',
+      cursor: 'python scripts/install.py --cursor',
+      copilot: 'python scripts/install.py --copilot',
+      antigravity: 'agy skill add turtleneck',
+      windsurf: 'python scripts/install.py --windsurf',
+      skill: 'python scripts/install.py --skill'
+    };
+
+    let activeInstallTab = 'claude';
+
+    function selectInstallTab(agentKey, btn) {
+      activeInstallTab = agentKey;
+      playAcousticTick();
+      document.querySelectorAll('.term-tab').forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      document.getElementById('terminalCmdDisplay').textContent = INSTALL_COMMANDS[agentKey];
+    }
+
+    function copyTerminalCommand(btn) {
+      const cmd = INSTALL_COMMANDS[activeInstallTab];
+      navigator.clipboard.writeText(cmd).then(() => {
+        playAcousticTick();
+        const label = document.getElementById('termCopyLabel');
+        label.textContent = 'Copied to Clipboard!';
+        setTimeout(() => { label.textContent = 'Copy Command'; }, 1800);
       });
     }
 
-    // Initial render
-    renderStage();
+    function copySnippet(btn, text) {
+      navigator.clipboard.writeText(text).then(() => {
+        playAcousticTick();
+        const orig = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(() => { btn.textContent = orig; }, 1800);
+      });
+    }
+
+    // Synthesized Web Audio Acoustics (Subtle, tactile mechanical clicks)
+    function getAudioContext() {
+      if (!audioCtx && (window.AudioContext || window.webkitAudioContext)) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playAcousticTick() {
+      const check = document.getElementById('acousticSoundCheck');
+      if (!check || !check.checked) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(820, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(140, ctx.currentTime + 0.012);
+        gain.gain.setValueAtTime(0.04, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.012);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.015);
+      } catch (e) {
+        // Silently ignore if audio is blocked by user policy
+      }
+    }
+
+    function playWarningTick() {
+      const check = document.getElementById('acousticSoundCheck');
+      if (!check || !check.checked) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(320, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.06);
+        gain.gain.setValueAtTime(0.06, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.06);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.065);
+      } catch (e) {}
+    }
+
+    function playCalderaDrone(freq) {
+      const check = document.getElementById('acousticSoundCheck');
+      if (!check || !check.checked) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        gain.gain.setValueAtTime(0.03, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.04);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.045);
+      } catch (e) {}
+    }
+
+    // Initial boot render
+    renderTransmuterStage();
   </script>
 </body>
 </html>
