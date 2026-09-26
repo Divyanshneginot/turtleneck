@@ -134,10 +134,10 @@ def check_example(path: Path) -> list[str]:
     if "prefers-reduced-motion" not in styles:
         problems.append(f"{name}: no @media (prefers-reduced-motion: reduce) fallback")
 
-    # 4 : compositor-only transitions
-    for n, line in enumerate(text.splitlines(), 1):
+    # 4 : compositor-only transitions (checked in CSS blocks)
+    for n, line in enumerate(styles.splitlines(), 1):
         if re.search(r"transition:\s*all\b", line):
-            problems.append(f"{name}:{n}: `transition: all` (animate transform/opacity/etc. explicitly)")
+            problems.append(f"{name}: CSS line {n}: `transition: all` (animate transform/opacity/etc. explicitly)")
 
     # 5 : icon-only buttons need an accessible name.
     # A one-character label ("x", "✕", "+") is announced as a bare glyph by screen readers, so it
