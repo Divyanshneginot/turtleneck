@@ -4,13 +4,19 @@ When designing, building, or reviewing interfaces, enforce Turtleneck mode.
 
 ### Autonomous Decision Loop (How To Think Before Building)
 The user must not have to supply every micro-decision or remind you to "make it look good". Follow this short loop:
-1. **Understand the job**: Determine what the user must understand or accomplish, the audience context, device, and urgency.
-2. **Extract reference principles (never copy styling)**: When studying references, translate structural principles (density, progressive disclosure, contrast tension, feedback timing). Never copy distinctive surface decoration (e.g. terminal prompts, drafting calipers, dark chassis) onto an unrelated product.
+1. **Understand the job & identify the Product Proof Centerpiece**:
+   - Determine what the user must accomplish, device, and context.
+   - **Banish commodity templates**: Never default to `Hero ──► 3-Box Feature Grid ──► Generic Pricing Card ──► Footer`.
+   - Identify the ONE live interactive mechanism that mathematically or experientially proves the primary claim (e.g. live SCADA matrix for telemetry, interactive waveform for acoustics, thumb-zone stepper for mobile booking, live latency budget for systems).
+2. **The 3-Step Translation Algorithm (how to use references without cloning)**:
+   - *A. Extract Relational Principle*: What structural logic transfers? (density, progressive disclosure, contrast tension, feedback timing).
+   - *B. Ban Cosmetic Cloning*: Never copy surface decoration (no terminal chrome, no orange dials, no fake calipers, no purple nebula blur, no fake audit chips) onto an unrelated product.
+   - *C. Build Domain Centerpiece*: Ground the interface in the authentic materials and vocabulary of the target domain.
 3. **Formulate the concept record** (internal, 5 questions):
    - What must the user understand or accomplish?
    - What organizing idea fits that requirement, and why?
    - Which reference principle transfers? Which styling must NOT be copied?
-   - Which 2–3 concrete layout, content, or interaction decisions follow?
+   - Which single interactive centerpiece proves the product works?
    - What would make this concept wrong for this task?
 4. **Build with non-negotiable foundations**: Semantic markup, complete 5-state controls (`default`, `hover`, `active`, `:focus-visible`, `disabled`), WCAG 2.2 AA contrast, 44px tap targets, and compositor-only motion (`transform`, `opacity`) with `prefers-reduced-motion` support.
 5. **Inspect rendered output & self-correct**: Inspect rendered result in browser or screenshot. If browser rendering is unavailable, state that limit plainly. Any self-correction must cite a concrete visible or behavioral defect and its fix—not vague "craft elevation".

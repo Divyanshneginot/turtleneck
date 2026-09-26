@@ -236,32 +236,58 @@
     color: #10b981;
   }
 
-  .atelier-card {
+  /* Transmuter Interactive Sandbox */
+  .transmuter-card {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 28px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
   }
 
-  .plan-row {
+  .transmuter-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 12px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
   }
 
-  .plan-title {
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+  .domain-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .domain-btn {
+    background: var(--canvas-elevated);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: transform 0.08s ease, opacity 0.08s ease;
+  }
+
+  .domain-btn:hover {
     color: var(--text-primary);
+    border-color: var(--border-strong);
   }
 
-  .billing-toggle {
+  .domain-btn.active {
+    background: var(--text-primary);
+    color: var(--canvas);
+    border-color: var(--text-primary);
+  }
+
+  .mode-toggle {
     background: var(--canvas-elevated);
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
@@ -270,95 +296,47 @@
     gap: 2px;
   }
 
-  .toggle-opt {
+  .mode-btn {
     background: transparent;
     border: none;
     color: var(--text-secondary);
     font-family: var(--font-sans);
     font-size: 12px;
     font-weight: 600;
-    padding: 4px 10px;
+    padding: 6px 12px;
     border-radius: 3px;
     cursor: pointer;
-    transition: background-color 0.09s ease, color 0.09s ease;
+    transition: opacity 0.08s ease;
   }
 
-  .toggle-opt.active {
-    background: var(--surface);
-    color: var(--text-primary);
+  .mode-btn.active-calibrated {
+    background: #4f46e5;
+    color: #ffffff;
   }
 
-  .slider-box {
+  .mode-btn.active-slop {
+    background: #b91c1c;
+    color: #ffffff;
+  }
+
+  .stage-container {
+    background: var(--canvas-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    min-height: 220px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-  }
-
-  .slider-labels {
-    display: flex;
     justify-content: space-between;
-    font-size: 13px;
-    color: var(--text-secondary);
   }
 
-  .seat-count {
-    font-family: var(--font-mono);
-    font-weight: 600;
-    color: var(--text-primary);
+  .slop-surface {
+    background: #1e1338;
+    border: 1px solid rgba(168, 85, 247, 0.4);
   }
 
-  input[type="range"].seat-slider {
-    width: 100%;
-    accent-color: var(--accent);
-    cursor: pointer;
-    height: 6px;
-    background: var(--canvas-elevated);
-    border-radius: 3px;
-  }
-
-  .pricing-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    border-top: 1px solid var(--border);
-    padding-top: 16px;
-  }
-
-  .price-large {
-    font-size: 32px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--text-primary);
-  }
-
-  .price-sub {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
-  .btn-atelier-action {
-    background: var(--text-primary);
-    color: var(--canvas);
-    border: none;
-    font-weight: 600;
-    font-size: 14px;
-    padding: 12px 24px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: opacity 0.1s ease, transform 0.08s ease;
-    text-align: center;
-  }
-
-  .btn-atelier-action:hover {
-    opacity: 0.92;
-  }
-
-  .btn-atelier-action:active {
-    transform: scale(0.97);
-  }
-
-  .specimen-specs {
-    margin-top: 20px;
+  .transmuter-specs {
+    margin-top: 16px;
     display: flex;
     justify-content: space-between;
     font-family: var(--font-mono);
@@ -366,6 +344,63 @@
     color: var(--text-muted);
     flex-wrap: wrap;
     gap: 12px;
+  }
+
+  .transmuter-ctrl {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .transmuter-range {
+    flex: 1;
+    min-width: 140px;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+
+  .transmuter-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+  }
+
+  .badge-ok {
+    background: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+
+  .badge-warn {
+    background: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+
+  .diagnosis-banner {
+    padding: 12px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    line-height: 1.5;
+    font-family: var(--font-mono);
+    margin-top: 16px;
+  }
+
+  .diag-slop {
+    background: rgba(185, 28, 28, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+  }
+
+  .diag-calibrated {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #6ee7b7;
   }
 
   /* Editorial Principles */
@@ -645,50 +680,45 @@
       </div>
     </section>
 
-    <!-- Interactive Component Specimen -->
-    <section class="specimen-section wrap">
+    <!-- Interactive Design Transmuter Sandbox -->
+    <section class="specimen-section wrap" id="transmuter">
       <div class="specimen-chassis">
         <div class="specimen-header">
-          <span class="specimen-label">Live Atelier Specimen // Interactive Product Surface</span>
-          <span class="specimen-badge">&check; Declared Token Contrast Verified</span>
+          <span class="specimen-label">Live Decision Engine // Interactive Transmuter Sandbox</span>
+          <span class="specimen-badge">&check; Real-Time Product Proof</span>
         </div>
 
-        <div class="atelier-card">
-          <div class="plan-row">
-            <div>
-              <div class="plan-title">Studio Workspace Access</div>
-              <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Autonomous design intelligence for product engineering teams.</div>
+        <div class="transmuter-card">
+          <div class="transmuter-nav">
+            <div class="domain-tabs" role="tablist" aria-label="Select evaluation domain">
+              <button type="button" class="domain-btn active" id="tabScada" onclick="switchDomain('scada')" role="tab" aria-selected="true" aria-label="Water SCADA Telemetry domain">Industrial SCADA</button>
+              <button type="button" class="domain-btn" id="tabCultural" onclick="switchDomain('cultural')" role="tab" aria-selected="false" aria-label="Archipelago Biennial cultural domain">Cultural Biennial</button>
+              <button type="button" class="domain-btn" id="tabDental" onclick="switchDomain('dental')" role="tab" aria-selected="false" aria-label="Alabaster Dental mobile domain">Mobile Healthcare</button>
+              <button type="button" class="domain-btn" id="tabCache" onclick="switchDomain('cache')" role="tab" aria-selected="false" aria-label="KiteCache systems domain">Distributed Systems</button>
             </div>
-            <div class="billing-toggle" role="group" aria-label="Billing frequency selector">
-              <button type="button" class="toggle-opt active" id="btnMonthly" onclick="setBilling('monthly')" aria-label="Monthly billing">Monthly</button>
-              <button type="button" class="toggle-opt" id="btnAnnual" onclick="setBilling('annual')" aria-label="Annual billing with 20% discount">Annual (Save 20%)</button>
+
+            <div class="mode-toggle" role="group" aria-label="Select output mode">
+              <button type="button" class="mode-btn" id="btnSlop" onclick="switchMode('slop')" aria-label="View default commodity AI output">Default AI Slop</button>
+              <button type="button" class="mode-btn active-calibrated" id="btnCalibrated" onclick="switchMode('calibrated')" aria-label="View Turtleneck calibrated output">Turtleneck Calibrated</button>
             </div>
           </div>
 
-          <div class="slider-box">
-            <div class="slider-labels">
-              <span>Allocated Design Seats</span>
-              <span class="seat-count" id="seatDisplay">8 Designers</span>
-            </div>
-            <input type="range" class="seat-slider" id="seatSlider" min="2" max="32" step="2" value="8" oninput="updateSeats(this.value)" aria-label="Adjust allocated design seats">
+          <!-- Dynamic Stage Output -->
+          <div id="stageContainer" class="stage-container">
+            <!-- Injected via JavaScript -->
           </div>
 
-          <div class="pricing-row">
-            <div>
-              <span class="price-large" id="priceDisplay">$128</span>
-              <span class="price-sub" id="cycleDisplay">/ month billed monthly</span>
-            </div>
-            <button type="button" class="btn-atelier-action" onclick="handleAuthorize(this)" aria-label="Demo: simulated authorize interaction">
-              Authorize Access &rarr;
-            </button>
+          <!-- Diagnostic Explanation Banner -->
+          <div id="diagnosisBanner" class="diagnosis-banner diag-calibrated">
+            <!-- Injected via JavaScript -->
           </div>
         </div>
 
-        <div class="specimen-specs">
-          <span>SCALE TENSION: 2.9:1 (32px / 11px)</span>
-          <span>MICRO-TIMING: 80ms CUBIC-OUT</span>
-          <span>CONTRAST: 18.59:1 AAA</span>
-          <span>DIALECT: ATELIER MINIMAL</span>
+        <div class="transmuter-specs">
+          <span id="specContrast">CONTRAST: 17.8:1 AAA</span>
+          <span id="specPhysics">PHYSICS: 80MS CUBIC-OUT</span>
+          <span id="specKeyboard">FOCUS: 2PX SOLID (&gt;=3:1)</span>
+          <span id="specProof">CENTERPIECE: PRODUCT PROOF</span>
         </div>
       </div>
     </section>
@@ -853,38 +883,275 @@
   </footer>
 
   <script>
-    let billingCycle = 'monthly';
-    let seatCount = 8;
-    const basePricePerSeat = 16;
+    let activeDomain = 'scada';
+    let activeMode = 'calibrated';
 
-    function updatePrice() {
-      const rate = billingCycle === 'annual' ? 0.8 : 1.0;
-      const total = Math.round(seatCount * basePricePerSeat * rate);
-      document.getElementById('priceDisplay').textContent = '$' + total;
-      document.getElementById('cycleDisplay').textContent = billingCycle === 'annual' ? '/ month billed annually' : '/ month billed monthly';
+    const DOMAINS = {
+      scada: {
+        name: 'Industrial SCADA',
+        calibrated: {
+          title: 'Zone 04 // Chemical Filtration Telemetry',
+          desc: 'Real-time telemetry for municipal water treatment plant. Real threshold alerts, zero decorative marketing fluff.',
+          html: `
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span style="font-size: 20px; font-weight: 700; color: var(--text-primary);">Zone 04: Sedimentation &amp; Ozone</span>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Flow: 42.6 MGD &bull; Turbidity: 0.18 NTU (Normal) &bull; pH: 7.34</div>
+              </div>
+              <span class="transmuter-badge badge-ok" id="scadaBadge">PUMP PRESSURE: 78 PSI (NOMINAL)</span>
+            </div>
+            <div class="transmuter-ctrl">
+              <label for="psiSlider" style="font-size: 13px; font-family: var(--font-mono); color: var(--text-secondary);">Pump Line Pressure:</label>
+              <input type="range" class="transmuter-range" id="psiSlider" min="40" max="160" value="78" oninput="updatePsi(this.value)" aria-label="Adjust pump line pressure PSI">
+              <span id="psiVal" style="font-family: var(--font-mono); font-weight: 700; color: var(--text-primary);">78 PSI</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 14px;">
+              <div style="background: var(--surface); padding: 10px; border-radius: 4px; border: 1px solid var(--border);">
+                <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">CHLORINE RESIDUAL</div>
+                <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-top: 2px;">1.84 ppm</div>
+              </div>
+              <div style="background: var(--surface); padding: 10px; border-radius: 4px; border: 1px solid var(--border);">
+                <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">FILTER RUN TIME</div>
+                <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-top: 2px;">48.2 hrs</div>
+              </div>
+              <div style="background: var(--surface); padding: 10px; border-radius: 4px; border: 1px solid var(--border);">
+                <div style="font-size: 11px; color: var(--text-muted); font-family: var(--font-mono);">BACKWASH CYCLES</div>
+                <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-top: 2px;">3 / 24h</div>
+              </div>
+            </div>
+          `,
+          diag: "Turtleneck Decision: Built around the single interactive mechanism that proves the domain. 17.8:1 contrast, dense operational hierarchy, instant threshold response.",
+          contrast: "CONTRAST: 17.8:1 AAA",
+          physics: "PHYSICS: 0MS LATENCY",
+          proof: "CENTERPIECE: REAL-TIME SCADA"
+        },
+        slop: {
+          title: "Industrial Solution Unleashed",
+          desc: "Next-gen AI platform accelerating fluid metrics with synergy.",
+          html: `
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span style="font-size: 20px; font-weight: 700; color: #d8b4fe;">AI Water Cloud Hub</span>
+                <div style="font-size: 12px; color: #a855f7; margin-top: 2px;">cluster-04-node &bull; p99: 14ms &bull; 14,200 req/s</div>
+              </div>
+              <span class="transmuter-badge" style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4);">PASS/FAIL: 99.9%</span>
+            </div>
+            <div style="margin-top: 16px; padding: 14px; background: rgba(88,28,135,0.3); border-radius: 8px; border: 1px dashed rgba(168,85,247,0.4);">
+              <div style="font-size: 13px; color: #94a3b8;">DevOps server telemetry pasted onto municipal water utility. Zero actual PSI or filtration controls.</div>
+            </div>
+          `,
+          diag: "Why this is slop: Cloned Kubernetes metrics (p99, req/s) onto a municipal water plant. Inappropriate purple gradient. 2.1:1 contrast failure.",
+          contrast: "CONTRAST: 2.1:1 (FAIL)",
+          physics: "PHYSICS: BOUNCY EASE-IN",
+          proof: "CENTERPIECE: FAKE SERVER TELEMETRY"
+        }
+      },
+      cultural: {
+        name: 'Cultural Biennial',
+        calibrated: {
+          title: 'Archipelago 2027 // Spatial Sound Biennial',
+          desc: 'Five volcanic islands. Acoustic resonance, deep basalt geology, and site-specific installations.',
+          html: `
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span style="font-size: 20px; font-weight: 700; color: var(--text-primary);">Island IV: Hrafntinna Caldera</span>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Sub-harmonic acoustic array in volcanic obsidian canyon &bull; Curated by El&iacute;n Halla</div>
+              </div>
+              <span class="transmuter-badge badge-ok">ACOUSTIC CADENCE: ACTIVE</span>
+            </div>
+            <div class="transmuter-ctrl">
+              <label for="freqSlider" style="font-size: 13px; font-family: var(--font-mono); color: var(--text-secondary);">Resonant Waveform:</label>
+              <input type="range" class="transmuter-range" id="freqSlider" min="28" max="432" value="114" oninput="updateFreq(this.value)" aria-label="Adjust acoustic resonant frequency Hz">
+              <span id="freqVal" style="font-family: var(--font-mono); font-weight: 700; color: var(--text-primary);">114 Hz (Basalt Cavity)</span>
+            </div>
+            <div style="display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap;">
+              <button type="button" class="domain-btn" style="background: var(--surface); color: var(--text-primary); border-color: var(--border-strong);" aria-label="Select 5-Island Pilgrimage Pass">Pilgrimage Pass &bull; $240</button>
+              <button type="button" class="domain-btn" style="background: var(--surface); color: var(--text-secondary);" aria-label="Select Caldera Day Pass">Caldera Day Pass &bull; $85</button>
+            </div>
+          `,
+          diag: "Turtleneck Decision: Distinctive elemental identity derived from basalt geology and sound art. Zero dark developer terminal windows or generic SaaS cards.",
+          contrast: "CONTRAST: 18.2:1 AAA",
+          physics: "PHYSICS: 80MS CUBIC-OUT",
+          proof: "CENTERPIECE: ACOUSTIC RESONANCE"
+        },
+        slop: {
+          title: "Archipelago Web3 Art Drop",
+          desc: "Mint your island pass now on the blockchain.",
+          html: `
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span style="font-size: 20px; font-weight: 700; color: #d8b4fe;">terminal$ git clone archipelago</span>
+                <div style="font-size: 12px; color: #a855f7; margin-top: 2px;">npm install @island/sound --save</div>
+              </div>
+              <span class="transmuter-badge" style="background: rgba(168,85,247,0.2); color: #c084fc;">MINT: 0.4 ETH</span>
+            </div>
+            <div style="margin-top: 16px; padding: 14px; background: rgba(88,28,135,0.3); border-radius: 8px; border: 1px dashed rgba(168,85,247,0.4);">
+              <div style="font-size: 13px; color: #94a3b8;">Hacker terminal and git commands pasted onto an international architecture and acoustic art festival.</div>
+            </div>
+          `,
+          diag: "Why this is slop: Literal reference copying. Treated an art biennial like a developer CLI repo with terminal chrome and crypto badges.",
+          contrast: "CONTRAST: 2.4:1 (FAIL)",
+          physics: "PHYSICS: ZERO ERGONOMICS",
+          proof: "CENTERPIECE: IRRELEVANT TERMINAL"
+        }
+      },
+      dental: {
+        name: 'Mobile Healthcare',
+        calibrated: {
+          title: 'Alabaster Dental Studio // Mobile Booking',
+          desc: 'Viewport 390x844. 44px thumb targets, clear appointment slots, zero horizontal scroll.',
+          html: `
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span style="font-size: 18px; font-weight: 700; color: var(--text-primary);">Select Appointment Slot</span>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Dr. Sarah Chen &bull; Comprehensive Hygiene ($120)</div>
+              </div>
+              <span class="transmuter-badge badge-ok">STEP 2 OF 4</span>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 14px;">
+              <button type="button" class="domain-btn active" onclick="selectSlot(this)" style="min-height: 44px;" aria-label="Book 09:00 AM slot">09:00 AM</button>
+              <button type="button" class="domain-btn" onclick="selectSlot(this)" style="min-height: 44px;" aria-label="Book 11:30 AM slot">11:30 AM</button>
+              <button type="button" class="domain-btn" onclick="selectSlot(this)" style="min-height: 44px;" aria-label="Book 02:15 PM slot">02:15 PM</button>
+            </div>
+            <div style="margin-top: 14px; font-size: 12px; color: var(--text-secondary);">
+              &check; 44px minimum tap targets &bull; Keyboard navigable &bull; Instant confirmation feedback
+            </div>
+          `,
+          diag: "Turtleneck Decision: Calibrated specifically for mobile touch ergonomics. Step preservation, zero horizontal overflow, warm reassuring clinic tone.",
+          contrast: "CONTRAST: 16.5:1 AAA",
+          physics: "PHYSICS: 80MS EASE-OUT",
+          proof: "CENTERPIECE: MOBILE THUMB-FLOW"
+        },
+        slop: {
+          title: "Dental Enterprise SaaS Dashboard",
+          desc: "Manage multi-tenant clinic appointments.",
+          html: `
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span style="font-size: 18px; font-weight: 700; color: #d8b4fe;">Patient Database Table (8 Columns)</span>
+                <div style="font-size: 12px; color: #a855f7; margin-top: 2px;">Scroll right to view action buttons &rarr;</div>
+              </div>
+              <span class="transmuter-badge" style="background: rgba(168,85,247,0.2); color: #c084fc;">ROWS: 2,400</span>
+            </div>
+            <div style="margin-top: 16px; padding: 14px; background: rgba(88,28,135,0.3); border-radius: 8px; border: 1px dashed rgba(168,85,247,0.4);">
+              <div style="font-size: 13px; color: #94a3b8;">8-column wide desktop table crammed into mobile screen, requiring awkward horizontal swipe and tiny 18px click targets.</div>
+            </div>
+          `,
+          diag: "Why this is slop: Ignored mobile viewport. Squeezed desktop table into 390px width. Broken tap targets (18px) and horizontal overflow.",
+          contrast: "CONTRAST: 2.2:1 (FAIL)",
+          physics: "PHYSICS: HORIZONTAL OVERFLOW",
+          proof: "CENTERPIECE: BROKEN TABLE"
+        }
+      },
+      cache: {
+        name: 'Distributed Systems',
+        calibrated: {
+          title: 'KiteCache // Memory Hierarchy Latency Budget',
+          desc: 'High-throughput in-memory caching. Mathematical latency budget and tier hit-ratios.',
+          html: `
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span style="font-size: 20px; font-weight: 700; color: var(--text-primary);">Sub-Millisecond Read Budget</span>
+                <div style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">Tier 1 SRAM (0.8ns) &bull; Tier 2 DRAM (85ns) &bull; NVMe Fallback (12&mu;s)</div>
+              </div>
+              <span class="transmuter-badge badge-ok" id="cacheBadge">P99 BUDGET: 0.28 MS (OPTIMAL)</span>
+            </div>
+            <div class="transmuter-ctrl">
+              <label for="cacheSlider" style="font-size: 13px; font-family: var(--font-mono); color: var(--text-secondary);">DRAM Cache Allocation:</label>
+              <input type="range" class="transmuter-range" id="cacheSlider" min="4" max="128" value="32" oninput="updateCache(this.value)" aria-label="Adjust allocated DRAM cache size GB">
+              <span id="cacheVal" style="font-family: var(--font-mono); font-weight: 700; color: var(--text-primary);">32 GB (Hit Ratio: 98.7%)</span>
+            </div>
+            <div style="margin-top: 14px; font-size: 12px; color: var(--text-secondary);">
+              &check; Domain-authentic distributed systems vernacular &bull; Interactive latency budget proof
+            </div>
+          `,
+          diag: "Turtleneck Decision: Mathematical latency budget interactive simulator. Proves the distributed cache value proposition without generic marketing fluff.",
+          contrast: "CONTRAST: 18.5:1 AAA",
+          physics: "PHYSICS: 0MS LATENCY",
+          proof: "CENTERPIECE: MEMORY BUDGET SIM"
+        },
+        slop: {
+          title: "Revolutionary AI Cache 10x",
+          desc: "Supercharge your database with quantum synergy.",
+          html: `
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span style="font-size: 20px; font-weight: 700; color: #d8b4fe;">Unleash Your Data Superpowers</span>
+                <div style="font-size: 12px; color: #a855f7; margin-top: 2px;">The only AI cache built for modern unicorns</div>
+              </div>
+              <span class="transmuter-badge" style="background: rgba(168,85,247,0.2); color: #c084fc;">AI RATING: 5/5</span>
+            </div>
+            <div style="margin-top: 16px; padding: 14px; background: rgba(88,28,135,0.3); border-radius: 8px; border: 1px dashed rgba(168,85,247,0.4);">
+              <div style="font-size: 13px; color: #94a3b8;">Marketing buzzwords ('revolutionary', 'supercharge') with zero real cache topology, memory metrics, or throughput calculations.</div>
+            </div>
+          `,
+          diag: "Why this is slop: Pure marketing hand-waving. Zero domain empathy for distributed systems engineers.",
+          contrast: "CONTRAST: 2.3:1 (FAIL)",
+          physics: "PHYSICS: ANIMATED BLOBS",
+          proof: "CENTERPIECE: BUZZWORD BANNER"
+        }
+      }
+    };
+
+    function renderStage() {
+      const data = DOMAINS[activeDomain][activeMode];
+      const stage = document.getElementById('stageContainer');
+      const banner = document.getElementById('diagnosisBanner');
+
+      stage.className = 'stage-container ' + (activeMode === 'slop' ? 'slop-surface' : '');
+      stage.innerHTML = data.html;
+
+      banner.className = 'diagnosis-banner ' + (activeMode === 'slop' ? 'diag-slop' : 'diag-calibrated');
+      banner.textContent = data.diag;
+
+      document.getElementById('specContrast').textContent = data.contrast;
+      document.getElementById('specPhysics').textContent = data.physics;
+      document.getElementById('specProof').textContent = data.proof;
     }
 
-    function updateSeats(val) {
-      seatCount = parseInt(val, 10);
-      document.getElementById('seatDisplay').textContent = seatCount + ' Designers';
-      updatePrice();
+    function switchDomain(domain) {
+      activeDomain = domain;
+      document.getElementById('tabScada').classList.toggle('active', domain === 'scada');
+      document.getElementById('tabCultural').classList.toggle('active', domain === 'cultural');
+      document.getElementById('tabDental').classList.toggle('active', domain === 'dental');
+      document.getElementById('tabCache').classList.toggle('active', domain === 'cache');
+      renderStage();
     }
 
-    function setBilling(cycle) {
-      billingCycle = cycle;
-      document.getElementById('btnMonthly').classList.toggle('active', cycle === 'monthly');
-      document.getElementById('btnAnnual').classList.toggle('active', cycle === 'annual');
-      updatePrice();
+    function switchMode(mode) {
+      activeMode = mode;
+      document.getElementById('btnSlop').classList.toggle('active-slop', mode === 'slop');
+      document.getElementById('btnCalibrated').classList.toggle('active-calibrated', mode === 'calibrated');
+      renderStage();
     }
 
-    function handleAuthorize(btn) {
-      const originalText = btn.innerHTML;
-      btn.innerHTML = '&check; Access Granted';
-      btn.style.opacity = '0.85';
-      setTimeout(() => {
-        btn.innerHTML = originalText;
-        btn.style.opacity = '1';
-      }, 1800);
+    function updatePsi(val) {
+      const v = parseInt(val, 10);
+      document.getElementById('psiVal').textContent = v + ' PSI';
+      const badge = document.getElementById('scadaBadge');
+      if (v > 120) {
+        badge.className = 'transmuter-badge badge-warn';
+        badge.textContent = 'HIGH PRESSURE ALERT: ' + v + ' PSI';
+      } else {
+        badge.className = 'transmuter-badge badge-ok';
+        badge.textContent = 'PUMP PRESSURE: ' + v + ' PSI (NOMINAL)';
+      }
+    }
+
+    function updateFreq(val) {
+      document.getElementById('freqVal').textContent = val + ' Hz (Basalt Cavity)';
+    }
+
+    function updateCache(val) {
+      const v = parseInt(val, 10);
+      const hit = (96.0 + (v / 128) * 3.8).toFixed(1);
+      document.getElementById('cacheVal').textContent = v + ' GB (Hit Ratio: ' + hit + '%)';
+    }
+
+    function selectSlot(btn) {
+      const parent = btn.parentElement;
+      Array.from(parent.children).forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
     }
 
     function copyInstallCmd(btn) {
@@ -893,6 +1160,9 @@
         setTimeout(() => { btn.textContent = 'Copy'; }, 1600);
       });
     }
+
+    // Initial render
+    renderStage();
   </script>
 </body>
 </html>
