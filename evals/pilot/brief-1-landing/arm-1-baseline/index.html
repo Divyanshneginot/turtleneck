@@ -1,0 +1,2766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turtleneck — Product Design Intelligence for AI Coding Agents</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-canvas: #090a0f;
+      --bg-subtle: #0f1118;
+      --bg-surface: #141722;
+      --bg-surface-elevated: #1a1e2d;
+      --bg-glass: rgba(20, 23, 34, 0.75);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --border-glow: rgba(245, 158, 11, 0.35);
+      
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --text-accent: #fbbf24;
+      
+      --accent-amber: #f59e0b;
+      --accent-amber-glow: rgba(245, 158, 11, 0.2);
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-violet: #8b5cf6;
+      --accent-rose: #f43f5e;
+      
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Space Grotesk', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --shadow-elevation: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      overflow-x: hidden;
+      background: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.07) 0%, transparent 60%),
+                  radial-gradient(circle at 90% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                  var(--bg-canvas);
+      min-height: 100vh;
+    }
+
+    /* Subtle grid background */
+    .grid-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1100px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse at 50% 10%, black 20%, transparent 75%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header / Nav */
+    header {
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+      padding: 0 16px;
+      margin-bottom: 40px;
+    }
+
+    .nav-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      background: rgba(15, 17, 24, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 9999px;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-mark {
+      width: 30px;
+      height: 30px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
+    }
+
+    .logo-tag {
+      font-size: 0.72rem;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: var(--accent-amber);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-weight: 500;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-cta {
+      background: var(--text-primary);
+      color: #000 !important;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: transform 0.15s ease, background-color 0.2s ease !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-cta:hover {
+      background: #e2e8f0 !important;
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 60px 0 80px;
+      text-align: center;
+      position: relative;
+    }
+
+    .pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 999px;
+      color: #fcd34d;
+      font-size: 0.82rem;
+      font-family: var(--font-mono);
+      font-weight: 500;
+      margin-bottom: 24px;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.1);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-amber);
+      box-shadow: 0 0 8px var(--accent-amber);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.3); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 5.5vw, 4.4rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      color: #ffffff;
+    }
+
+    .hero h1 span.gradient-text {
+      background: linear-gradient(135deg, #ffffff 30%, #fcd34d 80%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-lead {
+      max-width: 760px;
+      margin: 0 auto 36px;
+      font-size: 1.18rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    .hero-lead strong {
+      color: #e2e8f0;
+      font-weight: 600;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: var(--radius-md);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+      color: #0b0c10;
+      box-shadow: 0 4px 18px rgba(245, 158, 11, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(245, 158, 11, 0.45);
+    }
+
+    .btn-secondary {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-surface-elevated);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Terminal Quick Bar */
+    .quick-cli {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(15, 17, 24, 0.9);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 10px 18px;
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      color: #e2e8f0;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .cli-prefix {
+      color: var(--accent-amber);
+      user-select: none;
+    }
+
+    .cli-cmd {
+      color: #f1f5f9;
+      font-weight: 500;
+    }
+
+    .cli-copy-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .cli-copy-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+    }
+
+    /* Interactive Comparison Section */
+    .showcase-section {
+      padding: 40px 0 90px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-amber);
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+    }
+
+    /* Live Interactive Compare Container */
+    .comparison-frame {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-elevation);
+    }
+
+    .comparison-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 24px;
+      background: rgba(20, 23, 34, 0.95);
+      border-bottom: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .preset-selector {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .preset-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-right: 4px;
+    }
+
+    .preset-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-secondary);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .preset-pill:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .preset-pill.active {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.5);
+      color: var(--accent-amber);
+    }
+
+    .compare-toggle-bar {
+      display: flex;
+      align-items: center;
+      background: #090a0f;
+      border-radius: 999px;
+      padding: 3px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .mode-tab {
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--text-secondary);
+      border: none;
+      background: transparent;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mode-tab.active {
+      background: var(--bg-surface-elevated);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .mode-tab.active.turtleneck-mode {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(217, 119, 6, 0.2));
+      color: #fcd34d;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    /* Split Screen Grid */
+    .compare-viewport {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 540px;
+      position: relative;
+    }
+
+    @media (max-width: 900px) {
+      .compare-viewport {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pane {
+      padding: 28px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pane-left {
+      background: #0d0f14;
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    .pane-right {
+      background: #11131a;
+      position: relative;
+    }
+
+    .pane-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .pane-tag.uninformed {
+      color: #94a3b8;
+    }
+
+    .pane-tag.turtleneck {
+      color: var(--accent-amber);
+    }
+
+    .pane-tag .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+    }
+
+    .pane-tag.uninformed .badge-dot { background: #64748b; }
+    .pane-tag.turtleneck .badge-dot { 
+      background: var(--accent-amber);
+      box-shadow: 0 0 8px var(--accent-amber);
+    }
+
+    /* Output Render Mockups */
+    .mockup-card {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Generic agent output */
+    .generic-box {
+      background: #1a1c24;
+      border: 1px solid #2d313e;
+      border-radius: 10px;
+      padding: 24px;
+      color: #94a3b8;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .generic-hero {
+      background: linear-gradient(180deg, #3b82f6 0%, #8b5cf6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .generic-btn {
+      background: #6366f1;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: none;
+      font-size: 0.85rem;
+      margin-top: 14px;
+      display: inline-block;
+    }
+
+    .generic-meta {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-top: 14px;
+      border-top: 1px solid #2a2e3d;
+      padding-top: 10px;
+    }
+
+    .critique-box {
+      margin-top: 16px;
+      background: rgba(244, 63, 94, 0.08);
+      border: 1px dashed rgba(244, 63, 94, 0.35);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.78rem;
+      color: #fda4af;
+      line-height: 1.5;
+    }
+
+    .critique-title {
+      font-weight: 700;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      margin-bottom: 4px;
+      color: #fb7185;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Turtleneck-guided output */
+    .bespoke-app {
+      background: #0e1017;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .synth-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .synth-title {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+      color: #f8fafc;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .synth-badge {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      font-size: 0.68rem;
+      font-family: var(--font-mono);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .synth-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .synth-dial-card {
+      background: #141721;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+
+    .synth-dial-card:hover {
+      border-color: rgba(245, 158, 11, 0.4);
+    }
+
+    .dial-graphic {
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 8px;
+      border-radius: 50%;
+      border: 2px solid #334155;
+      border-top-color: var(--accent-amber);
+      position: relative;
+      transform: rotate(45deg);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .dial-graphic::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 50%;
+      width: 2px;
+      height: 6px;
+      background: var(--accent-amber);
+      transform: translateX(-50%);
+    }
+
+    .dial-name {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .dial-val {
+      font-size: 0.85rem;
+      color: #f1f5f9;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      margin-top: 2px;
+    }
+
+    .synth-visualizer {
+      background: #0a0b10;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      padding: 10px 14px;
+      height: 68px;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      margin-bottom: 16px;
+    }
+
+    .viz-bar {
+      flex: 1;
+      background: linear-gradient(180deg, var(--accent-amber) 0%, rgba(245, 158, 11, 0.2) 100%);
+      border-radius: 2px 2px 0 0;
+      height: 30%;
+      transition: height 0.2s ease;
+    }
+
+    /* Rationale Inspector Drawer */
+    .intel-breakdown {
+      margin-top: 14px;
+      background: rgba(245, 158, 11, 0.06);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.78rem;
+    }
+
+    .intel-header {
+      display: flex;
+      justify-content: space-between;
+      color: var(--accent-amber);
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 0.72rem;
+      margin-bottom: 6px;
+    }
+
+    .intel-list {
+      list-style: none;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .intel-list li {
+      margin-bottom: 4px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .intel-list li::before {
+      content: '↳';
+      color: var(--accent-amber);
+    }
+
+    /* Three Pillars / Core Design Principles */
+    .principles-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .principle-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .principle-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(245, 158, 11, 0.4);
+      box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.5);
+    }
+
+    .principle-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-amber), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .principle-card:hover::before {
+      opacity: 1;
+    }
+
+    .principle-num {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-amber);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .principle-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      color: var(--accent-amber);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .principle-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #f8fafc;
+      letter-spacing: -0.01em;
+    }
+
+    .principle-card p {
+      color: var(--text-secondary);
+      font-size: 0.93rem;
+      line-height: 1.65;
+      margin-bottom: 20px;
+      flex: 1;
+    }
+
+    .principle-rule {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: #cbd5e1;
+      border-left: 3px solid var(--accent-amber);
+    }
+
+    .principle-rule code {
+      color: #fcd34d;
+    }
+
+    /* Agent Install Snippets Section */
+    .install-section {
+      padding: 90px 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(15, 17, 24, 0.8) 50%, transparent 100%);
+    }
+
+    .tabs-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-elevation);
+    }
+
+    .agent-tabs-header {
+      display: flex;
+      background: rgba(20, 23, 34, 0.9);
+      border-bottom: 1px solid var(--border-subtle);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .agent-tabs-header::-webkit-scrollbar {
+      display: none;
+    }
+
+    .agent-tab {
+      padding: 16px 22px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .agent-tab:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .agent-tab.active {
+      color: #f8fafc;
+      border-bottom-color: var(--accent-amber);
+      background: rgba(245, 158, 11, 0.04);
+    }
+
+    .agent-tab-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .tab-content {
+      padding: 28px;
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .content-subheading {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .agent-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    .code-container {
+      position: relative;
+      background: #090a0f;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .code-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: #11131b;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .code-pre {
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.84rem;
+      color: #e2e8f0;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      cursor: pointer;
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+    }
+
+    .install-tips {
+      background: rgba(16, 185, 129, 0.06);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-size: 0.83rem;
+      color: #a7f3d0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    /* Live Interactive Agent Simulation Sandbox */
+    .sandbox-section {
+      padding: 80px 0 100px;
+    }
+
+    .sandbox-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      box-shadow: var(--shadow-elevation);
+    }
+
+    .sandbox-layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 32px;
+      margin-top: 32px;
+    }
+
+    @media (max-width: 960px) {
+      .sandbox-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .brief-controls {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .control-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .brief-select {
+      width: 100%;
+      background: #090a0f;
+      border: 1px solid var(--border-strong);
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .brief-select:focus {
+      border-color: var(--accent-amber);
+    }
+
+    .aesthetic-archetype-card {
+      background: #090a0f;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 14px;
+    }
+
+    .archetype-meta {
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      color: var(--accent-amber);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .archetype-title {
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .archetype-description {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+
+    .thought-stream {
+      background: #090a0f;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      height: 180px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .thought-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: var(--text-secondary);
+    }
+
+    .thought-line.done {
+      color: #34d399;
+    }
+
+    .thought-line.active {
+      color: var(--accent-amber);
+    }
+
+    /* Live Output Canvas */
+    .output-viewport {
+      background: #090a0f;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+    }
+
+    .viewport-header {
+      background: #131620;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #334155;
+    }
+
+    .dot.red { background: #ef4444; }
+    .dot.yellow { background: #f59e0b; }
+    .dot.green { background: #10b981; }
+
+    .viewport-canvas {
+      padding: 32px;
+      min-height: 440px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Dynamic Archetype Previews */
+    .dynamic-preview {
+      width: 100%;
+      max-width: 600px;
+      transition: all 0.3s ease;
+    }
+
+    /* Archetype 1: Modular Audio Workstation */
+    .audio-workstation {
+      background: #111216;
+      border: 1px solid #272a34;
+      border-radius: 12px;
+      padding: 24px;
+      color: #e2e8f0;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .rack-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #232733;
+      padding-bottom: 14px;
+      margin-bottom: 20px;
+    }
+
+    .rack-logo {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .knob-row {
+      display: flex;
+      gap: 20px;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .knob-unit {
+      text-align: center;
+      flex: 1;
+    }
+
+    .knob-disk {
+      width: 52px;
+      height: 52px;
+      margin: 0 auto 8px;
+      background: radial-gradient(circle, #252834 0%, #151720 100%);
+      border: 2px solid #3b4253;
+      border-radius: 50%;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      transition: transform 0.2s ease;
+    }
+
+    .knob-disk:hover {
+      border-color: #f59e0b;
+    }
+
+    .knob-indicator {
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      width: 3px;
+      height: 10px;
+      background: #fbbf24;
+      border-radius: 2px;
+      transform: translateX(-50%);
+    }
+
+    .knob-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: #94a3b8;
+    }
+
+    .knob-val-text {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: #f8fafc;
+      font-weight: 600;
+    }
+
+    .patch-bay {
+      background: #0a0b0e;
+      border: 1px solid #1f2330;
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .patch-status {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: #34d399;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .engage-btn {
+      background: #f59e0b;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .engage-btn:hover {
+      background: #fbbf24;
+    }
+
+    /* Archetype 2: High-Density Algorithmic Desk */
+    .fin-terminal {
+      background: #0b0d12;
+      border: 1px solid #1e293b;
+      border-radius: 12px;
+      padding: 20px;
+      font-family: var(--font-mono);
+    }
+
+    .fin-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 12px;
+    }
+
+    .fin-ticker {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #f8fafc;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .fin-delta {
+      color: #10b981;
+      font-size: 0.8rem;
+    }
+
+    .fin-stream-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .depth-chart {
+      background: #06070a;
+      border: 1px solid #151a24;
+      border-radius: 6px;
+      padding: 12px;
+      height: 120px;
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+    }
+
+    .depth-col {
+      flex: 1;
+      background: rgba(16, 185, 129, 0.35);
+      border-top: 1px solid #10b981;
+      height: 40%;
+    }
+
+    .depth-col.ask {
+      background: rgba(239, 68, 68, 0.35);
+      border-top: 1px solid #ef4444;
+    }
+
+    .order-book-mini {
+      background: #06070a;
+      border: 1px solid #151a24;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 0.7rem;
+    }
+
+    .book-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+    }
+
+    /* Archetype 3: Minimalist Brutalist Archive */
+    .brutalist-archive {
+      background: #fdfbf7;
+      color: #121212;
+      border: 2px solid #121212;
+      border-radius: 2px;
+      padding: 24px;
+      box-shadow: 6px 6px 0px #121212;
+      font-family: var(--font-sans);
+    }
+
+    .archive-header {
+      border-bottom: 2px solid #121212;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .archive-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .archive-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .archive-body {
+      font-size: 0.88rem;
+      line-height: 1.55;
+      margin-bottom: 16px;
+      color: #333;
+    }
+
+    .archive-tags {
+      display: flex;
+      gap: 6px;
+    }
+
+    .archive-tag {
+      background: #121212;
+      color: #fdfbf7;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 3px 8px;
+    }
+
+    /* Comparison Table */
+    .eval-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .table-container {
+      margin-top: 40px;
+      overflow-x: auto;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      background: var(--bg-subtle);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: #11141e;
+      padding: 16px 20px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    th.highlight-col {
+      color: var(--accent-amber);
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    td {
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-secondary);
+    }
+
+    td.highlight-col {
+      background: rgba(245, 158, 11, 0.03);
+      color: #f8fafc;
+      font-weight: 500;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .badge-pass {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #34d399;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    .badge-fail {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #94a3b8;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+
+    /* Testimonials / Agent Logs */
+    .quotes-section {
+      padding: 80px 0;
+    }
+
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .quote-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .quote-text {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .quote-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--accent-amber);
+      font-size: 0.8rem;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .author-name {
+      font-weight: 600;
+      color: #f8fafc;
+      font-size: 0.9rem;
+    }
+
+    .author-role {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    /* CTA Banner */
+    .cta-banner {
+      margin: 80px 0;
+      background: radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.15) 0%, transparent 80%),
+                  #11131a;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: var(--radius-xl);
+      padding: 60px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .cta-banner h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .cta-banner p {
+      color: var(--text-secondary);
+      max-width: 600px;
+      margin: 0 auto 32px;
+      font-size: 1.05rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 48px 0 60px;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #10b981;
+      color: #042f2e;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grid-pattern"></div>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <div class="logo-mark">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <span>Turtleneck</span>
+        <span class="logo-tag">skill &middot; v1.2</span>
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="#principles">Principles</a></li>
+          <li><a href="#interactive-demo">Live Demo</a></li>
+          <li><a href="#agent-install">Install</a></li>
+          <li><a href="#evals">Benchmark</a></li>
+        </ul>
+      </nav>
+
+      <a href="#agent-install" class="nav-cta">
+        <span>Install Skill</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="container">
+    <section class="hero">
+      <div class="pill-badge">
+        <span class="pulse-dot"></span>
+        <span>A Design Intelligence Skill for AI Coding Agents</span>
+      </div>
+
+      <h1>
+        Give your coding agents an<br>
+        <span class="gradient-text">innate sense of product taste.</span>
+      </h1>
+
+      <p class="hero-lead">
+        Most coding agents reach for the same generic indigo-gradient SaaS mockup. 
+        <strong>Turtleneck</strong> embeds an architectural design skill into LLMs—helping them discover authentic product archetypes, 
+        translate design inspiration without plagiarizing, and execute pixel-coherent interfaces.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#agent-install" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 17 10 11 4 5"></polyline>
+            <line x1="12" y1="19" x2="20" y2="19"></line>
+          </svg>
+          Add to Your Agent
+        </a>
+        <a href="#interactive-demo" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="10 8 16 12 10 16 10 8"></polygon>
+          </svg>
+          Explore Live Demo
+        </a>
+      </div>
+
+      <div class="quick-cli">
+        <span class="cli-prefix">$</span>
+        <span class="cli-cmd" id="quick-cmd">npx turtleneck-skill install --agent=all</span>
+        <button class="cli-copy-btn" onclick="copyCliCmd()">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <span>Copy</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Side-by-Side Comparison Showcase -->
+    <section class="showcase-section" id="interactive-demo">
+      <div class="section-header">
+        <div class="section-badge">The Transformation</div>
+        <h2 class="section-title">Generic AI Output vs. Turtleneck Intelligence</h2>
+        <p class="section-desc">
+          Compare how standard agent prompts produce derivative, uninspired templates, while Turtleneck synthesizes bespoke typographic rhythm and tactile affordances.
+        </p>
+      </div>
+
+      <div class="comparison-frame">
+        <div class="comparison-toolbar">
+          <div class="preset-selector">
+            <span class="preset-label">SCENARIO:</span>
+            <button class="preset-pill active" onclick="switchScenario('synth', this)">Audio Synthesizer</button>
+            <button class="preset-pill" onclick="switchScenario('trading', this)">Quant Desk</button>
+            <button class="preset-pill" onclick="switchScenario('editorial', this)">Design Archive</button>
+          </div>
+
+          <div class="compare-toggle-bar">
+            <button class="mode-tab active turtleneck-mode" id="btn-both" onclick="setSplitMode('both')">Split View</button>
+            <button class="mode-tab" id="btn-only-turtleneck" onclick="setSplitMode('turtleneck')">Turtleneck Only</button>
+          </div>
+        </div>
+
+        <div class="compare-viewport" id="compare-viewport">
+          <!-- Left: Bland Generic Agent Output -->
+          <div class="pane pane-left" id="pane-left">
+            <div class="pane-tag uninformed">
+              <span class="badge-dot"></span>
+              <span>Without Turtleneck (Vanilla Agent)</span>
+            </div>
+
+            <div class="mockup-card">
+              <div class="generic-box" id="generic-preview-box">
+                <div style="font-size: 0.75rem; text-transform: uppercase; color: #818cf8; margin-bottom: 4px;">Dashboard v1.0</div>
+                <div class="generic-hero">Smart Modular App</div>
+                <p style="font-size: 0.85rem; line-height: 1.4;">Manage your workflow seamlessly with our intuitive modern interface and AI powered cloud sync.</p>
+                <button class="generic-btn">Get Started &rarr;</button>
+                <div class="generic-meta">
+                  Default Tailwind palette &bull; Inter font everywhere &bull; No domain-specific tactile feedback
+                </div>
+              </div>
+
+              <div class="critique-box" id="generic-critique">
+                <div class="critique-title">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  </svg>
+                  <span>Cognitive Shortfall</span>
+                </div>
+                Agent used generic purple gradient SaaS tropes. Failed to understand the physical tactile nature of audio hardware, resulting in flat, lifeless UI with zero domain resonance.
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Turtleneck Bespoke Output -->
+          <div class="pane pane-right" id="pane-right">
+            <div class="pane-tag turtleneck">
+              <span class="badge-dot"></span>
+              <span>With Turtleneck Skill Enabled</span>
+            </div>
+
+            <div class="mockup-card">
+              <div class="bespoke-app" id="bespoke-preview-box">
+                <div class="synth-bar">
+                  <div class="synth-title">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" color="#f59e0b">
+                      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <span id="bespoke-title">ANALOGUE HARMONIC SYNTH</span>
+                  </div>
+                  <span class="synth-badge" id="bespoke-badge">48kHz &bull; 32-BIT FLOAT</span>
+                </div>
+
+                <div class="synth-grid" id="synth-dial-grid">
+                  <div class="synth-dial-card" onclick="rotateDial(this)">
+                    <div class="dial-graphic" style="transform: rotate(65deg);"></div>
+                    <div class="dial-name">Resonance</div>
+                    <div class="dial-val">68.4%</div>
+                  </div>
+                  <div class="synth-dial-card" onclick="rotateDial(this)">
+                    <div class="dial-graphic" style="transform: rotate(140deg);"></div>
+                    <div class="dial-name">Cutoff</div>
+                    <div class="dial-val">2.4 kHz</div>
+                  </div>
+                  <div class="synth-dial-card" onclick="rotateDial(this)">
+                    <div class="dial-graphic" style="transform: rotate(210deg);"></div>
+                    <div class="dial-name">Drive</div>
+                    <div class="dial-val">+4.2 dB</div>
+                  </div>
+                </div>
+
+                <div class="synth-visualizer" id="audio-viz">
+                  <div class="viz-bar" style="height: 45%;"></div>
+                  <div class="viz-bar" style="height: 85%;"></div>
+                  <div class="viz-bar" style="height: 60%;"></div>
+                  <div class="viz-bar" style="height: 95%;"></div>
+                  <div class="viz-bar" style="height: 40%;"></div>
+                  <div class="viz-bar" style="height: 70%;"></div>
+                  <div class="viz-bar" style="height: 30%;"></div>
+                  <div class="viz-bar" style="height: 80%;"></div>
+                  <div class="viz-bar" style="height: 55%;"></div>
+                  <div class="viz-bar" style="height: 90%;"></div>
+                </div>
+
+                <div class="intel-breakdown">
+                  <div class="intel-header">
+                    <span>TURTLENECK DESIGN RATIONALE</span>
+                    <span>COHERENCE SCORE: 98/100</span>
+                  </div>
+                  <ul class="intel-list" id="intel-list">
+                    <li><strong>Archetype:</strong> Vintage studio hardware meets Dieter Rams precision instrumentation.</li>
+                    <li><strong>Tactility:</strong> High-friction rotary potentiometer dials with mono tabular numeric readouts.</li>
+                    <li><strong>Harmonic Palette:</strong> Amber glow on matte charcoal (#0e1017) minimizing eye fatigue.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Design Principles Section -->
+    <section class="principles-section" id="principles">
+      <div class="section-header">
+        <div class="section-badge">System Philosophy</div>
+        <h2 class="section-title">The Three Pillars of Turtleneck Intelligence</h2>
+        <p class="section-desc">
+          How Turtleneck rewires the cognitive reasoning of LLMs before they write a single line of HTML or CSS.
+        </p>
+      </div>
+
+      <div class="principles-grid">
+        <!-- Principle 1 -->
+        <div class="principle-card">
+          <div class="principle-num">01 / CONCEPTUAL FOUNDATION</div>
+          <div class="principle-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </div>
+          <h3>Concept Over Template</h3>
+          <p>
+            Stops agents from defaulting to lazy SaaS boilerplate. Turtleneck forces the model to deliberate on the emotional tone, user ergonomics, and conceptual metaphor of the tool before choosing layout structures.
+          </p>
+          <div class="principle-rule">
+            <code>RULE:</code> Ban generic cards &amp; purple gradients. Derive unique component geography from domain mechanics.
+          </div>
+        </div>
+
+        <!-- Principle 2 -->
+        <div class="principle-card">
+          <div class="principle-num">02 / INSPIRATION TRANSLATION</div>
+          <div class="principle-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <h3>Translate, Never Plagiarize</h3>
+          <p>
+            When shown reference websites, naive models copy HTML tags and hex colors verbatim. Turtleneck deconstructs references into fundamental visual vectors—tension, density, contrast, and rhythm—then re-synthesizes them anew.
+          </p>
+          <div class="principle-rule">
+            <code>RULE:</code> Extract structural essence and emotional cadence; never duplicate literal DOM structures.
+          </div>
+        </div>
+
+        <!-- Principle 3 -->
+        <div class="principle-card">
+          <div class="principle-num">03 / SYSTEMIC RIGOR</div>
+          <div class="principle-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="3" y1="9" x2="21" y2="9"></line>
+              <line x1="9" y1="21" x2="9" y2="9"></line>
+            </svg>
+          </div>
+          <h3>Systemic Coherence</h3>
+          <p>
+            Prevents multi-turn design drift. Turtleneck maintains strict token invariants across typography, elevation planes, micro-states, and optical margins so complex generated web applications feel unified.
+          </p>
+          <div class="principle-rule">
+            <code>RULE:</code> Every state (hover, active, disabled, empty) inherits harmonic mathematical scaling.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Multi-Agent Installation Snippets Section -->
+    <section class="install-section" id="agent-install">
+      <div class="section-header">
+        <div class="section-badge">Universal Agent Compatibility</div>
+        <h2 class="section-title">One-Line Setup for Your Coding Stack</h2>
+        <p class="section-desc">
+          Drop the Turtleneck skill directly into Claude Code, Cursor, Windsurf, Cline, Roo Code, or GitHub Copilot.
+        </p>
+      </div>
+
+      <div class="tabs-wrapper">
+        <div class="agent-tabs-header">
+          <button class="agent-tab active" onclick="showAgentTab('claude', this)">
+            <svg class="agent-tab-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm0-8h-2V7h2v2zm4 8h-2v-4h2v4zm0-6h-2V7h2v4z"/>
+            </svg>
+            Claude Code
+          </button>
+          <button class="agent-tab" onclick="showAgentTab('cursor', this)">
+            <svg class="agent-tab-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2l9 4.5v11L12 22l-9-4.5v-11L12 2zm0 2.24L5 7.74v8.52l7 3.5 7-3.5V7.74l-7-3.5z"/>
+            </svg>
+            Cursor
+          </button>
+          <button class="agent-tab" onclick="showAgentTab('windsurf', this)">
+            <svg class="agent-tab-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/>
+            </svg>
+            Windsurf (Cascade)
+          </button>
+          <button class="agent-tab" onclick="showAgentTab('cline', this)">
+            <svg class="agent-tab-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            </svg>
+            Cline / Roo Code
+          </button>
+          <button class="agent-tab" onclick="showAgentTab('copilot', this)">
+            <svg class="agent-tab-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.1-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.99 1.03-2.69-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.6 1.03 2.69 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"/>
+            </svg>
+            Copilot &amp; Aider
+          </button>
+        </div>
+
+        <!-- Claude Code Tab -->
+        <div class="tab-content active" id="tab-claude">
+          <div class="content-subheading">
+            <span class="agent-desc">Claude Code native tool integration via skill manifest</span>
+            <button class="copy-btn" onclick="copySnippet('claude-code-block')">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy snippet</span>
+            </button>
+          </div>
+          <div class="code-container">
+            <div class="code-topbar">
+              <span>TERMINAL / CLAUDE CODE</span>
+              <span>BASH</span>
+            </div>
+            <pre class="code-pre" id="claude-code-block"><code># Install Turtleneck design intelligence skill for Claude Code
+claude skill add @turtleneck/design-intelligence
+
+# Verify active status
+claude skill list | grep turtleneck
+# Output: &check; turtleneck-design v1.2.0 (Active &middot; High Priority)</code></pre>
+          </div>
+          <div class="install-tips">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>Claude Code will now automatically invoke Turtleneck whenever asked to write HTML, React, Vue, Svelte, or CSS layouts.</span>
+          </div>
+        </div>
+
+        <!-- Cursor Tab -->
+        <div class="tab-content" id="tab-cursor">
+          <div class="content-subheading">
+            <span class="agent-desc">Add directly to your repository's <code>.cursorrules</code> or global rules</span>
+            <button class="copy-btn" onclick="copySnippet('cursor-code-block')">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy snippet</span>
+            </button>
+          </div>
+          <div class="code-container">
+            <div class="code-topbar">
+              <span>.cursorrules</span>
+              <span>MARKDOWN</span>
+            </div>
+            <pre class="code-pre" id="cursor-code-block"><code># Turtleneck UI/UX Design Intelligence Protocol
+- Never build standard generic purple-gradient SaaS cards unless explicitly asked.
+- Before generating frontend code, synthesize a specific Aesthetic Archetype:
+  1. Determine domain metaphors (e.g. tactile audio deck, brutalist archive, quant desk).
+  2. Define a strict harmonic token palette (max 3 accents, intentional background depth).
+  3. Ensure tactile micro-interactions on all interactive surfaces.
+- Strictly adhere to typographic hierarchy: Display headers, crisp mono data tags, sans body.</code></pre>
+          </div>
+          <div class="install-tips">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>Save to <code>.cursorrules</code> at project root to steer all Cursor Composer and Chat generations.</span>
+          </div>
+        </div>
+
+        <!-- Windsurf Tab -->
+        <div class="tab-content" id="tab-windsurf">
+          <div class="content-subheading">
+            <span class="agent-desc">Configuration for Windsurf Cascade rules</span>
+            <button class="copy-btn" onclick="copySnippet('windsurf-code-block')">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy snippet</span>
+            </button>
+          </div>
+          <div class="code-container">
+            <div class="code-topbar">
+              <span>.windsurfrules</span>
+              <span>JSON / PROMPT</span>
+            </div>
+            <pre class="code-pre" id="windsurf-code-block"><code>{
+  "skills": ["@turtleneck/design-engine"],
+  "design_mandate": {
+    "anti_slop_filter": true,
+    "enforce_systemic_scale": true,
+    "inspiration_mode": "translate_vectors",
+    "forbidden_patterns": ["floating-blob-shadows", "generic-purple-glow"]
+  }
+}</code></pre>
+          </div>
+          <div class="install-tips">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>Enables Windsurf Cascade to reason through UI decisions with full visual archetype consistency.</span>
+          </div>
+        </div>
+
+        <!-- Cline Tab -->
+        <div class="tab-content" id="tab-cline">
+          <div class="content-subheading">
+            <span class="agent-desc">Model Context Protocol (MCP) server configuration for Cline and Roo Code</span>
+            <button class="copy-btn" onclick="copySnippet('cline-code-block')">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy snippet</span>
+            </button>
+          </div>
+          <div class="code-container">
+            <div class="code-topbar">
+              <span>cline_mcp_settings.json</span>
+              <span>JSON</span>
+            </div>
+            <pre class="code-pre" id="cline-code-block"><code>{
+  "mcpServers": {
+    "turtleneck-design": {
+      "command": "npx",
+      "args": ["-y", "@turtleneck/mcp-server"],
+      "env": {
+        "TURTLENECK_THEME_RIGOR": "strict"
+      }
+    }
+  }
+}</code></pre>
+          </div>
+          <div class="install-tips">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>Gives Cline and Roo Code tool-level capabilities to query harmonic color sets and design tokens.</span>
+          </div>
+        </div>
+
+        <!-- Copilot Tab -->
+        <div class="tab-content" id="tab-copilot">
+          <div class="content-subheading">
+            <span class="agent-desc">Configuration for GitHub Copilot Workspace, CLI, and Aider</span>
+            <button class="copy-btn" onclick="copySnippet('copilot-code-block')">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy snippet</span>
+            </button>
+          </div>
+          <div class="code-container">
+            <div class="code-topbar">
+              <span>.aider.conf.yml</span>
+              <span>YAML</span>
+            </div>
+            <pre class="code-pre" id="copilot-code-block"><code># Aider & Copilot Turtleneck Prompt Layer
+read:
+  - https://turtleneck.dev/spec/core-design-intelligence.md
+architect: true
+designer-mode:
+  avoid-slop: true
+  elevated-contrast: true
+  responsive-fluidity: true</code></pre>
+          </div>
+          <div class="install-tips">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>Loads the Turtleneck design spec into Aider's architect-editor execution cycle.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Interactive Agent Sandbox -->
+    <section class="sandbox-section">
+      <div class="section-header">
+        <div class="section-badge">Live Generation Sandbox</div>
+        <h2 class="section-title">See Turtleneck Reason in Real Time</h2>
+        <p class="section-desc">
+          Select a creative design brief below and observe how the agent's internal thought stream calibrates tone, generates tokens, and executes an authentic user interface.
+        </p>
+      </div>
+
+      <div class="sandbox-card">
+        <div class="sandbox-layout">
+          <!-- Controls & Agent Thinking Stream -->
+          <div class="brief-controls">
+            <div>
+              <label class="control-label">Choose Design Brief</label>
+              <select class="brief-select" id="brief-selector" onchange="runSandboxSimulation()">
+                <option value="audio">Modular Hardware Synthesizer Studio</option>
+                <option value="quant">High-Frequency Liquidity Desk</option>
+                <option value="archive">Swiss Typographic Art Archive</option>
+              </select>
+            </div>
+
+            <div class="aesthetic-archetype-card">
+              <div class="archetype-meta" id="arch-meta">ARCHETYPE IDENTIFIED</div>
+              <div class="archetype-title" id="arch-title">Tactile Audio Hardware</div>
+              <div class="archetype-description" id="arch-desc">
+                Analog dials, dark anodized aluminum chassis, vacuum-tube amber glow, high-friction potentiometers.
+              </div>
+            </div>
+
+            <div>
+              <label class="control-label">Agent Cognitive Reasoning Stream</label>
+              <div class="thought-stream" id="thought-stream">
+                <div class="thought-line done">&check; Brief parsed: Hardware Audio Studio</div>
+                <div class="thought-line done">&check; Filtered out generic SaaS templates</div>
+                <div class="thought-line done">&check; Synthesizing Dieter Rams physical audio controls</div>
+                <div class="thought-line done">&check; Generating mathematical dial angular coordinates</div>
+                <div class="thought-line active">&bull; Emitting component DOM structure...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Output Viewport -->
+          <div class="output-viewport">
+            <div class="viewport-header">
+              <div class="window-dots">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+              </div>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);" id="viewport-url">
+                localhost:3000/synth-console
+              </span>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #10b981;">
+                &bull; LIVE RENDERING
+              </span>
+            </div>
+
+            <div class="viewport-canvas" id="viewport-canvas">
+              <!-- Content dynamically rendered via JS based on selected brief -->
+              <div class="dynamic-preview" id="sandbox-render">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benchmark Evaluation Table -->
+    <section class="eval-section" id="evals">
+      <div class="section-header">
+        <div class="section-badge">Empirical Results</div>
+        <h2 class="section-title">Design Quality Benchmark</h2>
+        <p class="section-desc">
+          Evaluating 120 generated frontend applications across Claude 3.5 Sonnet, GPT-4o, and Gemini 1.5 Pro.
+        </p>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Evaluation Dimension</th>
+              <th>Vanilla Prompting</th>
+              <th>Generic System Prompt</th>
+              <th class="highlight-col">Agent + Turtleneck</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Originality (Anti-Slop)</strong></td>
+              <td><span class="badge-fail">&cross; 12% (Generic SaaS)</span></td>
+              <td><span class="badge-fail">&cross; 34% (Minor variance)</span></td>
+              <td class="highlight-col"><span class="badge-pass">&check; 94% Bespoke concept</span></td>
+            </tr>
+            <tr>
+              <td><strong>Typographic Scale Rigor</strong></td>
+              <td><span class="badge-fail">&cross; Disjointed sizes</span></td>
+              <td><span class="badge-fail">&cross; Basic tailwind defaults</span></td>
+              <td class="highlight-col"><span class="badge-pass">&check; Harmonic mathematical ratio</span></td>
+            </tr>
+            <tr>
+              <td><strong>Tactility &amp; Affordance Clarity</strong></td>
+              <td><span class="badge-fail">&cross; Flat, ambiguous buttons</span></td>
+              <td><span class="badge-fail">&cross; Standard hover opacity</span></td>
+              <td class="highlight-col"><span class="badge-pass">&check; Multi-state tactile cues</span></td>
+            </tr>
+            <tr>
+              <td><strong>Inspiration Translation</strong></td>
+              <td><span class="badge-fail">&cross; 86% Direct visual copy</span></td>
+              <td><span class="badge-fail">&cross; 52% Surface clone</span></td>
+              <td class="highlight-col"><span class="badge-pass">&check; 91% Structural reinterpretation</span></td>
+            </tr>
+            <tr>
+              <td><strong>Multi-Turn Coherence</strong></td>
+              <td><span class="badge-fail">&cross; Design breaks at turn 3</span></td>
+              <td><span class="badge-fail">&cross; Drifts at turn 5</span></td>
+              <td class="highlight-col"><span class="badge-pass">&check; Rock-solid across 20+ turns</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Testimonials / Agent Community Quotes -->
+    <section class="quotes-section">
+      <div class="section-header">
+        <div class="section-badge">Practitioner Feedback</div>
+        <h2 class="section-title">Built for the Future of Agentic Software</h2>
+      </div>
+
+      <div class="quotes-grid">
+        <div class="quote-card">
+          <p class="quote-text">
+            "Before Turtleneck, every web app our Cursor agents generated looked like the exact same generic Shadcn starter kit. Now it generates interfaces with distinct visual identity, tailored precisely to the domain."
+          </p>
+          <div class="quote-author">
+            <div class="author-avatar">MS</div>
+            <div>
+              <div class="author-name">Milo Sundaram</div>
+              <div class="author-role">Founding Engineer, HyperScale</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote-card">
+          <p class="quote-text">
+            "The inspiration translation engine is magic. I can point Claude Code at an obscure 1970s Braun design book and an audio workstation, and it produces an entirely original, ergonomic web console without copying a single pixel."
+          </p>
+          <div class="quote-author">
+            <div class="author-avatar">EL</div>
+            <div>
+              <div class="author-name">Elena Rostova</div>
+              <div class="author-role">Head of Product Design, SynthOS</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote-card">
+          <p class="quote-text">
+            "The systemic coherence rule alone saved us hundreds of hours refactoring agent-generated CSS. It maintains token rigor from the hero section all the way to intricate modal states."
+          </p>
+          <div class="quote-author">
+            <div class="author-avatar">DK</div>
+            <div>
+              <div class="author-name">Devon Kross</div>
+              <div class="author-role">Lead Architect, Codex Labs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action Banner -->
+    <section class="cta-banner">
+      <h2>Transform how your agents design today.</h2>
+      <p>
+        Install the open Turtleneck skill into your favorite coding agent in under 30 seconds. Free, open, and model-agnostic.
+      </p>
+      <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+        <a href="#agent-install" class="btn btn-primary">
+          Install Turtleneck Now
+        </a>
+        <a href="https://github.com" target="_blank" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          View on GitHub
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-inner">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="logo-mark" style="width: 22px; height: 22px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+          <span style="font-weight: 600; color: #f1f5f9;">Turtleneck</span>
+          <span>&mdash; Product Design Intelligence for Autonomous Code Agents</span>
+        </div>
+
+        <ul class="footer-links">
+          <li><a href="#principles">Principles</a></li>
+          <li><a href="#agent-install">Skill Spec</a></li>
+          <li><a href="#interactive-demo">Demo</a></li>
+          <li><a href="#evals">Benchmark</a></li>
+        </ul>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Copy Toast Notification -->
+  <div class="toast" id="toast">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="20 6 9 17 4 12"></polyline>
+    </svg>
+    <span id="toast-text">Copied to clipboard</span>
+  </div>
+
+  <script>
+    // Scenario data for the Transformation preview
+    const scenarios = {
+      synth: {
+        title: "ANALOGUE HARMONIC SYNTH",
+        badge: "48kHz • 32-BIT FLOAT",
+        dials: [
+          { name: "Resonance", val: "68.4%", rot: 65 },
+          { name: "Cutoff", val: "2.4 kHz", rot: 140 },
+          { name: "Drive", val: "+4.2 dB", rot: 210 }
+        ],
+        generic: {
+          tag: "Dashboard v1.0",
+          title: "Smart Modular App",
+          desc: "Manage your workflow seamlessly with our intuitive modern interface and AI powered cloud sync.",
+          btn: "Get Started →",
+          critique: "Agent used generic purple gradient SaaS tropes. Failed to understand the physical tactile nature of audio hardware, resulting in flat, lifeless UI with zero domain resonance."
+        },
+        intel: [
+          "Archetype: Vintage studio hardware meets Dieter Rams precision instrumentation.",
+          "Tactility: High-friction rotary potentiometer dials with mono tabular numeric readouts.",
+          "Harmonic Palette: Amber glow on matte charcoal (#0e1017) minimizing eye fatigue."
+        ]
+      },
+      trading: {
+        title: "ALGORITHMIC LIQUIDITY MATRIX",
+        badge: "1.2ms LATENCY • ARBITRAGE",
+        dials: [
+          { name: "Spread", val: "0.0018", rot: 40 },
+          { name: "Slippage", val: "0.02%", rot: 110 },
+          { name: "Fill Rate", val: "99.8%", rot: 290 }
+        ],
+        generic: {
+          tag: "Finance Pro",
+          title: "Crypto Wallet & Exchange",
+          desc: "Buy, sell, and trade tokens with fast transactions and low fees. Easy crypto management for everyone.",
+          btn: "Connect Wallet",
+          critique: "Agent generated a toy crypto consumer wallet rather than a high-density institutional order desk. Missed tabular alignment, orderbook depth, and low-latency feedback states."
+        },
+        intel: [
+          "Archetype: Bloomberg terminal ergonomics re-imagined with modern WebGL precision.",
+          "Information Density: Maximum data-to-ink ratio with fixed-width mono tabular figures.",
+          "Visual Hierarchy: Muted emerald bids & crimson asks without blinding oversaturation."
+        ]
+      },
+      editorial: {
+        title: "BAUHAUS TYPOGRAPHIC ARCHIVE",
+        badge: "1923 — 1933 • MONOGRAPH",
+        dials: [
+          { name: "Grid Ratio", val: "1.618", rot: 90 },
+          { name: "Tracking", val: "-0.04em", rot: 180 },
+          { name: "Contrast", val: "100%", rot: 270 }
+        ],
+        generic: {
+          tag: "Blog Page",
+          title: "My Creative Articles",
+          desc: "Read the latest design posts and follow along with tutorials on modern web development trends.",
+          btn: "Read More",
+          critique: "Agent used cookie-cutter blog cards with rounded pastel badges. Completely stripped the bold asymmetric brutalist gravitas required for a historic design archive."
+        },
+        intel: [
+          "Archetype: Swiss International Typographic style with asymmetric grid tension.",
+          "Typography: High-contrast sans serif headline paired with brutalist black borders.",
+          "Rhythm: Replaces bubbly cards with stark editorial columns and archival catalog numbers."
+        ]
+      }
+    };
+
+    let currentScenario = 'synth';
+
+    function switchScenario(key, el) {
+      currentScenario = key;
+      const data = scenarios[key];
+
+      // Update active pill button
+      document.querySelectorAll('.preset-pill').forEach(btn => btn.classList.remove('active'));
+      if (el) {
+        el.classList.add('active');
+      } else if (typeof event !== 'undefined' && event && event.target) {
+        event.target.classList.add('active');
+      }
+
+      // Update generic side
+      const genericBox = document.getElementById('generic-preview-box');
+      genericBox.innerHTML = `
+        <div style="font-size: 0.75rem; text-transform: uppercase; color: #818cf8; margin-bottom: 4px;">${data.generic.tag}</div>
+        <div class="generic-hero">${data.generic.title}</div>
+        <p style="font-size: 0.85rem; line-height: 1.4;">${data.generic.desc}</p>
+        <button class="generic-btn">${data.generic.btn}</button>
+        <div class="generic-meta">
+          Default Tailwind palette &bull; Inter font everywhere &bull; No domain-specific tactile feedback
+        </div>
+      `;
+      document.getElementById('generic-critique').innerHTML = `
+        <div class="critique-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <span>Cognitive Shortfall</span>
+        </div>
+        ${data.generic.critique}
+      `;
+
+      // Update Bespoke Turtleneck side
+      document.getElementById('bespoke-title').innerText = data.title;
+      document.getElementById('bespoke-badge').innerText = data.badge;
+
+      const dialGrid = document.getElementById('synth-dial-grid');
+      dialGrid.innerHTML = data.dials.map(d => `
+        <div class="synth-dial-card" onclick="rotateDial(this)">
+          <div class="dial-graphic" style="transform: rotate(${d.rot}deg);"></div>
+          <div class="dial-name">${d.name}</div>
+          <div class="dial-val">${d.val}</div>
+        </div>
+      `).join('');
+
+      // Update Intel list
+      const intelList = document.getElementById('intel-list');
+      intelList.innerHTML = data.intel.map(item => `<li>${item}</li>`).join('');
+
+      triggerVizPulse();
+    }
+
+    // Split mode toggle
+    function setSplitMode(mode) {
+      const viewport = document.getElementById('compare-viewport');
+      const paneLeft = document.getElementById('pane-left');
+      const btnBoth = document.getElementById('btn-both');
+      const btnOnly = document.getElementById('btn-only-turtleneck');
+
+      if (mode === 'both') {
+        viewport.style.gridTemplateColumns = '1fr 1fr';
+        paneLeft.style.display = 'flex';
+        btnBoth.classList.add('active');
+        btnOnly.classList.remove('active');
+      } else {
+        viewport.style.gridTemplateColumns = '1fr';
+        paneLeft.style.display = 'none';
+        btnBoth.classList.remove('active');
+        btnOnly.classList.add('active');
+      }
+    }
+
+    // Rotate dial interaction
+    function rotateDial(card) {
+      const dial = card.querySelector('.dial-graphic');
+      const currentRot = dial.style.transform ? parseInt(dial.style.transform.replace(/[^0-9]/g, '')) || 45 : 45;
+      const nextRot = (currentRot + 45) % 360;
+      dial.style.transform = `rotate(${nextRot}deg)`;
+      showToast('Adjusted parameter: ' + card.querySelector('.dial-name').innerText);
+      triggerVizPulse();
+    }
+
+    function triggerVizPulse() {
+      const bars = document.querySelectorAll('.viz-bar');
+      bars.forEach(bar => {
+        const randHeight = Math.floor(Math.random() * 75) + 20;
+        bar.style.height = randHeight + '%';
+      });
+    }
+
+    // Agent installation snippet tabs
+    function showAgentTab(agentKey, el) {
+      document.querySelectorAll('.agent-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+      if (el) {
+        el.classList.add('active');
+      } else if (typeof event !== 'undefined' && event && (event.currentTarget || event.target)) {
+        (event.currentTarget || event.target).classList.add('active');
+      }
+      const targetContent = document.getElementById('tab-' + agentKey);
+      if (targetContent) {
+        targetContent.classList.add('active');
+      }
+    }
+
+    // Copy handlers
+    function copySnippet(elementId) {
+      const text = document.getElementById(elementId).innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Code snippet copied to clipboard');
+      });
+    }
+
+    function copyCliCmd() {
+      const text = document.getElementById('quick-cmd').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Install command copied: ' + text);
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      const toastText = document.getElementById('toast-text');
+      toastText.innerText = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2400);
+    }
+
+    // Sandbox Simulation logic
+    const sandboxArchetypes = {
+      audio: {
+        meta: "ARCHETYPE: TACTILE AUDIO HARDWARE",
+        title: "Analogue Hardware Synthesizer Studio",
+        desc: "Tactile rotary dials, anodized charcoal finish, amber phosphor display, high-friction control physics.",
+        url: "localhost:3000/hardware-synth",
+        thoughts: [
+          "&check; Brief parsed: Hardware Audio Studio",
+          "&check; Filtered out generic SaaS templates",
+          "&check; Synthesizing Dieter Rams physical audio controls",
+          "&check; Generating mathematical dial angular coordinates",
+          "&check; Emitted DOM with zero generic tailwind slop"
+        ],
+        render: `
+          <div class="audio-workstation">
+            <div class="rack-header">
+              <div class="rack-logo">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+                </svg>
+                <span>TURTLENECK MODULAR CORE // OSC-01</span>
+              </div>
+              <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #10b981;">&bull; ANALOGUE CIRCUIT READY</span>
+            </div>
+            <div class="knob-row">
+              <div class="knob-unit" onclick="rotateDial(this)">
+                <div class="knob-disk"><div class="knob-indicator"></div></div>
+                <div class="knob-label">ATTACK</div>
+                <div class="knob-val-text">14 ms</div>
+              </div>
+              <div class="knob-unit" onclick="rotateDial(this)">
+                <div class="knob-disk" style="transform: rotate(90deg);"><div class="knob-indicator"></div></div>
+                <div class="knob-label">DECAY</div>
+                <div class="knob-val-text">320 ms</div>
+              </div>
+              <div class="knob-unit" onclick="rotateDial(this)">
+                <div class="knob-disk" style="transform: rotate(180deg);"><div class="knob-indicator"></div></div>
+                <div class="knob-label">SUSTAIN</div>
+                <div class="knob-val-text">-6 dB</div>
+              </div>
+              <div class="knob-unit" onclick="rotateDial(this)">
+                <div class="knob-disk" style="transform: rotate(240deg);"><div class="knob-indicator"></div></div>
+                <div class="knob-label">RELEASE</div>
+                <div class="knob-val-text">1.2 s</div>
+              </div>
+            </div>
+            <div class="patch-bay">
+              <div class="patch-status">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <circle cx="12" cy="12" r="10"></circle>
+                </svg>
+                <span>PATCH ROUTED: LFO 1 &rarr; VCF CUTOFF</span>
+              </div>
+              <button class="engage-btn" onclick="showToast('Modulation Triggered')">FIRE TRIGGER</button>
+            </div>
+          </div>
+        `
+      },
+      quant: {
+        meta: "ARCHETYPE: HIGH-DENSITY QUANT DESK",
+        title: "Algorithmic Arbitrage Liquidity Desk",
+        desc: "Monospace tabular alignment, real-time bid/ask order book, subdued contrast, latency monitor.",
+        url: "localhost:3000/quant-terminal",
+        thoughts: [
+          "&check; Brief parsed: High-Frequency Liquidity Desk",
+          "&check; Rejected playful illustrations & rounded buttons",
+          "&check; Imposed tabular monospace numerals (font-variant-numeric: tabular-nums)",
+          "&check; Calculated color-safe bid/ask visual delta channels",
+          "&check; Rendered high-density order book matrix"
+        ],
+        render: `
+          <div class="fin-terminal">
+            <div class="fin-bar">
+              <div class="fin-ticker">
+                <span>SOL-USD PERP</span>
+                <span class="fin-delta">+3.42%</span>
+              </div>
+              <div style="font-size: 0.75rem; color: #94a3b8;">
+                INDEX: <strong style="color: #fff;">$194.28</strong> &bull; SPREAD: 0.01
+              </div>
+            </div>
+            <div class="fin-stream-grid">
+              <div class="depth-chart">
+                <div class="depth-col" style="height: 30%;"></div>
+                <div class="depth-col" style="height: 45%;"></div>
+                <div class="depth-col" style="height: 60%;"></div>
+                <div class="depth-col" style="height: 85%;"></div>
+                <div class="depth-col ask" style="height: 70%;"></div>
+                <div class="depth-col ask" style="height: 50%;"></div>
+                <div class="depth-col ask" style="height: 35%;"></div>
+                <div class="depth-col ask" style="height: 20%;"></div>
+              </div>
+              <div class="order-book-mini">
+                <div class="book-row" style="color: #ef4444;">
+                  <span>194.32</span><span>42.1</span>
+                </div>
+                <div class="book-row" style="color: #ef4444;">
+                  <span>194.30</span><span>18.5</span>
+                </div>
+                <div class="book-row" style="color: #10b981;">
+                  <span>194.27</span><span>84.0</span>
+                </div>
+                <div class="book-row" style="color: #10b981;">
+                  <span>194.25</span><span>129.2</span>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.72rem; color: #64748b;">EXECUTION ROUTE: FLASH-RELAY-02 (0.84ms)</span>
+              <button class="engage-btn" style="background: #10b981; color: #000;" onclick="showToast('Order Sent: 10 SOL @ 194.28')">LIMIT BUY</button>
+            </div>
+          </div>
+        `
+      },
+      archive: {
+        meta: "ARCHETYPE: SWISS TYPOGRAPHIC ARCHIVE",
+        title: "Swiss International Art Monograph",
+        desc: "Strict asymmetric grid tension, high-contrast monochrome typography, architectural borders.",
+        url: "localhost:3000/swiss-archive",
+        thoughts: [
+          "&check; Brief parsed: Swiss Typographic Art Archive",
+          "&check; Neutralized all drop shadows, glows, and soft blur",
+          "&check; Established Josef Müller-Brockmann grid proportions",
+          "&check; Injected stark tactile 2px structural ink lines",
+          "&check; Assembled editorial composition"
+        ],
+        render: `
+          <div class="brutalist-archive">
+            <div class="archive-header">
+              <div class="archive-title">NEUE GRAPHIK.<br>MONOGRAPH 1958</div>
+              <div class="archive-num">CAT. NO. 4402</div>
+            </div>
+            <div class="archive-body">
+              An international review devoted to contemporary graphic art, typography, and visual communication. Form follows systematic mathematical construction.
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div class="archive-tags">
+                <span class="archive-tag">ZÜRICH</span>
+                <span class="archive-tag">MÜLLER-BROCKMANN</span>
+                <span class="archive-tag">1:1.618</span>
+              </div>
+              <button style="background: #121212; color: #fff; border: none; padding: 6px 14px; font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; cursor: pointer;" onclick="showToast('Archive Plate Opened')">INSPECT FOLIO &rarr;</button>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    function runSandboxSimulation() {
+      const select = document.getElementById('brief-selector');
+      const key = select.value;
+      const data = sandboxArchetypes[key];
+
+      document.getElementById('arch-meta').innerText = data.meta;
+      document.getElementById('arch-title').innerText = data.title;
+      document.getElementById('arch-desc').innerText = data.desc;
+      document.getElementById('viewport-url').innerText = data.url;
+
+      // Update thought stream
+      const stream = document.getElementById('thought-stream');
+      stream.innerHTML = data.thoughts.map(t => `<div class="thought-line done">${t}</div>`).join('');
+
+      // Update live rendered preview
+      document.getElementById('sandbox-render').innerHTML = data.render;
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      runSandboxSimulation();
+      setInterval(triggerVizPulse, 2800);
+    });
+  </script>
+</body>
+</html>

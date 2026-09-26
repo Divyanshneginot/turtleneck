@@ -1,0 +1,2540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#FAF8F5">
+  <meta name="description" content="Book your dental appointment online at Alabaster Dental Studio. Quick, reassuring, gentle dental care in SoHo.">
+  <title>Book an Appointment | Alabaster Dental Studio</title>
+
+  <!-- Google Fonts Preconnect & Stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       CSS RESET & CUSTOM PROPERTIES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      /* Palette: Reassuring Healthcare & Warm Craft (WCAG 2.2 AA compliant >= 4.5:1) */
+      --color-canvas: #EDE8E0;
+      --color-bg: #FAF8F5;
+      --color-surface: #FFFFFF;
+      --color-surface-hover: #F6F3ED;
+      --color-surface-active: #EFEBE3;
+      --color-surface-selected: #EAF3F1;
+      
+      --color-border: #E3DED6;
+      --color-border-hover: #C5BCB0;
+      --color-border-selected: #155E54;
+      
+      --color-primary: #155E54;         /* High-contrast deep teal: 5.8:1 against white */
+      --color-primary-hover: #0F4840;
+      --color-primary-active: #09342F;
+      --color-primary-light: #EBF3F1;
+      --color-on-primary: #FFFFFF;
+      
+      --color-accent: #A25838;          /* Warm terracotta accent */
+      --color-accent-light: #FBF1EB;
+      
+      --color-text-title: #141E1B;      /* > 14:1 contrast */
+      --color-text-body: #1E2B27;       /* > 12:1 contrast */
+      --color-text-muted: #495852;      /* > 5.5:1 contrast */
+      --color-text-subtle: #5C6E67;     /* > 4.5:1 contrast */
+      
+      --color-focus: #155E54;
+      --color-focus-offset: #FAF8F5;
+      
+      --color-success: #166534;
+      --color-success-bg: #F0FDF4;
+      --color-success-border: #BBF7D0;
+      
+      --color-error: #991B1B;
+      --color-error-bg: #FEF2F2;
+      --color-error-border: #F87171;
+      
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 1px 3px rgba(24, 34, 31, 0.05);
+      --shadow-card: 0 2px 8px rgba(20, 30, 27, 0.04), 0 1px 2px rgba(20, 30, 27, 0.02);
+      --shadow-sticky: 0 -4px 18px rgba(20, 30, 27, 0.07);
+      --shadow-frame: 0 24px 60px -12px rgba(35, 45, 40, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.06);
+
+      --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--color-canvas);
+      color: var(--color-text-body);
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Screen Reader Only Utility */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ==========================================================================
+       FOCUS VISIBLE FOUNDATION (2px solid, 2px offset, >= 3:1 contrast)
+       ========================================================================== */
+    :focus-visible {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+    }
+
+    button:focus:not(:focus-visible),
+    input:focus:not(:focus-visible),
+    select:focus:not(:focus-visible),
+    textarea:focus:not(:focus-visible) {
+      outline: none;
+    }
+
+    /* ==========================================================================
+       VIEWPORT & MOBILE FRAME WRAPPER
+       Supports 390x844 physical mobile target with preview toolbar for desktop
+       ========================================================================== */
+    .app-viewport-wrapper {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    /* Desktop View Toolbar */
+    .desktop-toolbar {
+      display: none;
+      width: 100%;
+      max-width: 500px;
+      padding: 12px 16px 4px;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--color-text-muted);
+    }
+
+    @media (min-width: 540px) {
+      .desktop-toolbar {
+        display: flex;
+      }
+      .app-viewport-wrapper {
+        padding: 16px 0 32px;
+      }
+    }
+
+    .device-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      color: var(--color-text-title);
+      background: rgba(255, 255, 255, 0.7);
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-border);
+    }
+
+    .device-badge-dot {
+      width: 8px;
+      height: 8px;
+      background-color: #22C55E;
+      border-radius: 50%;
+    }
+
+    .toggle-frame-btn {
+      min-height: 44px;
+      padding: 0 14px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-title);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+    }
+
+    .toggle-frame-btn:hover {
+      background: var(--color-surface-hover);
+      border-color: var(--color-border-hover);
+    }
+
+    .toggle-frame-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* The Mobile Container (Default 390x844 ratio on desktop, fluid on mobile) */
+    .mobile-container {
+      width: 100%;
+      max-width: 390px;
+      min-height: 844px;
+      height: 100vh;
+      background-color: var(--color-bg);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      box-shadow: none;
+    }
+
+    @media (min-width: 540px) {
+      .mobile-container {
+        height: 844px;
+        border-radius: 46px;
+        box-shadow: var(--shadow-frame);
+        border: 10px solid #1A211E;
+        margin: auto 0;
+      }
+      .mobile-container.full-width {
+        max-width: 600px;
+        height: 90vh;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--color-border);
+      }
+    }
+
+    /* Mobile Status Bar (Simulated iPhone Dynamic Island & Time) */
+    .mobile-status-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 44px;
+      padding: 0 24px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-text-title);
+      flex-shrink: 0;
+      background-color: var(--color-bg);
+      user-select: none;
+      z-index: 40;
+    }
+
+    .island-pill {
+      width: 100px;
+      height: 24px;
+      background-color: #1A211E;
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* ==========================================================================
+       HEADER & NAVIGATION BAR
+       ========================================================================== */
+    .studio-header {
+      padding: 4px 20px 12px;
+      background-color: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      flex-shrink: 0;
+      z-index: 30;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-icon-box {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background-color: var(--color-primary-light);
+      color: var(--color-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-text-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--color-text-title);
+      line-height: 1.15;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      font-weight: 600;
+    }
+
+    .header-sound-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+    }
+
+    .header-sound-btn:hover {
+      background: var(--color-surface-hover);
+      color: var(--color-primary);
+    }
+
+    .header-sound-btn:active {
+      transform: scale(0.94);
+    }
+
+    /* ==========================================================================
+       PROGRESS INDICATOR (Accessible Stepper)
+       ========================================================================== */
+    .stepper-container {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .stepper-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .stepper-current-label {
+      color: var(--color-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .stepper-count {
+      color: var(--color-text-muted);
+    }
+
+    .stepper-segments {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      height: 5px;
+    }
+
+    .step-segment {
+      height: 100%;
+      border-radius: 3px;
+      background-color: #E2DDD5;
+      transition: transform 0.25s var(--ease-smooth), opacity 0.25s ease;
+    }
+
+    .step-segment.is-active,
+    .step-segment.is-complete {
+      background-color: var(--color-primary);
+    }
+
+    /* ==========================================================================
+       MAIN SCROLL AREA (THUMB REACH OPTIMIZED)
+       ========================================================================== */
+    .booking-main-content {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 18px 20px 140px; /* Generous bottom padding to clear sticky thumb zone */
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Gentle step transition container */
+    .step-panel {
+      display: none;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: transform 0.25s var(--ease-smooth), opacity 0.2s ease;
+    }
+
+    .step-panel.is-active-step {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .step-heading-group {
+      margin-bottom: 20px;
+    }
+
+    .step-intro-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-accent);
+      background-color: var(--color-accent-light);
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 6px;
+    }
+
+    .step-main-title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--color-text-title);
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .step-main-desc {
+      font-size: 14px;
+      color: var(--color-text-muted);
+      line-height: 1.45;
+    }
+
+    /* ==========================================================================
+       CARDS & 5-STATE CONTROLS (WCAG compliant)
+       ========================================================================== */
+    fieldset {
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    legend {
+      padding: 0;
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-title);
+    }
+
+    .selection-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* 5-State Selection Card: Default, Hover, Focus, Active, Disabled */
+    .selectable-card {
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px;
+      min-height: 52px;
+      background-color: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      user-select: none;
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+    }
+
+    /* State 2: Hover */
+    .selectable-card:hover {
+      border-color: var(--color-border-hover);
+      background-color: var(--color-surface-hover);
+    }
+
+    /* State 3: Focus-Visible */
+    .selectable-card input[type="radio"]:focus-visible + .card-content-wrapper,
+    .selectable-card:has(input[type="radio"]:focus-visible) {
+      outline: 2px solid var(--color-focus);
+      outline-offset: 2px;
+    }
+
+    /* State 4: Active / Pressed */
+    .selectable-card:active {
+      transform: scale(0.985);
+      background-color: var(--color-surface-active);
+    }
+
+    /* State 5: Disabled */
+    .selectable-card.is-disabled,
+    .selectable-card:has(input:disabled) {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+      background-color: #F1ECE4;
+      border-color: #E2DDD5;
+    }
+
+    /* Selected State */
+    .selectable-card.is-selected,
+    .selectable-card:has(input[type="radio"]:checked) {
+      border-color: var(--color-primary);
+      background-color: var(--color-surface-selected);
+      box-shadow: 0 0 0 1px var(--color-primary);
+    }
+
+    /* Custom Radio Visual Indicator */
+    .custom-radio-mark {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #C4BCB0;
+      background-color: var(--color-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+    }
+
+    .custom-radio-mark::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: var(--color-primary);
+      opacity: 0;
+      transform: scale(0);
+      transition: transform 0.18s var(--ease-smooth), opacity 0.18s ease;
+    }
+
+    .selectable-card:has(input[type="radio"]:checked) .custom-radio-mark {
+      border-color: var(--color-primary);
+    }
+
+    .selectable-card:has(input[type="radio"]:checked) .custom-radio-mark::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .card-header-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-text-title);
+      line-height: 1.25;
+    }
+
+    .card-price {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--color-primary);
+      white-space: nowrap;
+    }
+
+    .card-meta-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 2px;
+      font-size: 12px;
+      color: var(--color-text-muted);
+    }
+
+    .duration-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(0, 0, 0, 0.04);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .card-description {
+      font-size: 13px;
+      color: var(--color-text-subtle);
+      line-height: 1.4;
+      margin-top: 4px;
+    }
+
+    /* Doctor Avatar Layout */
+    .dentist-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-full);
+      background-color: #E2ECE8;
+      border: 2px solid #FFFFFF;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .dentist-avatar svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .dentist-role {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-accent);
+    }
+
+    .dentist-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #78350F;
+    }
+
+    .dentist-tag {
+      font-size: 11px;
+      color: var(--color-text-muted);
+      margin-top: 3px;
+    }
+
+    /* ==========================================================================
+       DATE & TIME PICKER (Interactive Thumb-Zone)
+       ========================================================================== */
+    .date-section-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .calendar-month-banner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 4px;
+    }
+
+    .month-title {
+      font-family: var(--font-serif);
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--color-text-title);
+    }
+
+    .month-nav-group {
+      display: flex;
+      gap: 6px;
+    }
+
+    .month-nav-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text-title);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+    }
+
+    .month-nav-btn:hover {
+      background: var(--color-surface-hover);
+      border-color: var(--color-border-hover);
+    }
+
+    .month-nav-btn:active {
+      transform: scale(0.93);
+    }
+
+    /* Horizontal Thumb Scrollable Date Bar */
+    .date-scroll-container {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 2px 10px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+
+    .date-pill-btn {
+      flex: 0 0 68px;
+      min-height: 80px;
+      padding: 10px 4px;
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      scroll-snap-align: start;
+      font-family: var(--font-sans);
+      user-select: none;
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+    }
+
+    .date-pill-btn:hover {
+      border-color: var(--color-border-hover);
+      background: var(--color-surface-hover);
+    }
+
+    .date-pill-btn:active {
+      transform: scale(0.94);
+    }
+
+    .date-pill-btn.is-selected {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(21, 94, 84, 0.28);
+    }
+
+    .date-pill-weekday {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--color-text-muted);
+    }
+
+    .date-pill-btn.is-selected .date-pill-weekday {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .date-pill-daynum {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin: 2px 0;
+      color: var(--color-text-title);
+    }
+
+    .date-pill-btn.is-selected .date-pill-daynum {
+      color: #FFFFFF;
+    }
+
+    .date-pill-tag {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background-color: var(--color-surface-hover);
+      color: var(--color-text-muted);
+    }
+
+    .date-pill-btn.is-selected .date-pill-tag {
+      background-color: rgba(255, 255, 255, 0.25);
+      color: #FFFFFF;
+    }
+
+    /* Time Slot Grouping */
+    .time-slot-group {
+      margin-top: 8px;
+    }
+
+    .time-group-heading {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+    }
+
+    .time-chip-btn {
+      min-height: 48px;
+      padding: 8px 6px;
+      background-color: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-title);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+    }
+
+    .time-chip-btn:hover:not(:disabled) {
+      border-color: var(--color-border-hover);
+      background-color: var(--color-surface-hover);
+    }
+
+    .time-chip-btn:active:not(:disabled) {
+      transform: scale(0.95);
+    }
+
+    .time-chip-btn.is-selected {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #FFFFFF;
+      box-shadow: 0 3px 8px rgba(21, 94, 84, 0.25);
+    }
+
+    .time-chip-btn:disabled {
+      opacity: 0.35;
+      background-color: #EDE8E0;
+      border-color: #E2DDD5;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
+    /* ==========================================================================
+       PATIENT DETAILS FORM & ACCESSIBLE INPUTS
+       ========================================================================== */
+    .form-group-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .field-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-text-title);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .field-label-optional {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--color-text-muted);
+    }
+
+    .text-input,
+    .select-input,
+    .textarea-input {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 14px;
+      background-color: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      color: var(--color-text-title);
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .text-input:hover,
+    .select-input:hover,
+    .textarea-input:hover {
+      border-color: var(--color-border-hover);
+    }
+
+    .text-input:focus,
+    .select-input:focus,
+    .textarea-input:focus {
+      border-color: var(--color-focus);
+      background-color: #FFFFFF;
+    }
+
+    .text-input[aria-invalid="true"],
+    .select-input[aria-invalid="true"] {
+      border-color: var(--color-error);
+      background-color: var(--color-error-bg);
+    }
+
+    .field-error-msg {
+      display: none;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-error);
+      margin-top: 2px;
+    }
+
+    .field-error-msg.is-visible {
+      display: block;
+    }
+
+    .textarea-input {
+      min-height: 76px;
+      resize: vertical;
+    }
+
+    /* Select Wrapper with Custom Arrow */
+    .select-wrapper {
+      position: relative;
+    }
+
+    .select-wrapper::after {
+      content: "";
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      width: 9px;
+      height: 9px;
+      border-right: 2px solid var(--color-text-muted);
+      border-bottom: 2px solid var(--color-text-muted);
+      transform: translateY(-65%) rotate(45deg);
+      pointer-events: none;
+    }
+
+    /* First-time patient toggle card */
+    .toggle-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background-color: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+    }
+
+    .toggle-card:hover {
+      border-color: var(--color-border-hover);
+    }
+
+    .toggle-card:active {
+      transform: scale(0.99);
+    }
+
+    .custom-checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid #C4BCB0;
+      background-color: var(--color-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+    }
+
+    .toggle-card input[type="checkbox"]:checked + .toggle-content-box .custom-checkbox,
+    .toggle-card:has(input[type="checkbox"]:checked) .custom-checkbox {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+      color: #FFFFFF;
+    }
+
+    .custom-checkbox svg {
+      opacity: 0;
+      transform: scale(0.6);
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+    }
+
+    .toggle-card:has(input[type="checkbox"]:checked) .custom-checkbox svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .toggle-text-block {
+      flex: 1;
+    }
+
+    .toggle-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-text-title);
+    }
+
+    .toggle-subtitle {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      line-height: 1.35;
+    }
+
+    .first-time-perk {
+      display: inline-block;
+      margin-top: 3px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    /* ==========================================================================
+       CONFIRMATION SCREEN (Review & Success)
+       ========================================================================== */
+    .confirmation-hero {
+      text-align: center;
+      padding: 10px 4px 20px;
+    }
+
+    .success-icon-badge {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-full);
+      background-color: #DCFCE7;
+      color: var(--color-success);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      box-shadow: 0 4px 14px rgba(22, 101, 52, 0.16);
+    }
+
+    .confirmation-hero-title {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--color-text-title);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .confirmation-booking-ref {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-primary);
+      background-color: var(--color-primary-light);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      letter-spacing: 0.04em;
+    }
+
+    /* Summary Receipt Card */
+    .receipt-card {
+      background: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 16px;
+    }
+
+    .receipt-section {
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      border-bottom: 1px dashed var(--color-border);
+    }
+
+    .receipt-section:last-child {
+      padding-bottom: 0;
+      margin-bottom: 0;
+      border-bottom: none;
+    }
+
+    .receipt-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: 6px;
+    }
+
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .receipt-val-bold {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--color-text-title);
+    }
+
+    .receipt-val-price {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .receipt-doctor-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .receipt-doctor-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-full);
+      background: #EAF3F1;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .receipt-location-card {
+      background: #F8F5EE;
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--color-text-muted);
+      line-height: 1.4;
+      margin-top: 10px;
+    }
+
+    .receipt-location-card strong {
+      color: var(--color-text-title);
+      display: block;
+      font-size: 13px;
+    }
+
+    /* Cal & Actions in Confirmation */
+    .confirmation-action-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .action-secondary-btn {
+      min-height: 48px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      background-color: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-title);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+    }
+
+    .action-secondary-btn:hover {
+      background-color: var(--color-surface-hover);
+      border-color: var(--color-border-hover);
+    }
+
+    .action-secondary-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Simulated SMS Notification Banner */
+    .sms-alert-banner {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: var(--color-success-bg);
+      border: 1px solid var(--color-success-border);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      font-size: 13px;
+      color: var(--color-success);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    /* ==========================================================================
+       FIXED THUMB-ZONE ACTION BAR (Ergonomic bottom anchor)
+       ========================================================================== */
+    .thumb-action-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(250, 248, 245, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-top: 1px solid var(--color-border);
+      padding: 12px 20px 24px;
+      box-shadow: var(--shadow-sticky);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* Live Summary Floating Pill above CTA */
+    .thumb-summary-badge {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      padding: 2px 2px 0;
+    }
+
+    .summary-text-left {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 250px;
+    }
+
+    .summary-price-bold {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .thumb-btn-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .thumb-btn-row.single-btn {
+      grid-template-columns: 1fr;
+    }
+
+    /* Primary CTA Button (5-State Control, >= 48px touch target) */
+    .btn-primary {
+      min-height: 52px;
+      padding: 0 20px;
+      border-radius: var(--radius-md);
+      background-color: var(--color-primary);
+      border: 1px solid transparent;
+      color: var(--color-on-primary);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(21, 94, 84, 0.28);
+      user-select: none;
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background-color: var(--color-primary-hover);
+    }
+
+    .btn-primary:active:not(:disabled) {
+      background-color: var(--color-primary-active);
+      transform: scale(0.98);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Back Nav Button */
+    .btn-back-nav {
+      min-width: 52px;
+      min-height: 52px;
+      padding: 0 16px;
+      border-radius: var(--radius-md);
+      background-color: var(--color-surface);
+      border: 1.5px solid var(--color-border);
+      color: var(--color-text-title);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      user-select: none;
+      transition: transform 0.15s var(--ease-smooth), opacity 0.15s ease;
+    }
+
+    .btn-back-nav:hover {
+      background-color: var(--color-surface-hover);
+      border-color: var(--color-border-hover);
+    }
+
+    .btn-back-nav:active {
+      transform: scale(0.96);
+    }
+
+    /* ==========================================================================
+       PREFERS-REDUCED-MOTION (Accessibility standard)
+       ========================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-viewport-wrapper">
+  <!-- Desktop frame wrapper controls for evaluation convenience -->
+  <aside class="desktop-toolbar" aria-label="Device simulation options">
+    <div class="device-badge">
+      <span class="device-badge-dot" aria-hidden="true"></span>
+      <span>390 × 844 Mobile Viewport</span>
+    </div>
+    <button type="button" class="toggle-frame-btn" id="toggle-container-width-btn" aria-pressed="false">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      <span>Toggle Responsive Frame</span>
+    </button>
+  </aside>
+
+  <!-- The Mobile Phone Container -->
+  <div class="mobile-container" id="mobile-viewport">
+    
+    <!-- Mobile Status Bar (Simulated iPhone Header) -->
+    <header class="mobile-status-bar" aria-hidden="true">
+      <time datetime="09:41" class="status-time">9:41</time>
+      <div class="island-pill"></div>
+      <div class="status-icons">
+        <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor">
+          <path d="M1 9.5h2V11H1v-1.5zm3.5-3h2V11h-2V6.5zm3.5-3h2V11H8V3.5zm3.5-3h2V11h-2V.5z"/>
+        </svg>
+        <svg width="15" height="11" viewBox="0 0 15 11" fill="currentColor">
+          <path d="M0 2.2C2.1.8 4.7 0 7.5 0s5.4.8 7.5 2.2l-7.5 8.8L0 2.2z"/>
+        </svg>
+        <svg width="22" height="11" viewBox="0 0 22 11" fill="currentColor">
+          <rect x="0.5" y="0.5" width="19" height="10" rx="3" fill="none" stroke="currentColor"/>
+          <rect x="2" y="2" width="14" height="7" rx="1.5"/>
+          <path d="M21 3.5v4" stroke="currentColor" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </header>
+
+    <!-- Studio Header & Live Stepper -->
+    <section class="studio-header">
+      <div class="brand-row">
+        <a href="#home" class="brand-mark" id="brand-home-link" aria-label="Alabaster Dental Studio Homepage">
+          <div class="brand-icon-box" aria-hidden="true">
+            <!-- Modern Dental Emblem SVG -->
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2C7.5 2 4 5 4 9.5c0 3 1.5 6 3 9.5 1 2 2 3.5 3 3.5 1.5 0 2-3 2-3s.5 3 2 3c1 0 2-1.5 3-3.5 1.5-3.5 3-6.5 3-9.5C20 5 16.5 2 12 2z"/>
+              <path d="M9 10c1-1 2-1 3 0 1-1 2-1 3 0"/>
+            </svg>
+          </div>
+          <div class="brand-text-block">
+            <h1 class="brand-title">Alabaster</h1>
+            <span class="brand-subtitle">Dental Studio • SoHo</span>
+          </div>
+        </a>
+
+        <!-- Sound Feedback Toggle -->
+        <button type="button" class="header-sound-btn" id="audio-toggle-btn" aria-label="Toggle interaction sounds" aria-pressed="true">
+          <svg id="sound-icon-on" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+          </svg>
+          <svg id="sound-icon-off" style="display:none;" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <line x1="23" y1="9" x2="17" y2="15"/>
+            <line x1="17" y1="9" x2="23" y2="15"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Accessible Step Progress Bar -->
+      <nav class="stepper-container" aria-label="Appointment booking steps">
+        <div class="stepper-meta">
+          <span class="stepper-current-label" id="step-name-display" aria-live="polite">1. Select Service</span>
+          <span class="stepper-count" id="step-number-display">Step 1 of 4</span>
+        </div>
+        <div class="stepper-segments" role="progressbar" id="progress-bar-meter" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" aria-label="Booking flow progress">
+          <div class="step-segment is-active" id="seg-1"></div>
+          <div class="step-segment" id="seg-2"></div>
+          <div class="step-segment" id="seg-3"></div>
+          <div class="step-segment" id="seg-4"></div>
+        </div>
+      </nav>
+    </section>
+
+    <!-- Main Booking Viewport Flow -->
+    <main class="booking-main-content" id="main-content-scroll" tabindex="-1">
+      <form id="booking-wizard-form" onsubmit="return false;" novalidate>
+
+        <!-- ==================================================================
+             STEP 1: SELECT SERVICE
+             ================================================================== -->
+        <section class="step-panel is-active-step" id="step-1" aria-labelledby="step-1-heading">
+          <div class="step-heading-group">
+            <span class="step-intro-badge">Clinical Hygiene & Care</span>
+            <h2 class="step-main-title" id="step-1-heading">Choose a treatment</h2>
+            <p class="step-main-desc">Transparent pricing with no unexpected clinic fees. All care performed in private acoustic suites.</p>
+          </div>
+
+          <fieldset>
+            <legend class="sr-only">Available Dental Services</legend>
+            <div class="selection-grid" role="radiogroup" aria-label="Select dental service">
+
+              <!-- Service 1: Cleaning -->
+              <label class="selectable-card is-selected" for="srv-cleaning">
+                <input type="radio" name="service" id="srv-cleaning" value="cleaning" class="sr-only" checked data-name="Dental Cleaning" data-price="120" data-duration="45 min">
+                <span class="custom-radio-mark" aria-hidden="true"></span>
+                <span class="card-body">
+                  <span class="card-header-line">
+                    <span class="card-title">Dental Cleaning</span>
+                    <span class="card-price">$120</span>
+                  </span>
+                  <span class="card-meta-pills">
+                    <span class="duration-pill">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      45 min
+                    </span>
+                    <span>• Preventive hygiene</span>
+                  </span>
+                  <span class="card-description">Precision ultrasonic scaling, enamel polish, and comprehensive gum-depth charting.</span>
+                </span>
+              </label>
+
+              <!-- Service 2: Whitening -->
+              <label class="selectable-card" for="srv-whitening">
+                <input type="radio" name="service" id="srv-whitening" value="whitening" class="sr-only" data-name="Studio Teeth Whitening" data-price="299" data-duration="60 min">
+                <span class="custom-radio-mark" aria-hidden="true"></span>
+                <span class="card-body">
+                  <span class="card-header-line">
+                    <span class="card-title">Teeth Whitening</span>
+                    <span class="card-price">$299</span>
+                  </span>
+                  <span class="card-meta-pills">
+                    <span class="duration-pill">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      60 min
+                    </span>
+                    <span>• Enamel-safe LED</span>
+                  </span>
+                  <span class="card-description">High-potency medical grade brightening with sensitivity-blocking remineralization.</span>
+                </span>
+              </label>
+
+              <!-- Service 3: Consultation -->
+              <label class="selectable-card" for="srv-consult">
+                <input type="radio" name="service" id="srv-consult" value="consultation" class="sr-only" data-name="Oral Exam & Consultation" data-price="75" data-duration="30 min">
+                <span class="custom-radio-mark" aria-hidden="true"></span>
+                <span class="card-body">
+                  <span class="card-header-line">
+                    <span class="card-title">Consultation & Exam</span>
+                    <span class="card-price">$75</span>
+                  </span>
+                  <span class="card-meta-pills">
+                    <span class="duration-pill">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      30 min
+                    </span>
+                    <span>• 3D Imaging included</span>
+                  </span>
+                  <span class="card-description">Full intraoral photography, digital wellness scan, and customized restorative planning.</span>
+                </span>
+              </label>
+
+              <!-- Service 4: Deep Cleaning -->
+              <label class="selectable-card" for="srv-deep-clean">
+                <input type="radio" name="service" id="srv-deep-clean" value="deep-cleaning" class="sr-only" data-name="Periodontal Deep Cleaning" data-price="180" data-duration="75 min">
+                <span class="custom-radio-mark" aria-hidden="true"></span>
+                <span class="card-body">
+                  <span class="card-header-line">
+                    <span class="card-title">Deep Cleaning</span>
+                    <span class="card-price">$180</span>
+                  </span>
+                  <span class="card-meta-pills">
+                    <span class="duration-pill">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                      75 min
+                    </span>
+                    <span>• Root scaling</span>
+                  </span>
+                  <span class="card-description">Targeted subgingival root planning for active gingivitis or periodontal restoration.</span>
+                </span>
+              </label>
+
+            </div>
+          </fieldset>
+        </section>
+
+        <!-- ==================================================================
+             STEP 2: SELECT DENTIST
+             ================================================================== -->
+        <section class="step-panel" id="step-2" aria-labelledby="step-2-heading">
+          <div class="step-heading-group">
+            <span class="step-intro-badge">Attending Clinicians</span>
+            <h2 class="step-main-title" id="step-2-heading">Select your doctor</h2>
+            <p class="step-main-desc">Board-certified specialists focused on gentle, pain-free patient experiences.</p>
+          </div>
+
+          <fieldset>
+            <legend class="sr-only">Studio Dentists</legend>
+            <div class="selection-grid" role="radiogroup" aria-label="Select dental practitioner">
+
+              <!-- Dentist 1: Dr. Sarah Chen -->
+              <label class="selectable-card is-selected" for="doc-chen">
+                <input type="radio" name="dentist" id="doc-chen" value="chen" class="sr-only" checked data-name="Dr. Sarah Chen" data-title="General & Cosmetic Dentistry" data-exp="12 yrs">
+                <div class="dentist-avatar" aria-hidden="true">
+                  <svg viewBox="0 0 100 100" fill="none">
+                    <rect width="100" height="100" fill="#E8F1EE"/>
+                    <!-- Illustrated portrait Dr. Sarah Chen -->
+                    <circle cx="50" cy="40" r="22" fill="#D3A284"/>
+                    <path d="M26 36c2-12 12-20 24-20s22 8 24 20c-8-3-16-4-24-4s-16 1-24 4z" fill="#241E1C"/>
+                    <path d="M28 42c0 8 4 14 10 18v6h24v-6c6-4 10-10 10-18" fill="#D3A284"/>
+                    <path d="M20 94c3-18 14-28 30-28s27 10 30 28" fill="#155E54"/>
+                    <circle cx="43" cy="39" r="2.5" fill="#1C1B1F"/>
+                    <circle cx="57" cy="39" r="2.5" fill="#1C1B1F"/>
+                    <path d="M46 48c2 2 6 2 8 0" stroke="#1C1B1F" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="card-body">
+                  <div class="card-header-line">
+                    <span class="card-title">Dr. Sarah Chen</span>
+                    <span class="dentist-rating">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="#D97706" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                      4.9 (184)
+                    </span>
+                  </div>
+                  <span class="dentist-role">General & Cosmetic Dentistry</span>
+                  <p class="dentist-tag">12 yrs exp • Harvard School of Dental Medicine • Gentle touch specialist</p>
+                </div>
+              </label>
+
+              <!-- Dentist 2: Dr. James Okafor -->
+              <label class="selectable-card" for="doc-okafor">
+                <input type="radio" name="dentist" id="doc-okafor" value="okafor" class="sr-only" data-name="Dr. James Okafor" data-title="Periodontics & Preventive Care" data-exp="15 yrs">
+                <div class="dentist-avatar" aria-hidden="true">
+                  <svg viewBox="0 0 100 100" fill="none">
+                    <rect width="100" height="100" fill="#EAE5DC"/>
+                    <!-- Illustrated portrait Dr. James Okafor -->
+                    <circle cx="50" cy="40" r="22" fill="#8C5338"/>
+                    <path d="M30 30c4-10 12-14 20-14s16 4 20 14c-6-2-14-3-20-3s-14 1-20 3z" fill="#181514"/>
+                    <rect x="42" y="60" width="16" height="8" fill="#8C5338"/>
+                    <path d="M20 94c3-18 14-26 30-26s27 8 30 26" fill="#204E4A"/>
+                    <circle cx="43" cy="40" r="2.5" fill="#181514"/>
+                    <circle cx="57" cy="40" r="2.5" fill="#181514"/>
+                    <path d="M40 34h6M54 34h6" stroke="#181514" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M46 50c2 2 6 2 8 0" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="card-body">
+                  <div class="card-header-line">
+                    <span class="card-title">Dr. James Okafor</span>
+                    <span class="dentist-rating">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="#D97706" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                      4.95 (210)
+                    </span>
+                  </div>
+                  <span class="dentist-role">Periodontics & Prevention</span>
+                  <p class="dentist-tag">15 yrs exp • Columbia Dental • Gum regeneration & zero-discomfort hygiene</p>
+                </div>
+              </label>
+
+              <!-- Dentist 3: Dr. Maria Santos -->
+              <label class="selectable-card" for="doc-santos">
+                <input type="radio" name="dentist" id="doc-santos" value="santos" class="sr-only" data-name="Dr. Maria Santos" data-title="Restorative & Minimally Invasive" data-exp="9 yrs">
+                <div class="dentist-avatar" aria-hidden="true">
+                  <svg viewBox="0 0 100 100" fill="none">
+                    <rect width="100" height="100" fill="#F4ECE6"/>
+                    <!-- Illustrated portrait Dr. Maria Santos -->
+                    <circle cx="50" cy="40" r="22" fill="#E0AF8D"/>
+                    <path d="M26 34c2-10 10-18 24-18s22 8 24 18c0 14-3 26-6 32-4-2-12-3-18-3s-14 1-18 3c-3-6-6-18-6-32z" fill="#422216"/>
+                    <circle cx="50" cy="42" r="19" fill="#E0AF8D"/>
+                    <path d="M20 94c3-18 14-26 30-26s27 8 30 26" fill="#693722"/>
+                    <circle cx="43" cy="41" r="2.5" fill="#1C1B1F"/>
+                    <circle cx="57" cy="41" r="2.5" fill="#1C1B1F"/>
+                    <path d="M46 50c2 2.5 6 2.5 8 0" stroke="#1C1B1F" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="card-body">
+                  <div class="card-header-line">
+                    <span class="card-title">Dr. Maria Santos</span>
+                    <span class="dentist-rating">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="#D97706" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                      4.88 (142)
+                    </span>
+                  </div>
+                  <span class="dentist-role">Restorative & Pediatric Care</span>
+                  <p class="dentist-tag">9 yrs exp • NYU Dentistry • Renowned for anxious & first-time patients</p>
+                </div>
+              </label>
+
+              <!-- Option 4: Any Available Doctor -->
+              <label class="selectable-card" for="doc-any">
+                <input type="radio" name="dentist" id="doc-any" value="any" class="sr-only" data-name="First Available Doctor" data-title="Earliest Clinic Opening" data-exp="Full Team">
+                <div class="dentist-avatar" style="background:#E2ECE8; display:flex; align-items:center; justify-content:center; color:#155E54;" aria-hidden="true">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                  </svg>
+                </div>
+                <div class="card-body">
+                  <div class="card-header-line">
+                    <span class="card-title">First Available Doctor</span>
+                    <span class="duration-pill" style="color:var(--color-primary); background:var(--color-primary-light);">Fastest</span>
+                  </div>
+                  <span class="dentist-role">Matched to Your Preferred Slot</span>
+                  <p class="dentist-tag">Unlocks maximum calendar flexibility with any of our three partners.</p>
+                </div>
+              </label>
+
+            </div>
+          </fieldset>
+        </section>
+
+        <!-- ==================================================================
+             STEP 3: SELECT DATE & TIME
+             ================================================================== -->
+        <section class="step-panel" id="step-3" aria-labelledby="step-3-heading">
+          <div class="step-heading-group">
+            <span class="step-intro-badge">Studio Calendar</span>
+            <h2 class="step-main-title" id="step-3-heading">Select date & time</h2>
+            <p class="step-main-desc">Tap a day to view openings. Appointment holds are guaranteed for 15 minutes.</p>
+          </div>
+
+          <div class="date-section-wrapper">
+            <!-- Month banner with switcher -->
+            <div class="calendar-month-banner">
+              <span class="month-title" id="calendar-current-month">September 2026</span>
+              <div class="month-nav-group" aria-label="Month navigation">
+                <button type="button" class="month-nav-btn" id="prev-month-btn" aria-label="Previous month" disabled>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                </button>
+                <button type="button" class="month-nav-btn" id="next-month-btn" aria-label="Next month">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Horizontal Thumb-Scrollable Dates -->
+            <fieldset>
+              <legend class="sr-only">Select Day of Visit</legend>
+              <div class="date-scroll-container" role="radiogroup" aria-label="Select appointment date" id="date-picker-strip">
+                <!-- Dynamically populated date buttons -->
+              </div>
+            </fieldset>
+
+            <!-- Morning Slots -->
+            <fieldset class="time-slot-group">
+              <legend class="time-group-heading">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+                Morning Hours
+              </legend>
+              <div class="time-grid" id="morning-slots-grid" role="radiogroup" aria-label="Morning appointment time slots">
+                <button type="button" class="time-chip-btn is-selected" data-time="09:00 AM" role="radio" aria-checked="true">09:00 AM</button>
+                <button type="button" class="time-chip-btn" data-time="09:45 AM" role="radio" aria-checked="false">09:45 AM</button>
+                <button type="button" class="time-chip-btn" data-time="10:30 AM" role="radio" aria-checked="false">10:30 AM</button>
+                <button type="button" class="time-chip-btn" data-time="11:15 AM" role="radio" aria-checked="false">11:15 AM</button>
+                <button type="button" class="time-chip-btn" data-time="11:45 AM" role="radio" aria-checked="false" disabled title="Booked">11:45 AM</button>
+              </div>
+            </fieldset>
+
+            <!-- Afternoon Slots -->
+            <fieldset class="time-slot-group">
+              <legend class="time-group-heading">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+                Afternoon Hours
+              </legend>
+              <div class="time-grid" id="afternoon-slots-grid" role="radiogroup" aria-label="Afternoon appointment time slots">
+                <button type="button" class="time-chip-btn" data-time="01:30 PM" role="radio" aria-checked="false">01:30 PM</button>
+                <button type="button" class="time-chip-btn" data-time="02:15 PM" role="radio" aria-checked="false">02:15 PM</button>
+                <button type="button" class="time-chip-btn" data-time="03:00 PM" role="radio" aria-checked="false">03:00 PM</button>
+                <button type="button" class="time-chip-btn" data-time="03:45 PM" role="radio" aria-checked="false" disabled title="Booked">03:45 PM</button>
+                <button type="button" class="time-chip-btn" data-time="04:30 PM" role="radio" aria-checked="false">04:30 PM</button>
+                <button type="button" class="time-chip-btn" data-time="05:15 PM" role="radio" aria-checked="false">05:15 PM</button>
+              </div>
+            </fieldset>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             STEP 4: PATIENT DETAILS
+             ================================================================== -->
+        <section class="step-panel" id="step-4" aria-labelledby="step-4-heading">
+          <div class="step-heading-group">
+            <span class="step-intro-badge">Guest Information</span>
+            <h2 class="step-main-title" id="step-4-heading">Patient details</h2>
+            <p class="step-main-desc">We will send immediate appointment confirmation and calendar reminders.</p>
+          </div>
+
+          <div class="form-group-list">
+            <!-- Full Name -->
+            <div class="form-field">
+              <label for="patient-name" class="field-label">
+                <span>Legal Full Name</span>
+              </label>
+              <input type="text" id="patient-name" name="patientName" class="text-input" placeholder="e.g. Eleanor Vance" autocomplete="name" required aria-required="true" aria-describedby="patient-name-err">
+              <p class="field-error-msg" id="patient-name-err" role="alert">Please enter your first and last name.</p>
+            </div>
+
+            <!-- Mobile Phone -->
+            <div class="form-field">
+              <label for="patient-phone" class="field-label">
+                <span>Mobile Phone</span>
+              </label>
+              <input type="tel" id="patient-phone" name="patientPhone" class="text-input" placeholder="(555) 234-5678" autocomplete="tel" required aria-required="true" aria-describedby="patient-phone-err">
+              <p class="field-error-msg" id="patient-phone-err" role="alert">Please provide a valid 10-digit mobile phone number.</p>
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-field">
+              <label for="patient-email" class="field-label">
+                <span>Email Address</span>
+              </label>
+              <input type="email" id="patient-email" name="patientEmail" class="text-input" placeholder="eleanor@example.com" autocomplete="email" required aria-required="true" aria-describedby="patient-email-err">
+              <p class="field-error-msg" id="patient-email-err" role="alert">Please provide a valid email address.</p>
+            </div>
+
+            <!-- Insurance Dropdown -->
+            <div class="form-field">
+              <label for="patient-insurance" class="field-label">
+                <span>Dental Insurance</span>
+                <span class="field-label-optional">Optional</span>
+              </label>
+              <div class="select-wrapper">
+                <select id="patient-insurance" name="patientInsurance" class="select-input">
+                  <option value="none">Self-Pay / Direct Alabaster Membership</option>
+                  <option value="delta">Delta Dental Premier / PPO</option>
+                  <option value="aetna">Aetna Dental</option>
+                  <option value="cigna">Cigna Total Dental</option>
+                  <option value="metlife">MetLife PDP Plus</option>
+                  <option value="guardian">Guardian DentalGuard</option>
+                  <option value="other">Other PPO Provider</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Visit Notes -->
+            <div class="form-field">
+              <label for="patient-notes" class="field-label">
+                <span>Special Requests or Dental Notes</span>
+                <span class="field-label-optional">Optional</span>
+              </label>
+              <textarea id="patient-notes" name="patientNotes" class="textarea-input" placeholder="e.g. Sensitivity to cold water, prefer morning light, dental anxiety..."></textarea>
+            </div>
+
+            <!-- First-Time Patient Card Toggle -->
+            <label class="toggle-card" for="is-first-time-toggle">
+              <input type="checkbox" id="is-first-time-toggle" name="isFirstTime" class="sr-only" checked>
+              <div class="custom-checkbox" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div class="toggle-text-block">
+                <div class="toggle-title">I am a new patient at Alabaster</div>
+                <div class="toggle-subtitle">We reserve an extra 15 minutes for your welcome tour & digital imaging.</div>
+                <span class="first-time-perk">★ New Patient Welcome Scan Included</span>
+              </div>
+            </label>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             STEP 5: CONFIRMATION & RECEIPT
+             ================================================================== -->
+        <section class="step-panel" id="step-5" aria-labelledby="step-5-heading">
+          <div class="confirmation-hero">
+            <div class="success-icon-badge" aria-hidden="true">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <h2 class="confirmation-hero-title" id="step-5-heading">Appointment Confirmed!</h2>
+            <div class="confirmation-booking-ref" id="summary-booking-id">ADS-89421</div>
+          </div>
+
+          <!-- SMS banner preview -->
+          <div class="sms-alert-banner" role="status">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <span id="sms-status-text">SMS confirmation sent to (555) 234-5678</span>
+          </div>
+
+          <!-- Appointment Summary Receipt -->
+          <article class="receipt-card" aria-label="Appointment summary details">
+            <!-- Doctor Details -->
+            <div class="receipt-section">
+              <span class="receipt-label">Doctor & Specialty</span>
+              <div class="receipt-doctor-row">
+                <div class="receipt-doctor-avatar" id="summary-doc-avatar-box" aria-hidden="true">
+                  <!-- SVG will be injected -->
+                </div>
+                <div>
+                  <div class="receipt-val-bold" id="summary-doc-name">Dr. Sarah Chen</div>
+                  <div class="dentist-role" id="summary-doc-title">General & Cosmetic Dentistry</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Treatment & Price -->
+            <div class="receipt-section">
+              <div class="receipt-row">
+                <div>
+                  <span class="receipt-label">Treatment</span>
+                  <div class="receipt-val-bold" id="summary-service-name">Dental Cleaning</div>
+                  <span class="duration-pill" id="summary-service-duration" style="margin-top:4px;">45 min</span>
+                </div>
+                <div style="text-align: right;">
+                  <span class="receipt-label">Amount</span>
+                  <div class="receipt-val-price" id="summary-service-price">$120</div>
+                  <span style="font-size:11px; color:var(--color-text-muted);">Due at visit</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Date & Time -->
+            <div class="receipt-section">
+              <span class="receipt-label">Scheduled Date & Time</span>
+              <div class="receipt-val-bold" id="summary-datetime-display">Monday, Sep 28, 2026 at 09:00 AM</div>
+            </div>
+
+            <!-- Patient Name -->
+            <div class="receipt-section">
+              <span class="receipt-label">Guest</span>
+              <div class="receipt-val-bold" id="summary-patient-name">Eleanor Vance</div>
+              <div style="font-size:13px; color:var(--color-text-muted);" id="summary-patient-contact">eleanor@example.com</div>
+            </div>
+
+            <!-- Studio Location -->
+            <div class="receipt-location-card">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0; margin-top:2px; color:var(--color-primary);" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+              <div>
+                <strong>Alabaster Dental Studio SoHo</strong>
+                <span>142 Mercer Street, Suite 400 • New York, NY 10012</span>
+                <span style="display:block; margin-top:3px; color:var(--color-text-subtle);">Complimentary valet parking available on Mercer St.</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Calendar & Booking Actions -->
+          <div class="confirmation-action-grid">
+            <button type="button" class="btn-primary" id="add-to-calendar-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              <span>Add to Apple / Google Calendar</span>
+            </button>
+
+            <button type="button" class="action-secondary-btn" id="modify-booking-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+              <span>Reschedule or Edit Details</span>
+            </button>
+
+            <button type="button" class="action-secondary-btn" id="book-another-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+              <span>Book Another Appointment</span>
+            </button>
+          </div>
+        </section>
+
+      </form>
+    </main>
+
+    <!-- ======================================================================
+         FIXED ERGONOMIC THUMB-ZONE BAR
+         Always accessible with one-hand thumb operation
+         ====================================================================== -->
+    <nav class="thumb-action-bar" id="thumb-bar" aria-label="Booking flow actions">
+      <!-- Live mini summary text -->
+      <div class="thumb-summary-badge" id="thumb-summary-row">
+        <span class="summary-text-left" id="thumb-summary-text">
+          <span>Dental Cleaning</span>
+          <span>•</span>
+          <span id="thumb-summary-doc">Dr. Sarah Chen</span>
+        </span>
+        <span class="summary-price-bold" id="thumb-summary-price">$120</span>
+      </div>
+
+      <div class="thumb-btn-row" id="thumb-btn-row">
+        <!-- Back Button (hidden on step 1) -->
+        <button type="button" class="btn-back-nav" id="back-step-btn" style="display:none;" aria-label="Go back to previous step">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          <span>Back</span>
+        </button>
+
+        <!-- Primary Forward CTA Button -->
+        <button type="button" class="btn-primary" id="next-step-btn">
+          <span id="next-btn-text">Select Doctor</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+  </div>
+</div>
+
+<script>
+  /* ==========================================================================
+     ALABASTER DENTAL STUDIO - MOBILE APPLICATION LOGIC
+     ========================================================================== */
+
+  // State Management Store
+  const state = {
+    currentStep: 1,
+    totalSteps: 4,
+    soundEnabled: true,
+    service: {
+      id: 'cleaning',
+      name: 'Dental Cleaning',
+      price: 120,
+      duration: '45 min'
+    },
+    dentist: {
+      id: 'chen',
+      name: 'Dr. Sarah Chen',
+      title: 'General & Cosmetic Dentistry',
+      exp: '12 yrs'
+    },
+    date: {
+      weekday: 'Mon',
+      dayNumber: 28,
+      monthName: 'Sep',
+      year: 2026,
+      fullFormatted: 'Monday, Sep 28, 2026'
+    },
+    timeSlot: '09:00 AM',
+    patient: {
+      name: '',
+      phone: '',
+      email: '',
+      insurance: 'none',
+      notes: '',
+      isFirstTime: true
+    },
+    bookingId: 'ADS-' + Math.floor(10000 + Math.random() * 90000)
+  };
+
+  // Audio Context for subtle tactile feedback
+  let audioCtx = null;
+  function playClickTone(type = 'tap') {
+    if (!state.soundEnabled) return;
+    try {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      const now = audioCtx.currentTime;
+      if (type === 'tap') {
+        osc.frequency.setValueAtTime(480, now);
+        osc.frequency.exponentialRampToValueAtTime(720, now + 0.04);
+        gain.gain.setValueAtTime(0.04, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+        osc.start(now);
+        osc.stop(now + 0.04);
+      } else if (type === 'success') {
+        osc.frequency.setValueAtTime(523.25, now);
+        osc.frequency.setValueAtTime(659.25, now + 0.08);
+        gain.gain.setValueAtTime(0.05, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      }
+    } catch (e) {
+      // Audio fallback silent
+    }
+  }
+
+  // DOM Elements Cache
+  const stepPanels = [
+    document.getElementById('step-1'),
+    document.getElementById('step-2'),
+    document.getElementById('step-3'),
+    document.getElementById('step-4'),
+    document.getElementById('step-5')
+  ];
+
+  const segments = [
+    document.getElementById('seg-1'),
+    document.getElementById('seg-2'),
+    document.getElementById('seg-3'),
+    document.getElementById('seg-4')
+  ];
+
+  const stepNameDisplay = document.getElementById('step-name-display');
+  const stepNumberDisplay = document.getElementById('step-number-display');
+  const progressBarMeter = document.getElementById('progress-bar-meter');
+  const mainScroll = document.getElementById('main-content-scroll');
+
+  const backStepBtn = document.getElementById('back-step-btn');
+  const nextStepBtn = document.getElementById('next-step-btn');
+  const nextBtnText = document.getElementById('next-btn-text');
+  const thumbSummaryRow = document.getElementById('thumb-summary-row');
+  const thumbSummaryText = document.getElementById('thumb-summary-text');
+  const thumbSummaryPrice = document.getElementById('thumb-summary-price');
+  const thumbBtnRow = document.getElementById('thumb-btn-row');
+  const thumbBar = document.getElementById('thumb-bar');
+
+  const toggleFrameBtn = document.getElementById('toggle-container-width-btn');
+  const mobileViewport = document.getElementById('mobile-viewport');
+  const audioToggleBtn = document.getElementById('audio-toggle-btn');
+  const soundIconOn = document.getElementById('sound-icon-on');
+  const soundIconOff = document.getElementById('sound-icon-off');
+
+  // Step Meta Configuration
+  const stepTitles = [
+    '1. Select Service',
+    '2. Select Doctor',
+    '3. Date & Time',
+    '4. Patient Details'
+  ];
+
+  const nextBtnLabels = [
+    'Select Doctor',
+    'Select Date & Time',
+    'Enter Details',
+    'Confirm Booking'
+  ];
+
+  /* ==========================================================================
+     CALENDAR GENERATION (September - October 2026)
+     ========================================================================== */
+  const dateStrip = document.getElementById('date-picker-strip');
+  const daysData = [
+    { weekday: 'Sat', day: 26, month: 'Sep', year: 2026, tag: 'Today' },
+    { weekday: 'Sun', day: 27, month: 'Sep', year: 2026, tag: 'Open' },
+    { weekday: 'Mon', day: 28, month: 'Sep', year: 2026, tag: 'Fastest' },
+    { weekday: 'Tue', day: 29, month: 'Sep', year: 2026, tag: '' },
+    { weekday: 'Wed', day: 30, month: 'Sep', year: 2026, tag: '' },
+    { weekday: 'Thu', day: 1, month: 'Oct', year: 2026, tag: 'Oct' },
+    { weekday: 'Fri', day: 2, month: 'Oct', year: 2026, tag: '' },
+    { weekday: 'Sat', day: 3, month: 'Oct', year: 2026, tag: 'Weekend' },
+    { weekday: 'Mon', day: 5, month: 'Oct', year: 2026, tag: '' }
+  ];
+
+  function renderDateStrip() {
+    dateStrip.innerHTML = '';
+    daysData.forEach((item, index) => {
+      const isSelected = (item.day === state.date.dayNumber && item.month === state.date.monthName);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'date-pill-btn' + (isSelected ? ' is-selected' : '');
+      btn.setAttribute('role', 'radio');
+      btn.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+      btn.setAttribute('aria-label', `${item.weekday}, ${item.month} ${item.day}`);
+
+      btn.innerHTML = `
+        <span class="date-pill-weekday">${item.weekday}</span>
+        <span class="date-pill-daynum">${item.day}</span>
+        ${item.tag ? `<span class="date-pill-tag">${item.tag}</span>` : '<span class="date-pill-tag" style="visibility:hidden">.</span>'}
+      `;
+
+      btn.addEventListener('click', () => {
+        playClickTone('tap');
+        state.date = {
+          weekday: item.weekday,
+          dayNumber: item.day,
+          monthName: item.month,
+          year: item.year,
+          fullFormatted: `${item.weekday === 'Mon' ? 'Monday' : item.weekday === 'Tue' ? 'Tuesday' : item.weekday === 'Wed' ? 'Wednesday' : item.weekday === 'Thu' ? 'Thursday' : item.weekday === 'Fri' ? 'Friday' : item.weekday === 'Sat' ? 'Saturday' : 'Sunday'}, ${item.month} ${item.day}, ${item.year}`
+        };
+        document.querySelectorAll('.date-pill-btn').forEach(b => {
+          b.classList.remove('is-selected');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('is-selected');
+        btn.setAttribute('aria-checked', 'true');
+        updateLiveSummary();
+      });
+
+      dateStrip.appendChild(btn);
+    });
+  }
+
+  // Time Slots selection listener
+  function setupTimeSlotListeners() {
+    const timeButtons = document.querySelectorAll('.time-chip-btn:not(:disabled)');
+    timeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        playClickTone('tap');
+        timeButtons.forEach(b => {
+          b.classList.remove('is-selected');
+          b.setAttribute('aria-checked', 'false');
+        });
+        btn.classList.add('is-selected');
+        btn.setAttribute('aria-checked', 'true');
+        state.timeSlot = btn.getAttribute('data-time');
+        updateLiveSummary();
+      });
+    });
+  }
+
+  /* ==========================================================================
+     RADIO CARD LISTENERS (Services & Dentists)
+     ========================================================================== */
+  function setupRadioCards() {
+    // Service selection
+    const serviceInputs = document.querySelectorAll('input[name="service"]');
+    serviceInputs.forEach(input => {
+      input.addEventListener('change', () => {
+        playClickTone('tap');
+        document.querySelectorAll('input[name="service"]').forEach(i => {
+          i.closest('.selectable-card').classList.remove('is-selected');
+        });
+        input.closest('.selectable-card').classList.add('is-selected');
+        state.service = {
+          id: input.value,
+          name: input.getAttribute('data-name'),
+          price: parseInt(input.getAttribute('data-price'), 10),
+          duration: input.getAttribute('data-duration')
+        };
+        updateLiveSummary();
+      });
+    });
+
+    // Dentist selection
+    const dentistInputs = document.querySelectorAll('input[name="dentist"]');
+    dentistInputs.forEach(input => {
+      input.addEventListener('change', () => {
+        playClickTone('tap');
+        document.querySelectorAll('input[name="dentist"]').forEach(i => {
+          i.closest('.selectable-card').classList.remove('is-selected');
+        });
+        input.closest('.selectable-card').classList.add('is-selected');
+        state.dentist = {
+          id: input.value,
+          name: input.getAttribute('data-name'),
+          title: input.getAttribute('data-title'),
+          exp: input.getAttribute('data-exp')
+        };
+        updateLiveSummary();
+      });
+    });
+  }
+
+  /* ==========================================================================
+     LIVE SUMMARY & STEP UI REFRESH
+     ========================================================================== */
+  function updateLiveSummary() {
+    thumbSummaryText.innerHTML = `
+      <span>${escapeHTML(state.service.name)}</span>
+      <span>•</span>
+      <span>${escapeHTML(state.dentist.name)}</span>
+    `;
+    thumbSummaryPrice.textContent = `$${state.service.price}`;
+  }
+
+  function renderStep(step) {
+    state.currentStep = step;
+
+    // Show appropriate panel
+    stepPanels.forEach((panel, idx) => {
+      if (idx + 1 === step) {
+        panel.classList.add('is-active-step');
+      } else {
+        panel.classList.remove('is-active-step');
+      }
+    });
+
+    // Reset scroll position to top
+    mainScroll.scrollTop = 0;
+
+    // Update Progress Segments and labels
+    if (step <= 4) {
+      stepNameDisplay.textContent = stepTitles[step - 1];
+      stepNumberDisplay.textContent = `Step ${step} of 4`;
+      progressBarMeter.setAttribute('aria-valuenow', step);
+
+      segments.forEach((seg, idx) => {
+        if (idx + 1 <= step) {
+          seg.classList.add('is-active');
+        } else {
+          seg.classList.remove('is-active');
+        }
+      });
+
+      // Show thumb bar with navigation controls
+      thumbBar.style.display = 'flex';
+      thumbSummaryRow.style.display = 'flex';
+
+      if (step === 1) {
+        backStepBtn.style.display = 'none';
+        thumbBtnRow.classList.add('single-btn');
+      } else {
+        backStepBtn.style.display = 'flex';
+        thumbBtnRow.classList.remove('single-btn');
+      }
+
+      nextBtnText.textContent = nextBtnLabels[step - 1];
+    } else {
+      // Step 5: Confirmation view
+      stepNameDisplay.textContent = 'Confirmed';
+      stepNumberDisplay.textContent = 'Complete';
+      progressBarMeter.setAttribute('aria-valuenow', 4);
+      segments.forEach(seg => seg.classList.add('is-active'));
+
+      // Hide bottom thumb bar on confirmation screen since actions are inside receipt
+      thumbBar.style.display = 'none';
+      populateConfirmationScreen();
+    }
+  }
+
+  /* ==========================================================================
+     VALIDATION & PATIENT FORM HANDLING
+     ========================================================================== */
+  const nameInput = document.getElementById('patient-name');
+  const phoneInput = document.getElementById('patient-phone');
+  const emailInput = document.getElementById('patient-email');
+  const insuranceSelect = document.getElementById('patient-insurance');
+  const notesTextarea = document.getElementById('patient-notes');
+  const firstTimeToggle = document.getElementById('is-first-time-toggle');
+
+  const nameErr = document.getElementById('patient-name-err');
+  const phoneErr = document.getElementById('patient-phone-err');
+  const emailErr = document.getElementById('patient-email-err');
+
+  // Format phone input cleanly
+  phoneInput.addEventListener('input', (e) => {
+    let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+  });
+
+  function validateStep4() {
+    let isValid = true;
+
+    // Validate Name
+    const nameVal = nameInput.value.trim();
+    if (nameVal.length < 2) {
+      nameInput.setAttribute('aria-invalid', 'true');
+      nameErr.classList.add('is-visible');
+      isValid = false;
+    } else {
+      nameInput.removeAttribute('aria-invalid');
+      nameErr.classList.remove('is-visible');
+    }
+
+    // Validate Phone (at least 10 digits)
+    const phoneDigits = phoneInput.value.replace(/\D/g, '');
+    if (phoneDigits.length < 10) {
+      phoneInput.setAttribute('aria-invalid', 'true');
+      phoneErr.classList.add('is-visible');
+      isValid = false;
+    } else {
+      phoneInput.removeAttribute('aria-invalid');
+      phoneErr.classList.remove('is-visible');
+    }
+
+    // Validate Email
+    const emailVal = emailInput.value.trim();
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(emailVal)) {
+      emailInput.setAttribute('aria-invalid', 'true');
+      emailErr.classList.add('is-visible');
+      isValid = false;
+    } else {
+      emailInput.removeAttribute('aria-invalid');
+      emailErr.classList.remove('is-visible');
+    }
+
+    if (isValid) {
+      state.patient = {
+        name: nameVal,
+        phone: phoneInput.value.trim(),
+        email: emailVal,
+        insurance: insuranceSelect.value,
+        notes: notesTextarea.value.trim(),
+        isFirstTime: firstTimeToggle.checked
+      };
+    }
+
+    return isValid;
+  }
+
+  // Clear errors on field input
+  nameInput.addEventListener('input', () => {
+    nameInput.removeAttribute('aria-invalid');
+    nameErr.classList.remove('is-visible');
+  });
+
+  phoneInput.addEventListener('input', () => {
+    phoneInput.removeAttribute('aria-invalid');
+    phoneErr.classList.remove('is-visible');
+  });
+
+  emailInput.addEventListener('input', () => {
+    emailInput.removeAttribute('aria-invalid');
+    emailErr.classList.remove('is-visible');
+  });
+
+  /* ==========================================================================
+     POPULATE CONFIRMATION SCREEN
+     ========================================================================== */
+  function populateConfirmationScreen() {
+    document.getElementById('summary-booking-id').textContent = state.bookingId;
+    document.getElementById('sms-status-text').textContent = `SMS reminder scheduled to ${state.patient.phone || '(555) 234-5678'}`;
+    
+    document.getElementById('summary-doc-name').textContent = state.dentist.name;
+    document.getElementById('summary-doc-title').textContent = state.dentist.title;
+    
+    // Inject Doctor Avatar
+    const avatarBox = document.getElementById('summary-doc-avatar-box');
+    if (state.dentist.id === 'chen') {
+      avatarBox.innerHTML = `
+        <svg viewBox="0 0 100 100" fill="none" style="width:100%;height:100%;">
+          <rect width="100" height="100" fill="#E8F1EE"/>
+          <circle cx="50" cy="40" r="22" fill="#D3A284"/>
+          <path d="M26 36c2-12 12-20 24-20s22 8 24 20c-8-3-16-4-24-4s-16 1-24 4z" fill="#241E1C"/>
+          <circle cx="43" cy="39" r="2.5" fill="#1C1B1F"/>
+          <circle cx="57" cy="39" r="2.5" fill="#1C1B1F"/>
+          <path d="M46 48c2 2 6 2 8 0" stroke="#1C1B1F" stroke-width="2" stroke-linecap="round"/>
+        </svg>`;
+    } else if (state.dentist.id === 'okafor') {
+      avatarBox.innerHTML = `
+        <svg viewBox="0 0 100 100" fill="none" style="width:100%;height:100%;">
+          <rect width="100" height="100" fill="#EAE5DC"/>
+          <circle cx="50" cy="40" r="22" fill="#8C5338"/>
+          <circle cx="43" cy="40" r="2.5" fill="#181514"/>
+          <circle cx="57" cy="40" r="2.5" fill="#181514"/>
+        </svg>`;
+    } else {
+      avatarBox.innerHTML = `
+        <svg viewBox="0 0 100 100" fill="none" style="width:100%;height:100%;">
+          <rect width="100" height="100" fill="#F4ECE6"/>
+          <circle cx="50" cy="40" r="22" fill="#E0AF8D"/>
+          <circle cx="43" cy="41" r="2.5" fill="#1C1B1F"/>
+          <circle cx="57" cy="41" r="2.5" fill="#1C1B1F"/>
+        </svg>`;
+    }
+
+    document.getElementById('summary-service-name').textContent = state.service.name;
+    document.getElementById('summary-service-price').textContent = `$${state.service.price}`;
+    document.getElementById('summary-service-duration').textContent = state.service.duration;
+
+    document.getElementById('summary-datetime-display').textContent = `${state.date.fullFormatted} at ${state.timeSlot}`;
+    document.getElementById('summary-patient-name').textContent = state.patient.name || 'Valued Patient';
+    document.getElementById('summary-patient-contact').textContent = `${state.patient.email} • ${state.patient.phone}`;
+  }
+
+  /* ==========================================================================
+     CALENDAR ICS FILE DOWNLOAD GENERATOR
+     ========================================================================== */
+  function generateICSFile() {
+    const pad = (n) => n < 10 ? '0' + n : n;
+    const year = state.date.year;
+    const month = state.date.monthName === 'Sep' ? '09' : '10';
+    const day = pad(state.date.dayNumber);
+
+    // Parse time
+    let [timePart, modifier] = state.timeSlot.split(' ');
+    let [hours, minutes] = timePart.split(':');
+    let h = parseInt(hours, 10);
+    if (modifier === 'PM' && h < 12) h += 12;
+    if (modifier === 'AM' && h === 12) h = 0;
+
+    const startDateTime = `${year}${month}${day}T${pad(h)}${minutes}00`;
+    const endH = h + 1;
+    const endDateTime = `${year}${month}${day}T${pad(endH)}${minutes}00`;
+
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Alabaster Dental Studio//Booking App//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
+      'BEGIN:VEVENT',
+      `UID:${state.bookingId}@alabasterdental.com`,
+      `DTSTAMP:${year}${month}${day}T090000Z`,
+      `DTSTART:${startDateTime}`,
+      `DTEND:${endDateTime}`,
+      `SUMMARY:Dental Appointment with ${state.dentist.name} (${state.service.name})`,
+      `DESCRIPTION:Appointment Reference: ${state.bookingId}\\nService: ${state.service.name} ($${state.service.price})\\nPractitioner: ${state.dentist.name}\\nPatient: ${state.patient.name}\\nPhone: +1 212-555-0199`,
+      'LOCATION:Alabaster Dental Studio, 142 Mercer St, Suite 400, SoHo, New York, NY 10012',
+      'STATUS:CONFIRMED',
+      'BEGIN:VALARM',
+      'TRIGGER:-PT2H',
+      'ACTION:DISPLAY',
+      'DESCRIPTION:Reminder: Dental Visit at Alabaster Studio in 2 hours',
+      'END:VALARM',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.setAttribute('download', `Alabaster-Appointment-${state.bookingId}.ics`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
+  /* ==========================================================================
+     PRIMARY STEP NAVIGATION LOGIC
+     ========================================================================== */
+  nextStepBtn.addEventListener('click', () => {
+    playClickTone('tap');
+
+    if (state.currentStep === 1) {
+      renderStep(2);
+    } else if (state.currentStep === 2) {
+      renderStep(3);
+    } else if (state.currentStep === 3) {
+      renderStep(4);
+    } else if (state.currentStep === 4) {
+      if (validateStep4()) {
+        playClickTone('success');
+        renderStep(5);
+      }
+    }
+  });
+
+  backStepBtn.addEventListener('click', () => {
+    playClickTone('tap');
+    if (state.currentStep > 1) {
+      renderStep(state.currentStep - 1);
+    }
+  });
+
+  // Action buttons on confirmation screen
+  document.getElementById('add-to-calendar-btn').addEventListener('click', () => {
+    playClickTone('tap');
+    generateICSFile();
+  });
+
+  document.getElementById('modify-booking-btn').addEventListener('click', () => {
+    playClickTone('tap');
+    renderStep(1); // Navigate back while retaining all user choices
+  });
+
+  document.getElementById('book-another-btn').addEventListener('click', () => {
+    playClickTone('tap');
+    // Generate new booking ID and restart
+    state.bookingId = 'ADS-' + Math.floor(10000 + Math.random() * 90000);
+    renderStep(1);
+  });
+
+  // Home link resets to step 1
+  document.getElementById('brand-home-link').addEventListener('click', (e) => {
+    e.preventDefault();
+    playClickTone('tap');
+    renderStep(1);
+  });
+
+  // Sound toggle button
+  audioToggleBtn.addEventListener('click', () => {
+    state.soundEnabled = !state.soundEnabled;
+    audioToggleBtn.setAttribute('aria-pressed', state.soundEnabled ? 'true' : 'false');
+    if (state.soundEnabled) {
+      soundIconOn.style.display = 'block';
+      soundIconOff.style.display = 'none';
+      playClickTone('tap');
+    } else {
+      soundIconOn.style.display = 'none';
+      soundIconOff.style.display = 'block';
+    }
+  });
+
+  // Desktop Responsive Frame Toggle
+  toggleFrameBtn.addEventListener('click', () => {
+    playClickTone('tap');
+    const isFull = mobileViewport.classList.toggle('full-width');
+    toggleFrameBtn.setAttribute('aria-pressed', isFull ? 'true' : 'false');
+    toggleFrameBtn.querySelector('span').textContent = isFull ? 'Set 390×844 Frame' : 'Toggle Responsive Frame';
+  });
+
+  // Escape HTML helper
+  function escapeHTML(str) {
+    if (!str) return '';
+    return str.replace(/[&<>'"]/g, tag => ({
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      "'": '&#39;',
+      '"': '&quot;'
+    }[tag] || tag));
+  }
+
+  /* ==========================================================================
+     INITIALIZATION
+     ========================================================================== */
+  renderDateStrip();
+  setupTimeSlotListeners();
+  setupRadioCards();
+  updateLiveSummary();
+  renderStep(1);
+
+</script>
+</body>
+</html>

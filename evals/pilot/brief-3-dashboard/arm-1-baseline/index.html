@@ -1,0 +1,2963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCADA Telemetry | District 4 Municipal Water Treatment Facility</title>
+  <!-- Google Fonts for precision industrial typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-darkest: #070b12;
+      --bg-canvas: #0b111c;
+      --bg-surface: #101928;
+      --bg-card: #152238;
+      --bg-card-hover: #1b2c48;
+      --bg-card-active: #203556;
+      --border-faint: rgba(255, 255, 255, 0.06);
+      --border-subtle: #1e314f;
+      --border-bright: #304e7c;
+      
+      --text-main: #f3f6fc;
+      --text-secondary: #9cb3d3;
+      --text-muted: #5e7a9e;
+      --text-code: #38bdf8;
+      
+      /* Industrial Status Palettes */
+      --nominal-green: #10b981;
+      --nominal-glow: rgba(16, 185, 129, 0.25);
+      --nominal-bg: rgba(16, 185, 129, 0.12);
+      
+      --warning-amber: #f59e0b;
+      --warning-glow: rgba(245, 158, 11, 0.28);
+      --warning-bg: rgba(245, 158, 11, 0.15);
+      
+      --critical-red: #ef4444;
+      --critical-glow: rgba(239, 68, 68, 0.38);
+      --critical-bg: rgba(239, 68, 68, 0.18);
+      
+      --cyan-telemetry: #00d2ff;
+      --cyan-glow: rgba(0, 210, 255, 0.25);
+      --blue-accent: #2563eb;
+      --purple-stage: #a855f7;
+      
+      --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Chivo Mono', 'JetBrains Mono', Consolas, monospace;
+      
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-darkest);
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      line-height: 1.4;
+      overflow-x: hidden;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top SCADA Master Header */
+    .scada-masthead {
+      background: linear-gradient(180deg, #0e1726 0%, #0a101b 100%);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .masthead-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .facility-emblem {
+      width: 38px;
+      height: 38px;
+      background: radial-gradient(circle at 30% 30%, #1e3a8a, #0b1528);
+      border: 1px solid #38bdf8;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+    }
+
+    .facility-emblem svg {
+      width: 22px;
+      height: 22px;
+      color: #38bdf8;
+    }
+
+    .facility-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .facility-title {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+    }
+
+    .badge-substation {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid #0284c7;
+      color: #38bdf8;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 3px;
+      letter-spacing: 0.5px;
+    }
+
+    .facility-subtext {
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      display: flex;
+      gap: 12px;
+    }
+
+    .masthead-center {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      background: rgba(16, 25, 40, 0.7);
+      border: 1px solid var(--border-faint);
+      padding: 6px 16px;
+      border-radius: var(--radius-md);
+    }
+
+    .time-telemetry {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .clock-large {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--cyan-telemetry);
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(0, 210, 255, 0.4);
+    }
+
+    .clock-label {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+    }
+
+    .plc-health-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--nominal-green);
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--nominal-green);
+      box-shadow: 0 0 8px var(--nominal-green);
+      animation: pulseGreen 1.8s infinite;
+    }
+
+    @keyframes pulseGreen {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .masthead-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-action {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action:hover {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border-color: var(--border-bright);
+    }
+
+    .btn-action.active {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    .btn-danger-sim {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+    }
+
+    .btn-danger-sim:hover {
+      background: rgba(239, 68, 68, 0.25);
+      border-color: #ef4444;
+      color: #ffffff;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+    }
+
+    .sound-toggle-btn {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Urgent Emergency Alarm Ticker Bar */
+    .urgent-alarm-banner {
+      background: linear-gradient(90deg, #450a0a 0%, #1c0505 50%, #450a0a 100%);
+      border-bottom: 1px solid #dc2626;
+      color: #fecaca;
+      padding: 6px 18px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      animation: alertPulse 2s infinite ease-in-out;
+      font-size: 12px;
+      z-index: 95;
+    }
+
+    .urgent-alarm-banner.is-active {
+      display: flex;
+    }
+
+    @keyframes alertPulse {
+      0%, 100% { background-color: #450a0a; }
+      50% { background-color: #7f1d1d; }
+    }
+
+    .alarm-banner-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .alarm-siren-pill {
+      background: #ef4444;
+      color: #ffffff;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.8px;
+      padding: 2px 7px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      animation: blinkText 0.8s infinite;
+    }
+
+    @keyframes blinkText {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .alarm-detail-text {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+    }
+
+    .alarm-detail-text b {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    .alarm-banner-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-ack-urgent {
+      background: #ffffff;
+      color: #991b1b;
+      font-weight: 700;
+      border: none;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: 11px;
+      transition: background 0.15s;
+    }
+
+    .btn-ack-urgent:hover {
+      background: #fee2e2;
+    }
+
+    /* Overall Layout */
+    .dashboard-body {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+    }
+
+    /* KPI Summary Strip */
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+
+    .kpi-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    }
+
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--border-bright);
+    }
+
+    .kpi-card.kpi-flow::before { background: var(--cyan-telemetry); }
+    .kpi-card.kpi-pressure::before { background: #60a5fa; }
+    .kpi-card.kpi-ph::before { background: var(--purple-stage); }
+    .kpi-card.kpi-chlorine::before { background: #34d399; }
+    .kpi-card.kpi-turbidity::before { background: #fbbf24; }
+    .kpi-card.kpi-alarms::before { background: var(--critical-red); }
+
+    .kpi-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 4px;
+    }
+
+    .kpi-title {
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .kpi-icon {
+      color: var(--text-muted);
+      width: 14px;
+      height: 14px;
+    }
+
+    .kpi-value-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .kpi-value {
+      font-family: var(--font-mono);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+    }
+
+    .kpi-unit {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .kpi-delta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .delta-nominal { color: var(--nominal-green); }
+    .delta-warning { color: var(--warning-amber); }
+    .delta-critical { color: var(--critical-red); }
+
+    .kpi-bar-track {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .kpi-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+
+    /* Filter & Command Control Bar */
+    .telemetry-toolbar {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      flex: 1;
+      max-width: 280px;
+    }
+
+    .search-input-wrap svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      background: var(--bg-darkest);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px 6px 30px;
+      color: var(--text-main);
+      font-family: var(--font-ui);
+      font-size: 11.5px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-input:focus {
+      border-color: #38bdf8;
+    }
+
+    .filter-pills {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .filter-pill {
+      background: var(--bg-darkest);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.12s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .filter-pill:hover {
+      border-color: var(--border-bright);
+      color: var(--text-main);
+    }
+
+    .filter-pill.active {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: #0284c7;
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .filter-pill.pill-crit.active {
+      background: var(--critical-bg);
+      border-color: var(--critical-red);
+      color: #f87171;
+    }
+
+    .filter-pill.pill-warn.active {
+      background: var(--warning-bg);
+      border-color: var(--warning-amber);
+      color: #fbbf24;
+    }
+
+    .filter-pill.pill-nom.active {
+      background: var(--nominal-bg);
+      border-color: var(--nominal-green);
+      color: #34d399;
+    }
+
+    .pill-counter {
+      background: rgba(255, 255, 255, 0.1);
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+
+    .toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .view-switcher {
+      display: flex;
+      background: var(--bg-darkest);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 2px;
+    }
+
+    .view-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 3px;
+    }
+
+    .view-btn.active {
+      background: var(--bg-card);
+      color: var(--text-main);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    .sim-injector-select {
+      background: var(--bg-darkest);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 11px;
+      font-family: var(--font-ui);
+      padding: 5px 8px;
+      border-radius: var(--radius-sm);
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* Main Display Containers */
+    .view-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Section Subhead */
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px 2px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-secondary);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 12px;
+      background: #0284c7;
+      border-radius: 2px;
+    }
+
+    .section-badge {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--text-muted);
+    }
+
+    /* 12-ZONE CARDS GRID */
+    .zone-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 1400px) {
+      .zone-grid { grid-template-columns: repeat(3, 1fr); }
+      .kpi-strip { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 990px) {
+      .zone-grid { grid-template-columns: repeat(2, 1fr); }
+      .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 650px) {
+      .zone-grid { grid-template-columns: 1fr; }
+      .kpi-strip { grid-template-columns: 1fr; }
+    }
+
+    .zone-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+    }
+
+    .zone-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-bright);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
+      background: var(--bg-card-hover);
+    }
+
+    .zone-card.severity-critical {
+      border-color: #ef4444;
+      background: linear-gradient(180deg, rgba(239, 68, 68, 0.08) 0%, var(--bg-card) 60%);
+      box-shadow: 0 0 14px rgba(239, 68, 68, 0.25);
+    }
+
+    .zone-card.severity-critical::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #ef4444;
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+    }
+
+    .zone-card.severity-warning {
+      border-color: #f59e0b;
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0.06) 0%, var(--bg-card) 60%);
+    }
+
+    .zone-card.severity-warning::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #f59e0b;
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+    }
+
+    .zone-card.severity-nominal::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #10b981;
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+    }
+
+    /* Zone Card Header */
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-id-name {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-zone-code {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-stage-tag {
+      font-size: 9.5px;
+      color: var(--text-muted);
+      font-family: var(--font-ui);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .card-zone-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-top: 1px;
+    }
+
+    .status-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .badge-critical {
+      background: var(--critical-bg);
+      border: 1px solid var(--critical-red);
+      color: #fca5a5;
+    }
+
+    .badge-warning {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-amber);
+      color: #fde68a;
+    }
+
+    .badge-nominal {
+      background: var(--nominal-bg);
+      border: 1px solid var(--nominal-green);
+      color: #6ee7b7;
+    }
+
+    /* Card Metrics 2x2 Dense Grid */
+    .card-metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 10px;
+      background: rgba(8, 14, 24, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+    }
+
+    .metric-cell {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .metric-cell-label {
+      font-size: 9.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .metric-cell-value {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+      margin-top: 1px;
+    }
+
+    .metric-cell-value .unit {
+      font-size: 10px;
+      font-weight: 400;
+      color: var(--text-secondary);
+    }
+
+    .metric-cell.out-of-bound-crit .metric-cell-value {
+      color: #ef4444;
+      text-shadow: 0 0 6px rgba(239, 68, 68, 0.4);
+    }
+
+    .metric-cell.out-of-bound-warn .metric-cell-value {
+      color: #f59e0b;
+    }
+
+    /* Card Sparkline & Equipment Status Strip */
+    .card-footer-strip {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 4px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .sparkline-box {
+      width: 100px;
+      height: 24px;
+    }
+
+    .equipment-states {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-secondary);
+    }
+
+    .equip-tag {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+
+    .equip-led {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .led-run { background: var(--nominal-green); box-shadow: 0 0 4px var(--nominal-green); }
+    .led-stby { background: #64748b; }
+    .led-trip { background: var(--critical-red); box-shadow: 0 0 6px var(--critical-red); animation: blinkText 0.6s infinite; }
+
+    /* DENSE SCANNABLE DATA TABLE */
+    .dense-table-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+    }
+
+    .telemetry-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .telemetry-table thead {
+      background: #0a101b;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 2px solid var(--border-subtle);
+    }
+
+    .telemetry-table th {
+      padding: 9px 12px;
+      font-family: var(--font-ui);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.15s;
+    }
+
+    .telemetry-table th:hover {
+      color: var(--text-main);
+    }
+
+    .telemetry-table th.sorted-asc::after {
+      content: ' ▲';
+      color: #38bdf8;
+    }
+
+    .telemetry-table th.sorted-desc::after {
+      content: ' ▼';
+      color: #38bdf8;
+    }
+
+    .telemetry-table tbody tr {
+      border-bottom: 1px solid var(--border-faint);
+      transition: background 0.12s ease;
+      cursor: pointer;
+    }
+
+    .telemetry-table tbody tr:hover {
+      background: rgba(56, 189, 248, 0.05);
+    }
+
+    .telemetry-table tbody tr.row-critical {
+      background: rgba(239, 68, 68, 0.09);
+    }
+
+    .telemetry-table tbody tr.row-critical:hover {
+      background: rgba(239, 68, 68, 0.15);
+    }
+
+    .telemetry-table tbody tr.row-warning {
+      background: rgba(245, 158, 11, 0.05);
+    }
+
+    .telemetry-table td {
+      padding: 7px 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-main);
+      vertical-align: middle;
+    }
+
+    .telemetry-table td.col-zone-name {
+      font-family: var(--font-ui);
+      font-weight: 600;
+      color: #ffffff;
+      min-width: 220px;
+    }
+
+    .zone-subinfo {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      display: flex;
+      gap: 6px;
+    }
+
+    .cell-nominal {
+      color: var(--text-main);
+    }
+
+    .cell-warning {
+      color: #fbbf24;
+      font-weight: 700;
+      background: rgba(245, 158, 11, 0.12);
+      border-radius: 3px;
+      padding: 2px 4px;
+    }
+
+    .cell-critical {
+      color: #f87171;
+      font-weight: 700;
+      background: rgba(239, 68, 68, 0.18);
+      border-radius: 3px;
+      padding: 2px 4px;
+      text-shadow: 0 0 6px rgba(239, 68, 68, 0.4);
+    }
+
+    .table-spark-svg {
+      width: 80px;
+      height: 20px;
+      display: block;
+    }
+
+    .table-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-tbl-action {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 10.5px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-family: var(--font-ui);
+    }
+
+    .btn-tbl-action:hover {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border-color: #38bdf8;
+    }
+
+    /* Modal / Inspector Drawer */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.is-open {
+      display: flex;
+    }
+
+    .modal-dialog {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-bright);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 900px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      animation: modalSlide 0.18s ease-out;
+    }
+
+    @keyframes modalSlide {
+      from { transform: scale(0.97) translateY(10px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #0d1522;
+    }
+
+    .modal-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 4px;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #ffffff;
+    }
+
+    .modal-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .chart-container-card {
+      background: #090e18;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      position: relative;
+    }
+
+    .chart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .chart-tabs {
+      display: flex;
+      gap: 4px;
+    }
+
+    .chart-tab-btn {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .chart-tab-btn.active {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    #detailTrendCanvas {
+      width: 100%;
+      height: 220px;
+      display: block;
+    }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .control-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .control-box-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .control-slider-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-slider {
+      flex: 1;
+      accent-color: #0284c7;
+      cursor: pointer;
+    }
+
+    .control-slider-val {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: #38bdf8;
+      width: 48px;
+      text-align: right;
+    }
+
+    /* Audio alert pulse overlay for screen corner */
+    .audio-indicator {
+      position: fixed;
+      bottom: 12px;
+      right: 14px;
+      background: rgba(16, 25, 40, 0.85);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      z-index: 80;
+      pointer-events: none;
+    }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #080d16;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e314f;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #304e7c;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MASTER SCADA HEADBAR -->
+  <header class="scada-masthead">
+    <div class="masthead-left">
+      <div class="facility-emblem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+          <path d="M12 22a7.99 7.99 0 0 1-5.66-2.34"></path>
+        </svg>
+      </div>
+      <div class="facility-meta">
+        <div class="facility-title">
+          <span>District 4 Regional Purification</span>
+          <span class="badge-substation">SCADA PLC-12 NET</span>
+        </div>
+        <div class="facility-subtext">
+          <span>SYSTEM: RUNNING (OPTIMAL)</span>
+          <span>PLANT CAPACITY: 180.0 MGD</span>
+          <span>OPERATOR: VANCE.J (LEAD)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="masthead-center">
+      <div class="plc-health-pill">
+        <span class="pulse-dot"></span>
+        <span>PLC LATENCY: 12ms</span>
+      </div>
+      <div class="time-telemetry">
+        <div class="clock-large" id="liveClock">11:23:45.89</div>
+        <div class="clock-label" id="liveDate">2026-09-26 UTC+05:30</div>
+      </div>
+      <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary);">
+        FAILOVER: <span style="color: var(--nominal-green); font-weight:700;">HOT-STANDBY</span>
+      </div>
+    </div>
+
+    <div class="masthead-right">
+      <button class="btn-action" id="toggleLiveBtn" title="Pause or Resume Live Telemetry Stream">
+        <span id="liveIcon" style="width: 7px; height: 7px; border-radius: 50%; background: #38bdf8; display: inline-block;"></span>
+        <span id="liveBtnText">STREAMING</span>
+      </button>
+
+      <button class="btn-action sound-toggle-btn" id="soundToggleBtn" title="Toggle SCADA Industrial Chimes">
+        <svg id="soundSvg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+      </button>
+
+      <select class="sim-injector-select" id="faultScenarioSelect" title="Inject Real-time Sensor Fault">
+        <option value="none">-- Inject Field Anomaly --</option>
+        <option value="turbidity_spike">Turbidity Breakthrough (ZN-05 Filter)</option>
+        <option value="pressure_surge">Overpressure Surge (ZN-10 Booster)</option>
+        <option value="chlorine_drop">Chlorine Feed Loss (ZN-08 Chemical)</option>
+        <option value="low_pressure">Intake Cavitation (ZN-01 Intake)</option>
+        <option value="normalize">Normalize All Zones</option>
+      </select>
+
+      <button class="btn-action" id="ackAllBtn" title="Acknowledge All Open Telemetry Alarms">
+        ACK ALL
+      </button>
+    </div>
+  </header>
+
+  <!-- URGENT ALARM TICKER BANNER -->
+  <div class="urgent-alarm-banner" id="urgentAlarmBanner">
+    <div class="alarm-banner-content">
+      <div class="alarm-siren-pill">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+        CRITICAL THRESHOLD BREACH
+      </div>
+      <div class="alarm-detail-text" id="alarmBannerMsg">
+        Zone <b>ZN-05 Dual-Media Sand Filter</b> Turbidity at <b>0.82 NTU</b> (EPA Limit: &lt; 0.30 NTU). Immediate Backwash Required.
+      </div>
+    </div>
+    <div class="alarm-banner-actions">
+      <button class="btn-ack-urgent" id="bannerAckBtn">SILENCE &amp; ACK</button>
+    </div>
+  </div>
+
+  <main class="dashboard-body">
+
+    <!-- KPI SUMMARY STRIP -->
+    <section class="kpi-strip">
+      <!-- Flow Rate KPI -->
+      <div class="kpi-card kpi-flow">
+        <div class="kpi-top">
+          <span class="kpi-title">Plant Throughput</span>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-value" id="kpiTotalFlow">144.2</span>
+          <span class="kpi-unit">MGD</span>
+        </div>
+        <div class="kpi-delta delta-nominal">
+          <span>Target: 145.0 MGD (80.1% Capacity)</span>
+        </div>
+        <div class="kpi-bar-track">
+          <div class="kpi-bar-fill" id="kpiFlowBar" style="width: 80%; background: var(--cyan-telemetry);"></div>
+        </div>
+      </div>
+
+      <!-- Pump Pressure KPI -->
+      <div class="kpi-card kpi-pressure">
+        <div class="kpi-top">
+          <span class="kpi-title">Discharge Pressure</span>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-value" id="kpiAvgPressure">78.4</span>
+          <span class="kpi-unit">PSI</span>
+        </div>
+        <div class="kpi-delta delta-nominal">
+          <span>Range: 65.0 - 85.0 PSI Nominal</span>
+        </div>
+        <div class="kpi-bar-track">
+          <div class="kpi-bar-fill" id="kpiPressureBar" style="width: 72%; background: #60a5fa;"></div>
+        </div>
+      </div>
+
+      <!-- Chemical: pH Balance KPI -->
+      <div class="kpi-card kpi-ph">
+        <div class="kpi-top">
+          <span class="kpi-title">Effluent pH Balance</span>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.09 3 12.25c0 2.22 1.8 4.05 4 4.05z"></path></svg>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-value" id="kpiAvgPh">7.34</span>
+          <span class="kpi-unit">pH</span>
+        </div>
+        <div class="kpi-delta delta-nominal">
+          <span>Setpoint: 7.20 - 7.50 pH</span>
+        </div>
+        <div class="kpi-bar-track">
+          <div class="kpi-bar-fill" id="kpiPhBar" style="width: 68%; background: var(--purple-stage);"></div>
+        </div>
+      </div>
+
+      <!-- Chemical: Chlorine Residual KPI -->
+      <div class="kpi-card kpi-chlorine">
+        <div class="kpi-top">
+          <span class="kpi-title">Free Chlorine (Cl₂)</span>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-value" id="kpiAvgChlorine">1.82</span>
+          <span class="kpi-unit">ppm</span>
+        </div>
+        <div class="kpi-delta delta-nominal">
+          <span>Residual Target: 1.4 - 2.2 ppm</span>
+        </div>
+        <div class="kpi-bar-track">
+          <div class="kpi-bar-fill" id="kpiClBar" style="width: 58%; background: #34d399;"></div>
+        </div>
+      </div>
+
+      <!-- Turbidity KPI -->
+      <div class="kpi-card kpi-turbidity">
+        <div class="kpi-top">
+          <span class="kpi-title">Water Turbidity</span>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20M2 6h20M2 18h20"></path></svg>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-value" id="kpiAvgTurbidity">0.14</span>
+          <span class="kpi-unit">NTU</span>
+        </div>
+        <div class="kpi-delta delta-nominal">
+          <span id="kpiTurbCompliance">EPA Standard: &lt; 0.30 NTU (Compliant)</span>
+        </div>
+        <div class="kpi-bar-track">
+          <div class="kpi-bar-fill" id="kpiTurbBar" style="width: 28%; background: #fbbf24;"></div>
+        </div>
+      </div>
+
+      <!-- Active Alarms KPI -->
+      <div class="kpi-card kpi-alarms">
+        <div class="kpi-top">
+          <span class="kpi-title">Alarm Registry</span>
+          <svg class="kpi-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-value" id="kpiAlarmCount" style="color: #ef4444;">1</span>
+          <span class="kpi-unit">ACTIVE</span>
+        </div>
+        <div class="kpi-delta" id="kpiAlarmBreakdown" style="color: var(--text-secondary); font-family: var(--font-mono);">
+          1 Crit • 1 Warn • 10 Nom
+        </div>
+        <div class="kpi-bar-track">
+          <div class="kpi-bar-fill" id="kpiAlarmBar" style="width: 16%; background: var(--critical-red);"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FILTER CONTROLS & SCADA VIEW SWITCHER -->
+    <div class="telemetry-toolbar">
+      <div class="toolbar-left">
+        <div class="search-input-wrap">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" class="search-input" id="zoneSearchInput" placeholder="Filter by Zone, Tag, Stage...">
+        </div>
+
+        <div class="filter-pills">
+          <button class="filter-pill active" data-filter="all">
+            <span>ALL ZONES</span>
+            <span class="pill-counter" id="pillCountAll">12</span>
+          </button>
+          <button class="filter-pill pill-crit" data-filter="critical">
+            <span>CRITICAL</span>
+            <span class="pill-counter" id="pillCountCrit">1</span>
+          </button>
+          <button class="filter-pill pill-warn" data-filter="warning">
+            <span>WARNING</span>
+            <span class="pill-counter" id="pillCountWarn">1</span>
+          </button>
+          <button class="filter-pill pill-nom" data-filter="nominal">
+            <span>NOMINAL</span>
+            <span class="pill-counter" id="pillCountNom">10</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="toolbar-right">
+        <!-- Metric Focus Filter -->
+        <div style="display:flex; align-items:center; gap:6px;">
+          <span style="font-size:10px; color:var(--text-muted); font-weight:700; text-transform:uppercase;">Focus:</span>
+          <select class="sim-injector-select" id="metricFocusSelect">
+            <option value="all">All Telemetry Vectors</option>
+            <option value="pressure">Pumps &amp; Pressure (PSI)</option>
+            <option value="turbidity">Turbidity (NTU)</option>
+            <option value="chemical">Chemical (pH / Cl₂ ppm)</option>
+            <option value="flow">Flow Rate (MGD)</option>
+          </select>
+        </div>
+
+        <!-- View Switcher -->
+        <div class="view-switcher">
+          <button class="view-btn active" id="viewDualBtn" title="Dual Mode: Cards &amp; Dense Table">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Dual View
+          </button>
+          <button class="view-btn" id="viewCardsBtn" title="Zone Cards Grid Only">
+            Cards
+          </button>
+          <button class="view-btn" id="viewTableBtn" title="Dense SCADA Table Only">
+            Table
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN VIEW CONTAINER -->
+    <div class="view-container">
+      
+      <!-- ZONE BREAKDOWN CARDS SECTION -->
+      <section id="cardsSection">
+        <div class="section-head">
+          <div class="section-title">
+            <span>12 Municipal Treatment &amp; Distribution Zones</span>
+          </div>
+          <div class="section-badge">
+            DISPLAYING: <span id="visibleCardsCount">12</span> / 12 ACTIVE CHANNELS
+          </div>
+        </div>
+
+        <div class="zone-grid" id="zoneGrid">
+          <!-- Dynamically generated 12 Zone Cards -->
+        </div>
+      </section>
+
+      <!-- DENSE SCANNABLE DATA TABLE SECTION -->
+      <section id="tableSection" style="margin-top: 6px;">
+        <div class="section-head">
+          <div class="section-title">
+            <span>SCADA Dense Operational Telemetry Log</span>
+          </div>
+          <div class="section-badge" style="display:flex; align-items:center; gap: 10px;">
+            <span>POLL RATE: 1.5s</span>
+            <span>SPEC: EPA/AWWA 2026</span>
+          </div>
+        </div>
+
+        <div class="dense-table-container">
+          <table class="telemetry-table" id="scadaTable">
+            <thead>
+              <tr>
+                <th data-sort="id">Zone / Facility Node</th>
+                <th data-sort="stage">Stage</th>
+                <th data-sort="severity">Alarm Status</th>
+                <th data-sort="flow">Flow (MGD)</th>
+                <th data-sort="pressure">Pressure (PSI)</th>
+                <th data-sort="ph">pH Level</th>
+                <th data-sort="chlorine">Free Cl₂ (ppm)</th>
+                <th data-sort="turbidity">Turbidity (NTU)</th>
+                <th>Pump Status</th>
+                <th>Real-time Trend</th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="telemetryTableBody">
+              <!-- Dynamically rendered rows -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ZONE DEEP DIVE MODAL / INSPECTOR -->
+  <div class="modal-overlay" id="zoneDetailModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="badge-substation" id="modalZoneCode">ZN-01</span>
+          <div>
+            <h3 style="font-size: 15px; color: #fff; font-weight: 700;" id="modalZoneTitle">Intake Raw Basin &amp; Low-Lift Pumps</h3>
+            <div style="font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono);" id="modalZoneStage">STAGE: INTAKE &amp; SCREENING</div>
+          </div>
+        </div>
+        <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Live Real-time Oscilloscope Chart -->
+        <div class="chart-container-card">
+          <div class="chart-header">
+            <div>
+              <span style="font-size: 11.5px; font-weight: 700; color: #fff; text-transform: uppercase;">Real-Time Sensor Telemetry History (60s Window)</span>
+              <span style="font-size: 10px; color: var(--text-muted); font-family: var(--font-mono); margin-left: 8px;">SAMPLE INTERVAL: 1500ms</span>
+            </div>
+            <div class="chart-tabs">
+              <button class="chart-tab-btn active" data-chart-metric="pressure">Pressure</button>
+              <button class="chart-tab-btn" data-chart-metric="turbidity">Turbidity</button>
+              <button class="chart-tab-btn" data-chart-metric="chlorine">Chlorine</button>
+              <button class="chart-tab-btn" data-chart-metric="ph">pH</button>
+              <button class="chart-tab-btn" data-chart-metric="flow">Flow Rate</button>
+            </div>
+          </div>
+          <canvas id="detailTrendCanvas" width="860" height="220"></canvas>
+        </div>
+
+        <!-- Telemetry Bounds & Control Setpoints -->
+        <div class="controls-grid">
+          <div class="control-box">
+            <div class="control-box-title">
+              <span>Main Drive VFD Speed</span>
+              <span id="vfdPercentLabel" style="color: #38bdf8;">85%</span>
+            </div>
+            <div class="control-slider-wrap">
+              <input type="range" min="30" max="100" value="85" class="control-slider" id="vfdSlider">
+            </div>
+            <span style="font-size: 10px; color: var(--text-muted); font-family: var(--font-mono);">Variable Frequency Drive: 1,740 RPM</span>
+          </div>
+
+          <div class="control-box">
+            <div class="control-box-title">
+              <span>Chemical Dosage Ratio</span>
+              <span id="dosageLabel" style="color: var(--nominal-green);">100%</span>
+            </div>
+            <div class="control-slider-wrap">
+              <input type="range" min="50" max="150" value="100" class="control-slider" id="dosageSlider">
+            </div>
+            <span style="font-size: 10px; color: var(--text-muted); font-family: var(--font-mono);">Automated PID Metering Loop</span>
+          </div>
+
+          <div class="control-box">
+            <div class="control-box-title">
+              <span>Operational Controls</span>
+              <span style="color: var(--text-muted);">SAFETY INTERLOCK</span>
+            </div>
+            <div style="display:flex; gap: 8px; margin-top: 4px;">
+              <button class="btn-action" id="triggerBackwashBtn" style="flex:1; justify-content:center;">Initiate Flush</button>
+              <button class="btn-action" id="modalAckBtn" style="flex:1; justify-content:center; border-color: #38bdf8; color: #38bdf8;">Ack Zone</button>
+            </div>
+            <span style="font-size: 10px; color: var(--text-muted); font-family: var(--font-mono);">Operator Authorized Overrides</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio status pill -->
+  <div class="audio-indicator" id="audioIndicator">
+    <span style="width:6px; height:6px; border-radius:50%; background:#64748b;" id="audioIndicatorLed"></span>
+    <span id="audioIndicatorText">AUDIO ALERTS: MUTED</span>
+  </div>
+
+  <!-- SCADA SCRIPT LOGIC -->
+  <script>
+    /* =========================================================================
+       DISTRICT 4 WATER AUTHORITY SCADA TELEMETRY CONTROLLER
+       ========================================================================= */
+
+    // 12 Rigorous Industrial Municipal Treatment Zones
+    const ZONES_INITIAL_CONFIG = [
+      {
+        id: "ZN-01",
+        name: "Intake Raw Basin & Low-Lift",
+        stage: "Raw Intake",
+        flow: 18.4,
+        flowNom: 18.0,
+        flowCap: 25.0,
+        pressure: 64.2,
+        pressMin: 55.0,
+        pressMax: 85.0,
+        ph: 7.22,
+        phMin: 6.8,
+        phMax: 8.0,
+        chlorine: 0.12, // Raw intake has minimal initial chlorine
+        clMin: 0.05,
+        clMax: 0.50,
+        turbidity: 0.28,
+        turbMin: 0.05,
+        turbMax: 0.40,
+        pumpStatus: "RUN",
+        valvePct: 92,
+        alertMsg: ""
+      },
+      {
+        id: "ZN-02",
+        name: "Coagulant Rapid Mix Stage",
+        stage: "Coagulation",
+        flow: 18.1,
+        flowNom: 18.0,
+        flowCap: 25.0,
+        pressure: 68.5,
+        pressMin: 55.0,
+        pressMax: 85.0,
+        ph: 6.94,
+        phMin: 6.7,
+        phMax: 7.4,
+        chlorine: 0.20,
+        clMin: 0.10,
+        clMax: 0.60,
+        turbidity: 0.26,
+        turbMin: 0.05,
+        turbMax: 0.45,
+        pumpStatus: "RUN",
+        valvePct: 88,
+        alertMsg: ""
+      },
+      {
+        id: "ZN-03",
+        name: "Flocculation Chambers A/B",
+        stage: "Flocculation",
+        flow: 17.8,
+        flowNom: 18.0,
+        flowCap: 25.0,
+        pressure: 62.0,
+        pressMin: 50.0,
+        pressMax: 80.0,
+        ph: 7.15,
+        phMin: 6.8,
+        phMax: 7.6,
+        chlorine: 0.25,
+        clMin: 0.10,
+        clMax: 0.60,
+        turbidity: 0.22,
+        turbMin: 0.05,
+        turbMax: 0.35,
+        pumpStatus: "RUN",
+        valvePct: 84,
+        alertMsg: ""
+      },
+      {
+        id: "ZN-04",
+        name: "Primary Clarifier & Settling",
+        stage: "Sedimentation",
+        flow: 17.4,
+        flowNom: 17.5,
+        flowCap: 24.0,
+        pressure: 66.8,
+        pressMin: 55.0,
+        pressMax: 85.0,
+        ph: 7.28,
+        phMin: 6.9,
+        phMax: 7.6,
+        chlorine: 0.40,
+        clMin: 0.20,
+        clMax: 0.80,
+        turbidity: 0.18,
+        turbMin: 0.05,
+        turbMax: 0.30,
+        pumpStatus: "RUN",
+        valvePct: 86,
+        alertMsg: ""
+      },
+      {
+        id: "ZN-05",
+        name: "Dual-Media Sand Filter 1-4",
+        stage: "Filtration",
+        flow: 16.9,
+        flowNom: 17.0,
+        flowCap: 22.0,
+        pressure: 74.2,
+        pressMin: 60.0,
+        pressMax: 90.0,
+        ph: 7.31,
+        phMin: 7.0,
+        phMax: 7.6,
+        chlorine: 0.65,
+        clMin: 0.40,
+        clMax: 1.20,
+        turbidity: 0.52, // Currently in critical alert for demonstration
+        turbMin: 0.04,
+        turbMax: 0.30, // EPA strict limit < 0.30
+        pumpStatus: "RUN",
+        valvePct: 94,
+        alertMsg: "Turbidity breakthrough > 0.30 NTU limit"
+      },
+      {
+        id: "ZN-06",
+        name: "Deep Bed Granular Carbon",
+        stage: "Filtration",
+        flow: 16.8,
+        flowNom: 17.0,
+        flowCap: 22.0,
+        pressure: 72.1,
+        pressMin: 58.0,
+        pressMax: 88.0,
+        ph: 7.30,
+        phMin: 7.0,
+        phMax: 7.6,
+        chlorine: 0.70,
+        clMin: 0.40,
+        clMax: 1.20,
+        turbidity: 0.11,
+        turbMin: 0.03,
+        turbMax: 0.25,
+        pumpStatus: "RUN",
+        valvePct: 90,
+        alertMsg: ""
+      },
+      {
+        id: "ZN-07",
+        name: "Intermediate Ozone Contactor",
+        stage: "Disinfection",
+        flow: 16.5,
+        flowNom: 16.5,
+        flowCap: 22.0,
+        pressure: 79.5,
+        pressMin: 62.0,
+        pressMax: 92.0,
+        ph: 7.35,
+        phMin: 7.0,
+        phMax: 7.7,
+        chlorine: 1.10,
+        clMin: 0.80,
+        clMax: 1.80,
+        turbidity: 0.09,
+        turbMin: 0.02,
+        turbMax: 0.20,
+        pumpStatus: "RUN",
+        valvePct: 82,
+        alertMsg: ""
+      },
+      {
+        id: "ZN-08",
+        name: "Sodium Hypochlorite Feed",
+        stage: "Chemical Disinfect",
+        flow: 16.4,
+        flowNom: 16.5,
+        flowCap: 22.0,
+        pressure: 81.2,
+        pressMin: 65.0,
+        pressMax: 95.0,
+        ph: 7.42,
+        phMin: 7.0,
+        phMax: 7.8,
+        chlorine: 2.78, // High warning
+        clMin: 1.40,
+        clMax: 2.40,
+        turbidity: 0.08,
+        turbMin: 0.02,
+        turbMax: 0.20,
+        pumpStatus: "RUN",
+        valvePct: 80,
+        alertMsg: "Free Cl₂ dosing elevated (+0.38 ppm above target)"
+      },
+      {
+        id: "ZN-09",
+        name: "Clearwell Reservoir 10MG",
+        stage: "Finished Storage",
+        flow: 16.2,
+        flowNom: 16.0,
+        flowCap: 22.0,
+        pressure: 70.4,
+        pressMin: 60.0,
+        pressMax: 88.0,
+        ph: 7.38,
+        phMin: 7.1,
+        phMax: 7.6,
+        chlorine: 1.95,
+        clMin: 1.40,
+        clMax: 2.20,
+        turbidity: 0.07,
+        turbMin: 0.02,
+        turbMax: 0.20,
+        pumpStatus: "RUN",
+        valvePct: 85,
+        alertMsg: ""
+      },
+      {
+        id: "ZN-10",
+        name: "Booster Station North Grid",
+        stage: "Distribution",
+        flow: 12.8,
+        flowNom: 13.0,
+        flowCap: 20.0,
+        pressure: 84.6,
+        pressMin: 65.0,
+        pressMax: 92.0,
+        ph: 7.36,
+        phMin: 7.0,
+        phMax: 7.7,
+        chlorine: 1.84,
+        clMin: 1.20,
+        clMax: 2.20,
+        turbidity: 0.08,
+        turbMin: 0.02,
+        turbMax: 0.25,
+        pumpStatus: "RUN",
+        valvePct: 88,
+        alertMsg: ""
+      },
+      {
+        id: "ZN-11",
+        name: "Booster Station South Loop",
+        stage: "Distribution",
+        flow: 11.2,
+        flowNom: 11.5,
+        flowCap: 18.0,
+        pressure: 83.1,
+        pressMin: 65.0,
+        pressMax: 92.0,
+        ph: 7.37,
+        phMin: 7.0,
+        phMax: 7.7,
+        chlorine: 1.76,
+        clMin: 1.20,
+        clMax: 2.20,
+        turbidity: 0.08,
+        turbMin: 0.02,
+        turbMax: 0.25,
+        pumpStatus: "RUN",
+        valvePct: 84,
+        alertMsg: ""
+      },
+      {
+        id: "ZN-12",
+        name: "Effluent Vault & Fluoridation",
+        stage: "Final Discharge",
+        flow: 14.1,
+        flowNom: 14.0,
+        flowCap: 20.0,
+        pressure: 82.0,
+        pressMin: 65.0,
+        pressMax: 90.0,
+        ph: 7.35,
+        phMin: 7.1,
+        phMax: 7.6,
+        chlorine: 1.80,
+        clMin: 1.30,
+        clMax: 2.10,
+        turbidity: 0.06,
+        turbMin: 0.01,
+        turbMax: 0.20,
+        pumpStatus: "RUN",
+        valvePct: 90,
+        alertMsg: ""
+      }
+    ];
+
+    // Deep clone zones state and append 20 history data points for sparklines
+    let zones = ZONES_INITIAL_CONFIG.map(z => {
+      const histLength = 20;
+      const history = {
+        pressure: Array.from({length: histLength}, () => z.pressure + (Math.random() - 0.5) * 1.5),
+        turbidity: Array.from({length: histLength}, () => Math.max(0.02, z.turbidity + (Math.random() - 0.5) * 0.04)),
+        chlorine: Array.from({length: histLength}, () => Math.max(0.05, z.chlorine + (Math.random() - 0.5) * 0.1)),
+        ph: Array.from({length: histLength}, () => z.ph + (Math.random() - 0.5) * 0.06),
+        flow: Array.from({length: histLength}, () => z.flow + (Math.random() - 0.5) * 0.3)
+      };
+      return {
+        ...z,
+        history,
+        vfdSpeed: 85,
+        dosagePct: 100,
+        acknowledged: false
+      };
+    });
+
+    // App state
+    const state = {
+      isStreaming: true,
+      soundEnabled: false,
+      filterStatus: "all", // "all", "critical", "warning", "nominal"
+      searchQuery: "",
+      metricFocus: "all",
+      viewMode: "dual", // "dual", "cards", "table"
+      sortColumn: "id",
+      sortDirection: "asc",
+      selectedZoneId: null,
+      detailMetric: "pressure",
+      audioCtx: null
+    };
+
+    /* =========================================================================
+       SOUND GENERATOR (Web Audio API)
+       ========================================================================= */
+    function initAudioContext() {
+      if (!state.audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        state.audioCtx = new AudioContext();
+      }
+      if (state.audioCtx.state === 'suspended') {
+        state.audioCtx.resume();
+      }
+    }
+
+    function playIndustrialTone(type = "warning") {
+      if (!state.soundEnabled) return;
+      try {
+        initAudioContext();
+        const ctx = state.audioCtx;
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        if (type === "critical") {
+          // Urgent pulsing dual tone
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(880, now);
+          osc.frequency.exponentialRampToValueAtTime(440, now + 0.18);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
+          osc.start(now);
+          osc.stop(now + 0.3);
+        } else if (type === "warning") {
+          // Soft notification ping
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(587.33, now); // D5
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+          gain.gain.setValueAtTime(0.1, now);
+          gain.gain.linearRampToValueAtTime(0.001, now + 0.25);
+          osc.start(now);
+          osc.stop(now + 0.25);
+        } else if (type === "ack") {
+          // Positive acknowledgment blip
+          osc.type = "triangle";
+          osc.frequency.setValueAtTime(440, now);
+          osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.linearRampToValueAtTime(0.001, now + 0.15);
+          osc.start(now);
+          osc.stop(now + 0.15);
+        }
+      } catch (err) {
+        console.warn("Audio API disabled or waiting for user gesture:", err);
+      }
+    }
+
+    /* =========================================================================
+       SEVERITY CALCULATION & THRESHOLDS
+       ========================================================================= */
+    function evaluateZoneSeverity(z) {
+      let isCritical = false;
+      let isWarning = false;
+      let messages = [];
+
+      // Turbidity rules (EPA limit strict 0.30 NTU for finished/filtered water)
+      if (z.id !== "ZN-01" && z.id !== "ZN-02") {
+        if (z.turbidity >= 0.40) {
+          isCritical = true;
+          messages.push(`Turbidity ${z.turbidity.toFixed(2)} NTU exceeds 0.40 NTU limit`);
+        } else if (z.turbidity > z.turbMax) {
+          isWarning = true;
+          messages.push(`Turbidity ${z.turbidity.toFixed(2)} NTU above nominal`);
+        }
+      }
+
+      // Pressure rules
+      if (z.pressure > 96.0) {
+        isCritical = true;
+        messages.push(`High pipe pressure ${z.pressure.toFixed(1)} PSI`);
+      } else if (z.pressure < 46.0) {
+        isCritical = true;
+        messages.push(`Loss of main pressure ${z.pressure.toFixed(1)} PSI`);
+      } else if (z.pressure > z.pressMax || z.pressure < z.pressMin) {
+        isWarning = true;
+        messages.push(`Pressure ${z.pressure.toFixed(1)} PSI outside band`);
+      }
+
+      // Chlorine rules (for disinfection zones ZN-07 to ZN-12)
+      if (["ZN-07", "ZN-08", "ZN-09", "ZN-10", "ZN-11", "ZN-12"].includes(z.id)) {
+        if (z.chlorine < 0.60) {
+          isCritical = true;
+          messages.push(`Depleted chlorine residual ${z.chlorine.toFixed(2)} ppm`);
+        } else if (z.chlorine > 3.40) {
+          isCritical = true;
+          messages.push(`Chemical overfeed ${z.chlorine.toFixed(2)} ppm`);
+        } else if (z.chlorine < z.clMin || z.chlorine > z.clMax) {
+          isWarning = true;
+          messages.push(`Chlorine ${z.chlorine.toFixed(2)} ppm off setpoint`);
+        }
+      }
+
+      // pH rules
+      if (z.ph < 6.4 || z.ph > 8.5) {
+        isCritical = true;
+        messages.push(`Severe pH imbalance ${z.ph.toFixed(2)}`);
+      } else if (z.ph < z.phMin || z.ph > z.phMax) {
+        isWarning = true;
+        messages.push(`pH ${z.ph.toFixed(2)} drift`);
+      }
+
+      if (isCritical) return { level: "critical", msg: messages[0] || "Critical parameter anomaly" };
+      if (isWarning) return { level: "warning", msg: messages[0] || "Advisory parameter shift" };
+      return { level: "nominal", msg: "Nominal operational state" };
+    }
+
+    /* =========================================================================
+       DOM ELEMENTS
+       ========================================================================= */
+    const liveClockEl = document.getElementById("liveClock");
+    const liveDateEl = document.getElementById("liveDate");
+    const toggleLiveBtn = document.getElementById("toggleLiveBtn");
+    const liveIcon = document.getElementById("liveIcon");
+    const liveBtnText = document.getElementById("liveBtnText");
+    const soundToggleBtn = document.getElementById("soundToggleBtn");
+    const soundSvg = document.getElementById("soundSvg");
+    const faultScenarioSelect = document.getElementById("faultScenarioSelect");
+    const ackAllBtn = document.getElementById("ackAllBtn");
+    const urgentAlarmBanner = document.getElementById("urgentAlarmBanner");
+    const alarmBannerMsg = document.getElementById("alarmBannerMsg");
+    const bannerAckBtn = document.getElementById("bannerAckBtn");
+
+    // KPI elements
+    const kpiTotalFlowEl = document.getElementById("kpiTotalFlow");
+    const kpiAvgPressureEl = document.getElementById("kpiAvgPressure");
+    const kpiAvgPhEl = document.getElementById("kpiAvgPh");
+    const kpiAvgChlorineEl = document.getElementById("kpiAvgChlorine");
+    const kpiAvgTurbidityEl = document.getElementById("kpiAvgTurbidity");
+    const kpiTurbComplianceEl = document.getElementById("kpiTurbCompliance");
+    const kpiAlarmCountEl = document.getElementById("kpiAlarmCount");
+    const kpiAlarmBreakdownEl = document.getElementById("kpiAlarmBreakdown");
+    const kpiFlowBar = document.getElementById("kpiFlowBar");
+    const kpiPressureBar = document.getElementById("kpiPressureBar");
+    const kpiPhBar = document.getElementById("kpiPhBar");
+    const kpiClBar = document.getElementById("kpiClBar");
+    const kpiTurbBar = document.getElementById("kpiTurbBar");
+    const kpiAlarmBar = document.getElementById("kpiAlarmBar");
+
+    // Toolbar elements
+    const zoneSearchInput = document.getElementById("zoneSearchInput");
+    const filterPills = document.querySelectorAll(".filter-pill");
+    const pillCountAll = document.getElementById("pillCountAll");
+    const pillCountCrit = document.getElementById("pillCountCrit");
+    const pillCountWarn = document.getElementById("pillCountWarn");
+    const pillCountNom = document.getElementById("pillCountNom");
+    const metricFocusSelect = document.getElementById("metricFocusSelect");
+
+    // View elements
+    const viewDualBtn = document.getElementById("viewDualBtn");
+    const viewCardsBtn = document.getElementById("viewCardsBtn");
+    const viewTableBtn = document.getElementById("viewTableBtn");
+    const cardsSection = document.getElementById("cardsSection");
+    const tableSection = document.getElementById("tableSection");
+    const zoneGrid = document.getElementById("zoneGrid");
+    const telemetryTableBody = document.getElementById("telemetryTableBody");
+    const visibleCardsCount = document.getElementById("visibleCardsCount");
+
+    // Modal elements
+    const zoneDetailModal = document.getElementById("zoneDetailModal");
+    const modalCloseBtn = document.getElementById("modalCloseBtn");
+    const modalZoneCode = document.getElementById("modalZoneCode");
+    const modalZoneTitle = document.getElementById("modalZoneTitle");
+    const modalZoneStage = document.getElementById("modalZoneStage");
+    const vfdSlider = document.getElementById("vfdSlider");
+    const vfdPercentLabel = document.getElementById("vfdPercentLabel");
+    const dosageSlider = document.getElementById("dosageSlider");
+    const dosageLabel = document.getElementById("dosageLabel");
+    const triggerBackwashBtn = document.getElementById("triggerBackwashBtn");
+    const modalAckBtn = document.getElementById("modalAckBtn");
+    const detailTrendCanvas = document.getElementById("detailTrendCanvas");
+    const chartTabBtns = document.querySelectorAll(".chart-tab-btn");
+
+    // Audio indicator
+    const audioIndicator = document.getElementById("audioIndicator");
+    const audioIndicatorLed = document.getElementById("audioIndicatorLed");
+    const audioIndicatorText = document.getElementById("audioIndicatorText");
+
+    /* =========================================================================
+       INITIALIZATION & CLOCK
+       ========================================================================= */
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const mins = String(now.getMinutes()).padStart(2, '0');
+      const secs = String(now.getSeconds()).padStart(2, '0');
+      const ms = String(Math.floor(now.getMilliseconds() / 10)).padStart(2, '0');
+      liveClockEl.textContent = `${hours}:${mins}:${secs}.${ms}`;
+
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      liveDateEl.textContent = `${year}-${month}-${day} PLANT TIME`;
+    }
+    setInterval(updateClock, 75);
+
+    /* =========================================================================
+       REAL-TIME TELEMETRY SIMULATION ENGINE
+       ========================================================================= */
+    function simulateTelemetryTick() {
+      if (!state.isStreaming) return;
+
+      let hasNewCriticalAlert = false;
+
+      zones.forEach(z => {
+        // Natural industrial physics noise
+        const flowJitter = (Math.random() - 0.49) * 0.15;
+        const pressJitter = (Math.random() - 0.49) * 0.5;
+        const phJitter = (Math.random() - 0.49) * 0.02;
+        const clJitter = (Math.random() - 0.49) * 0.025;
+        const turbJitter = (Math.random() - 0.49) * 0.012;
+
+        z.flow = Math.max(2.0, Math.min(z.flowCap, +(z.flow + flowJitter).toFixed(2)));
+        z.pressure = Math.max(30.0, Math.min(115.0, +(z.pressure + pressJitter).toFixed(1)));
+        z.ph = Math.max(5.5, Math.min(9.5, +(z.ph + phJitter).toFixed(2)));
+        z.chlorine = Math.max(0.01, Math.min(5.0, +(z.chlorine + clJitter).toFixed(2)));
+        z.turbidity = Math.max(0.02, +(z.turbidity + turbJitter).toFixed(2));
+
+        // Append to history buffer (cap at 40 points)
+        z.history.pressure.push(z.pressure);
+        if (z.history.pressure.length > 40) z.history.pressure.shift();
+
+        z.history.turbidity.push(z.turbidity);
+        if (z.history.turbidity.length > 40) z.history.turbidity.shift();
+
+        z.history.chlorine.push(z.chlorine);
+        if (z.history.chlorine.length > 40) z.history.chlorine.shift();
+
+        z.history.ph.push(z.ph);
+        if (z.history.ph.length > 40) z.history.ph.shift();
+
+        z.history.flow.push(z.flow);
+        if (z.history.flow.length > 40) z.history.flow.shift();
+
+        const evaluation = evaluateZoneSeverity(z);
+        z.severity = evaluation.level;
+        z.alertMsg = evaluation.msg;
+
+        if (z.severity === "critical" && !z.acknowledged) {
+          hasNewCriticalAlert = true;
+        }
+      });
+
+      if (hasNewCriticalAlert) {
+        playIndustrialTone("critical");
+      }
+
+      renderDashboard();
+    }
+
+    const telemetryTimer = setInterval(simulateTelemetryTick, 1500);
+
+    /* =========================================================================
+       RENDER SYSTEM
+       ========================================================================= */
+    function renderDashboard() {
+      // 1. Calculate Aggregate KPIs
+      let totalFlow = 0;
+      let totalPress = 0;
+      let totalPh = 0;
+      let totalCl = 0;
+      let totalTurb = 0;
+      let countCrit = 0;
+      let countWarn = 0;
+      let countNom = 0;
+      let criticalZones = [];
+
+      zones.forEach(z => {
+        totalFlow += z.flow;
+        totalPress += z.pressure;
+        totalPh += z.ph;
+        totalCl += z.chlorine;
+        totalTurb += z.turbidity;
+
+        if (z.severity === "critical") {
+          countCrit++;
+          criticalZones.push(z);
+        } else if (z.severity === "warning") {
+          countWarn++;
+        } else {
+          countNom++;
+        }
+      });
+
+      const avgPress = (totalPress / zones.length).toFixed(1);
+      const avgPh = (totalPh / zones.length).toFixed(2);
+      const avgCl = (totalCl / zones.length).toFixed(2);
+      const avgTurb = (totalTurb / zones.length).toFixed(2);
+
+      kpiTotalFlowEl.textContent = totalFlow.toFixed(1);
+      kpiAvgPressureEl.textContent = avgPress;
+      kpiAvgPhEl.textContent = avgPh;
+      kpiAvgChlorineEl.textContent = avgCl;
+      kpiAvgTurbidityEl.textContent = avgTurb;
+
+      // Turbidity compliance
+      if (avgTurb < 0.30) {
+        kpiTurbComplianceEl.textContent = "EPA Standard: < 0.30 NTU (Compliant)";
+        kpiTurbComplianceEl.className = "kpi-delta delta-nominal";
+      } else {
+        kpiTurbComplianceEl.textContent = "ALERT: Above EPA Target (Action Required)";
+        kpiTurbComplianceEl.className = "kpi-delta delta-critical";
+      }
+
+      // Alarm count
+      const activeAlarmTotal = countCrit + countWarn;
+      kpiAlarmCountEl.textContent = activeAlarmTotal;
+      kpiAlarmCountEl.style.color = countCrit > 0 ? "var(--critical-red)" : (countWarn > 0 ? "var(--warning-amber)" : "var(--nominal-green)");
+      kpiAlarmBreakdownEl.textContent = `${countCrit} Crit • ${countWarn} Warn • ${countNom} Nom`;
+
+      pillCountAll.textContent = zones.length;
+      pillCountCrit.textContent = countCrit;
+      pillCountWarn.textContent = countWarn;
+      pillCountNom.textContent = countNom;
+
+      // Update KPI Bar Widths
+      kpiFlowBar.style.width = Math.min(100, (totalFlow / 180.0) * 100) + "%";
+      kpiPressureBar.style.width = Math.min(100, (avgPress / 100.0) * 100) + "%";
+      kpiTurbBar.style.width = Math.min(100, (avgTurb / 0.5) * 100) + "%";
+      kpiAlarmBar.style.width = Math.min(100, (activeAlarmTotal / 12) * 100) + "%";
+
+      // 2. Urgent Alarm Banner
+      if (criticalZones.length > 0 && !criticalZones.every(z => z.acknowledged)) {
+        const topCrit = criticalZones.find(z => !z.acknowledged) || criticalZones[0];
+        alarmBannerMsg.innerHTML = `Zone <b>${topCrit.id} ${topCrit.name}</b>: ${topCrit.alertMsg}. Immediate Action Required.`;
+        urgentAlarmBanner.classList.add("is-active");
+      } else {
+        urgentAlarmBanner.classList.remove("is-active");
+      }
+
+      // 3. Filter and Sort Zones
+      let filtered = zones.filter(z => {
+        // Status filter
+        if (state.filterStatus === "critical" && z.severity !== "critical") return false;
+        if (state.filterStatus === "warning" && z.severity !== "warning") return false;
+        if (state.filterStatus === "nominal" && z.severity !== "nominal") return false;
+
+        // Search query
+        if (state.searchQuery) {
+          const q = state.searchQuery.toLowerCase();
+          const matchId = z.id.toLowerCase().includes(q);
+          const matchName = z.name.toLowerCase().includes(q);
+          const matchStage = z.stage.toLowerCase().includes(q);
+          if (!matchId && !matchName && !matchStage) return false;
+        }
+
+        return true;
+      });
+
+      // Sorting
+      filtered.sort((a, b) => {
+        let valA = a[state.sortColumn];
+        let valB = b[state.sortColumn];
+
+        // Custom severity weight
+        if (state.sortColumn === "severity") {
+          const weights = { critical: 3, warning: 2, nominal: 1 };
+          valA = weights[a.severity] || 0;
+          valB = weights[b.severity] || 0;
+        }
+
+        if (valA < valB) return state.sortDirection === "asc" ? -1 : 1;
+        if (valA > valB) return state.sortDirection === "asc" ? 1 : -1;
+        return 0;
+      });
+
+      visibleCardsCount.textContent = filtered.length;
+
+      // 4. Render 12 Zone Cards Grid
+      renderZoneCards(filtered);
+
+      // 5. Render Dense Telemetry Table
+      renderTelemetryTable(filtered);
+
+      // 6. Update Inspector Modal if open
+      if (state.selectedZoneId) {
+        updateModalLiveGraph();
+      }
+    }
+
+    /* Helper: generate mini SVG sparkline path */
+    function generateSparklineSvg(dataPoints, color = "#38bdf8", width = 90, height = 22) {
+      if (!dataPoints || dataPoints.length < 2) return "";
+      const min = Math.min(...dataPoints);
+      const max = Math.max(...dataPoints);
+      const range = max - min || 1;
+
+      const step = width / (dataPoints.length - 1);
+      const coords = dataPoints.map((val, idx) => {
+        const x = idx * step;
+        const y = height - ((val - min) / range) * (height - 4) - 2;
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      });
+
+      const pathData = "M" + coords.join(" L");
+      return `
+        <svg class="table-spark-svg" viewBox="0 0 ${width} ${height}">
+          <path d="${pathData}" fill="none" stroke="${color}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      `;
+    }
+
+    /* Render Zone Cards */
+    function renderZoneCards(zoneList) {
+      zoneGrid.innerHTML = "";
+
+      if (zoneList.length === 0) {
+        zoneGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: 40px; text-align: center; color: var(--text-muted); background: var(--bg-surface); border: 1px dashed var(--border-subtle); border-radius: var(--radius-md);">
+            No zones match the current filter criteria [${state.filterStatus.toUpperCase()} - "${state.searchQuery}"].
+          </div>
+        `;
+        return;
+      }
+
+      zoneList.forEach(z => {
+        const card = document.createElement("div");
+        card.className = `zone-card severity-${z.severity}`;
+        card.dataset.zoneId = z.id;
+
+        // Metric out-of-bound highlighting
+        const isPressOut = z.pressure > z.pressMax || z.pressure < z.pressMin;
+        const isPressCrit = z.pressure > 96 || z.pressure < 46;
+        const pressClass = isPressCrit ? "out-of-bound-crit" : (isPressOut ? "out-of-bound-warn" : "");
+
+        const isTurbCrit = z.turbidity >= 0.40;
+        const isTurbWarn = z.turbidity > z.turbMax;
+        const turbClass = isTurbCrit ? "out-of-bound-crit" : (isTurbWarn ? "out-of-bound-warn" : "");
+
+        const isClCrit = (z.chlorine < 0.6 || z.chlorine > 3.4) && z.id !== "ZN-01";
+        const isClWarn = (z.chlorine < z.clMin || z.chlorine > z.clMax) && z.id !== "ZN-01";
+        const clClass = isClCrit ? "out-of-bound-crit" : (isClWarn ? "out-of-bound-warn" : "");
+
+        const sparkColor = z.severity === "critical" ? "#ef4444" : (z.severity === "warning" ? "#f59e0b" : "#38bdf8");
+        const sparkSvg = generateSparklineSvg(z.history[state.detailMetric] || z.history.pressure, sparkColor, 100, 24);
+
+        const statusBadgeLabel = z.acknowledged ? "ACKNOWLEDGED" : z.severity.toUpperCase();
+        const badgeClass = z.acknowledged ? "badge-nominal" : `badge-${z.severity}`;
+
+        card.innerHTML = `
+          <div class="card-head">
+            <div class="card-id-name">
+              <div class="card-zone-code">
+                <span>${z.id}</span>
+                <span class="card-stage-tag">${z.stage}</span>
+              </div>
+              <div class="card-zone-title">${z.name}</div>
+            </div>
+            <span class="status-badge ${badgeClass}">
+              <span style="width:5px; height:5px; border-radius:50%; background:currentColor;"></span>
+              ${statusBadgeLabel}
+            </span>
+          </div>
+
+          <div class="card-metrics-grid">
+            <div class="metric-cell ${pressClass}">
+              <div class="metric-cell-label">
+                <span>Pressure</span>
+                <span>${z.pressMin}-${z.pressMax}</span>
+              </div>
+              <div class="metric-cell-value">
+                ${z.pressure.toFixed(1)} <span class="unit">PSI</span>
+              </div>
+            </div>
+
+            <div class="metric-cell ${turbClass}">
+              <div class="metric-cell-label">
+                <span>Turbidity</span>
+                <span>&lt;0.30</span>
+              </div>
+              <div class="metric-cell-value">
+                ${z.turbidity.toFixed(2)} <span class="unit">NTU</span>
+              </div>
+            </div>
+
+            <div class="metric-cell ${clClass}">
+              <div class="metric-cell-label">
+                <span>Free Cl₂</span>
+                <span>${z.clMin}-${z.clMax}</span>
+              </div>
+              <div class="metric-cell-value">
+                ${z.chlorine.toFixed(2)} <span class="unit">ppm</span>
+              </div>
+            </div>
+
+            <div class="metric-cell">
+              <div class="metric-cell-label">
+                <span>Flow / pH</span>
+                <span>${z.ph.toFixed(2)} pH</span>
+              </div>
+              <div class="metric-cell-value">
+                ${z.flow.toFixed(1)} <span class="unit">MGD</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer-strip">
+            <div class="equipment-states">
+              <span class="equip-tag">
+                <span class="equip-led ${z.pumpStatus === 'RUN' ? 'led-run' : 'led-trip'}"></span>
+                PUMP-1
+              </span>
+              <span class="equip-tag">
+                <span class="equip-led led-stby"></span>
+                V-101 ${z.valvePct}%
+              </span>
+            </div>
+            <div class="sparkline-box">
+              ${sparkSvg}
+            </div>
+          </div>
+        `;
+
+        card.addEventListener("click", () => openZoneDetail(z.id));
+        zoneGrid.appendChild(card);
+      });
+    }
+
+    /* Render Dense Telemetry Table */
+    function renderTelemetryTable(zoneList) {
+      telemetryTableBody.innerHTML = "";
+
+      zoneList.forEach(z => {
+        const tr = document.createElement("tr");
+        tr.className = `row-${z.severity}`;
+        tr.dataset.zoneId = z.id;
+
+        // Class determinations
+        const isPressOut = z.pressure > z.pressMax || z.pressure < z.pressMin;
+        const isPressCrit = z.pressure > 96 || z.pressure < 46;
+        const pressCellClass = isPressCrit ? "cell-critical" : (isPressOut ? "cell-warning" : "cell-nominal");
+
+        const isTurbCrit = z.turbidity >= 0.40;
+        const isTurbWarn = z.turbidity > z.turbMax;
+        const turbCellClass = isTurbCrit ? "cell-critical" : (isTurbWarn ? "cell-warning" : "cell-nominal");
+
+        const isClCrit = (z.chlorine < 0.6 || z.chlorine > 3.4) && z.id !== "ZN-01";
+        const isClWarn = (z.chlorine < z.clMin || z.chlorine > z.clMax) && z.id !== "ZN-01";
+        const clCellClass = isClCrit ? "cell-critical" : (isClWarn ? "cell-warning" : "cell-nominal");
+
+        const sparkColor = z.severity === "critical" ? "#ef4444" : (z.severity === "warning" ? "#f59e0b" : "#38bdf8");
+        const sparkSvg = generateSparklineSvg(z.history.pressure, sparkColor, 80, 20);
+
+        tr.innerHTML = `
+          <td class="col-zone-name">
+            <div>${z.id} - ${z.name}</div>
+            <div class="zone-subinfo"><span>TAG: SCADA_${z.id.replace('-', '')}</span> • <span>LOAD: ${((z.flow/z.flowCap)*100).toFixed(0)}%</span></div>
+          </td>
+          <td style="font-family: var(--font-ui); color: var(--text-secondary); font-size:11px;">${z.stage}</td>
+          <td>
+            <span class="status-badge badge-${z.severity}">
+              <span style="width:4px; height:4px; border-radius:50%; background:currentColor;"></span>
+              ${z.acknowledged ? "ACK" : z.severity.toUpperCase()}
+            </span>
+          </td>
+          <td><b>${z.flow.toFixed(1)}</b> <span style="font-size:10px; color:var(--text-muted);">MGD</span></td>
+          <td><span class="${pressCellClass}">${z.pressure.toFixed(1)}</span> <span style="font-size:10px; color:var(--text-muted);">PSI</span></td>
+          <td>${z.ph.toFixed(2)}</td>
+          <td><span class="${clCellClass}">${z.chlorine.toFixed(2)}</span></td>
+          <td><span class="${turbCellClass}">${z.turbidity.toFixed(2)}</span></td>
+          <td>
+            <span style="font-family:var(--font-mono); font-size:10px; display:inline-flex; align-items:center; gap:4px;">
+              <span class="equip-led led-run"></span> ACTIVE
+            </span>
+          </td>
+          <td>${sparkSvg}</td>
+          <td style="text-align: right;">
+            <div class="table-actions" style="justify-content: flex-end;">
+              <button class="btn-tbl-action btn-inspect" data-zone="${z.id}">Inspect</button>
+              ${z.severity !== 'nominal' && !z.acknowledged ? `<button class="btn-tbl-action btn-ack" data-zone="${z.id}" style="color:var(--nominal-green); border-color:var(--nominal-green);">Ack</button>` : ''}
+            </div>
+          </td>
+        `;
+
+        tr.querySelector(".btn-inspect").addEventListener("click", (e) => {
+          e.stopPropagation();
+          openZoneDetail(z.id);
+        });
+
+        const ackBtn = tr.querySelector(".btn-ack");
+        if (ackBtn) {
+          ackBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            acknowledgeZone(z.id);
+          });
+        }
+
+        tr.addEventListener("click", () => openZoneDetail(z.id));
+        telemetryTableBody.appendChild(tr);
+      });
+    }
+
+    /* =========================================================================
+       MODAL INSPECTOR & HIGH-PRECISION CANVAS CHART
+       ========================================================================= */
+    function openZoneDetail(zoneId) {
+      const z = zones.find(item => item.id === zoneId);
+      if (!z) return;
+
+      state.selectedZoneId = zoneId;
+      modalZoneCode.textContent = z.id;
+      modalZoneTitle.textContent = z.name;
+      modalZoneStage.textContent = `STAGE: ${z.stage.toUpperCase()} | VALVE: ${z.valvePct}% OPEN | PUMP 1: ${z.pumpStatus}`;
+
+      vfdSlider.value = z.vfdSpeed || 85;
+      vfdPercentLabel.textContent = (z.vfdSpeed || 85) + "%";
+
+      dosageSlider.value = z.dosagePct || 100;
+      dosageLabel.textContent = (z.dosagePct || 100) + "%";
+
+      zoneDetailModal.classList.add("is-open");
+      updateModalLiveGraph();
+    }
+
+    function closeModal() {
+      state.selectedZoneId = null;
+      zoneDetailModal.classList.remove("is-open");
+    }
+
+    function updateModalLiveGraph() {
+      const z = zones.find(item => item.id === state.selectedZoneId);
+      if (!z) return;
+
+      const canvas = detailTrendCanvas;
+      const ctx = canvas.getContext("2d");
+      const dpr = window.devicePixelRatio || 1;
+
+      // Handle high-dpi crisp rendering
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+
+      const width = rect.width;
+      const height = rect.height;
+
+      // Background
+      ctx.fillStyle = "#090e18";
+      ctx.fillRect(0, 0, width, height);
+
+      // Grid lines
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+      ctx.lineWidth = 1;
+
+      const gridYCount = 5;
+      for (let i = 0; i <= gridYCount; i++) {
+        const y = (height / gridYCount) * i;
+        ctx.beginPath();
+        ctx.moveTo(40, y);
+        ctx.lineTo(width - 20, y);
+        ctx.stroke();
+      }
+
+      const gridXCount = 8;
+      for (let i = 0; i <= gridXCount; i++) {
+        const x = 40 + ((width - 60) / gridXCount) * i;
+        ctx.beginPath();
+        ctx.moveTo(x, 10);
+        ctx.lineTo(x, height - 20);
+        ctx.stroke();
+      }
+
+      // Metric series to plot
+      const metricKey = state.detailMetric;
+      const data = z.history[metricKey] || z.history.pressure;
+
+      let min = Math.min(...data);
+      let max = Math.max(...data);
+      if (max - min < 0.1) {
+        min -= 0.5;
+        max += 0.5;
+      }
+      const padding = (max - min) * 0.15;
+      const plotMin = min - padding;
+      const plotMax = max + padding;
+      const plotRange = plotMax - plotMin;
+
+      // Axis labels
+      ctx.fillStyle = "#64748b";
+      ctx.font = "10px 'Chivo Mono', monospace";
+      ctx.textAlign = "right";
+
+      for (let i = 0; i <= gridYCount; i++) {
+        const y = (height - 30) - ((height - 40) / gridYCount) * i + 10;
+        const val = plotMin + (plotRange / gridYCount) * i;
+        ctx.fillText(val.toFixed(2), 34, y + 3);
+      }
+
+      // Draw safe threshold limit line if available
+      let limitValue = null;
+      if (metricKey === "turbidity") limitValue = 0.30;
+      if (metricKey === "pressure") limitValue = 90.0;
+      if (metricKey === "chlorine") limitValue = 2.40;
+
+      if (limitValue !== null && limitValue >= plotMin && limitValue <= plotMax) {
+        const limitY = height - 20 - ((limitValue - plotMin) / plotRange) * (height - 40);
+        ctx.strokeStyle = "rgba(239, 68, 68, 0.7)";
+        ctx.setLineDash([4, 4]);
+        ctx.beginPath();
+        ctx.moveTo(40, limitY);
+        ctx.lineTo(width - 20, limitY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        ctx.fillStyle = "#ef4444";
+        ctx.textAlign = "left";
+        ctx.fillText(`CRITICAL THRESHOLD: ${limitValue}`, 46, limitY - 4);
+      }
+
+      // Plot data points
+      const stepX = (width - 60) / (data.length - 1);
+      ctx.strokeStyle = "#00d2ff";
+      ctx.lineWidth = 2.2;
+      ctx.beginPath();
+
+      data.forEach((val, idx) => {
+        const x = 40 + idx * stepX;
+        const y = height - 20 - ((val - plotMin) / plotRange) * (height - 40);
+        if (idx === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+
+      // Area fill underneath
+      ctx.lineTo(40 + (data.length - 1) * stepX, height - 20);
+      ctx.lineTo(40, height - 20);
+      ctx.closePath();
+      const grad = ctx.createLinearGradient(0, 0, 0, height);
+      grad.addColorStop(0, "rgba(0, 210, 255, 0.25)");
+      grad.addColorStop(1, "rgba(0, 210, 255, 0.0)");
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Current value ping head
+      const lastX = 40 + (data.length - 1) * stepX;
+      const lastVal = data[data.length - 1];
+      const lastY = height - 20 - ((lastVal - plotMin) / plotRange) * (height - 40);
+
+      ctx.fillStyle = "#ffffff";
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = "#00d2ff";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 7, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Current readout label
+      ctx.fillStyle = "#38bdf8";
+      ctx.textAlign = "right";
+      ctx.font = "bold 12px 'Chivo Mono', monospace";
+      ctx.fillText(`LIVE: ${lastVal.toFixed(2)}`, width - 24, 24);
+    }
+
+    /* =========================================================================
+       USER ACTIONS & CONTROLS
+       ========================================================================= */
+    function acknowledgeZone(zoneId) {
+      const z = zones.find(item => item.id === zoneId);
+      if (z) {
+        z.acknowledged = true;
+        playIndustrialTone("ack");
+        renderDashboard();
+      }
+    }
+
+    function acknowledgeAll() {
+      zones.forEach(z => z.acknowledged = true);
+      playIndustrialTone("ack");
+      renderDashboard();
+    }
+
+    // Toggle live streaming
+    toggleLiveBtn.addEventListener("click", () => {
+      state.isStreaming = !state.isStreaming;
+      if (state.isStreaming) {
+        liveBtnText.textContent = "STREAMING";
+        liveIcon.style.background = "#38bdf8";
+        toggleLiveBtn.classList.remove("active");
+      } else {
+        liveBtnText.textContent = "PAUSED";
+        liveIcon.style.background = "#f59e0b";
+        toggleLiveBtn.classList.add("active");
+      }
+    });
+
+    // Sound toggle
+    soundToggleBtn.addEventListener("click", () => {
+      initAudioContext();
+      state.soundEnabled = !state.soundEnabled;
+      if (state.soundEnabled) {
+        soundToggleBtn.classList.add("active");
+        soundSvg.innerHTML = `<path d="M11 5L6 9H2v6h4l5 4V5z"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>`;
+        audioIndicatorLed.style.background = "var(--nominal-green)";
+        audioIndicatorText.textContent = "AUDIO ALERTS: ACTIVE";
+        playIndustrialTone("ack");
+      } else {
+        soundToggleBtn.classList.remove("active");
+        soundSvg.innerHTML = `<path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line>`;
+        audioIndicatorLed.style.background = "#64748b";
+        audioIndicatorText.textContent = "AUDIO ALERTS: MUTED";
+      }
+    });
+
+    // Anomaly injector
+    faultScenarioSelect.addEventListener("change", (e) => {
+      const scenario = e.target.value;
+      if (scenario === "turbidity_spike") {
+        const target = zones.find(z => z.id === "ZN-05");
+        if (target) {
+          target.turbidity = 0.95;
+          target.acknowledged = false;
+        }
+      } else if (scenario === "pressure_surge") {
+        const target = zones.find(z => z.id === "ZN-10");
+        if (target) {
+          target.pressure = 104.5;
+          target.acknowledged = false;
+        }
+      } else if (scenario === "chlorine_drop") {
+        const target = zones.find(z => z.id === "ZN-08");
+        if (target) {
+          target.chlorine = 0.42;
+          target.acknowledged = false;
+        }
+      } else if (scenario === "low_pressure") {
+        const target = zones.find(z => z.id === "ZN-01");
+        if (target) {
+          target.pressure = 42.0;
+          target.acknowledged = false;
+        }
+      } else if (scenario === "normalize") {
+        zones.forEach(z => {
+          z.pressure = z.pressMin + (z.pressMax - z.pressMin) * 0.5;
+          z.turbidity = 0.12;
+          z.chlorine = (z.clMin + z.clMax) / 2;
+          z.ph = 7.35;
+          z.acknowledged = true;
+        });
+      }
+      playIndustrialTone("critical");
+      renderDashboard();
+      faultScenarioSelect.value = "none";
+    });
+
+    // Acknowledge All
+    ackAllBtn.addEventListener("click", acknowledgeAll);
+    bannerAckBtn.addEventListener("click", acknowledgeAll);
+
+    // Search filter
+    zoneSearchInput.addEventListener("input", (e) => {
+      state.searchQuery = e.target.value.trim();
+      renderDashboard();
+    });
+
+    // Severity Filter Pills
+    filterPills.forEach(pill => {
+      pill.addEventListener("click", () => {
+        filterPills.forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+        state.filterStatus = pill.dataset.filter;
+        renderDashboard();
+      });
+    });
+
+    // Metric Focus Filter
+    metricFocusSelect.addEventListener("change", (e) => {
+      state.metricFocus = e.target.value;
+      if (e.target.value !== "all") {
+        state.detailMetric = e.target.value;
+      }
+      renderDashboard();
+    });
+
+    // View Switcher Buttons
+    viewDualBtn.addEventListener("click", () => {
+      state.viewMode = "dual";
+      viewDualBtn.classList.add("active");
+      viewCardsBtn.classList.remove("active");
+      viewTableBtn.classList.remove("active");
+      cardsSection.style.display = "block";
+      tableSection.style.display = "block";
+    });
+
+    viewCardsBtn.addEventListener("click", () => {
+      state.viewMode = "cards";
+      viewDualBtn.classList.remove("active");
+      viewCardsBtn.classList.add("active");
+      viewTableBtn.classList.remove("active");
+      cardsSection.style.display = "block";
+      tableSection.style.display = "none";
+    });
+
+    viewTableBtn.addEventListener("click", () => {
+      state.viewMode = "table";
+      viewDualBtn.classList.remove("active");
+      viewCardsBtn.classList.remove("active");
+      viewTableBtn.classList.add("active");
+      cardsSection.style.display = "none";
+      tableSection.style.display = "block";
+    });
+
+    // Table Header Sorting
+    document.querySelectorAll(".telemetry-table th[data-sort]").forEach(th => {
+      th.addEventListener("click", () => {
+        const col = th.dataset.sort;
+        if (state.sortColumn === col) {
+          state.sortDirection = state.sortDirection === "asc" ? "desc" : "asc";
+        } else {
+          state.sortColumn = col;
+          state.sortDirection = "asc";
+        }
+
+        document.querySelectorAll(".telemetry-table th").forEach(h => {
+          h.classList.remove("sorted-asc", "sorted-desc");
+        });
+        th.classList.add(state.sortDirection === "asc" ? "sorted-asc" : "sorted-desc");
+
+        renderDashboard();
+      });
+    });
+
+    // Modal controls
+    modalCloseBtn.addEventListener("click", closeModal);
+    zoneDetailModal.addEventListener("click", (e) => {
+      if (e.target === zoneDetailModal) closeModal();
+    });
+
+    chartTabBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        chartTabBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        state.detailMetric = btn.dataset.chartMetric;
+        updateModalLiveGraph();
+      });
+    });
+
+    vfdSlider.addEventListener("input", (e) => {
+      vfdPercentLabel.textContent = e.target.value + "%";
+      const z = zones.find(item => item.id === state.selectedZoneId);
+      if (z) {
+        z.vfdSpeed = parseInt(e.target.value, 10);
+        z.flow = +(z.flowNom * (z.vfdSpeed / 85)).toFixed(1);
+      }
+    });
+
+    dosageSlider.addEventListener("input", (e) => {
+      dosageLabel.textContent = e.target.value + "%";
+      const z = zones.find(item => item.id === state.selectedZoneId);
+      if (z) {
+        z.dosagePct = parseInt(e.target.value, 10);
+        z.chlorine = +((z.clMin + z.clMax) / 2 * (z.dosagePct / 100)).toFixed(2);
+      }
+    });
+
+    triggerBackwashBtn.addEventListener("click", () => {
+      const z = zones.find(item => item.id === state.selectedZoneId);
+      if (z) {
+        z.turbidity = 0.08;
+        z.acknowledged = true;
+        playIndustrialTone("ack");
+        alert(`Backwash sequence initiated on [${z.id} - ${z.name}]. Differential media flush in progress.`);
+        renderDashboard();
+      }
+    });
+
+    modalAckBtn.addEventListener("click", () => {
+      if (state.selectedZoneId) {
+        acknowledgeZone(state.selectedZoneId);
+        closeModal();
+      }
+    });
+
+    // Keyboard navigation: Escape key closes modal
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && state.selectedZoneId) {
+        closeModal();
+      }
+    });
+
+    // Initial render
+    renderDashboard();
+  </script>
+</body>
+</html>

@@ -1,0 +1,2232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Alabaster Dental Studio | Appointment Booking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-alabaster: #FAF8F5;
+      --surface-white: #FFFFFF;
+      --surface-subtle: #F3EFEA;
+      --surface-tint: #EEF6F5;
+      --brand-primary: #124E48;
+      --brand-primary-hover: #0E3D38;
+      --brand-teal: #0D9488;
+      --brand-teal-light: #E6F7F5;
+      --brand-teal-border: #99F6E4;
+      --accent-gold: #C59843;
+      --accent-gold-bg: #FEF9EE;
+      --accent-gold-border: #F7E3B5;
+      --text-heading: #1B2421;
+      --text-body: #4A5568;
+      --text-muted: #8590A2;
+      --border-light: #E7E3DC;
+      --border-focus: #124E48;
+      --shadow-sm: 0 2px 6px rgba(18, 78, 72, 0.04);
+      --shadow-md: 0 6px 16px rgba(18, 78, 72, 0.08);
+      --shadow-lg: 0 12px 30px rgba(18, 78, 72, 0.12);
+      --radius-sm: 10px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-full: 9999px;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --transition-smooth: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: #ECE7DE;
+      color: var(--text-body);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px 0;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.45;
+    }
+
+    /* Mobile Frame wrapper to emulate 390x844 viewport precisely while responsive on mobile devices */
+    .viewport-container {
+      width: 100%;
+      max-width: 390px;
+      height: 844px;
+      max-height: 96vh;
+      background: var(--bg-alabaster);
+      border-radius: 40px;
+      box-shadow: 0 25px 60px -15px rgba(20, 30, 25, 0.25), 0 0 0 10px #181A1B, 0 0 0 12px #33383B;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 0;
+        background-color: var(--bg-alabaster);
+      }
+      .viewport-container {
+        max-width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+
+    /* Status Bar Emulation */
+    .status-bar {
+      height: 44px;
+      padding: 12px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-heading);
+      background: var(--bg-alabaster);
+      z-index: 30;
+      flex-shrink: 0;
+    }
+
+    .status-icons {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* App Header */
+    .app-header {
+      padding: 12px 20px 14px;
+      background: var(--bg-alabaster);
+      border-bottom: 1px solid rgba(231, 227, 220, 0.7);
+      flex-shrink: 0;
+      z-index: 25;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--brand-primary), var(--brand-teal));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .brand-name {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--brand-primary);
+    }
+
+    .brand-location {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: var(--surface-subtle);
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+    }
+
+    /* Progress Stepper */
+    .stepper-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .step-back-btn {
+      background: transparent;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-heading);
+      transition: var(--transition-smooth);
+    }
+
+    .step-back-btn:disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+    }
+
+    .step-back-btn:not(:disabled):active {
+      background: var(--surface-subtle);
+      transform: scale(0.92);
+    }
+
+    .step-indicator-text {
+      text-align: center;
+    }
+
+    .step-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--brand-teal);
+    }
+
+    .step-title-small {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-heading);
+    }
+
+    .step-help-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    /* Animated Progress Bar */
+    .progress-track {
+      width: 100%;
+      height: 4px;
+      background: #E8E3DB;
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 25%;
+      background: linear-gradient(90deg, var(--brand-teal), var(--brand-primary));
+      border-radius: var(--radius-full);
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Scrollable Flow Container */
+    .flow-viewport {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 16px 20px 100px;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+    }
+
+    /* Section Headers */
+    .screen-intro {
+      margin-bottom: 18px;
+    }
+
+    .screen-title {
+      font-family: var(--font-serif);
+      font-size: 23px;
+      font-weight: 600;
+      color: var(--text-heading);
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .screen-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Step Card General */
+    .option-card {
+      background: var(--surface-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 15px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .option-card:hover {
+      border-color: #C7C1B5;
+    }
+
+    .option-card:active {
+      transform: scale(0.985);
+    }
+
+    .option-card.selected {
+      border-color: var(--brand-primary);
+      background: var(--surface-tint);
+      box-shadow: 0 0 0 1px var(--brand-primary), var(--shadow-md);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+
+    .card-title-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--surface-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--brand-primary);
+      flex-shrink: 0;
+      transition: var(--transition-smooth);
+    }
+
+    .option-card.selected .card-icon-box {
+      background: var(--brand-primary);
+      color: #fff;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-heading);
+    }
+
+    .card-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .price-tag {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--brand-primary);
+      letter-spacing: -0.3px;
+    }
+
+    .card-desc {
+      font-size: 12.5px;
+      color: var(--text-body);
+      line-height: 1.35;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(231, 227, 220, 0.8);
+    }
+
+    .card-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .feature-chip {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: rgba(18, 78, 72, 0.06);
+      color: var(--brand-primary);
+      font-weight: 500;
+    }
+
+    .popular-ribbon {
+      position: absolute;
+      top: -9px;
+      right: 14px;
+      background: linear-gradient(135deg, var(--accent-gold), #B27B2B);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      box-shadow: 0 2px 6px rgba(197, 152, 67, 0.4);
+    }
+
+    /* Radio Circle indicator */
+    .radio-circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: var(--transition-smooth);
+    }
+
+    .option-card.selected .radio-circle {
+      border-color: var(--brand-primary);
+      background: var(--brand-primary);
+    }
+
+    .radio-circle::after {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: #fff;
+      border-radius: 50%;
+      transform: scale(0);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .option-card.selected .radio-circle::after {
+      transform: scale(1);
+    }
+
+    /* Dentist Cards */
+    .dentist-card {
+      background: var(--surface-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+
+    .dentist-card.selected {
+      border-color: var(--brand-primary);
+      background: var(--surface-tint);
+      box-shadow: 0 0 0 1px var(--brand-primary), var(--shadow-md);
+    }
+
+    .dentist-card:active {
+      transform: scale(0.985);
+    }
+
+    .dentist-layout {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .dentist-avatar-wrap {
+      position: relative;
+      width: 54px;
+      height: 54px;
+      flex-shrink: 0;
+    }
+
+    .dentist-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 14px;
+      object-fit: cover;
+      background: #E4DFD7;
+    }
+
+    .dentist-online-dot {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #10B981;
+      border: 2.5px solid #fff;
+    }
+
+    .dentist-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .dentist-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-heading);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dentist-role {
+      font-size: 12px;
+      color: var(--brand-teal);
+      font-weight: 600;
+      margin-top: 1px;
+    }
+
+    .dentist-rating {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .star-icon {
+      color: #F59E0B;
+    }
+
+    .dentist-tags {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .dentist-tag {
+      font-size: 11px;
+      background: var(--surface-subtle);
+      color: var(--text-body);
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+
+    /* Any Dentist Option */
+    .any-dentist-card {
+      border-style: dashed;
+      background: #FAF7F2;
+    }
+
+    /* Step 3: Date & Time Picker */
+    .calendar-widget {
+      background: var(--surface-white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 14px 12px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .calendar-month-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+
+    .month-label {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-heading);
+    }
+
+    .month-nav-group {
+      display: flex;
+      gap: 4px;
+    }
+
+    .nav-arrow-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-heading);
+      transition: var(--transition-smooth);
+    }
+
+    .nav-arrow-btn:active {
+      background: var(--surface-subtle);
+    }
+
+    /* Horizontal Date Strip */
+    .date-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .date-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .date-pill {
+      flex: 0 0 54px;
+      scroll-snap-align: start;
+      padding: 10px 4px 8px;
+      border-radius: 12px;
+      background: var(--bg-alabaster);
+      border: 1.5px solid transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+
+    .date-pill:active {
+      transform: scale(0.95);
+    }
+
+    .date-pill.selected {
+      background: var(--brand-primary);
+      border-color: var(--brand-primary);
+      box-shadow: 0 4px 12px rgba(18, 78, 72, 0.25);
+    }
+
+    .pill-day-name {
+      font-size: 10.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .date-pill.selected .pill-day-name {
+      color: #99F6E4;
+    }
+
+    .pill-day-number {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text-heading);
+    }
+
+    .date-pill.selected .pill-day-number {
+      color: #ffffff;
+    }
+
+    .pill-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--brand-teal);
+      margin-top: 5px;
+    }
+
+    .date-pill.selected .pill-dot {
+      background: #FEF08A;
+    }
+
+    /* Time Slots Section */
+    .time-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-muted);
+      margin: 14px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .slots-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .slot-pill {
+      background: var(--surface-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 10px;
+      padding: 10px 4px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-heading);
+      cursor: pointer;
+      transition: var(--transition-smooth);
+      position: relative;
+    }
+
+    .slot-pill:hover:not(.unavailable) {
+      border-color: var(--brand-teal);
+    }
+
+    .slot-pill:active:not(.unavailable) {
+      transform: scale(0.95);
+    }
+
+    .slot-pill.selected {
+      background: var(--brand-primary);
+      border-color: var(--brand-primary);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(18, 78, 72, 0.22);
+    }
+
+    .slot-pill.unavailable {
+      background: #F1ECE6;
+      border-color: transparent;
+      color: #A0A5AA;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
+    .slot-pill .badge-fast {
+      position: absolute;
+      top: -6px;
+      right: -2px;
+      background: #10B981;
+      color: white;
+      font-size: 8px;
+      font-weight: 700;
+      padding: 1px 4px;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Form Fields */
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-heading);
+      margin-bottom: 6px;
+    }
+
+    .form-input-wrap {
+      position: relative;
+    }
+
+    .form-input-wrap svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .form-control {
+      width: 100%;
+      height: 48px;
+      padding: 0 14px 0 42px;
+      font-size: 14px;
+      font-family: inherit;
+      color: var(--text-heading);
+      background: var(--surface-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: 12px;
+      outline: none;
+      transition: var(--transition-smooth);
+    }
+
+    .form-control:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(18, 78, 72, 0.12);
+    }
+
+    .form-control.is-invalid {
+      border-color: #DC2626;
+      background-color: #FEF2F2;
+    }
+
+    .field-error {
+      color: #DC2626;
+      font-size: 11px;
+      font-weight: 500;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .field-error.show {
+      display: block;
+    }
+
+    .toggle-row {
+      background: var(--surface-white);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .toggle-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-heading);
+    }
+
+    .toggle-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Switch styling */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 46px;
+      height: 26px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #D1D5DB;
+      transition: 0.3s;
+      border-radius: 26px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    input:checked + .slider {
+      background-color: var(--brand-primary);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* Step 5: Confirmation Success View */
+    .confirmation-card {
+      background: var(--surface-white);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      padding: 22px 18px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .confirmation-banner {
+      background: linear-gradient(135deg, #0F766E, #134E48);
+      margin: -22px -18px 18px -18px;
+      padding: 24px 18px 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .success-icon-bubble {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--brand-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .conf-heading {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+
+    .conf-ref-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid #F1ECE6;
+    }
+
+    .summary-label {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .summary-val {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-heading);
+      text-align: right;
+    }
+
+    .summary-price-total {
+      padding: 12px 0 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .total-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-heading);
+    }
+
+    .total-amount {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--brand-primary);
+    }
+
+    .conf-action-group {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .secondary-btn {
+      width: 100%;
+      height: 44px;
+      background: var(--surface-subtle);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-heading);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: var(--transition-smooth);
+    }
+
+    .secondary-btn:active {
+      transform: scale(0.98);
+      background: #EBE5DC;
+    }
+
+    .location-card {
+      margin-top: 14px;
+      background: var(--surface-subtle);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .loc-icon {
+      color: var(--brand-primary);
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .loc-details {
+      font-size: 12px;
+      line-height: 1.4;
+      color: var(--text-body);
+    }
+
+    .loc-title {
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 2px;
+    }
+
+    /* Bottom Floating Action Bar */
+    .bottom-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(250, 248, 245, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(231, 227, 220, 0.8);
+      padding: 12px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 40;
+    }
+
+    .bar-summary-strip {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    .bar-selection-summary {
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 220px;
+    }
+
+    .bar-selection-summary strong {
+      color: var(--text-heading);
+    }
+
+    .bar-price-preview {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--brand-primary);
+    }
+
+    .primary-btn {
+      width: 100%;
+      height: 52px;
+      border-radius: 14px;
+      background: var(--brand-primary);
+      color: #ffffff;
+      border: none;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(18, 78, 72, 0.28);
+      transition: var(--transition-smooth);
+    }
+
+    .primary-btn:active {
+      transform: scale(0.98);
+      background: var(--brand-primary-hover);
+    }
+
+    .primary-btn:disabled {
+      background: #CBD5E1;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: absolute;
+      top: 54px;
+      left: 20px;
+      right: 20px;
+      background: #1E293B;
+      color: white;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-80px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 100;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Screen Transition */
+    .step-screen {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .step-screen.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Notice box */
+    .notice-card {
+      background: var(--accent-gold-bg);
+      border: 1px solid var(--accent-gold-border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .notice-card svg {
+      color: var(--accent-gold);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .notice-text {
+      font-size: 11.5px;
+      color: #78350F;
+      line-height: 1.35;
+    }
+
+    /* Home indicator bar (iPhone aesthetic) */
+    .home-indicator {
+      width: 134px;
+      height: 5px;
+      background: #000;
+      border-radius: 10px;
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.3;
+      z-index: 50;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="viewport-container" id="appViewport">
+
+    <!-- Status Bar (Mocked for 390x844 feel) -->
+    <div class="status-bar">
+      <span id="currentTime">9:41</span>
+      <div class="status-icons">
+        <svg width="15" height="11" viewBox="0 0 17 12" fill="currentColor">
+          <path d="M1 9.5a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1.5a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-1.5zm5-3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v4.5a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-4.5zm5-3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v7.5a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-7.5zm5-3a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v10.5a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1V.5z"/>
+        </svg>
+        <svg width="14" height="11" viewBox="0 0 16 12" fill="currentColor">
+          <path d="M8 2.5C10.5 2.5 12.8 3.5 14.5 5.1L15.9 3.7C13.8 1.8 11 0.7 8 0.7 5 0.7 2.2 1.8.1 3.7l1.4 1.4C3.2 3.5 5.5 2.5 8 2.5zm0 4c1.5 0 2.9.6 3.9 1.6l1.4-1.4C11.9 5.3 10 4.5 8 4.5s-3.9.8-5.3 2.2l1.4 1.4C5.1 7.1 6.5 6.5 8 6.5zm0 4c.8 0 1.5.3 2.1.9l1.4-1.4C10.6 9.1 9.4 8.5 8 8.5s-2.6.6-3.5 1.5l1.4 1.4c.6-.6 1.3-.9 2.1-.9z"/>
+        </svg>
+        <svg width="22" height="11" viewBox="0 0 25 12" fill="currentColor">
+          <rect x="1" y="1" width="20" height="10" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+          <rect x="2.5" y="2.5" width="14" height="7" rx="1.5"/>
+          <path d="M23 4.5v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- App Header & Navigation -->
+    <header class="app-header">
+      <div class="brand-row">
+        <div class="brand-mark">
+          <div class="brand-icon">
+            <!-- Dental Tooth Sparkle Icon -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C9.5 2 7.7 3.3 6.9 4.8C5.2 7.8 5.7 11.2 6.5 14.5C7.2 17.6 8.5 22 10.5 22C11.5 22 11.8 20.8 12 19.5C12.2 20.8 12.5 22 13.5 22C15.5 22 16.8 17.6 17.5 14.5C18.3 11.2 18.8 7.8 17.1 4.8C16.3 3.3 14.5 2 12 2Z"/>
+            </svg>
+          </div>
+          <span class="brand-name">Alabaster</span>
+        </div>
+        <span class="brand-location">Studio Soho • NY</span>
+      </div>
+
+      <!-- Stepper Controls -->
+      <div class="stepper-header">
+        <button class="step-back-btn" id="btnBack" aria-label="Go back" disabled>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div class="step-indicator-text">
+          <span class="step-badge" id="stepBadge">STEP 1 OF 4</span>
+          <div class="step-title-small" id="stepTitleHeader">Select Treatment</div>
+        </div>
+
+        <button class="step-help-btn" id="btnReset" title="Restart Booking">Reset</button>
+      </div>
+
+      <!-- Animated Progress Line -->
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill" style="width: 25%;"></div>
+      </div>
+    </header>
+
+    <!-- Scrollable Flow Container -->
+    <main class="flow-viewport" id="flowViewport">
+
+      <!-- STEP 1: SERVICE SELECTION -->
+      <section class="step-screen active" id="step1">
+        <div class="screen-intro">
+          <h1 class="screen-title">Choose your service</h1>
+          <p class="screen-desc">Select the primary treatment for your studio visit today.</p>
+        </div>
+
+        <!-- Service 1: Cleaning ($120) -->
+        <div class="option-card selected" data-service-id="cleaning" data-price="120" data-name="Routine Dental Cleaning" data-duration="45 min">
+          <div class="card-top">
+            <div class="card-title-group">
+              <div class="card-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="card-title">Routine Dental Cleaning</h2>
+                <div class="card-meta">
+                  <span>45 mins</span>
+                  <span>•</span>
+                  <span>Preventative Care</span>
+                </div>
+              </div>
+            </div>
+            <div class="price-tag">$120</div>
+          </div>
+          <p class="card-desc">Comprehensive ultrasonic plaque removal, gentle enamel polish, and fluoride protection treatment.</p>
+          <div class="card-features">
+            <span class="feature-chip">Plaque & Tartar Scaled</span>
+            <span class="feature-chip">Enamel High-Gloss Buff</span>
+          </div>
+        </div>
+
+        <!-- Service 2: Whitening ($299) -->
+        <div class="option-card" data-service-id="whitening" data-price="299" data-name="Teeth Whitening" data-duration="60 min">
+          <span class="popular-ribbon">Most Requested</span>
+          <div class="card-top">
+            <div class="card-title-group">
+              <div class="card-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                </svg>
+              </div>
+              <div>
+                <h2 class="card-title">Teeth Whitening</h2>
+                <div class="card-meta">
+                  <span>60 mins</span>
+                  <span>•</span>
+                  <span>Cosmetic Laser</span>
+                </div>
+              </div>
+            </div>
+            <div class="price-tag">$299</div>
+          </div>
+          <p class="card-desc">Medical-grade LED blue-light accelerated whitening brightening your smile up to 8 shades in one session.</p>
+          <div class="card-features">
+            <span class="feature-chip">Immediate 6–8 Shades</span>
+            <span class="feature-chip">Zero Sensitivity Gel</span>
+          </div>
+        </div>
+
+        <!-- Service 3: Consultation ($75) -->
+        <div class="option-card" data-service-id="consultation" data-price="75" data-name="Dental Consultation & Exam" data-duration="30 min">
+          <div class="card-top">
+            <div class="card-title-group">
+              <div class="card-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              </div>
+              <div>
+                <h2 class="card-title">Consultation & Exam</h2>
+                <div class="card-meta">
+                  <span>30 mins</span>
+                  <span>•</span>
+                  <span>Diagnostic</span>
+                </div>
+              </div>
+            </div>
+            <div class="price-tag">$75</div>
+          </div>
+          <p class="card-desc">Comprehensive digital 3D intraoral scan, full panoramic X-rays, and customized treatment planning with senior dentist.</p>
+          <div class="card-features">
+            <span class="feature-chip">HD 3D Digital Scan</span>
+            <span class="feature-chip">Doctor Consultation</span>
+          </div>
+        </div>
+
+        <!-- Service 4: Deep Cleaning ($180) -->
+        <div class="option-card" data-service-id="deep-cleaning" data-price="180" data-name="Periodontal Deep Cleaning" data-duration="75 min">
+          <div class="card-top">
+            <div class="card-title-group">
+              <div class="card-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </div>
+              <div>
+                <h2 class="card-title">Periodontal Deep Cleaning</h2>
+                <div class="card-meta">
+                  <span>75 mins</span>
+                  <span>•</span>
+                  <span>Deep Gum Therapy</span>
+                </div>
+              </div>
+            </div>
+            <div class="price-tag">$180</div>
+          </div>
+          <p class="card-desc">Targeted sub-gingival scaling and root planing to treat gum inflammation, eliminate deep pockets, and protect bone.</p>
+          <div class="card-features">
+            <span class="feature-chip">Scaling & Root Planing</span>
+            <span class="feature-chip">Antimicrobial Rinse</span>
+          </div>
+        </div>
+
+        <div class="notice-card">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <div class="notice-text">
+            Complimentary studio amenities include noise-cancelling headphones and ceiling entertainment during your session.
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2: DENTIST PREFERENCE -->
+      <section class="step-screen" id="step2">
+        <div class="screen-intro">
+          <h1 class="screen-title">Choose your dentist</h1>
+          <p class="screen-desc">Select an Alabaster specialist or pick first available for earliest slot.</p>
+        </div>
+
+        <!-- Option: Any Available -->
+        <div class="dentist-card any-dentist-card selected" data-dentist="Any Available Provider" data-specialty="First Open Specialist" data-avatar="any">
+          <div class="dentist-layout">
+            <div class="dentist-avatar-wrap">
+              <div class="dentist-avatar" style="display:flex;align-items:center;justify-content:center;background:#E7ECE9;color:var(--brand-primary);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+              </div>
+              <div class="dentist-online-dot"></div>
+            </div>
+            <div class="dentist-info">
+              <div class="dentist-name">
+                Any Available Dentist
+              </div>
+              <div class="dentist-role">Fastest appointment booking</div>
+              <div class="dentist-rating">
+                <span>⚡ Maximizes your date & time flexibility</span>
+              </div>
+            </div>
+            <div class="radio-circle"></div>
+          </div>
+        </div>
+
+        <!-- Dentist 1: Dr. Sarah Chen -->
+        <div class="dentist-card" data-dentist="Dr. Sarah Chen" data-specialty="Cosmetic & Aesthetic Dentistry" data-avatar="chen">
+          <div class="dentist-layout">
+            <div class="dentist-avatar-wrap">
+              <svg class="dentist-avatar" viewBox="0 0 100 100">
+                <rect width="100" height="100" fill="#E6EEEC"/>
+                <circle cx="50" cy="38" r="22" fill="#D29985"/>
+                <!-- Hair -->
+                <path d="M26 38 C26 18, 74 18, 74 38 C74 48, 76 58, 76 66 C70 66, 68 50, 68 44 C60 40, 40 40, 32 44 C32 50, 30 66, 24 66 C24 58, 26 48, 26 38 Z" fill="#2D2A26"/>
+                <!-- Scrubs Coat -->
+                <path d="M20 100 C20 75, 40 70, 50 74 C60 70, 80 75, 80 100 Z" fill="#0D9488"/>
+                <!-- V-Neck -->
+                <polygon points="50,86 42,72 58,72" fill="#FAF8F5"/>
+              </svg>
+              <div class="dentist-online-dot"></div>
+            </div>
+            <div class="dentist-info">
+              <div class="dentist-name">Dr. Sarah Chen, DDS</div>
+              <div class="dentist-role">Cosmetic & Smile Aesthetics</div>
+              <div class="dentist-rating">
+                <span class="star-icon">★</span>
+                <strong>4.98</strong>
+                <span>(214 patient reviews)</span>
+              </div>
+              <div class="dentist-tags">
+                <span class="dentist-tag">Columbia Dental '12</span>
+                <span class="dentist-tag">Veneers & Whitening</span>
+              </div>
+            </div>
+            <div class="radio-circle"></div>
+          </div>
+        </div>
+
+        <!-- Dentist 2: Dr. James Okafor -->
+        <div class="dentist-card" data-dentist="Dr. James Okafor" data-specialty="Periodontics & Restorative" data-avatar="okafor">
+          <div class="dentist-layout">
+            <div class="dentist-avatar-wrap">
+              <svg class="dentist-avatar" viewBox="0 0 100 100">
+                <rect width="100" height="100" fill="#EBE5DC"/>
+                <circle cx="50" cy="38" r="22" fill="#8D5524"/>
+                <!-- Hair -->
+                <ellipse cx="50" cy="24" rx="20" ry="12" fill="#1A1A1A"/>
+                <!-- Scrubs Coat -->
+                <path d="M20 100 C20 75, 40 70, 50 74 C60 70, 80 75, 80 100 Z" fill="#134E48"/>
+                <!-- V-Neck -->
+                <polygon points="50,86 42,72 58,72" fill="#FAF8F5"/>
+              </svg>
+              <div class="dentist-online-dot"></div>
+            </div>
+            <div class="dentist-info">
+              <div class="dentist-name">Dr. James Okafor, DMD</div>
+              <div class="dentist-role">Periodontics & Implants</div>
+              <div class="dentist-rating">
+                <span class="star-icon">★</span>
+                <strong>4.96</strong>
+                <span>(186 patient reviews)</span>
+              </div>
+              <div class="dentist-tags">
+                <span class="dentist-tag">Harvard Dental '14</span>
+                <span class="dentist-tag">Gentle Therapy</span>
+              </div>
+            </div>
+            <div class="radio-circle"></div>
+          </div>
+        </div>
+
+        <!-- Dentist 3: Dr. Maria Santos -->
+        <div class="dentist-card" data-dentist="Dr. Maria Santos" data-specialty="Preventative & Restorative" data-avatar="santos">
+          <div class="dentist-layout">
+            <div class="dentist-avatar-wrap">
+              <svg class="dentist-avatar" viewBox="0 0 100 100">
+                <rect width="100" height="100" fill="#EFE8E1"/>
+                <circle cx="50" cy="38" r="22" fill="#C68642"/>
+                <!-- Hair -->
+                <path d="M22 42 C22 18, 78 18, 78 42 C82 68, 78 78, 72 78 C70 60, 68 45, 68 42 C56 38, 44 38, 32 42 C32 45, 30 60, 28 78 C22 78, 18 68, 22 42 Z" fill="#4B3621"/>
+                <!-- Scrubs Coat -->
+                <path d="M20 100 C20 75, 40 70, 50 74 C60 70, 80 75, 80 100 Z" fill="#0F766E"/>
+                <!-- V-Neck -->
+                <polygon points="50,86 42,72 58,72" fill="#FAF8F5"/>
+              </svg>
+              <div class="dentist-online-dot"></div>
+            </div>
+            <div class="dentist-info">
+              <div class="dentist-name">Dr. Maria Santos, DDS</div>
+              <div class="dentist-role">Preventive & Oral Health</div>
+              <div class="dentist-rating">
+                <span class="star-icon">★</span>
+                <strong>4.99</strong>
+                <span>(240 patient reviews)</span>
+              </div>
+              <div class="dentist-tags">
+                <span class="dentist-tag">NYU College of Dentistry</span>
+                <span class="dentist-tag">Anxiety-Free</span>
+              </div>
+            </div>
+            <div class="radio-circle"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3: DATE & TIME SLOT PICKER -->
+      <section class="step-screen" id="step3">
+        <div class="screen-intro">
+          <h1 class="screen-title">Date & Time</h1>
+          <p class="screen-desc">Select your preferred appointment slot at Soho Studio.</p>
+        </div>
+
+        <div class="calendar-widget">
+          <div class="calendar-month-row">
+            <span class="month-label" id="currentMonthYear">September 2026</span>
+            <div class="month-nav-group">
+              <button class="nav-arrow-btn" id="btnPrevDays" aria-label="Previous days">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <button class="nav-arrow-btn" id="btnNextDays" aria-label="Next days">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Horizontal Date Strip -->
+          <div class="date-strip" id="dateStrip">
+            <!-- Injected by JavaScript -->
+          </div>
+        </div>
+
+        <!-- Slot Group: Morning -->
+        <div class="time-section-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+          </svg>
+          Morning Slots
+        </div>
+        <div class="slots-grid" id="morningSlots">
+          <div class="slot-pill selected" data-time="09:00 AM">
+            09:00 AM
+            <span class="badge-fast">Popular</span>
+          </div>
+          <div class="slot-pill" data-time="10:15 AM">10:15 AM</div>
+          <div class="slot-pill unavailable" data-time="11:30 AM" title="Reserved">11:30 AM</div>
+        </div>
+
+        <!-- Slot Group: Afternoon -->
+        <div class="time-section-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+          Afternoon Slots
+        </div>
+        <div class="slots-grid" id="afternoonSlots">
+          <div class="slot-pill" data-time="01:30 PM">01:30 PM</div>
+          <div class="slot-pill" data-time="02:45 PM">02:45 PM</div>
+          <div class="slot-pill" data-time="03:45 PM">03:45 PM</div>
+          <div class="slot-pill" data-time="04:30 PM">04:30 PM</div>
+          <div class="slot-pill unavailable" data-time="05:15 PM" title="Reserved">05:15 PM</div>
+          <div class="slot-pill" data-time="06:00 PM">06:00 PM</div>
+        </div>
+
+        <div class="notice-card" style="margin-top: 14px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <div class="notice-text">
+            Studio appointments start promptly. Please arrive 10 minutes prior for check-in refreshment.
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 4: PATIENT CONTACT DETAILS -->
+      <section class="step-screen" id="step4">
+        <div class="screen-intro">
+          <h1 class="screen-title">Patient details</h1>
+          <p class="screen-desc">Where should we send your appointment confirmation & reminder?</p>
+        </div>
+
+        <form id="patientForm" novalidate onsubmit="return false;">
+          <div class="form-group">
+            <label class="form-label" for="patientName">Full Name *</label>
+            <div class="form-input-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" id="patientName" class="form-control" placeholder="e.g. Eleanor Vance" required autocomplete="name">
+            </div>
+            <div class="field-error" id="nameError">Please enter your legal full name</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="patientPhone">Mobile Phone *</label>
+            <div class="form-input-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              <input type="tel" id="patientPhone" class="form-control" placeholder="(555) 000-0000" inputmode="tel" required autocomplete="tel">
+            </div>
+            <div class="field-error" id="phoneError">Please provide a valid 10-digit mobile number</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="patientEmail">Email Address *</label>
+            <div class="form-input-wrap">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <input type="email" id="patientEmail" class="form-control" placeholder="eleanor@example.com" inputmode="email" required autocomplete="email">
+            </div>
+            <div class="field-error" id="emailError">Please enter a valid email address</div>
+          </div>
+
+          <div class="toggle-row">
+            <div>
+              <div class="toggle-text">First visit to Alabaster?</div>
+              <div class="toggle-sub">We will prepare your introductory welcome packet</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="firstVisitToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="form-group" style="margin-top: 14px;">
+            <label class="form-label" for="patientNotes">Special Dental Notes (Optional)</label>
+            <input type="text" id="patientNotes" class="form-control" style="padding-left: 14px;" placeholder="e.g. Tooth sensitivity, anxiety, dental insurance info">
+          </div>
+        </form>
+      </section>
+
+      <!-- STEP 5: BOOKING CONFIRMATION & RECEIPT -->
+      <section class="step-screen" id="step5">
+        <div class="confirmation-card">
+          <div class="confirmation-banner">
+            <div class="success-icon-bubble">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <h1 class="conf-heading">Booking Confirmed!</h1>
+            <p style="font-size: 13px; opacity: 0.9; margin-bottom: 8px;">We are excited to see you at Alabaster Studio.</p>
+            <span class="conf-ref-badge" id="confBookingRef">#ALB-8942-NYC</span>
+          </div>
+
+          <div class="summary-item">
+            <span class="summary-label">Treatment</span>
+            <span class="summary-val" id="confService">Routine Dental Cleaning</span>
+          </div>
+
+          <div class="summary-item">
+            <span class="summary-label">Provider</span>
+            <span class="summary-val" id="confDentist">Dr. Sarah Chen, DDS</span>
+          </div>
+
+          <div class="summary-item">
+            <span class="summary-label">Date & Time</span>
+            <span class="summary-val" id="confDateTime">Wed, Sep 28 • 09:00 AM</span>
+          </div>
+
+          <div class="summary-item">
+            <span class="summary-label">Patient</span>
+            <span class="summary-val" id="confPatientName">Eleanor Vance</span>
+          </div>
+
+          <div class="summary-item">
+            <span class="summary-label">Contact</span>
+            <span class="summary-val" id="confContactInfo">(555) 234-5678</span>
+          </div>
+
+          <div class="summary-price-total">
+            <span class="total-title">Total Due at Visit</span>
+            <span class="total-amount" id="confTotalAmount">$120</span>
+          </div>
+
+          <div class="conf-action-group">
+            <button class="secondary-btn" id="btnAddToCalendar">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+                <line x1="12" y1="14" x2="12" y2="18"></line>
+                <line x1="10" y1="16" x2="14" y2="16"></line>
+              </svg>
+              Add to Calendar (.ics)
+            </button>
+
+            <button class="secondary-btn" id="btnShareInvite">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+              Copy Confirmation Link
+            </button>
+          </div>
+
+          <div class="location-card">
+            <svg class="loc-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <div class="loc-details">
+              <div class="loc-title">Alabaster Dental Studio</div>
+              <div>452 Spring Street, Suite 4A<br>SoHo, New York, NY 10012</div>
+              <div style="color:var(--brand-teal); font-weight:600; margin-top:4px;">Valet parking available at entrance</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Sticky Controls -->
+    <footer class="bottom-bar" id="bottomBar">
+      <div class="bar-summary-strip" id="barSummaryStrip">
+        <span class="bar-selection-summary" id="barSummaryText">
+          Selected: <strong id="barServiceName">Routine Cleaning</strong>
+        </span>
+        <span class="bar-price-preview" id="barPricePreview">$120</span>
+      </div>
+
+      <button class="primary-btn" id="btnPrimaryAction">
+        <span id="btnPrimaryText">Continue to Dentist</span>
+        <svg id="btnPrimaryIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </footer>
+
+    <!-- Toast Component -->
+    <div class="toast" id="toastMessage">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2DD4BF" stroke-width="2">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+      <span id="toastText">Action completed</span>
+    </div>
+
+    <!-- Home Indicator bar -->
+    <div class="home-indicator"></div>
+
+  </div>
+
+  <script>
+    // State management
+    const state = {
+      currentStep: 1,
+      totalSteps: 4,
+      service: {
+        id: 'cleaning',
+        name: 'Routine Dental Cleaning',
+        price: 120,
+        duration: '45 min'
+      },
+      dentist: {
+        name: 'Any Available Provider',
+        specialty: 'First Open Specialist'
+      },
+      appointment: {
+        date: null,
+        formattedDate: '',
+        time: '09:00 AM'
+      },
+      patient: {
+        name: '',
+        phone: '',
+        email: '',
+        firstVisit: true,
+        notes: ''
+      },
+      bookingReference: ''
+    };
+
+    // Step configuration metadata
+    const stepMeta = [
+      {
+        step: 1,
+        title: 'Select Treatment',
+        badge: 'STEP 1 OF 4',
+        btnText: 'Continue to Dentist',
+        progress: 25
+      },
+      {
+        step: 2,
+        title: 'Select Dentist',
+        badge: 'STEP 2 OF 4',
+        btnText: 'Choose Date & Time',
+        progress: 50
+      },
+      {
+        step: 3,
+        title: 'Select Slot',
+        badge: 'STEP 3 OF 4',
+        btnText: 'Enter Patient Details',
+        progress: 75
+      },
+      {
+        step: 4,
+        title: 'Patient Details',
+        badge: 'STEP 4 OF 4',
+        btnText: 'Confirm & Book ($120)',
+        progress: 100
+      },
+      {
+        step: 5,
+        title: 'Confirmed',
+        badge: 'BOOKING COMPLETE',
+        btnText: 'Book Another Appointment',
+        progress: 100
+      }
+    ];
+
+    // DOM Elements
+    const btnBack = document.getElementById('btnBack');
+    const btnReset = document.getElementById('btnReset');
+    const stepBadge = document.getElementById('stepBadge');
+    const stepTitleHeader = document.getElementById('stepTitleHeader');
+    const progressFill = document.getElementById('progressFill');
+    const btnPrimaryAction = document.getElementById('btnPrimaryAction');
+    const btnPrimaryText = document.getElementById('btnPrimaryText');
+    const barSummaryStrip = document.getElementById('barSummaryStrip');
+    const barSummaryText = document.getElementById('barSummaryText');
+    const barPricePreview = document.getElementById('barPricePreview');
+    const flowViewport = document.getElementById('flowViewport');
+    const toastMessage = document.getElementById('toastMessage');
+    const toastText = document.getElementById('toastText');
+
+    // Phone input auto-formatting helper
+    const phoneInput = document.getElementById('patientPhone');
+    phoneInput.addEventListener('input', (e) => {
+      let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+      e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+    });
+
+    // Display current simulated clock in status bar
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      const el = document.getElementById('currentTime');
+      if (el) el.textContent = `${hours}:${minutes}`;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+
+    // Initialize 14 dynamic days for Date Picker starting from tomorrow
+    function setupDateStrip() {
+      const stripContainer = document.getElementById('dateStrip');
+      stripContainer.innerHTML = '';
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+      const startDate = new Date();
+      // Start tomorrow for standard studio appointments
+      startDate.setDate(startDate.getDate() + 1);
+
+      // Default select the first date
+      state.appointment.date = new Date(startDate);
+      const dayName = days[startDate.getDay()];
+      const monthName = months[startDate.getMonth()];
+      state.appointment.formattedDate = `${dayName}, ${monthName} ${startDate.getDate()}`;
+
+      for (let i = 0; i < 14; i++) {
+        const d = new Date(startDate);
+        d.setDate(startDate.getDate() + i);
+
+        const pill = document.createElement('div');
+        pill.className = `date-pill ${i === 0 ? 'selected' : ''}`;
+        pill.dataset.fullDate = d.toISOString();
+        pill.dataset.formatted = `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}`;
+
+        pill.innerHTML = `
+          <span class="pill-day-name">${days[d.getDay()]}</span>
+          <span class="pill-day-number">${d.getDate()}</span>
+          <span class="pill-dot"></span>
+        `;
+
+        pill.addEventListener('click', () => {
+          document.querySelectorAll('.date-pill').forEach(el => el.classList.remove('selected'));
+          pill.classList.add('selected');
+          state.appointment.date = new Date(pill.dataset.fullDate);
+          state.appointment.formattedDate = pill.dataset.formatted;
+          
+          // Randomize unavailable slot subtly to give interactive liveliness
+          regenerateSlotAvailability();
+          updateBottomBar();
+        });
+
+        stripContainer.appendChild(pill);
+      }
+
+      document.getElementById('currentMonthYear').textContent = `${months[startDate.getMonth()]} ${startDate.getFullYear()}`;
+    }
+
+    function regenerateSlotAvailability() {
+      const allSlots = document.querySelectorAll('.slot-pill');
+      allSlots.forEach((slot, idx) => {
+        if (idx === 2 || idx === 7) {
+          slot.classList.add('unavailable');
+          if (slot.classList.contains('selected')) {
+            slot.classList.remove('selected');
+            // Auto switch to another available slot
+            const firstAvailable = document.querySelector('.slot-pill:not(.unavailable)');
+            if (firstAvailable) {
+              firstAvailable.classList.add('selected');
+              state.appointment.time = firstAvailable.dataset.time;
+            }
+          }
+        } else {
+          slot.classList.remove('unavailable');
+        }
+      });
+    }
+
+    // Date navigation arrows
+    document.getElementById('btnNextDays').addEventListener('click', () => {
+      const strip = document.getElementById('dateStrip');
+      strip.scrollBy({ left: 160, behavior: 'smooth' });
+    });
+    document.getElementById('btnPrevDays').addEventListener('click', () => {
+      const strip = document.getElementById('dateStrip');
+      strip.scrollBy({ left: -160, behavior: 'smooth' });
+    });
+
+    // Step 1: Service card selection handler
+    document.querySelectorAll('#step1 .option-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('#step1 .option-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+
+        state.service = {
+          id: card.dataset.serviceId,
+          name: card.dataset.name,
+          price: parseInt(card.dataset.price, 10),
+          duration: card.dataset.duration
+        };
+
+        updateBottomBar();
+      });
+    });
+
+    // Step 2: Dentist card selection handler
+    document.querySelectorAll('#step2 .dentist-card').forEach(card => {
+      card.addEventListener('click', () => {
+        document.querySelectorAll('#step2 .dentist-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+
+        state.dentist = {
+          name: card.dataset.dentist,
+          specialty: card.dataset.specialty
+        };
+
+        updateBottomBar();
+      });
+    });
+
+    // Step 3: Time slot selection handler
+    document.querySelectorAll('.slot-pill').forEach(slot => {
+      slot.addEventListener('click', () => {
+        if (slot.classList.contains('unavailable')) {
+          showToast('That slot has just been reserved. Please pick another.');
+          return;
+        }
+
+        document.querySelectorAll('.slot-pill').forEach(s => s.classList.remove('selected'));
+        slot.classList.add('selected');
+        state.appointment.time = slot.dataset.time;
+        updateBottomBar();
+      });
+    });
+
+    // Update bottom bar content and dynamic prices
+    function updateBottomBar() {
+      const meta = stepMeta[state.currentStep - 1];
+
+      if (state.currentStep === 1) {
+        barSummaryStrip.style.display = 'flex';
+        barSummaryText.innerHTML = `Selected: <strong>${state.service.name}</strong>`;
+        barPricePreview.textContent = `$${state.service.price}`;
+        btnPrimaryText.textContent = 'Continue to Dentist';
+      } else if (state.currentStep === 2) {
+        barSummaryStrip.style.display = 'flex';
+        barSummaryText.innerHTML = `Dentist: <strong>${state.dentist.name}</strong>`;
+        barPricePreview.textContent = `$${state.service.price}`;
+        btnPrimaryText.textContent = 'Choose Date & Time';
+      } else if (state.currentStep === 3) {
+        barSummaryStrip.style.display = 'flex';
+        barSummaryText.innerHTML = `Time: <strong>${state.appointment.formattedDate} • ${state.appointment.time}</strong>`;
+        barPricePreview.textContent = `$${state.service.price}`;
+        btnPrimaryText.textContent = 'Enter Patient Details';
+      } else if (state.currentStep === 4) {
+        barSummaryStrip.style.display = 'flex';
+        barSummaryText.innerHTML = `Total for <strong>${state.service.name}</strong>`;
+        barPricePreview.textContent = `$${state.service.price}`;
+        btnPrimaryText.textContent = `Confirm & Book ($${state.service.price})`;
+      } else if (state.currentStep === 5) {
+        barSummaryStrip.style.display = 'none';
+        btnPrimaryText.textContent = 'Book Another Appointment';
+      }
+    }
+
+    // Validation for Step 4
+    function validatePatientForm() {
+      let isValid = true;
+      const name = document.getElementById('patientName');
+      const phone = document.getElementById('patientPhone');
+      const email = document.getElementById('patientEmail');
+
+      const nameErr = document.getElementById('nameError');
+      const phoneErr = document.getElementById('phoneError');
+      const emailErr = document.getElementById('emailError');
+
+      // Name check
+      if (!name.value.trim() || name.value.trim().length < 3) {
+        name.classList.add('is-invalid');
+        nameErr.classList.add('show');
+        isValid = false;
+      } else {
+        name.classList.remove('is-invalid');
+        nameErr.classList.remove('show');
+      }
+
+      // Phone check: at least 10 digits
+      const digits = phone.value.replace(/\D/g, '');
+      if (digits.length < 10) {
+        phone.classList.add('is-invalid');
+        phoneErr.classList.add('show');
+        isValid = false;
+      } else {
+        phone.classList.remove('is-invalid');
+        phoneErr.classList.remove('show');
+      }
+
+      // Email check regex
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email.value.trim())) {
+        email.classList.add('is-invalid');
+        emailErr.classList.add('show');
+        isValid = false;
+      } else {
+        email.classList.remove('is-invalid');
+        emailErr.classList.remove('show');
+      }
+
+      if (isValid) {
+        state.patient.name = name.value.trim();
+        state.patient.phone = phone.value.trim();
+        state.patient.email = email.value.trim();
+        state.patient.firstVisit = document.getElementById('firstVisitToggle').checked;
+        state.patient.notes = document.getElementById('patientNotes').value.trim();
+      }
+
+      return isValid;
+    }
+
+    // Step Transition Function
+    function goToStep(stepNumber) {
+      if (stepNumber < 1 || stepNumber > 5) return;
+
+      state.currentStep = stepNumber;
+      const meta = stepMeta[stepNumber - 1];
+
+      // Update Header Text & Stepper
+      stepBadge.textContent = meta.badge;
+      stepTitleHeader.textContent = meta.title;
+      progressFill.style.width = `${meta.progress}%`;
+
+      btnBack.disabled = (stepNumber === 1 || stepNumber === 5);
+
+      // Switch Screens
+      document.querySelectorAll('.step-screen').forEach(scr => scr.classList.remove('active'));
+      const activeScreen = document.getElementById(`step${stepNumber}`);
+      if (activeScreen) {
+        activeScreen.classList.add('active');
+      }
+
+      // Scroll viewport back to top
+      flowViewport.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // If Step 5 (Confirmation Screen), populate details
+      if (stepNumber === 5) {
+        generateBookingConfirmation();
+      }
+
+      updateBottomBar();
+    }
+
+    // Generate random confirmation code and summary
+    function generateBookingConfirmation() {
+      const randomCode = 'ALB-' + Math.floor(1000 + Math.random() * 9000) + '-NYC';
+      state.bookingReference = randomCode;
+
+      document.getElementById('confBookingRef').textContent = randomCode;
+      document.getElementById('confService').textContent = `${state.service.name} (${state.service.duration})`;
+      document.getElementById('confDentist').textContent = state.dentist.name;
+      document.getElementById('confDateTime').textContent = `${state.appointment.formattedDate} • ${state.appointment.time}`;
+      document.getElementById('confPatientName').textContent = state.patient.name;
+      document.getElementById('confContactInfo').textContent = `${state.patient.phone} • ${state.patient.email}`;
+      document.getElementById('confTotalAmount').textContent = `$${state.service.price}`;
+
+      showToast('Booking confirmed! Calendar invite prepared.');
+    }
+
+    // Primary Button Click Handler
+    btnPrimaryAction.addEventListener('click', () => {
+      if (state.currentStep === 1) {
+        goToStep(2);
+      } else if (state.currentStep === 2) {
+        goToStep(3);
+      } else if (state.currentStep === 3) {
+        goToStep(4);
+      } else if (state.currentStep === 4) {
+        if (validatePatientForm()) {
+          goToStep(5);
+        }
+      } else if (state.currentStep === 5) {
+        // Reset flow
+        resetFlow();
+      }
+    });
+
+    // Back Button Click Handler
+    btnBack.addEventListener('click', () => {
+      if (state.currentStep > 1 && state.currentStep < 5) {
+        goToStep(state.currentStep - 1);
+      }
+    });
+
+    // Reset Button Handler
+    btnReset.addEventListener('click', () => {
+      if (confirm('Restart booking flow from the beginning?')) {
+        resetFlow();
+      }
+    });
+
+    function resetFlow() {
+      document.getElementById('patientName').value = '';
+      document.getElementById('patientPhone').value = '';
+      document.getElementById('patientEmail').value = '';
+      document.getElementById('patientNotes').value = '';
+
+      // Reset selection to default
+      document.querySelectorAll('#step1 .option-card').forEach((c, idx) => {
+        if (idx === 0) c.classList.add('selected');
+        else c.classList.remove('selected');
+      });
+      state.service = {
+        id: 'cleaning',
+        name: 'Routine Dental Cleaning',
+        price: 120,
+        duration: '45 min'
+      };
+
+      document.querySelectorAll('#step2 .dentist-card').forEach((c, idx) => {
+        if (idx === 0) c.classList.add('selected');
+        else c.classList.remove('selected');
+      });
+      state.dentist = {
+        name: 'Any Available Provider',
+        specialty: 'First Open Specialist'
+      };
+
+      goToStep(1);
+    }
+
+    // Add to Calendar (.ics file generation)
+    document.getElementById('btnAddToCalendar').addEventListener('click', () => {
+      try {
+        const title = `Alabaster Dental: ${state.service.name}`;
+        const description = `Appointment with ${state.dentist.name} at Alabaster Dental Studio. Ref: ${state.bookingReference}`;
+        const location = `Alabaster Dental Studio, 452 Spring Street, New York, NY 10012`;
+
+        // Create standard iCalendar format
+        const icsContent = [
+          'BEGIN:VCALENDAR',
+          'VERSION:2.0',
+          'PRODID:-//Alabaster Dental Studio//Appointments//EN',
+          'BEGIN:VEVENT',
+          `SUMMARY:${title}`,
+          `DESCRIPTION:${description}`,
+          `LOCATION:${location}`,
+          `STATUS:CONFIRMED`,
+          'END:VEVENT',
+          'END:VCALENDAR'
+        ].join('\r\n');
+
+        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.setAttribute('download', `alabaster-appointment-${state.bookingReference}.ics`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        showToast('Calendar file (.ics) downloaded!');
+      } catch (err) {
+        showToast('Calendar invite added to your device.');
+      }
+    });
+
+    // Share / Copy Link handler
+    document.getElementById('btnShareInvite').addEventListener('click', () => {
+      const shareUrl = `${window.location.origin}${window.location.pathname}?booking=${state.bookingReference}`;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast('Confirmation link copied to clipboard!');
+        }).catch(() => {
+          showToast(`Reference: ${state.bookingReference}`);
+        });
+      } else {
+        showToast(`Reference: ${state.bookingReference}`);
+      }
+    });
+
+    // Toast helper
+    let toastTimeout;
+    function showToast(msg) {
+      clearTimeout(toastTimeout);
+      toastText.textContent = msg;
+      toastMessage.classList.add('show');
+      toastTimeout = setTimeout(() => {
+        toastMessage.classList.remove('show');
+      }, 3200);
+    }
+
+    // Initialize date picker on load
+    setupDateStrip();
+    updateBottomBar();
+  </script>
+</body>
+</html>

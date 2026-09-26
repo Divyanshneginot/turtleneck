@@ -1,0 +1,3385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCADA Operations Telemetry | Clearwater Municipal WTP-4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* =====================================================================
+       TURTLENECK v2.0 - HIGH-DENSITY STARLIGHT DESIGN SYSTEM
+       Autonomous Craft Mandate:
+       1. Vernacular Harmony: High-Density Starlight Archetype (Dark Space Mission-Critical)
+       2. Frequency-Gated Interaction: 80-120ms ease-out
+       3. Atmospheric Layered Elevation: --canvas: #08090e, --surface-1: #121520, --surface-2: #181c2b
+       4. Typographic Scale Tension: 44px display / 11px micro = 4:1 ratio
+       5. 5-State Interactive Completeness with :focus-visible (2px solid #00e5ff, 2px offset)
+       6. Compositor-only tactile feedback (transform, opacity), NO transition: all
+       7. Authentic Municipal Water Treatment Domain Telemetry (MGD, PSI, NTU, pH, Cl2 ppm)
+       8. 8pt grid alignment, WCAG 2.2 AA contrast, prefers-reduced-motion
+       ===================================================================== */
+
+    :root {
+      /* Elevation Surfaces */
+      --canvas: #08090e;
+      --surface-1: #121520;
+      --surface-2: #181c2b;
+      --surface-3: #22273d;
+      --surface-hover: #293049;
+      --surface-active: #313a57;
+      
+      /* Borders & Dividers */
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --border-medium: rgba(255, 255, 255, 0.12);
+      --border-accent: rgba(0, 229, 255, 0.35);
+      --border-focus: #00e5ff;
+
+      /* Typography Colors */
+      --text-primary: #f0f4fc;
+      --text-secondary: #8da0be;
+      --text-muted: #53627c;
+      --text-inverted: #08090e;
+
+      /* High-Density Starlight Accents */
+      --starlight-cyan: #00e5ff;
+      --starlight-cyan-dim: rgba(0, 229, 255, 0.12);
+      --starlight-blue: #38bdf8;
+      --starlight-blue-dim: rgba(56, 189, 248, 0.12);
+
+      /* Telemetry Status Spectrum */
+      --status-nominal: #10b981;
+      --status-nominal-bg: rgba(16, 185, 129, 0.14);
+      --status-nominal-border: rgba(16, 185, 129, 0.32);
+      --status-warning: #f59e0b;
+      --status-warning-bg: rgba(245, 158, 11, 0.14);
+      --status-warning-border: rgba(245, 158, 11, 0.35);
+      --status-critical: #f43f5e;
+      --status-critical-bg: rgba(244, 63, 94, 0.16);
+      --status-critical-border: rgba(244, 63, 94, 0.40);
+
+      /* Physics & Timing */
+      --ease-tactile: cubic-bezier(0, 0, 0.2, 1);
+      --time-tactile: 100ms;
+
+      /* Fonts */
+      --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    /* Reset & Base Setup */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--canvas);
+      background-image: 
+        radial-gradient(ellipse at 50% 0%, rgba(0, 229, 255, 0.04) 0%, transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(56, 189, 248, 0.02) 0%, transparent 40%);
+      background-attachment: fixed;
+      color: var(--text-primary);
+      font-family: var(--font-display);
+      font-size: 13px;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Typography Scale Tension (4:1 ratio >= 44px to 11px) */
+    .telemetry-display-hero {
+      font-family: var(--font-mono);
+      font-size: 44px;
+      line-height: 1.05;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .telemetry-display-stat {
+      font-family: var(--font-mono);
+      font-size: 24px;
+      line-height: 1.1;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .telemetry-caption-mono {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1.3;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .telemetry-tag-mono {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* Focus Visible Standard: 2px solid #00e5ff, 2px offset */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2px solid var(--border-focus);
+      outline-offset: 2px;
+    }
+
+    /* Tactile Interactive Completeness: 5 States (Default, Hover, Active, Focus, Disabled) */
+    .tactile-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: 32px;
+      padding: 0 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      cursor: pointer;
+      user-select: none;
+      border: 1px solid var(--border-medium);
+      background-color: var(--surface-2);
+      color: var(--text-primary);
+      transition: transform var(--time-tactile) var(--ease-tactile),
+                  opacity var(--time-tactile) var(--ease-tactile),
+                  background-color var(--time-tactile) var(--ease-tactile),
+                  border-color var(--time-tactile) var(--ease-tactile),
+                  box-shadow var(--time-tactile) var(--ease-tactile);
+    }
+
+    .tactile-btn:hover {
+      background-color: var(--surface-3);
+      border-color: var(--border-accent);
+      transform: translateY(-1px);
+    }
+
+    .tactile-btn:active {
+      transform: translateY(0) scale(0.98);
+      background-color: var(--surface-active);
+    }
+
+    .tactile-btn:disabled, .tactile-btn[aria-disabled="true"] {
+      opacity: 0.42;
+      cursor: not-allowed;
+      pointer-events: none;
+      transform: none;
+    }
+
+    .tactile-btn-primary {
+      background-color: var(--starlight-cyan);
+      border-color: var(--starlight-cyan);
+      color: #041017;
+      font-weight: 700;
+    }
+
+    .tactile-btn-primary:hover {
+      background-color: #38bdf8;
+      border-color: #38bdf8;
+      box-shadow: 0 0 14px rgba(0, 229, 255, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .tactile-btn-critical {
+      background-color: var(--status-critical-bg);
+      border-color: var(--status-critical-border);
+      color: #fda4af;
+    }
+
+    .tactile-btn-critical:hover {
+      background-color: rgba(244, 63, 94, 0.28);
+      border-color: var(--status-critical);
+      color: #fff;
+    }
+
+    .tactile-btn-ghost {
+      background: transparent;
+      border-color: transparent;
+      color: var(--text-secondary);
+    }
+
+    .tactile-btn-ghost:hover {
+      background-color: var(--surface-2);
+      border-color: var(--border-subtle);
+      color: var(--text-primary);
+    }
+
+    /* Layout Skeleton: 8pt Spacing Grid */
+    .scada-app {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      width: 100%;
+    }
+
+    /* Masthead Header */
+    .scada-masthead {
+      background-color: var(--surface-1);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+
+    .masthead-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-emblem {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #00e5ff 0%, #0369a1 100%);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
+      position: relative;
+    }
+
+    .brand-emblem svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: #08090e;
+      stroke-width: 2.2;
+    }
+
+    .brand-titles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-badge {
+      background: rgba(0, 229, 255, 0.12);
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      color: var(--starlight-cyan);
+      font-size: 10px;
+      font-family: var(--font-mono);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+
+    /* Masthead Heartbeat & Clock */
+    .masthead-telemetry {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .scada-link-pulse {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px;
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--status-nominal);
+      box-shadow: 0 0 8px var(--status-nominal);
+      animation: scadaPulse 1.8s infinite var(--ease-tactile);
+    }
+
+    @keyframes scadaPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.85); }
+    }
+
+    .clock-display {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .masthead-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Sound Pill Indicator */
+    .audio-btn {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      position: relative;
+    }
+
+    .audio-btn.sound-on svg {
+      stroke: var(--starlight-cyan);
+    }
+
+    /* Threshold Alert Banners Strip */
+    .alert-ticker-strip {
+      background-color: var(--surface-1);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .alert-ticker-strip.has-critical {
+      background-color: rgba(244, 63, 94, 0.08);
+      border-bottom: 1px solid var(--status-critical-border);
+    }
+
+    .alert-strip-lead {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .alert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 7px;
+      border-radius: 3px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .alert-badge-critical {
+      background-color: var(--status-critical);
+      color: #fff;
+      animation: alertFlash 1s infinite alternate;
+    }
+
+    @keyframes alertFlash {
+      from { opacity: 1; }
+      to { opacity: 0.75; }
+    }
+
+    .alert-badge-warning {
+      background-color: var(--status-warning-bg);
+      border: 1px solid var(--status-warning-border);
+      color: var(--status-warning);
+    }
+
+    .alert-badge-nominal {
+      background-color: var(--status-nominal-bg);
+      border: 1px solid var(--status-nominal-border);
+      color: var(--status-nominal);
+    }
+
+    .alert-ticker-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      overflow-x: auto;
+      white-space: nowrap;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      flex: 1;
+      scrollbar-width: none;
+    }
+
+    .alert-ticker-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    .alert-item-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      color: var(--text-primary);
+      text-decoration: none;
+      padding: 2px 6px;
+      border-radius: 3px;
+      transition: background-color var(--time-tactile) var(--ease-tactile);
+    }
+
+    .alert-item-link:hover {
+      background-color: var(--surface-2);
+    }
+
+    .alert-item-link strong {
+      color: #fda4af;
+    }
+
+    /* Main Operational Canvas Grid */
+    .scada-main-canvas {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px;
+      max-width: 1720px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Top Strip: 6 Key Facility Metrics */
+    .telemetry-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+
+    .kpi-tile {
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color var(--time-tactile) var(--ease-tactile),
+                  transform var(--time-tactile) var(--ease-tactile);
+    }
+
+    .kpi-tile:hover {
+      border-color: var(--border-medium);
+      transform: translateY(-1px);
+    }
+
+    .kpi-tile::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background-color: var(--border-subtle);
+    }
+
+    .kpi-tile.kpi-cyan::before { background-color: var(--starlight-cyan); }
+    .kpi-tile.kpi-nominal::before { background-color: var(--status-nominal); }
+    .kpi-tile.kpi-warning::before { background-color: var(--status-warning); }
+    .kpi-tile.kpi-critical::before { background-color: var(--status-critical); }
+
+    .kpi-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .kpi-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .kpi-target-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .kpi-metric-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .kpi-unit {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .kpi-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 2px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .kpi-delta {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 11px;
+      color: var(--status-nominal);
+    }
+
+    .kpi-delta.negative { color: var(--status-critical); }
+    .kpi-delta.neutral { color: var(--text-muted); }
+
+    /* Hydraulic & Chemical Filtration Stage Visual Ribbon */
+    .filtration-pipeline-card {
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .pipeline-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .pipeline-title-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--starlight-cyan);
+    }
+
+    .pipeline-summary-stat {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .stages-diagram {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      position: relative;
+    }
+
+    .stage-node {
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 5px;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+      position: relative;
+      transition: transform var(--time-tactile) var(--ease-tactile),
+                  border-color var(--time-tactile) var(--ease-tactile),
+                  background-color var(--time-tactile) var(--ease-tactile);
+    }
+
+    .stage-node:hover {
+      background-color: var(--surface-3);
+      border-color: var(--border-accent);
+      transform: translateY(-1px);
+    }
+
+    .stage-node.is-active {
+      border-color: var(--starlight-cyan);
+      background-color: rgba(0, 229, 255, 0.08);
+      box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.1);
+    }
+
+    .stage-node.has-warning {
+      border-color: var(--status-warning-border);
+    }
+
+    .stage-node.has-critical {
+      border-color: var(--status-critical-border);
+      background-color: rgba(244, 63, 94, 0.08);
+    }
+
+    .stage-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stage-num {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .stage-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--status-nominal);
+    }
+
+    .stage-status-dot.warning { background-color: var(--status-warning); }
+    .stage-status-dot.critical { background-color: var(--status-critical); box-shadow: 0 0 6px var(--status-critical); }
+
+    .stage-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .stage-metric {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--starlight-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stage-sub {
+      color: var(--text-secondary);
+      font-size: 10px;
+    }
+
+    /* Filter Controls & Search Bar */
+    .controls-panel {
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .filter-tabs {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 2px;
+    }
+
+    .filter-tab {
+      height: 28px;
+      padding: 0 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: transparent;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color var(--time-tactile) var(--ease-tactile),
+                  color var(--time-tactile) var(--ease-tactile);
+    }
+
+    .filter-tab:hover {
+      color: var(--text-primary);
+      background-color: var(--surface-hover);
+    }
+
+    .filter-tab.active {
+      background-color: var(--surface-3);
+      color: var(--starlight-cyan);
+    }
+
+    .tab-counter {
+      padding: 1px 5px;
+      border-radius: 10px;
+      font-size: 10px;
+      background-color: rgba(255, 255, 255, 0.08);
+      color: var(--text-secondary);
+    }
+
+    .filter-tab.active .tab-counter {
+      background-color: rgba(0, 229, 255, 0.18);
+      color: var(--starlight-cyan);
+    }
+
+    .search-and-selectors {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      max-width: 680px;
+      justify-content: flex-end;
+    }
+
+    .search-box-wrapper {
+      position: relative;
+      width: 260px;
+    }
+
+    .search-box-wrapper svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      stroke: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      height: 32px;
+      padding: 0 12px 0 32px;
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-medium);
+      border-radius: 4px;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      transition: border-color var(--time-tactile) var(--ease-tactile),
+                  background-color var(--time-tactile) var(--ease-tactile);
+    }
+
+    .search-input:hover {
+      border-color: var(--border-accent);
+    }
+
+    .search-input:focus {
+      outline: 2px solid var(--border-focus);
+      outline-offset: 1px;
+      border-color: var(--border-focus);
+      background-color: var(--surface-3);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    .scada-select {
+      height: 32px;
+      padding: 0 28px 0 10px;
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-medium);
+      border-radius: 4px;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238da0be' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      transition: border-color var(--time-tactile) var(--ease-tactile);
+    }
+
+    .scada-select:hover {
+      border-color: var(--border-accent);
+    }
+
+    .view-toggle-group {
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      background-color: var(--surface-2);
+      padding: 2px;
+    }
+
+    .view-toggle-btn {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 3px;
+      transition: color var(--time-tactile) var(--ease-tactile),
+                  background-color var(--time-tactile) var(--ease-tactile);
+    }
+
+    .view-toggle-btn:hover {
+      color: var(--text-primary);
+      background-color: var(--surface-hover);
+    }
+
+    .view-toggle-btn.active {
+      color: var(--starlight-cyan);
+      background-color: var(--surface-3);
+    }
+
+    /* Core Telemetry Layout: Table View & Grid View */
+    .telemetry-content-container {
+      width: 100%;
+      position: relative;
+    }
+
+    /* Scannable Telemetry Table */
+    .table-container {
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      overflow: hidden;
+      width: 100%;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .scada-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .scada-table thead {
+      background-color: var(--surface-2);
+      border-bottom: 1px solid var(--border-medium);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .scada-table th {
+      padding: 10px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .scada-table th.sortable {
+      cursor: pointer;
+      transition: color var(--time-tactile) var(--ease-tactile);
+    }
+
+    .scada-table th.sortable:hover {
+      color: var(--starlight-cyan);
+    }
+
+    .sort-indicator {
+      display: inline-block;
+      margin-left: 4px;
+      font-size: 10px;
+      color: var(--starlight-cyan);
+    }
+
+    .scada-table tbody tr {
+      border-bottom: 1px solid var(--border-subtle);
+      cursor: pointer;
+      transition: background-color var(--time-tactile) var(--ease-tactile);
+    }
+
+    .scada-table tbody tr:hover {
+      background-color: var(--surface-hover);
+    }
+
+    .scada-table tbody tr.is-selected {
+      background-color: rgba(0, 229, 255, 0.08);
+      border-left: 3px solid var(--starlight-cyan);
+    }
+
+    .scada-table tbody tr.has-critical {
+      background-color: rgba(244, 63, 94, 0.06);
+    }
+
+    .scada-table tbody tr.has-warning {
+      background-color: rgba(245, 158, 11, 0.05);
+    }
+
+    .scada-table td {
+      padding: 9px 12px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    /* Zone Tag Cell */
+    .zone-tag-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .zone-tag {
+      font-weight: 700;
+      color: var(--text-primary);
+      background-color: var(--surface-2);
+      padding: 3px 6px;
+      border-radius: 3px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .zone-name-cell {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .zone-name-primary {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .zone-stage-sub {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* Status Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .status-badge.nominal {
+      background-color: var(--status-nominal-bg);
+      border: 1px solid var(--status-nominal-border);
+      color: #6ee7b7;
+    }
+
+    .status-badge.warning {
+      background-color: var(--status-warning-bg);
+      border: 1px solid var(--status-warning-border);
+      color: #fcd34d;
+    }
+
+    .status-badge.critical {
+      background-color: var(--status-critical-bg);
+      border: 1px solid var(--status-critical-border);
+      color: #fda4af;
+      box-shadow: 0 0 10px rgba(244, 63, 94, 0.25);
+    }
+
+    .status-indicator-light {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: currentColor;
+    }
+
+    /* Sparkline Canvas */
+    .sparkline-canvas {
+      width: 90px;
+      height: 24px;
+      display: block;
+      vertical-align: middle;
+    }
+
+    /* Hydraulic Value Formatting */
+    .telemetry-cell-val {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .telemetry-cell-unit {
+      color: var(--text-muted);
+      font-size: 10px;
+      margin-left: 2px;
+    }
+
+    .val-out-of-bounds {
+      color: #fda4af;
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(244, 63, 94, 0.4);
+    }
+
+    .val-near-limit {
+      color: #fcd34d;
+      font-weight: 600;
+    }
+
+    /* Density Cards Grid View */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 12px;
+      width: 100%;
+    }
+
+    .zone-card {
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--time-tactile) var(--ease-tactile),
+                  border-color var(--time-tactile) var(--ease-tactile),
+                  background-color var(--time-tactile) var(--ease-tactile),
+                  box-shadow var(--time-tactile) var(--ease-tactile);
+    }
+
+    .zone-card:hover {
+      background-color: var(--surface-2);
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .zone-card.has-critical {
+      border-color: var(--status-critical-border);
+      background-color: rgba(244, 63, 94, 0.04);
+    }
+
+    .zone-card.has-warning {
+      border-color: var(--status-warning-border);
+    }
+
+    .card-top-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .card-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .card-zone-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--starlight-cyan);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    .card-zone-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .card-metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 10px;
+    }
+
+    .card-metric-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .card-metric-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .card-metric-val {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 8px;
+    }
+
+    .card-equipment-summary {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Slide-out Inspector Drawer */
+    .inspector-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(4, 5, 8, 0.72);
+      backdrop-filter: blur(4px);
+      z-index: 60;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 120ms var(--ease-tactile);
+    }
+
+    .inspector-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .inspector-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 540px;
+      max-width: 95vw;
+      background-color: var(--surface-1);
+      border-left: 1px solid var(--border-medium);
+      z-index: 70;
+      transform: translateX(100%);
+      transition: transform 120ms var(--ease-tactile);
+      display: flex;
+      flex-direction: column;
+      box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+      overflow-y: auto;
+    }
+
+    .inspector-drawer.open {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      padding: 16px 20px;
+      background-color: var(--surface-2);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .drawer-title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .drawer-zone-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--starlight-cyan);
+      letter-spacing: 0.05em;
+    }
+
+    .drawer-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .drawer-subtitle {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .drawer-close-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color var(--time-tactile) var(--ease-tactile),
+                  color var(--time-tactile) var(--ease-tactile);
+    }
+
+    .drawer-close-btn:hover {
+      background-color: var(--surface-3);
+      color: var(--text-primary);
+    }
+
+    .drawer-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Gauge & Hero Metric Block in Drawer */
+    .drawer-hero-block {
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .gauge-wrapper {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gauge-canvas {
+      width: 140px;
+      height: 140px;
+    }
+
+    .drawer-hero-metrics {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Subsystem Detail Cards */
+    .subsystem-block {
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .subsystem-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .equipment-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+
+    .equipment-table td {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+
+    .equipment-table td:last-child {
+      text-align: right;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* Drawer Live Trend Chart */
+    .drawer-chart-container {
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drawer-canvas-chart {
+      width: 100%;
+      height: 150px;
+      display: block;
+    }
+
+    /* Operator Control Actions in Drawer */
+    .drawer-actions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    /* Audit Log in Drawer */
+    .audit-log-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .audit-log-item {
+      padding: 8px 10px;
+      background-color: var(--surface-3);
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .audit-time {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .audit-desc {
+      color: var(--text-primary);
+    }
+
+    /* Footer Status Bar */
+    .scada-statusbar {
+      background-color: var(--surface-1);
+      border-top: 1px solid var(--border-subtle);
+      padding: 6px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-secondary);
+    }
+
+    .status-pill-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Toast Notification for Operator Feedback */
+    .scada-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background-color: var(--surface-3);
+      border: 1px solid var(--starlight-cyan);
+      box-shadow: 0 4px 20px rgba(0, 229, 255, 0.25);
+      border-radius: 6px;
+      padding: 10px 16px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 100;
+      opacity: 0;
+      transition: transform 120ms var(--ease-tactile), opacity 120ms var(--ease-tactile);
+      pointer-events: none;
+    }
+
+    .scada-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Accessibility: Prefers Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1400px) {
+      .telemetry-kpi-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 992px) {
+      .stages-diagram {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .telemetry-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .controls-panel {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .search-and-selectors {
+        max-width: 100%;
+        justify-content: stretch;
+      }
+      .search-box-wrapper {
+        flex: 1;
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .telemetry-kpi-grid {
+        grid-template-columns: 1fr;
+      }
+      .stages-diagram {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .table-container {
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scada-app">
+    <!-- Top Masthead / Navigation Bar -->
+    <header class="scada-masthead" role="banner">
+      <div class="masthead-brand">
+        <div class="brand-emblem" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+          </svg>
+        </div>
+        <div class="brand-titles">
+          <div class="brand-title">
+            CLEARWATER-4 SCADA <span class="brand-badge">PLANT #4</span>
+          </div>
+          <div class="brand-subtitle">Metro Water District • Real-Time Telemetry & Process Control</div>
+        </div>
+      </div>
+
+      <div class="masthead-telemetry">
+        <div class="scada-link-pulse" title="Telemetry Socket Protocol WebSocket-Secure">
+          <div class="pulse-dot" id="pulseDot"></div>
+          <span id="socketStatusText">SCADA ONLINE</span>
+          <span style="color: var(--text-muted)">|</span>
+          <span id="latencyDisplay" style="color: var(--starlight-cyan);">24ms</span>
+        </div>
+        <div class="clock-display" id="liveClock" aria-label="System Time">2026-09-26 11:23:22 UTC</div>
+      </div>
+
+      <div class="masthead-actions">
+        <!-- Audio Acoustic Toggle -->
+        <button class="tactile-btn audio-btn" id="audioToggleBtn" title="Toggle SCADA Acoustic Feedback" aria-label="Toggle Sound">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+        </button>
+
+        <!-- Stream Pause / Play -->
+        <button class="tactile-btn" id="streamToggleBtn" aria-label="Pause or Resume Stream">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="6" y="4" width="4" height="16"></rect>
+            <rect x="14" y="4" width="4" height="16"></rect>
+          </svg>
+          <span id="streamBtnText">LIVE</span>
+        </button>
+
+        <!-- Sim Frequency -->
+        <select class="scada-select" id="updateIntervalSelect" aria-label="Update Interval">
+          <option value="1200">1.2s Rate</option>
+          <option value="2500" selected>2.5s Rate</option>
+          <option value="5000">5.0s Rate</option>
+        </select>
+
+        <!-- Trigger Anomaly Test Button -->
+        <button class="tactile-btn tactile-btn-primary" id="triggerAnomalyBtn" title="Inject simulated hydraulic surge / turbidity spike to test thresholds">
+          SIMULATE EVENT
+        </button>
+
+        <!-- Export CSV Button -->
+        <button class="tactile-btn tactile-btn-ghost" id="exportCsvBtn" title="Export Telemetry Log to CSV">
+          EXPORT CSV
+        </button>
+      </div>
+    </header>
+
+    <!-- Threshold Alert Banners Strip -->
+    <div class="alert-ticker-strip has-critical" id="alertTickerStrip" role="region" aria-label="Active Threshold Alarms">
+      <div class="alert-strip-lead">
+        <span class="alert-badge alert-badge-critical" id="alertCountBadge">1 CRITICAL</span>
+        <span class="alert-badge alert-badge-warning" id="alertWarnCountBadge">2 WARNINGS</span>
+      </div>
+      <div class="alert-ticker-content" id="alertTickerContent">
+        <a class="alert-item-link" data-zone-id="Z-08" tabindex="0">
+          <strong>[CRITICAL] Z-08 DISINFECTION:</strong> Free Cl₂ Residual dropped to 1.02 ppm (Min Limit: 1.10 ppm). Hypochlorite Feed Trim Active.
+        </a>
+        <span style="color: var(--text-muted)">•</span>
+        <a class="alert-item-link" data-zone-id="Z-06" tabindex="0">
+          <strong style="color: #fcd34d;">[WARNING] Z-06 FILTERS 1-4:</strong> Differential Head Loss ΔP at 7.8 PSI (Limit: 8.0 PSI). Backwash recommended.
+        </a>
+        <span style="color: var(--text-muted)">•</span>
+        <a class="alert-item-link" data-zone-id="Z-12" tabindex="0">
+          <strong style="color: #fcd34d;">[WARNING] Z-12 HIGH SERVICE:</strong> Suction manifold at 31.4 PSI (Threshold: 32.0 PSI). Cavitation index: 0.64.
+        </a>
+      </div>
+      <button class="tactile-btn tactile-btn-critical" id="ackAllAlertsBtn" style="height: 24px; padding: 0 8px; font-size: 10px;">
+        ACKNOWLEDGE ALL
+      </button>
+    </div>
+
+    <!-- Main Operational Workspace -->
+    <main class="scada-main-canvas" role="main">
+      <!-- 6 Top Facility Operational Key Performance Indicators -->
+      <section class="telemetry-kpi-grid" aria-label="Plant Primary Telemetry Strip">
+        <!-- KPI 1: Total Flow -->
+        <article class="kpi-tile kpi-cyan">
+          <div class="kpi-header">
+            <span class="kpi-label">Plant Production Flow</span>
+            <span class="kpi-target-tag">CAP: 65.0 MGD</span>
+          </div>
+          <div class="kpi-metric-row">
+            <span class="telemetry-display-stat" id="kpiTotalFlow">48.35</span>
+            <span class="kpi-unit">MGD</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-delta">▲ +1.4% vs 24h</span>
+            <span style="color: var(--text-muted); font-size: 10px;">33,576 GPM</span>
+          </div>
+        </article>
+
+        <!-- KPI 2: Effluent Turbidity -->
+        <article class="kpi-tile kpi-nominal">
+          <div class="kpi-header">
+            <span class="kpi-label">Finished Turbidity</span>
+            <span class="kpi-target-tag">EPA MAX: 0.30</span>
+          </div>
+          <div class="kpi-metric-row">
+            <span class="telemetry-display-stat" id="kpiTurbidity">0.078</span>
+            <span class="kpi-unit">NTU</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-delta">▼ 99.47% Removal</span>
+            <span style="color: var(--status-nominal); font-size: 10px;">COMPLIANT</span>
+          </div>
+        </article>
+
+        <!-- KPI 3: Free Chlorine -->
+        <article class="kpi-tile kpi-warning">
+          <div class="kpi-header">
+            <span class="kpi-label">Disinfection Residual</span>
+            <span class="kpi-target-tag">TARGET: 1.5 - 2.2</span>
+          </div>
+          <div class="kpi-metric-row">
+            <span class="telemetry-display-stat" id="kpiChlorine">1.84</span>
+            <span class="kpi-unit">ppm Cl₂</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-delta negative">▼ Contact Basin Lag</span>
+            <span style="color: var(--status-warning); font-size: 10px;">TRIMMING</span>
+          </div>
+        </article>
+
+        <!-- KPI 4: pH Finished -->
+        <article class="kpi-tile kpi-nominal">
+          <div class="kpi-header">
+            <span class="kpi-label">Finished Water pH</span>
+            <span class="kpi-target-tag">SPAN: 7.2 - 7.6</span>
+          </div>
+          <div class="kpi-metric-row">
+            <span class="telemetry-display-stat" id="kpiPh">7.42</span>
+            <span class="kpi-unit">pH</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-delta">LSI: +0.12 (Stable)</span>
+            <span style="color: var(--text-muted); font-size: 10px;">Caustic NaOH</span>
+          </div>
+        </article>
+
+        <!-- KPI 5: Transmission Pressure -->
+        <article class="kpi-tile kpi-cyan">
+          <div class="kpi-header">
+            <span class="kpi-label">High-Service Pressure</span>
+            <span class="kpi-target-tag">DIST HEAD: 218 ft</span>
+          </div>
+          <div class="kpi-metric-row">
+            <span class="telemetry-display-stat" id="kpiPressure">94.6</span>
+            <span class="kpi-unit">PSI</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-delta">▲ 4 Pumps Active</span>
+            <span style="color: var(--text-muted); font-size: 10px;">Grid Demand OK</span>
+          </div>
+        </article>
+
+        <!-- KPI 6: Specific Energy -->
+        <article class="kpi-tile kpi-nominal">
+          <div class="kpi-header">
+            <span class="kpi-label">Specific Energy Rate</span>
+            <span class="kpi-target-tag">BENCH: &lt;450</span>
+          </div>
+          <div class="kpi-metric-row">
+            <span class="telemetry-display-stat" id="kpiEnergy">412</span>
+            <span class="kpi-unit">kWh/MG</span>
+          </div>
+          <div class="kpi-footer">
+            <span class="kpi-delta">Optimal Load Balance</span>
+            <span style="color: var(--starlight-cyan); font-size: 10px;">VFD 94.2%</span>
+          </div>
+        </article>
+      </section>
+
+      <!-- 6-Stage Filtration & Hydraulic Pipeline Ribbon -->
+      <section class="filtration-pipeline-card" aria-label="Process Filtration Stages Pipeline">
+        <div class="pipeline-header">
+          <div class="pipeline-title-group">
+            <span class="section-eyebrow">PROCESS FILTRATION TRAIN</span>
+            <span class="pipeline-summary-stat">Raw River Intake ➔ Gravity Coagulation ➔ Lamella Settling ➔ Deep GAC Filters ➔ Disinfection ➔ High Service</span>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted);">Click stage to filter 12 zones</span>
+        </div>
+        <div class="stages-diagram" id="stagesDiagram">
+          <!-- Stage 1 -->
+          <div class="stage-node" data-stage="Raw Intake" tabindex="0">
+            <div class="stage-meta">
+              <span class="stage-num">STAGE 01</span>
+              <div class="stage-status-dot"></div>
+            </div>
+            <div class="stage-name">Raw River Intake</div>
+            <div class="stage-metric">
+              <span>14.80 <span class="stage-sub">NTU</span></span>
+              <span>49.2 <span class="stage-sub">MGD</span></span>
+            </div>
+          </div>
+
+          <!-- Stage 2 -->
+          <div class="stage-node" data-stage="Coagulation" tabindex="0">
+            <div class="stage-meta">
+              <span class="stage-num">STAGE 02</span>
+              <div class="stage-status-dot"></div>
+            </div>
+            <div class="stage-name">Flash Mix & Coag</div>
+            <div class="stage-metric">
+              <span>24.5 <span class="stage-sub">mg/L Alum</span></span>
+              <span>6.78 <span class="stage-sub">pH</span></span>
+            </div>
+          </div>
+
+          <!-- Stage 3 -->
+          <div class="stage-node" data-stage="Clarification" tabindex="0">
+            <div class="stage-meta">
+              <span class="stage-num">STAGE 03</span>
+              <div class="stage-status-dot"></div>
+            </div>
+            <div class="stage-name">Lamella Clarifiers</div>
+            <div class="stage-metric">
+              <span>1.45 <span class="stage-sub">NTU</span></span>
+              <span>-90.2% <span class="stage-sub">Solids</span></span>
+            </div>
+          </div>
+
+          <!-- Stage 4 -->
+          <div class="stage-node has-warning" data-stage="Filtration" tabindex="0">
+            <div class="stage-meta">
+              <span class="stage-num">STAGE 04</span>
+              <div class="stage-status-dot warning"></div>
+            </div>
+            <div class="stage-name">Deep Bed GAC Filters</div>
+            <div class="stage-metric">
+              <span style="color: #fcd34d;">0.29 <span class="stage-sub">NTU (ΔP!)</span></span>
+              <span>8 Filters</span>
+            </div>
+          </div>
+
+          <!-- Stage 5 -->
+          <div class="stage-node has-critical" data-stage="Disinfection" tabindex="0">
+            <div class="stage-meta">
+              <span class="stage-num">STAGE 05</span>
+              <div class="stage-status-dot critical"></div>
+            </div>
+            <div class="stage-name">Disinfection Basins</div>
+            <div class="stage-metric">
+              <span style="color: #fda4af;">1.02 <span class="stage-sub">ppm Cl₂</span></span>
+              <span>Ozone + Cl₂</span>
+            </div>
+          </div>
+
+          <!-- Stage 6 -->
+          <div class="stage-node has-warning" data-stage="Transmission" tabindex="0">
+            <div class="stage-meta">
+              <span class="stage-num">STAGE 06</span>
+              <div class="stage-status-dot warning"></div>
+            </div>
+            <div class="stage-name">Clearwell & High Service</div>
+            <div class="stage-metric">
+              <span>94.6 <span class="stage-sub">PSI</span></span>
+              <span>48.4 <span class="stage-sub">MGD</span></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Search, Filtering, and View Mode Bar -->
+      <section class="controls-panel" aria-label="Dashboard Filtering and View Controls">
+        <div class="filter-tabs" role="tablist">
+          <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">
+            ALL ZONES <span class="tab-counter" id="tabCountAll">12</span>
+          </button>
+          <button class="filter-tab" data-filter="nominal" role="tab" aria-selected="false">
+            NOMINAL <span class="tab-counter" id="tabCountNominal">9</span>
+          </button>
+          <button class="filter-tab" data-filter="warning" role="tab" aria-selected="false">
+            WARNING <span class="tab-counter" style="color: #fcd34d;" id="tabCountWarning">2</span>
+          </button>
+          <button class="filter-tab" data-filter="critical" role="tab" aria-selected="false">
+            CRITICAL <span class="tab-counter" style="color: #fda4af;" id="tabCountCritical">1</span>
+          </button>
+        </div>
+
+        <div class="search-and-selectors">
+          <!-- Search Bar -->
+          <div class="search-box-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" class="search-input" id="zoneSearchInput" placeholder="Filter by tag, zone name, chemical..." aria-label="Search zones">
+          </div>
+
+          <!-- Process Stage Select Filter -->
+          <select class="scada-select" id="stageFilterSelect" aria-label="Filter by process stage">
+            <option value="ALL">All Stages (6)</option>
+            <option value="Raw Intake">Raw River Intake</option>
+            <option value="Coagulation">Coagulation & Flash Mix</option>
+            <option value="Clarification">Lamella Clarification</option>
+            <option value="Filtration">GAC Media Filtration</option>
+            <option value="Disinfection">Disinfection Basin</option>
+            <option value="Transmission">Clearwell & High Service</option>
+          </select>
+
+          <!-- View Switcher (Table, Cards) -->
+          <div class="view-toggle-group" role="radiogroup" aria-label="Display View Mode">
+            <button class="view-toggle-btn active" id="viewModeTableBtn" title="Dense Scannable Table View" aria-checked="true" role="radio">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
+            <button class="view-toggle-btn" id="viewModeCardsBtn" title="Tactical Zone Cards Grid" aria-checked="false" role="radio">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Primary Content Area: Dense Table or Tactical Cards Grid -->
+      <section class="telemetry-content-container" id="telemetryContainer">
+        <!-- Dense Scannable Telemetry Table -->
+        <div class="table-container" id="tableViewContainer">
+          <table class="scada-table" aria-label="Zone Telemetry Matrix">
+            <thead>
+              <tr>
+                <th class="sortable" data-sort="tag">ZONE TAG <span class="sort-indicator"></span></th>
+                <th class="sortable" data-sort="name">MONITORED ZONE & PROCESS STAGE <span class="sort-indicator"></span></th>
+                <th class="sortable" data-sort="flow">FLOW (MGD / GPM) <span class="sort-indicator"></span></th>
+                <th class="sortable" data-sort="pressure">PRESSURE (PSI / ΔP) <span class="sort-indicator"></span></th>
+                <th class="sortable" data-sort="turbidity">TURBIDITY (NTU) <span class="sort-indicator"></span></th>
+                <th class="sortable" data-sort="chem">CHEMISTRY (pH / Cl₂) <span class="sort-indicator"></span></th>
+                <th>EQUIPMENT STATUS</th>
+                <th>60s SPARK</th>
+                <th style="text-align: right;">ACTION</th>
+              </tr>
+            </thead>
+            <tbody id="zonesTableBody">
+              <!-- Dynamically populated via renderTable() -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tactical Zone Cards Grid (Initially Hidden or Toggled) -->
+        <div class="cards-grid" id="cardsViewContainer" style="display: none;">
+          <!-- Dynamically populated via renderCards() -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Slide-out Zone Detailed Inspector Drawer -->
+    <div class="inspector-backdrop" id="inspectorBackdrop" aria-hidden="true"></div>
+    <aside class="inspector-drawer" id="inspectorDrawer" role="dialog" aria-labelledby="drawerZoneTitle" aria-modal="true">
+      <div class="drawer-header">
+        <div class="drawer-title-group">
+          <span class="drawer-zone-tag" id="drawerZoneTag">Z-08 • DISINFECTION STAGE</span>
+          <h2 class="drawer-title" id="drawerZoneTitle">Chlorine Contact Chamber Alpha</h2>
+          <span class="drawer-subtitle" id="drawerZoneDesc">CT Inactivation & Secondary Residual Stabilization</span>
+        </div>
+        <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="Close Inspector">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="drawer-body">
+        <!-- Hero Gauge & Primary Telemetry -->
+        <div class="drawer-hero-block">
+          <div class="gauge-wrapper">
+            <canvas class="gauge-canvas" id="drawerGaugeCanvas" width="140" height="140"></canvas>
+          </div>
+          <div class="drawer-hero-metrics">
+            <div class="telemetry-caption-mono">PRIMARY OPERATING VALUE</div>
+            <div class="telemetry-display-hero" id="drawerHeroVal" style="color: #fda4af;">1.02</div>
+            <div class="telemetry-caption-mono" id="drawerHeroUnit">ppm Free Chlorine (Threshold: 1.10 - 2.80)</div>
+            <div style="margin-top: 4px;">
+              <span class="status-badge critical" id="drawerStatusBadge">CRITICAL THRESHOLD</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Telemetry Trend History Canvas -->
+        <div class="drawer-chart-container">
+          <div class="subsystem-title">
+            <span>REAL-TIME 60-SECOND TELEMETRY TRACE</span>
+            <span style="color: var(--starlight-cyan);" id="drawerChartCurrentVal">1.02 ppm</span>
+          </div>
+          <canvas class="drawer-canvas-chart" id="drawerTraceCanvas" width="480" height="140"></canvas>
+          <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--text-muted);">
+            <span>-60s</span>
+            <span>-30s</span>
+            <span>CURRENT TIME</span>
+          </div>
+        </div>
+
+        <!-- Mechanical Subsystem & Equipment Matrix -->
+        <div class="subsystem-block">
+          <div class="subsystem-title">
+            <span>MECHANICAL & SENSOR DIAGNOSTICS</span>
+            <span style="color: var(--status-nominal);">ALL BUSES SYNCED</span>
+          </div>
+          <table class="equipment-table">
+            <tbody>
+              <tr>
+                <td>Primary Pump / VFD Drive</td>
+                <td id="diagPumpStatus">P-801A RUNNING (1,740 RPM)</td>
+              </tr>
+              <tr>
+                <td>Motor Load / Current Draw</td>
+                <td id="diagMotorCurrent">142.6 A @ 480V (88% Load)</td>
+              </tr>
+              <tr>
+                <td>Bearing Temperature & Vibration</td>
+                <td id="diagBearingTemp">48.2°C • 1.4 mm/s RMS</td>
+              </tr>
+              <tr>
+                <td>Isolation Valve Position Actuator</td>
+                <td id="diagValvePos">V-801 OPEN 100% (Modulating)</td>
+              </tr>
+              <tr>
+                <td>Chemical Feed / Dosing Rate</td>
+                <td id="diagChemFeed">NaOCl Dosing: 3.42 gal/hr</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Threshold Setpoints & Alarm Envelopes -->
+        <div class="subsystem-block">
+          <div class="subsystem-title">
+            <span>THRESHOLD SAFETY ENVELOPE</span>
+            <span style="color: var(--text-muted);">SCADA SETPOINTS</span>
+          </div>
+          <table class="equipment-table">
+            <tbody>
+              <tr>
+                <td>Critical Low Limit (L-ALARM)</td>
+                <td style="color: #fda4af;" id="diagLimitLow">1.10 ppm</td>
+              </tr>
+              <tr>
+                <td>Normal Operational Target</td>
+                <td style="color: var(--starlight-cyan);" id="diagTargetVal">1.85 ppm</td>
+              </tr>
+              <tr>
+                <td>Critical High Limit (H-ALARM)</td>
+                <td style="color: #fda4af;" id="diagLimitHigh">2.80 ppm</td>
+              </tr>
+              <tr>
+                <td>SCADA Deadband / Dwell Time</td>
+                <td>0.05 units • 15 sec delay</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Operator Actions & Overrides -->
+        <div class="subsystem-block">
+          <div class="subsystem-title">
+            <span>OPERATOR OVERRIDE CONTROLS</span>
+            <span style="color: var(--text-muted);">LEVEL 2 PRIVILEGE</span>
+          </div>
+          <div class="drawer-actions-grid">
+            <button class="tactile-btn tactile-btn-primary" id="btnAcknowledgeSingle">
+              ACKNOWLEDGE
+            </button>
+            <button class="tactile-btn" id="btnTriggerBackwash">
+              START BACKWASH
+            </button>
+            <button class="tactile-btn" id="btnBoostChemical">
+              DOSE BOOST (+10%)
+            </button>
+            <button class="tactile-btn tactile-btn-ghost" id="btnDownloadZoneLog">
+              ZONE AUDIT LOG
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Audit Trail & Events -->
+        <div class="subsystem-block">
+          <div class="subsystem-title">
+            <span>ZONE EVENT LOG (LAST 24 HOURS)</span>
+            <span style="color: var(--text-muted);">5 EVENTS</span>
+          </div>
+          <ul class="audit-log-list" id="drawerAuditList">
+            <li class="audit-log-item">
+              <span class="audit-time">11:21:40 UTC</span>
+              <span class="audit-desc" style="color: #fda4af;">Threshold Breached: Free Cl₂ 1.02 ppm &lt; Min 1.10 ppm</span>
+            </li>
+            <li class="audit-log-item">
+              <span class="audit-time">11:18:02 UTC</span>
+              <span class="audit-desc">Secondary Chemical Pump P-802B switched to STANDBY</span>
+            </li>
+            <li class="audit-log-item">
+              <span class="audit-time">10:45:11 UTC</span>
+              <span class="audit-desc">Routine Grab Sample Calibration matched online probe (Δ0.02)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Bottom Telemetry Statusbar -->
+    <footer class="scada-statusbar" role="contentinfo">
+      <div class="status-pill-group">
+        <span>FACILITY: METRO WATER DISTRICT PLANT #4</span>
+        <span style="color: var(--border-medium)">|</span>
+        <span>SUPERVISORY HOST: SCADA-SRV-01A (ACTIVE)</span>
+        <span style="color: var(--border-medium)">|</span>
+        <span>LATENCY: &lt;28ms</span>
+      </div>
+      <div class="status-pill-group">
+        <span id="activeFilterDisplay">SHOWING ALL 12 ZONES</span>
+        <span style="color: var(--border-medium)">|</span>
+        <span style="color: var(--starlight-cyan);">AUTONOMOUS CRAFT MANDATE ACTIVE</span>
+      </div>
+    </footer>
+
+    <!-- Interactive Feedback Toast -->
+    <div class="scada-toast" id="scadaToast" role="status" aria-live="polite">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--starlight-cyan)" stroke-width="2">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <span id="toastMessage">Command dispatched successfully.</span>
+    </div>
+  </div>
+
+  <script>
+    /* =====================================================================
+       TURTLENECK v2.0 - TELEMETRY DASHBOARD ENGINE & SIMULATOR
+       ===================================================================== */
+
+    // 12 Authentic Water Treatment Operational Zones
+    const ZONES_DATA = [
+      {
+        id: "Z-01",
+        name: "River Intake & Raw Lift Station",
+        stage: "Raw Intake",
+        flowMGD: 49.20,
+        flowGPM: 34166,
+        pressurePSI: 28.4,
+        pressureSub: "Discharge Head",
+        turbidityNTU: 14.80,
+        turbidityLimit: 25.0,
+        ph: 7.15,
+        cl2PPM: 0.02,
+        status: "nominal",
+        equipment: "Lift Pumps #1, #2 ACTIVE (1,180 RPM)",
+        pumpMotor: "168A @ 4160V",
+        bearingTemp: "42.1°C",
+        vibration: "1.2 mm/s",
+        valveState: "Intake Gates 100% OPEN",
+        chemDose: "Raw Screen Wash Active",
+        primaryMetric: "turbidity",
+        targetVal: 12.0,
+        minLimit: 5.0,
+        maxLimit: 25.0,
+        history: Array.from({ length: 25 }, () => 14.8 + (Math.random() * 0.6 - 0.3))
+      },
+      {
+        id: "Z-02",
+        name: "Flash Mix & Chemical Coagulation",
+        stage: "Coagulation",
+        flowMGD: 49.00,
+        flowGPM: 34027,
+        pressurePSI: 34.1,
+        pressureSub: "Injection Manifold",
+        turbidityNTU: 14.10,
+        turbidityLimit: 20.0,
+        ph: 6.78,
+        cl2PPM: 0.00,
+        status: "nominal",
+        equipment: "Flash Impeller #1 (350 RPM)",
+        pumpMotor: "45A @ 480V",
+        bearingTemp: "38.5°C",
+        vibration: "0.9 mm/s",
+        valveState: "Alum Metering Valve 64%",
+        chemDose: "Alum 24.5 mg/L • Polymer 0.18 mg/L",
+        primaryMetric: "ph",
+        targetVal: 6.80,
+        minLimit: 6.50,
+        maxLimit: 7.10,
+        history: Array.from({ length: 25 }, () => 6.78 + (Math.random() * 0.08 - 0.04))
+      },
+      {
+        id: "Z-03",
+        name: "Flocculation Basins Alpha & Beta",
+        stage: "Coagulation",
+        flowMGD: 48.90,
+        flowGPM: 33958,
+        pressurePSI: 12.0,
+        pressureSub: "Gravity Baffle Head",
+        turbidityNTU: 12.30,
+        turbidityLimit: 18.0,
+        ph: 6.82,
+        cl2PPM: 0.00,
+        status: "nominal",
+        equipment: "6 Variable Speed Paddles (18 RPM)",
+        pumpMotor: "28A @ 480V",
+        bearingTemp: "35.2°C",
+        vibration: "0.5 mm/s",
+        valveState: "Baffle Weirs 100% SUBMERGED",
+        chemDose: "Coagulant Aid Active",
+        primaryMetric: "turbidity",
+        targetVal: 11.5,
+        minLimit: 8.0,
+        maxLimit: 18.0,
+        history: Array.from({ length: 25 }, () => 12.3 + (Math.random() * 0.4 - 0.2))
+      },
+      {
+        id: "Z-04",
+        name: "High-Rate Lamella Plate Clarifiers",
+        stage: "Clarification",
+        flowMGD: 48.80,
+        flowGPM: 33888,
+        pressurePSI: 8.5,
+        pressureSub: "Effluent Launder",
+        turbidityNTU: 1.45,
+        turbidityLimit: 3.5,
+        ph: 6.95,
+        cl2PPM: 0.00,
+        status: "nominal",
+        equipment: "Sludge Collector Flight #2 RUNNING",
+        pumpMotor: "16A @ 480V",
+        bearingTemp: "32.0°C",
+        vibration: "0.4 mm/s",
+        valveState: "Underflow Blowdown Cycle 45m",
+        chemDose: "Sludge Blanket Depth 4.2 ft",
+        primaryMetric: "turbidity",
+        targetVal: 1.5,
+        minLimit: 0.5,
+        maxLimit: 3.5,
+        history: Array.from({ length: 25 }, () => 1.45 + (Math.random() * 0.15 - 0.07))
+      },
+      {
+        id: "Z-05",
+        name: "Intermediate Ozone Oxidation Vault",
+        stage: "Clarification",
+        flowMGD: 48.60,
+        flowGPM: 33750,
+        pressurePSI: 15.2,
+        pressureSub: "Ozone Contactor Diffuser",
+        turbidityNTU: 1.10,
+        turbidityLimit: 2.5,
+        ph: 6.98,
+        cl2PPM: 0.00,
+        status: "nominal",
+        equipment: "Ozone Gen-02 (38.5 kg/day O₃)",
+        pumpMotor: "92A @ 480V",
+        bearingTemp: "44.0°C",
+        vibration: "0.8 mm/s",
+        valveState: "Off-Gas Destruct Unit ONLINE",
+        chemDose: "Ozone Residual 0.38 mg/L",
+        primaryMetric: "pressure",
+        targetVal: 15.0,
+        minLimit: 10.0,
+        maxLimit: 20.0,
+        history: Array.from({ length: 25 }, () => 15.2 + (Math.random() * 0.4 - 0.2))
+      },
+      {
+        id: "Z-06",
+        name: "Deep Bed Gravity Filters 1-4 (GAC/Sand)",
+        stage: "Filtration",
+        flowMGD: 24.30,
+        flowGPM: 16875,
+        pressurePSI: 8.9,
+        pressureSub: "Head Loss ΔP 7.8 PSI",
+        turbidityNTU: 0.29,
+        turbidityLimit: 0.30,
+        ph: 7.02,
+        cl2PPM: 0.00,
+        status: "warning",
+        equipment: "Filters 1, 2, 4 ON; Filter 3 APPROACHING BACKWASH",
+        pumpMotor: "Backwash Blower Standby",
+        bearingTemp: "39.1°C",
+        vibration: "1.1 mm/s",
+        valveState: "Effluent Modulating Valve 82%",
+        chemDose: "GAC Bed Age 14 Months",
+        primaryMetric: "turbidity",
+        targetVal: 0.10,
+        minLimit: 0.02,
+        maxLimit: 0.30,
+        history: Array.from({ length: 25 }, () => 0.28 + (Math.random() * 0.03 - 0.01))
+      },
+      {
+        id: "Z-07",
+        name: "Deep Bed Gravity Filters 5-8 (GAC/Sand)",
+        stage: "Filtration",
+        flowMGD: 24.30,
+        flowGPM: 16875,
+        pressurePSI: 4.2,
+        pressureSub: "Head Loss ΔP 3.1 PSI",
+        turbidityNTU: 0.064,
+        turbidityLimit: 0.30,
+        ph: 7.04,
+        cl2PPM: 0.00,
+        status: "nominal",
+        equipment: "Filters 5, 6, 7, 8 CLEAN RUN CYCLE",
+        pumpMotor: "Wash Pump #2 Standby",
+        bearingTemp: "34.8°C",
+        vibration: "0.6 mm/s",
+        valveState: "Rate of Flow Controllers AUTO",
+        chemDose: "GAC Bed Expansion Nominal",
+        primaryMetric: "turbidity",
+        targetVal: 0.07,
+        minLimit: 0.01,
+        maxLimit: 0.30,
+        history: Array.from({ length: 25 }, () => 0.064 + (Math.random() * 0.008 - 0.004))
+      },
+      {
+        id: "Z-08",
+        name: "Disinfection Chlorine Contact Chamber",
+        stage: "Disinfection",
+        flowMGD: 48.50,
+        flowGPM: 33680,
+        pressurePSI: 18.6,
+        pressureSub: "Basin CT Chamber",
+        turbidityNTU: 0.072,
+        turbidityLimit: 0.30,
+        ph: 7.10,
+        cl2PPM: 1.02,
+        status: "critical",
+        equipment: "Hypochlorite Dosing Skids #1 TRIM ACTIVE",
+        pumpMotor: "Metering Pump A: 142.6A @ 480V",
+        bearingTemp: "48.2°C",
+        vibration: "1.4 mm/s",
+        valveState: "Chlorine Injector V-801 OPEN 100%",
+        chemDose: "Free Cl₂ Residual 1.02 ppm (CRITICAL &lt; 1.10)",
+        primaryMetric: "cl2",
+        targetVal: 1.85,
+        minLimit: 1.10,
+        maxLimit: 2.80,
+        history: Array.from({ length: 25 }, () => 1.02 + (Math.random() * 0.04 - 0.02))
+      },
+      {
+        id: "Z-09",
+        name: "Fluoridation & Caustic Stabilization",
+        stage: "Disinfection",
+        flowMGD: 48.40,
+        flowGPM: 33611,
+        pressurePSI: 22.1,
+        pressureSub: "Post-Chemical Header",
+        turbidityNTU: 0.074,
+        turbidityLimit: 0.30,
+        ph: 7.42,
+        cl2PPM: 1.88,
+        status: "nominal",
+        equipment: "Caustic Soda NaOH Feed Loop Active",
+        pumpMotor: "Peristaltic Dosing 12A",
+        bearingTemp: "31.4°C",
+        vibration: "0.3 mm/s",
+        valveState: "Fluoride H₂SiF₆ Injection 0.70 mg/L",
+        chemDose: "Finished Water LSI +0.12",
+        primaryMetric: "ph",
+        targetVal: 7.40,
+        minLimit: 7.20,
+        maxLimit: 7.60,
+        history: Array.from({ length: 25 }, () => 7.42 + (Math.random() * 0.05 - 0.025))
+      },
+      {
+        id: "Z-10",
+        name: "North Clearwell Reservoir (20 MG)",
+        stage: "Transmission",
+        flowMGD: 24.15,
+        flowGPM: 16770,
+        pressurePSI: 16.8,
+        pressureSub: "Static Head 38.5 ft",
+        turbidityNTU: 0.068,
+        turbidityLimit: 0.30,
+        ph: 7.41,
+        cl2PPM: 1.84,
+        status: "nominal",
+        equipment: "Submerged Inflow Valve 100%",
+        pumpMotor: "Level Transmitter Ultrasonic Dual",
+        bearingTemp: "24.0°C",
+        vibration: "0.1 mm/s",
+        valveState: "Storage Depth 92.4% Capacity",
+        chemDose: "Residual Hold Time 3.8 hrs",
+        primaryMetric: "pressure",
+        targetVal: 16.5,
+        minLimit: 10.0,
+        maxLimit: 22.0,
+        history: Array.from({ length: 25 }, () => 16.8 + (Math.random() * 0.2 - 0.1))
+      },
+      {
+        id: "Z-11",
+        name: "South Clearwell Reservoir (20 MG)",
+        stage: "Transmission",
+        flowMGD: 24.20,
+        flowGPM: 16805,
+        pressurePSI: 16.2,
+        pressureSub: "Static Head 37.1 ft",
+        turbidityNTU: 0.070,
+        turbidityLimit: 0.30,
+        ph: 7.42,
+        cl2PPM: 1.83,
+        status: "nominal",
+        equipment: "Submerged Inflow Valve 100%",
+        pumpMotor: "Level Transmitter Radar Dual",
+        bearingTemp: "23.8°C",
+        vibration: "0.1 mm/s",
+        valveState: "Storage Depth 89.2% Capacity",
+        chemDose: "Residual Hold Time 3.9 hrs",
+        primaryMetric: "pressure",
+        targetVal: 16.5,
+        minLimit: 10.0,
+        maxLimit: 22.0,
+        history: Array.from({ length: 25 }, () => 16.2 + (Math.random() * 0.2 - 0.1))
+      },
+      {
+        id: "Z-12",
+        name: "High-Service Transmission Booster Pumping",
+        stage: "Transmission",
+        flowMGD: 48.35,
+        flowGPM: 33576,
+        pressurePSI: 94.6,
+        pressureSub: "Suction 31.4 PSI (LOW!)",
+        turbidityNTU: 0.078,
+        turbidityLimit: 0.30,
+        ph: 7.42,
+        cl2PPM: 1.84,
+        status: "warning",
+        equipment: "High Service Pumps P-12A, P-12B, P-12C ACTIVE",
+        pumpMotor: "450 HP • 542A @ 4160V",
+        bearingTemp: "52.8°C",
+        vibration: "1.9 mm/s",
+        valveState: "Discharge Check Valve 100% OPEN",
+        chemDose: "Finished Water Compliance OK",
+        primaryMetric: "pressure",
+        targetVal: 95.0,
+        minLimit: 85.0,
+        maxLimit: 110.0,
+        history: Array.from({ length: 25 }, () => 94.6 + (Math.random() * 1.2 - 0.6))
+      }
+    ];
+
+    // State Variables
+    let currentFilter = "all";
+    let currentStage = "ALL";
+    let searchQuery = "";
+    let sortColumn = "tag";
+    let sortDirection = "asc";
+    let isStreamActive = true;
+    let streamIntervalMs = 2500;
+    let timerId = null;
+    let selectedZoneId = "Z-08";
+    let soundEnabled = false;
+    let audioCtx = null;
+
+    // DOM Elements
+    const pulseDot = document.getElementById("pulseDot");
+    const liveClock = document.getElementById("liveClock");
+    const streamToggleBtn = document.getElementById("streamToggleBtn");
+    const streamBtnText = document.getElementById("streamBtnText");
+    const updateIntervalSelect = document.getElementById("updateIntervalSelect");
+    const audioToggleBtn = document.getElementById("audioToggleBtn");
+    const triggerAnomalyBtn = document.getElementById("triggerAnomalyBtn");
+    const exportCsvBtn = document.getElementById("exportCsvBtn");
+    const ackAllAlertsBtn = document.getElementById("ackAllAlertsBtn");
+
+    const tabCountAll = document.getElementById("tabCountAll");
+    const tabCountNominal = document.getElementById("tabCountNominal");
+    const tabCountWarning = document.getElementById("tabCountWarning");
+    const tabCountCritical = document.getElementById("tabCountCritical");
+    const alertCountBadge = document.getElementById("alertCountBadge");
+    const alertWarnCountBadge = document.getElementById("alertWarnCountBadge");
+    const alertTickerStrip = document.getElementById("alertTickerStrip");
+
+    const zoneSearchInput = document.getElementById("zoneSearchInput");
+    const stageFilterSelect = document.getElementById("stageFilterSelect");
+    const viewModeTableBtn = document.getElementById("viewModeTableBtn");
+    const viewModeCardsBtn = document.getElementById("viewModeCardsBtn");
+    const tableViewContainer = document.getElementById("tableViewContainer");
+    const cardsViewContainer = document.getElementById("cardsViewContainer");
+    const zonesTableBody = document.getElementById("zonesTableBody");
+    const stagesDiagram = document.getElementById("stagesDiagram");
+
+    // Drawer Elements
+    const inspectorDrawer = document.getElementById("inspectorDrawer");
+    const inspectorBackdrop = document.getElementById("inspectorBackdrop");
+    const drawerCloseBtn = document.getElementById("drawerCloseBtn");
+    const drawerGaugeCanvas = document.getElementById("drawerGaugeCanvas");
+    const drawerTraceCanvas = document.getElementById("drawerTraceCanvas");
+    const scadaToast = document.getElementById("scadaToast");
+    const toastMessage = document.getElementById("toastMessage");
+
+    // Acoustic Web Audio Synthesizer
+    function playTactileChime(type = "click") {
+      if (!soundEnabled) return;
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        const now = audioCtx.currentTime;
+        if (type === "click") {
+          osc.frequency.setValueAtTime(840, now);
+          osc.frequency.exponentialRampToValueAtTime(420, now + 0.05);
+          gain.gain.setValueAtTime(0.08, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+          osc.start(now);
+          osc.stop(now + 0.05);
+        } else if (type === "alert") {
+          osc.type = "sawtooth";
+          osc.frequency.setValueAtTime(680, now);
+          osc.frequency.setValueAtTime(880, now + 0.1);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+          osc.start(now);
+          osc.stop(now + 0.25);
+        } else if (type === "success") {
+          osc.frequency.setValueAtTime(520, now);
+          osc.frequency.exponentialRampToValueAtTime(1040, now + 0.12);
+          gain.gain.setValueAtTime(0.09, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+          osc.start(now);
+          osc.stop(now + 0.12);
+        }
+      } catch (e) {
+        console.warn("Audio Context init suppressed", e);
+      }
+    }
+
+    // Toast Notification Dispatcher
+    let toastTimeout = null;
+    function showToast(msg) {
+      toastMessage.textContent = msg;
+      scadaToast.classList.add("show");
+      playTactileChime("success");
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        scadaToast.classList.remove("show");
+      }, 3200);
+    }
+
+    // Live Clock Update
+    function updateClock() {
+      const now = new Date();
+      const yr = now.getUTCFullYear();
+      const mo = String(now.getUTCMonth() + 1).padStart(2, '0');
+      const da = String(now.getUTCDate()).padStart(2, '0');
+      const hr = String(now.getUTCHours()).padStart(2, '0');
+      const mi = String(now.getUTCMinutes()).padStart(2, '0');
+      const se = String(now.getUTCSeconds()).padStart(2, '0');
+      liveClock.textContent = `${yr}-${mo}-${da} ${hr}:${mi}:${se} UTC`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Data Filtering and Sorting Logic
+    function getFilteredZones() {
+      return ZONES_DATA.filter(z => {
+        // Status filter
+        if (currentFilter !== "all" && z.status !== currentFilter) return false;
+        // Stage filter
+        if (currentStage !== "ALL" && z.stage !== currentStage) return false;
+        // Search query
+        if (searchQuery.trim() !== "") {
+          const q = searchQuery.toLowerCase();
+          const matchId = z.id.toLowerCase().includes(q);
+          const matchName = z.name.toLowerCase().includes(q);
+          const matchStage = z.stage.toLowerCase().includes(q);
+          const matchEq = z.equipment.toLowerCase().includes(q);
+          const matchChem = z.chemDose.toLowerCase().includes(q);
+          if (!matchId && !matchName && !matchStage && !matchEq && !matchChem) return false;
+        }
+        return true;
+      }).sort((a, b) => {
+        let valA, valB;
+        if (sortColumn === "tag") {
+          valA = a.id;
+          valB = b.id;
+        } else if (sortColumn === "name") {
+          valA = a.name;
+          valB = b.name;
+        } else if (sortColumn === "flow") {
+          valA = a.flowMGD;
+          valB = b.flowMGD;
+        } else if (sortColumn === "pressure") {
+          valA = a.pressurePSI;
+          valB = b.pressurePSI;
+        } else if (sortColumn === "turbidity") {
+          valA = a.turbidityNTU;
+          valB = b.turbidityNTU;
+        } else if (sortColumn === "chem") {
+          valA = a.cl2PPM > 0 ? a.cl2PPM : a.ph;
+          valB = b.cl2PPM > 0 ? b.cl2PPM : b.ph;
+        } else {
+          valA = a.id;
+          valB = b.id;
+        }
+
+        if (valA < valB) return sortDirection === "asc" ? -1 : 1;
+        if (valA > valB) return sortDirection === "asc" ? 1 : -1;
+        return 0;
+      });
+    }
+
+    // Sparkline Canvas Rendering
+    function drawSparkline(canvas, historyArray, status) {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      if (!historyArray || historyArray.length < 2) return;
+
+      const min = Math.min(...historyArray);
+      const max = Math.max(...historyArray);
+      const range = max - min === 0 ? 1 : max - min;
+
+      ctx.beginPath();
+      for (let i = 0; i < historyArray.length; i++) {
+        const x = (i / (historyArray.length - 1)) * (w - 4) + 2;
+        const y = h - 3 - ((historyArray[i] - min) / range) * (h - 8);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+
+      ctx.lineWidth = 1.8;
+      if (status === 'critical') {
+        ctx.strokeStyle = '#f43f5e';
+      } else if (status === 'warning') {
+        ctx.strokeStyle = '#f59e0b';
+      } else {
+        ctx.strokeStyle = '#00e5ff';
+      }
+      ctx.stroke();
+
+      // Fill area under sparkline
+      ctx.lineTo(w - 2, h);
+      ctx.lineTo(2, h);
+      ctx.closePath();
+      const grad = ctx.createLinearGradient(0, 0, 0, h);
+      if (status === 'critical') {
+        grad.addColorStop(0, 'rgba(244, 63, 94, 0.28)');
+        grad.addColorStop(1, 'rgba(244, 63, 94, 0.01)');
+      } else if (status === 'warning') {
+        grad.addColorStop(0, 'rgba(245, 158, 11, 0.22)');
+        grad.addColorStop(1, 'rgba(245, 158, 11, 0.01)');
+      } else {
+        grad.addColorStop(0, 'rgba(0, 229, 255, 0.25)');
+        grad.addColorStop(1, 'rgba(0, 229, 255, 0.01)');
+      }
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    // Render Dense Scannable Table
+    function renderTable() {
+      const zones = getFilteredZones();
+      zonesTableBody.innerHTML = "";
+
+      if (zones.length === 0) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td colspan="9" style="text-align: center; padding: 32px; color: var(--text-muted); font-family: var(--font-mono);">No telemetry zones match current filter parameters.</td>`;
+        zonesTableBody.appendChild(tr);
+        return;
+      }
+
+      zones.forEach(zone => {
+        const tr = document.createElement("tr");
+        tr.dataset.zoneId = zone.id;
+        tr.tabIndex = 0;
+        if (zone.status === "critical") tr.classList.add("has-critical");
+        if (zone.status === "warning") tr.classList.add("has-warning");
+        if (zone.id === selectedZoneId) tr.classList.add("is-selected");
+
+        // Turbidity formatting & threshold warning
+        let turbClass = "";
+        if (zone.turbidityNTU >= zone.turbidityLimit) turbClass = "val-out-of-bounds";
+        else if (zone.turbidityNTU >= zone.turbidityLimit * 0.85) turbClass = "val-near-limit";
+
+        // Chlorine / Chemical formatting
+        let chemFormatted = "";
+        if (zone.cl2PPM > 0) {
+          const clClass = zone.cl2PPM < 1.10 ? "val-out-of-bounds" : "";
+          chemFormatted = `<span class="${clClass}">${zone.cl2PPM.toFixed(2)}</span> <span class="telemetry-cell-unit">ppm Cl₂</span> <span style="color:var(--text-muted)">•</span> ${zone.ph.toFixed(2)} <span class="telemetry-cell-unit">pH</span>`;
+        } else {
+          chemFormatted = `${zone.ph.toFixed(2)} <span class="telemetry-cell-unit">pH</span>`;
+        }
+
+        // Pressure formatting
+        let pressClass = "";
+        if (zone.id === "Z-12" && zone.pressurePSI < 85) pressClass = "val-near-limit";
+        if (zone.id === "Z-06" && zone.pressurePSI > 8.0) pressClass = "val-near-limit";
+
+        tr.innerHTML = `
+          <td>
+            <div class="zone-tag-wrapper">
+              <span class="status-indicator-light" style="background-color: ${zone.status === 'critical' ? 'var(--status-critical)' : zone.status === 'warning' ? 'var(--status-warning)' : 'var(--status-nominal)'}"></span>
+              <span class="zone-tag">${zone.id}</span>
+            </div>
+          </td>
+          <td>
+            <div class="zone-name-cell">
+              <span class="zone-name-primary">${zone.name}</span>
+              <span class="zone-stage-sub">${zone.stage.toUpperCase()} • ${zone.chemDose}</span>
+            </div>
+          </td>
+          <td>
+            <span class="telemetry-cell-val">${zone.flowMGD.toFixed(2)}</span> <span class="telemetry-cell-unit">MGD</span>
+            <div style="font-size: 10px; color: var(--text-muted);">${zone.flowGPM.toLocaleString()} GPM</div>
+          </td>
+          <td>
+            <span class="telemetry-cell-val ${pressClass}">${zone.pressurePSI.toFixed(1)}</span> <span class="telemetry-cell-unit">PSI</span>
+            <div style="font-size: 10px; color: var(--text-muted);">${zone.pressureSub}</div>
+          </td>
+          <td>
+            <span class="telemetry-cell-val ${turbClass}">${zone.turbidityNTU.toFixed(zone.turbidityNTU < 1 ? 3 : 2)}</span> <span class="telemetry-cell-unit">NTU</span>
+            <div style="font-size: 10px; color: var(--text-muted);">MAX: ${zone.turbidityLimit.toFixed(2)}</div>
+          </td>
+          <td>
+            ${chemFormatted}
+          </td>
+          <td>
+            <span class="status-badge ${zone.status}">
+              <span class="status-indicator-light"></span>
+              ${zone.status}
+            </span>
+          </td>
+          <td>
+            <canvas class="sparkline-canvas" width="90" height="24" id="spark-${zone.id}"></canvas>
+          </td>
+          <td style="text-align: right;">
+            <button class="tactile-btn tactile-btn-ghost inspect-zone-btn" data-zone-id="${zone.id}" aria-label="Inspect ${zone.name}">
+              INSPECT
+            </button>
+          </td>
+        `;
+
+        // Row Selection & Drawer Opening
+        tr.addEventListener("click", (e) => {
+          openInspector(zone.id);
+        });
+
+        tr.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openInspector(zone.id);
+          }
+        });
+
+        zonesTableBody.appendChild(tr);
+
+        // Draw individual sparklines after appending
+        const canvas = document.getElementById(`spark-${zone.id}`);
+        drawSparkline(canvas, zone.history, zone.status);
+      });
+    }
+
+    // Render Tactical Cards Grid
+    function renderCards() {
+      const zones = getFilteredZones();
+      cardsViewContainer.innerHTML = "";
+
+      if (zones.length === 0) {
+        cardsViewContainer.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted); font-family: var(--font-mono);">No telemetry zones match current filter parameters.</div>`;
+        return;
+      }
+
+      zones.forEach(zone => {
+        const card = document.createElement("div");
+        card.className = `zone-card ${zone.status === 'critical' ? 'has-critical' : zone.status === 'warning' ? 'has-warning' : ''}`;
+        card.dataset.zoneId = zone.id;
+        card.tabIndex = 0;
+
+        card.innerHTML = `
+          <div class="card-top-row">
+            <div class="card-title-group">
+              <span class="card-zone-tag">${zone.id} • ${zone.stage.toUpperCase()}</span>
+              <h3 class="card-zone-name">${zone.name}</h3>
+            </div>
+            <span class="status-badge ${zone.status}">
+              <span class="status-indicator-light"></span>
+              ${zone.status}
+            </span>
+          </div>
+
+          <div class="card-metrics-grid">
+            <div class="card-metric-item">
+              <span class="card-metric-label">Flow Rate</span>
+              <span class="card-metric-val">${zone.flowMGD.toFixed(2)} <span style="font-size: 11px; color: var(--text-muted);">MGD</span></span>
+            </div>
+            <div class="card-metric-item">
+              <span class="card-metric-label">Pressure</span>
+              <span class="card-metric-val">${zone.pressurePSI.toFixed(1)} <span style="font-size: 11px; color: var(--text-muted);">PSI</span></span>
+            </div>
+            <div class="card-metric-item">
+              <span class="card-metric-label">Turbidity</span>
+              <span class="card-metric-val ${zone.turbidityNTU >= zone.turbidityLimit ? 'val-out-of-bounds' : ''}">${zone.turbidityNTU.toFixed(zone.turbidityNTU < 1 ? 3 : 2)} <span style="font-size: 11px; color: var(--text-muted);">NTU</span></span>
+            </div>
+            <div class="card-metric-item">
+              <span class="card-metric-label">${zone.cl2PPM > 0 ? 'Free Chlorine' : 'pH Balance'}</span>
+              <span class="card-metric-val ${zone.cl2PPM > 0 && zone.cl2PPM < 1.10 ? 'val-out-of-bounds' : ''}">${zone.cl2PPM > 0 ? zone.cl2PPM.toFixed(2) + ' ppm' : zone.ph.toFixed(2)}</span>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+            <canvas class="sparkline-canvas" width="160" height="30" id="card-spark-${zone.id}"></canvas>
+            <button class="tactile-btn tactile-btn-ghost inspect-zone-btn" data-zone-id="${zone.id}">
+              DETAILS ➔
+            </button>
+          </div>
+
+          <div class="card-footer">
+            <span class="card-equipment-summary">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+              </svg>
+              ${zone.equipment.length > 36 ? zone.equipment.substring(0, 36) + '...' : zone.equipment}
+            </span>
+          </div>
+        `;
+
+        card.addEventListener("click", () => openInspector(zone.id));
+        card.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            openInspector(zone.id);
+          }
+        });
+
+        cardsViewContainer.appendChild(card);
+
+        const canvas = document.getElementById(`card-spark-${zone.id}`);
+        drawSparkline(canvas, zone.history, zone.status);
+      });
+    }
+
+    // Refresh Active View Mode
+    function renderTelemetryView() {
+      if (viewModeTableBtn.classList.contains("active")) {
+        renderTable();
+      } else {
+        renderCards();
+      }
+      updateCounters();
+    }
+
+    // Update Dashboard Counts & Status Banners
+    function updateCounters() {
+      let nominalCount = 0;
+      let warningCount = 0;
+      let criticalCount = 0;
+
+      ZONES_DATA.forEach(z => {
+        if (z.status === "nominal") nominalCount++;
+        else if (z.status === "warning") warningCount++;
+        else if (z.status === "critical") criticalCount++;
+      });
+
+      tabCountAll.textContent = ZONES_DATA.length;
+      tabCountNominal.textContent = nominalCount;
+      tabCountWarning.textContent = warningCount;
+      tabCountCritical.textContent = criticalCount;
+
+      alertCountBadge.textContent = `${criticalCount} CRITICAL`;
+      alertWarnCountBadge.textContent = `${warningCount} WARNINGS`;
+
+      if (criticalCount > 0) {
+        alertTickerStrip.classList.add("has-critical");
+      } else {
+        alertTickerStrip.classList.remove("has-critical");
+      }
+    }
+
+    // Draw Radial Gauge for Inspector
+    function drawGauge(canvas, currentVal, minVal, maxVal, targetVal, status) {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const cx = w / 2;
+      const cy = h / 2 + 10;
+      const radius = 52;
+      const startAngle = 0.75 * Math.PI;
+      const endAngle = 2.25 * Math.PI;
+
+      // Background Arc
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, startAngle, endAngle);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.lineWidth = 10;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Colored Threshold Arc
+      const clampedVal = Math.max(minVal, Math.min(maxVal, currentVal));
+      const pct = (clampedVal - minVal) / (maxVal - minVal);
+      const valAngle = startAngle + pct * (endAngle - startAngle);
+
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, startAngle, valAngle);
+      if (status === 'critical') {
+        ctx.strokeStyle = '#f43f5e';
+      } else if (status === 'warning') {
+        ctx.strokeStyle = '#f59e0b';
+      } else {
+        ctx.strokeStyle = '#00e5ff';
+      }
+      ctx.lineWidth = 10;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+
+      // Target tick mark
+      const targetPct = (targetVal - minVal) / (maxVal - minVal);
+      const targetAngle = startAngle + targetPct * (endAngle - startAngle);
+      const tx1 = cx + (radius - 8) * Math.cos(targetAngle);
+      const ty1 = cy + (radius - 8) * Math.sin(targetAngle);
+      const tx2 = cx + (radius + 8) * Math.cos(targetAngle);
+      const ty2 = cy + (radius + 8) * Math.sin(targetAngle);
+      ctx.beginPath();
+      ctx.moveTo(tx1, ty1);
+      ctx.lineTo(tx2, ty2);
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Needle Center Hub
+      ctx.beginPath();
+      ctx.arc(cx, cy, 5, 0, 2 * Math.PI);
+      ctx.fillStyle = '#f0f4fc';
+      ctx.fill();
+
+      // Needle Line
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      const nx = cx + (radius - 12) * Math.cos(valAngle);
+      const ny = cy + (radius - 12) * Math.sin(valAngle);
+      ctx.lineTo(nx, ny);
+      ctx.strokeStyle = '#f0f4fc';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+    }
+
+    // Draw Detailed 60-Second Multi-Sample Trend Canvas
+    function drawDetailedTrace(canvas, historyArray, status) {
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      // Grid background lines
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.lineWidth = 1;
+      for (let y = 20; y < h; y += 30) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(w, y);
+        ctx.stroke();
+      }
+
+      if (!historyArray || historyArray.length < 2) return;
+      const min = Math.min(...historyArray);
+      const max = Math.max(...historyArray);
+      const range = max - min === 0 ? 1 : max - min;
+
+      ctx.beginPath();
+      for (let i = 0; i < historyArray.length; i++) {
+        const x = (i / (historyArray.length - 1)) * (w - 16) + 8;
+        const y = h - 14 - ((historyArray[i] - min) / range) * (h - 28);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+
+      ctx.lineWidth = 2.5;
+      ctx.strokeStyle = status === 'critical' ? '#f43f5e' : status === 'warning' ? '#f59e0b' : '#00e5ff';
+      ctx.stroke();
+
+      // Area fill
+      ctx.lineTo(w - 8, h);
+      ctx.lineTo(8, h);
+      ctx.closePath();
+      const grad = ctx.createLinearGradient(0, 0, 0, h);
+      if (status === 'critical') {
+        grad.addColorStop(0, 'rgba(244, 63, 94, 0.35)');
+        grad.addColorStop(1, 'rgba(244, 63, 94, 0.01)');
+      } else if (status === 'warning') {
+        grad.addColorStop(0, 'rgba(245, 158, 11, 0.3)');
+        grad.addColorStop(1, 'rgba(245, 158, 11, 0.01)');
+      } else {
+        grad.addColorStop(0, 'rgba(0, 229, 255, 0.35)');
+        grad.addColorStop(1, 'rgba(0, 229, 255, 0.01)');
+      }
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Current Value Point
+      const lastX = w - 8;
+      const lastY = h - 14 - ((historyArray[historyArray.length - 1] - min) / range) * (h - 28);
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 4, 0, 2 * Math.PI);
+      ctx.fillStyle = '#ffffff';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, 7, 0, 2 * Math.PI);
+      ctx.strokeStyle = ctx.strokeStyle;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+
+    // Open Inspector Drawer for a Specific Zone
+    function openInspector(zoneId) {
+      const zone = ZONES_DATA.find(z => z.id === zoneId);
+      if (!zone) return;
+
+      selectedZoneId = zoneId;
+      playTactileChime("click");
+
+      // Populate text fields
+      document.getElementById("drawerZoneTag").textContent = `${zone.id} • ${zone.stage.toUpperCase()}`;
+      document.getElementById("drawerZoneTitle").textContent = zone.name;
+      document.getElementById("drawerZoneDesc").textContent = `${zone.stage} Stage • ${zone.chemDose}`;
+
+      let heroVal = 0;
+      let heroUnit = "";
+      if (zone.primaryMetric === "cl2") {
+        heroVal = zone.cl2PPM.toFixed(2);
+        heroUnit = "ppm Free Available Chlorine (FAC)";
+      } else if (zone.primaryMetric === "turbidity") {
+        heroVal = zone.turbidityNTU.toFixed(zone.turbidityNTU < 1 ? 3 : 2);
+        heroUnit = "NTU Nephelometric Turbidity Units";
+      } else if (zone.primaryMetric === "ph") {
+        heroVal = zone.ph.toFixed(2);
+        heroUnit = "pH Hydrogen Ion Concentration";
+      } else {
+        heroVal = zone.pressurePSI.toFixed(1);
+        heroUnit = "PSI Hydraulic Line Pressure";
+      }
+
+      const drawerHeroVal = document.getElementById("drawerHeroVal");
+      drawerHeroVal.textContent = heroVal;
+      drawerHeroVal.style.color = zone.status === "critical" ? "#fda4af" : zone.status === "warning" ? "#fcd34d" : "#00e5ff";
+      document.getElementById("drawerHeroUnit").textContent = `${heroUnit} (Envelope: ${zone.minLimit.toFixed(2)} - ${zone.maxLimit.toFixed(2)})`;
+
+      const badge = document.getElementById("drawerStatusBadge");
+      badge.className = `status-badge ${zone.status}`;
+      badge.textContent = zone.status === "critical" ? "CRITICAL ALARM ACTIVE" : zone.status === "warning" ? "WARNING THRESHOLD" : "OPERATIONAL NOMINAL";
+
+      document.getElementById("diagPumpStatus").textContent = zone.equipment;
+      document.getElementById("diagMotorCurrent").textContent = zone.pumpMotor;
+      document.getElementById("diagBearingTemp").textContent = `${zone.bearingTemp} • ${zone.vibration}`;
+      document.getElementById("diagValvePos").textContent = zone.valveState;
+      document.getElementById("diagChemFeed").textContent = zone.chemDose;
+
+      document.getElementById("diagLimitLow").textContent = `${zone.minLimit.toFixed(2)} units`;
+      document.getElementById("diagTargetVal").textContent = `${zone.targetVal.toFixed(2)} units`;
+      document.getElementById("diagLimitHigh").textContent = `${zone.maxLimit.toFixed(2)} units`;
+      document.getElementById("drawerChartCurrentVal").textContent = `${heroVal} units`;
+
+      // Render Gauge & Trend Trace
+      drawGauge(drawerGaugeCanvas, parseFloat(heroVal), zone.minLimit, zone.maxLimit, zone.targetVal, zone.status);
+      drawDetailedTrace(drawerTraceCanvas, zone.history, zone.status);
+
+      // Open drawer & backdrop
+      inspectorBackdrop.classList.add("open");
+      inspectorDrawer.classList.add("open");
+      inspectorDrawer.focus();
+
+      // Update selected row in table
+      document.querySelectorAll("#zonesTableBody tr").forEach(row => {
+        if (row.dataset.zoneId === zoneId) row.classList.add("is-selected");
+        else row.classList.remove("is-selected");
+      });
+    }
+
+    // Close Inspector Drawer
+    function closeInspector() {
+      inspectorBackdrop.classList.remove("open");
+      inspectorDrawer.classList.remove("open");
+      playTactileChime("click");
+    }
+
+    // Telemetry Stochastic Simulation Engine
+    function stepTelemetrySimulation() {
+      if (!isStreamActive) return;
+
+      // Realistic Brownian fluctuations for all 12 zones
+      let totalFlow = 0;
+      let maxTurbidity = 0;
+
+      ZONES_DATA.forEach(zone => {
+        // Subtle drift in flow
+        const flowDrift = (Math.random() - 0.49) * 0.08;
+        zone.flowMGD = Math.max(10.0, Math.min(60.0, zone.flowMGD + flowDrift));
+        zone.flowGPM = Math.round(zone.flowMGD * 694.44);
+        totalFlow += zone.flowMGD;
+
+        // Subtle drift in pressure
+        const pressDrift = (Math.random() - 0.5) * 0.15;
+        zone.pressurePSI = Math.max(1.0, Math.min(130.0, zone.pressurePSI + pressDrift));
+
+        // Turbidity drift (lower in filter effluents, higher in raw intake)
+        const turbScale = zone.stage === "Raw Intake" ? 0.2 : 0.006;
+        const turbDrift = (Math.random() - 0.48) * turbScale;
+        zone.turbidityNTU = Math.max(0.01, zone.turbidityNTU + turbDrift);
+
+        // pH drift
+        const phDrift = (Math.random() - 0.5) * 0.01;
+        zone.ph = Math.max(6.2, Math.min(8.8, zone.ph + phDrift));
+
+        // Chlorine residual drift (Zone 8 recovery or drift)
+        if (zone.cl2PPM > 0) {
+          const clDrift = (Math.random() - 0.48) * 0.02;
+          zone.cl2PPM = Math.max(0.70, Math.min(3.2, zone.cl2PPM + clDrift));
+          
+          // Check critical threshold on Z-08
+          if (zone.id === "Z-08") {
+            if (zone.cl2PPM < 1.10) {
+              zone.status = "critical";
+            } else if (zone.cl2PPM < 1.30) {
+              zone.status = "warning";
+            } else {
+              zone.status = "nominal";
+            }
+          }
+        }
+
+        // Zone 6 differential pressure check
+        if (zone.id === "Z-06") {
+          if (zone.turbidityNTU > 0.30 || zone.pressurePSI > 9.0) {
+            zone.status = "critical";
+          } else if (zone.turbidityNTU > 0.25 || zone.pressurePSI > 7.5) {
+            zone.status = "warning";
+          } else {
+            zone.status = "nominal";
+          }
+        }
+
+        // Record history for sparkline
+        let sampleMetric = zone.primaryMetric === "cl2" ? zone.cl2PPM :
+                           zone.primaryMetric === "turbidity" ? zone.turbidityNTU :
+                           zone.primaryMetric === "ph" ? zone.ph : zone.pressurePSI;
+        zone.history.push(sampleMetric);
+        if (zone.history.length > 30) zone.history.shift();
+      });
+
+      // Update KPI Top Strip
+      document.getElementById("kpiTotalFlow").textContent = (ZONES_DATA[11].flowMGD).toFixed(2);
+      document.getElementById("kpiTurbidity").textContent = (ZONES_DATA[11].turbidityNTU).toFixed(3);
+      document.getElementById("kpiChlorine").textContent = (ZONES_DATA[11].cl2PPM).toFixed(2);
+      document.getElementById("kpiPh").textContent = (ZONES_DATA[11].ph).toFixed(2);
+      document.getElementById("kpiPressure").textContent = (ZONES_DATA[11].pressurePSI).toFixed(1);
+
+      // Re-render active view
+      renderTelemetryView();
+
+      // If drawer is open, refresh its current live metrics
+      if (inspectorDrawer.classList.contains("open")) {
+        const zone = ZONES_DATA.find(z => z.id === selectedZoneId);
+        if (zone) {
+          let heroVal = zone.primaryMetric === "cl2" ? zone.cl2PPM.toFixed(2) :
+                        zone.primaryMetric === "turbidity" ? zone.turbidityNTU.toFixed(zone.turbidityNTU < 1 ? 3 : 2) :
+                        zone.primaryMetric === "ph" ? zone.ph.toFixed(2) : zone.pressurePSI.toFixed(1);
+          document.getElementById("drawerHeroVal").textContent = heroVal;
+          document.getElementById("drawerChartCurrentVal").textContent = `${heroVal} units`;
+          drawGauge(drawerGaugeCanvas, parseFloat(heroVal), zone.minLimit, zone.maxLimit, zone.targetVal, zone.status);
+          drawDetailedTrace(drawerTraceCanvas, zone.history, zone.status);
+        }
+      }
+
+      // Random subtle link latency pulse
+      const lat = Math.floor(22 + Math.random() * 8);
+      document.getElementById("latencyDisplay").textContent = `${lat}ms`;
+    }
+
+    // Setup Telemetry Timer Loop
+    function restartTimer() {
+      if (timerId) clearInterval(timerId);
+      timerId = setInterval(stepTelemetrySimulation, streamIntervalMs);
+    }
+
+    // Event Listeners: Filter Tabs
+    document.querySelectorAll(".filter-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".filter-tab").forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        currentFilter = tab.dataset.filter;
+        playTactileChime("click");
+        renderTelemetryView();
+      });
+    });
+
+    // Event Listeners: Stage Filter Dropdown & Pipeline Nodes
+    stageFilterSelect.addEventListener("change", (e) => {
+      currentStage = e.target.value;
+      updateStageNodesUI();
+      playTactileChime("click");
+      renderTelemetryView();
+    });
+
+    stagesDiagram.querySelectorAll(".stage-node").forEach(node => {
+      node.addEventListener("click", () => {
+        const stage = node.dataset.stage;
+        if (currentStage === stage) {
+          currentStage = "ALL";
+          stageFilterSelect.value = "ALL";
+        } else {
+          currentStage = stage;
+          stageFilterSelect.value = stage;
+        }
+        updateStageNodesUI();
+        playTactileChime("click");
+        renderTelemetryView();
+      });
+    });
+
+    function updateStageNodesUI() {
+      stagesDiagram.querySelectorAll(".stage-node").forEach(node => {
+        if (currentStage === "ALL") {
+          node.classList.remove("is-active");
+        } else if (node.dataset.stage === currentStage) {
+          node.classList.add("is-active");
+        } else {
+          node.classList.remove("is-active");
+        }
+      });
+    }
+
+    // Search Input Listener
+    zoneSearchInput.addEventListener("input", (e) => {
+      searchQuery = e.target.value;
+      renderTelemetryView();
+    });
+
+    // View Switcher (Table vs Cards)
+    viewModeTableBtn.addEventListener("click", () => {
+      viewModeTableBtn.classList.add("active");
+      viewModeCardsBtn.classList.remove("active");
+      tableViewContainer.style.display = "block";
+      cardsViewContainer.style.display = "none";
+      playTactileChime("click");
+      renderTable();
+    });
+
+    viewModeCardsBtn.addEventListener("click", () => {
+      viewModeCardsBtn.classList.add("active");
+      viewModeTableBtn.classList.remove("active");
+      tableViewContainer.style.display = "none";
+      cardsViewContainer.style.display = "grid";
+      playTactileChime("click");
+      renderCards();
+    });
+
+    // Table Header Sort Handlers
+    document.querySelectorAll(".scada-table th.sortable").forEach(th => {
+      th.addEventListener("click", () => {
+        const col = th.dataset.sort;
+        if (sortColumn === col) {
+          sortDirection = sortDirection === "asc" ? "desc" : "asc";
+        } else {
+          sortColumn = col;
+          sortDirection = "asc";
+        }
+
+        document.querySelectorAll(".scada-table th.sortable .sort-indicator").forEach(ind => ind.textContent = "");
+        const indicator = th.querySelector(".sort-indicator");
+        indicator.textContent = sortDirection === "asc" ? "▲" : "▼";
+
+        playTactileChime("click");
+        renderTable();
+      });
+    });
+
+    // Stream Pause / Play Toggle
+    streamToggleBtn.addEventListener("click", () => {
+      isStreamActive = !isStreamActive;
+      playTactileChime("click");
+      if (isStreamActive) {
+        streamToggleBtn.classList.remove("tactile-btn-ghost");
+        streamBtnText.textContent = "LIVE";
+        pulseDot.style.backgroundColor = "var(--status-nominal)";
+        document.getElementById("socketStatusText").textContent = "SCADA ONLINE";
+        showToast("Telemetry stream resumed.");
+      } else {
+        streamToggleBtn.classList.add("tactile-btn-ghost");
+        streamBtnText.textContent = "PAUSED";
+        pulseDot.style.backgroundColor = "var(--status-warning)";
+        document.getElementById("socketStatusText").textContent = "STREAM PAUSED";
+        showToast("Telemetry stream paused.");
+      }
+    });
+
+    // Update Interval Selector
+    updateIntervalSelect.addEventListener("change", (e) => {
+      streamIntervalMs = parseInt(e.target.value, 10);
+      playTactileChime("click");
+      restartTimer();
+      showToast(`Telemetry polling set to ${streamIntervalMs / 1000}s`);
+    });
+
+    // Sound Toggle
+    audioToggleBtn.addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      if (soundEnabled) {
+        audioToggleBtn.classList.add("sound-on");
+        playTactileChime("alert");
+        showToast("Acoustic operator chimes enabled.");
+      } else {
+        audioToggleBtn.classList.remove("sound-on");
+        showToast("Acoustic chimes muted.");
+      }
+    });
+
+    // Inject Simulated Anomaly / Surge
+    triggerAnomalyBtn.addEventListener("click", () => {
+      playTactileChime("alert");
+      // Create sudden hydraulic head loss in Zone 6 and chlorine drop in Zone 8
+      const z6 = ZONES_DATA.find(z => z.id === "Z-06");
+      const z8 = ZONES_DATA.find(z => z.id === "Z-08");
+
+      if (z6) {
+        z6.pressurePSI = 9.4;
+        z6.turbidityNTU = 0.32;
+        z6.status = "critical";
+        z6.history.push(0.32);
+      }
+      if (z8) {
+        z8.cl2PPM = 0.94;
+        z8.status = "critical";
+        z8.history.push(0.94);
+      }
+
+      renderTelemetryView();
+      showToast("ALERT: Hydraulic head loss & chlorine drop injected in Z-06 / Z-08!");
+      openInspector("Z-06");
+    });
+
+    // Acknowledge All Alerts Button
+    ackAllAlertsBtn.addEventListener("click", () => {
+      playTactileChime("success");
+      ZONES_DATA.forEach(z => {
+        if (z.status === "critical") {
+          z.status = "nominal";
+          if (z.id === "Z-08") z.cl2PPM = 1.84;
+          if (z.id === "Z-06") {
+            z.turbidityNTU = 0.08;
+            z.pressurePSI = 4.2;
+          }
+        }
+      });
+      renderTelemetryView();
+      showToast("All active threshold alarms acknowledged and silenced.");
+    });
+
+    // Alert Ticker Clickable Items
+    document.querySelectorAll(".alert-item-link").forEach(link => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const zoneId = link.dataset.zoneId;
+        if (zoneId) openInspector(zoneId);
+      });
+    });
+
+    // Drawer Close Listeners
+    drawerCloseBtn.addEventListener("click", closeInspector);
+    inspectorBackdrop.addEventListener("click", closeInspector);
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && inspectorDrawer.classList.contains("open")) {
+        closeInspector();
+      }
+    });
+
+    // Drawer Operator Action Buttons
+    document.getElementById("btnAcknowledgeSingle").addEventListener("click", () => {
+      const zone = ZONES_DATA.find(z => z.id === selectedZoneId);
+      if (zone) {
+        zone.status = "nominal";
+        if (zone.primaryMetric === "cl2") zone.cl2PPM = 1.85;
+        if (zone.primaryMetric === "turbidity" && zone.turbidityNTU > 0.3) zone.turbidityNTU = 0.08;
+        playTactileChime("success");
+        renderTelemetryView();
+        openInspector(selectedZoneId);
+        showToast(`Alarm for [${zone.id}] acknowledged by Operator.`);
+      }
+    });
+
+    document.getElementById("btnTriggerBackwash").addEventListener("click", () => {
+      const zone = ZONES_DATA.find(z => z.id === selectedZoneId);
+      if (zone) {
+        playTactileChime("success");
+        zone.pressurePSI = 3.2;
+        zone.turbidityNTU = 0.045;
+        zone.status = "nominal";
+        renderTelemetryView();
+        openInspector(selectedZoneId);
+        showToast(`Filter backwash sequence initiated for ${zone.id}.`);
+      }
+    });
+
+    document.getElementById("btnBoostChemical").addEventListener("click", () => {
+      const zone = ZONES_DATA.find(z => z.id === selectedZoneId);
+      if (zone) {
+        playTactileChime("success");
+        if (zone.cl2PPM > 0) zone.cl2PPM = Math.min(2.8, zone.cl2PPM + 0.35);
+        if (zone.ph < 7.2) zone.ph = 7.42;
+        zone.status = "nominal";
+        renderTelemetryView();
+        openInspector(selectedZoneId);
+        showToast(`Chemical feed trimmed +10% on ${zone.id}.`);
+      }
+    });
+
+    document.getElementById("btnDownloadZoneLog").addEventListener("click", () => {
+      const zone = ZONES_DATA.find(z => z.id === selectedZoneId);
+      if (zone) {
+        playTactileChime("click");
+        showToast(`Exported 24h event logs for ${zone.id}.`);
+      }
+    });
+
+    // Export Telemetry to CSV
+    exportCsvBtn.addEventListener("click", () => {
+      playTactileChime("click");
+      const headers = ["ZoneID", "ZoneName", "Stage", "Flow_MGD", "Pressure_PSI", "Turbidity_NTU", "pH", "Chlorine_PPM", "Status"];
+      const rows = ZONES_DATA.map(z => [
+        z.id,
+        `"${z.name}"`,
+        `"${z.stage}"`,
+        z.flowMGD.toFixed(2),
+        z.pressurePSI.toFixed(1),
+        z.turbidityNTU.toFixed(3),
+        z.ph.toFixed(2),
+        z.cl2PPM.toFixed(2),
+        z.status
+      ]);
+
+      const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `SCADA_Clearwater4_Telemetry_${new Date().toISOString().slice(0, 19)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      showToast("Facility telemetry snapshot exported to CSV.");
+    });
+
+    // Initial Setup
+    renderTelemetryView();
+    restartTimer();
+    console.log("SCADA Clearwater-4 High-Density Starlight Operations Console Initialized.");
+  </script>
+</body>
+</html>

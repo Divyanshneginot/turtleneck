@@ -1,0 +1,3618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARCHIPELAGO 2027 — Biennial of Experimental Architecture & Sound</title>
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ----------------------------------------------------
+       RESET & ROOT VARIABLES
+    ---------------------------------------------------- */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-deep: #070709;
+      --bg-surface: #0e0e12;
+      --bg-card: #15151b;
+      --bg-card-hover: #1c1c24;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(230, 81, 0, 0.4);
+      --border-glow: rgba(255, 112, 67, 0.6);
+      
+      --text-primary: #f2efe9;
+      --text-secondary: #a8a59f;
+      --text-muted: #6e6b66;
+      --text-highlight: #ff6e40;
+      
+      --magma-glow: #ff5722;
+      --magma-bright: #ff8a50;
+      --magma-subtle: rgba(255, 87, 34, 0.15);
+      --sulfur: #e5c158;
+      --obsidian: #040405;
+      --pumice: #c8c2b7;
+      --ocean-deep: #081119;
+      
+      --font-display: 'Cinzel', serif;
+      --font-body: 'Newsreader', serif;
+      --font-ui: 'Syne', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      
+      --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-snappy: cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 50% 10%, #151212 0%, #070709 70%);
+      background-attachment: fixed;
+      position: relative;
+    }
+
+    /* Ambient noise & grid overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    /* Noise grain filter */
+    .film-grain {
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: var(--font-ui);
+      cursor: pointer;
+      border: none;
+      background: none;
+      outline: none;
+    }
+
+    /* ----------------------------------------------------
+       TELEMETRY HEADER & NAVIGATION
+    ---------------------------------------------------- */
+    .telemetry-ticker {
+      background: rgba(4, 4, 6, 0.95);
+      border-bottom: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: var(--text-secondary);
+      padding: 0.45rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 102;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .ticker-group {
+      display: flex;
+      align-items: center;
+      gap: 1.8rem;
+    }
+
+    .live-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background: #00e676;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #00e676;
+      animation: pulse-dot 2s infinite;
+      margin-right: 6px;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .telemetry-item strong {
+      color: var(--text-primary);
+      font-weight: 700;
+    }
+
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 101;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: rgba(10, 10, 13, 0.85);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 3rem;
+      transition: all 0.4s var(--ease-fluid);
+    }
+
+    .brand-logo {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-main {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 40%, var(--magma-bright) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+    }
+
+    .logo-sub {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-secondary);
+      position: relative;
+      padding: 0.4rem 0;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--magma-glow);
+      transition: width 0.3s var(--ease-snappy);
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .btn-audio-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(255, 87, 34, 0.08);
+      border: 1px solid rgba(255, 87, 34, 0.3);
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      color: var(--magma-bright);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      transition: all 0.3s ease;
+    }
+
+    .btn-audio-toggle:hover {
+      background: rgba(255, 87, 34, 0.2);
+      border-color: var(--magma-glow);
+      box-shadow: 0 0 15px rgba(255, 87, 34, 0.25);
+    }
+
+    .audio-visualizer-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 12px;
+    }
+
+    .audio-bar {
+      width: 2.5px;
+      background: var(--magma-bright);
+      border-radius: 1px;
+      height: 4px;
+      transition: height 0.15s ease;
+    }
+
+    .audio-playing .audio-bar:nth-child(1) { animation: sound-bounce 0.8s ease-in-out infinite 0.1s; }
+    .audio-playing .audio-bar:nth-child(2) { animation: sound-bounce 0.7s ease-in-out infinite 0.3s; }
+    .audio-playing .audio-bar:nth-child(3) { animation: sound-bounce 0.9s ease-in-out infinite 0.15s; }
+    .audio-playing .audio-bar:nth-child(4) { animation: sound-bounce 0.6s ease-in-out infinite 0.4s; }
+
+    @keyframes sound-bounce {
+      0%, 100% { height: 3px; }
+      50% { height: 12px; }
+    }
+
+    .btn-ticket-nav {
+      background: var(--magma-glow);
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.4rem;
+      border-radius: 3px;
+      transition: all 0.3s var(--ease-snappy);
+      box-shadow: 0 4px 18px rgba(255, 87, 34, 0.35);
+    }
+
+    .btn-ticket-nav:hover {
+      background: #ff7043;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(255, 87, 34, 0.55);
+    }
+
+    /* ----------------------------------------------------
+       HERO SECTION WITH GENERATIVE SEISMIC TOPOGRAPHY
+    ---------------------------------------------------- */
+    .hero {
+      position: relative;
+      min-height: 94vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3rem;
+      overflow: hidden;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.8;
+    }
+
+    .hero-vignette {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 65% 40%, rgba(255, 87, 34, 0.07) 0%, transparent 60%),
+                  radial-gradient(circle at 50% 50%, transparent 40%, var(--bg-deep) 95%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 1300px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-meta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--pumice);
+      margin-bottom: 2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-meta-badge span.pulse-indicator {
+      width: 8px;
+      height: 8px;
+      background: var(--magma-glow);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--magma-glow);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7.5vw, 7.2rem);
+      line-height: 0.96;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+      max-width: 1100px;
+    }
+
+    .hero-title .line-dim {
+      display: block;
+      color: rgba(255, 255, 255, 0.45);
+      font-size: 0.82em;
+    }
+
+    .hero-title .line-flame {
+      display: block;
+      background: linear-gradient(135deg, #ffffff 10%, #ffab91 50%, var(--magma-glow) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 60px rgba(255, 87, 34, 0.25);
+    }
+
+    .hero-manifesto {
+      font-family: var(--font-body);
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.45;
+      color: var(--pumice);
+      max-width: 780px;
+      margin-bottom: 3.2rem;
+      border-left: 2px solid var(--magma-glow);
+      padding-left: 1.6rem;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.4rem;
+    }
+
+    .btn-hero-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.9rem;
+      background: linear-gradient(135deg, var(--magma-glow) 0%, #d84315 100%);
+      color: #fff;
+      font-family: var(--font-ui);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 1.15rem 2.4rem;
+      border-radius: 4px;
+      transition: all 0.35s var(--ease-fluid);
+      box-shadow: 0 10px 30px rgba(255, 87, 34, 0.4);
+    }
+
+    .btn-hero-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 40px rgba(255, 87, 34, 0.6);
+      background: linear-gradient(135deg, #ff7043 0%, #e64a19 100%);
+    }
+
+    .btn-hero-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 1.1rem 2.2rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-hero-secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .hero-stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .stat-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-number span {
+      color: var(--magma-glow);
+      font-size: 0.6em;
+      vertical-align: super;
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ----------------------------------------------------
+       CURATORIAL STATEMENT
+    ---------------------------------------------------- */
+    .section-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 7rem 3rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .section-header-tag {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--magma-bright);
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .section-header-tag::before {
+      content: '//';
+      color: var(--text-muted);
+    }
+
+    .section-main-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      line-height: 1.1;
+      margin-bottom: 2rem;
+    }
+
+    .curatorial-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 5rem;
+      align-items: start;
+      margin-top: 3rem;
+    }
+
+    .curatorial-body {
+      font-size: 1.22rem;
+      line-height: 1.8;
+      color: #dfdcd4;
+    }
+
+    .curatorial-body p {
+      margin-bottom: 1.8rem;
+    }
+
+    .curatorial-body p.lead {
+      font-size: 1.45rem;
+      font-style: italic;
+      color: #fff;
+      line-height: 1.6;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1.8rem;
+    }
+
+    .curatorial-sidebar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 2.5rem;
+      border-radius: 6px;
+      position: relative;
+    }
+
+    .curatorial-sidebar::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 3px;
+      background: linear-gradient(90deg, var(--magma-glow), transparent);
+    }
+
+    .curator-profile {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .curator-avatar-box {
+      width: 58px;
+      height: 58px;
+      background: #1e1e28;
+      border: 1px solid var(--magma-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      color: var(--magma-bright);
+      font-size: 1.2rem;
+      border-radius: 4px;
+    }
+
+    .curator-info h4 {
+      font-family: var(--font-ui);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .curator-info p {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+
+    .pillars-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      margin-top: 1.8rem;
+    }
+
+    .pillar-card {
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 2px solid var(--sulfur);
+      padding: 0.9rem 1.2rem;
+      transition: all 0.3s ease;
+    }
+
+    .pillar-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(4px);
+    }
+
+    .pillar-card h5 {
+      font-family: var(--font-ui);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+
+    .pillar-card p {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* ----------------------------------------------------
+       INTERACTIVE CARTOGRAPHY & THE 5 VOLCANIC ISLANDS
+    ---------------------------------------------------- */
+    .islands-section {
+      background: linear-gradient(180deg, var(--bg-deep) 0%, #0c0b10 50%, var(--bg-deep) 100%);
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 7rem 0;
+    }
+
+    .interactive-map-wrapper {
+      position: relative;
+      background: #09090d;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 3.5rem 3rem 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .map-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1.8rem;
+      background: rgba(20, 20, 26, 0.9);
+      border-bottom: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+
+    .map-coordinates {
+      color: var(--magma-bright);
+    }
+
+    .island-map-svg {
+      width: 100%;
+      height: 480px;
+      background: radial-gradient(circle at 50% 50%, #15141c 0%, #08080c 100%);
+      display: block;
+      cursor: crosshair;
+    }
+
+    /* Island Pin Nodes in SVG */
+    .island-node {
+      cursor: pointer;
+      transition: transform 0.3s var(--ease-snappy);
+    }
+
+    .island-node:hover circle.pulse-ring {
+      animation: pulse-ring 1s infinite;
+    }
+
+    .island-node text {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      fill: #ffffff;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      pointer-events: none;
+    }
+
+    .island-node text.coords {
+      font-family: 'Space Mono', monospace;
+      font-size: 8px;
+      fill: var(--text-muted);
+    }
+
+    .island-node.active circle.core-dot {
+      fill: #ff3d00;
+      filter: drop-shadow(0 0 10px #ff3d00);
+    }
+
+    @keyframes pulse-ring {
+      0% { r: 12; opacity: 0.8; }
+      100% { r: 28; opacity: 0; }
+    }
+
+    /* Island Detail Showcase Cards */
+    .island-tabs-nav {
+      display: flex;
+      gap: 0.5rem;
+      padding: 1.5rem 3rem 0;
+      overflow-x: auto;
+    }
+
+    .island-tab-btn {
+      padding: 0.8rem 1.6rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+
+    .island-tab-btn:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .island-tab-btn.active {
+      background: var(--magma-glow);
+      color: #fff;
+      border-color: var(--magma-bright);
+      box-shadow: 0 4px 15px rgba(255, 87, 34, 0.4);
+    }
+
+    .island-cards-container {
+      padding: 2rem 3rem 0;
+    }
+
+    .island-card-panel {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 3rem;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3.5rem;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .island-card-panel.active {
+      display: grid;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .island-panel-left h3 {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 0.4rem;
+    }
+
+    .island-subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--magma-bright);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 1.6rem;
+    }
+
+    .island-description {
+      font-size: 1.15rem;
+      color: var(--pumice);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .acoustic-profile-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      margin-bottom: 2rem;
+    }
+
+    .acoustic-profile-table td {
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .acoustic-profile-table td:first-child {
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      width: 45%;
+    }
+
+    .acoustic-profile-table td:last-child {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .island-panel-right {
+      background: rgba(10, 10, 14, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 6px;
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .highlight-installation-tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      color: var(--sulfur);
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .installation-title {
+      font-family: var(--font-ui);
+      font-size: 1.45rem;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .installation-artists {
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--magma-bright);
+      margin-bottom: 1.2rem;
+    }
+
+    .installation-excerpt {
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .btn-island-sound {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      background: rgba(255, 87, 34, 0.12);
+      border: 1px solid rgba(255, 87, 34, 0.4);
+      color: #fff;
+      padding: 0.9rem 1.6rem;
+      border-radius: 4px;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+
+    .btn-island-sound:hover {
+      background: var(--magma-glow);
+      border-color: var(--magma-bright);
+      box-shadow: 0 4px 20px rgba(255, 87, 34, 0.4);
+    }
+
+    /* ----------------------------------------------------
+       PROGRAM LINEUP & CURATED SCHEDULE
+    ---------------------------------------------------- */
+    .program-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      margin-top: 3rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .filter-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .filter-btn {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 1.1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: 30px;
+      color: var(--text-secondary);
+      transition: all 0.25s ease;
+    }
+
+    .filter-btn:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .filter-btn.active {
+      background: #fff;
+      color: #000;
+      font-weight: 700;
+      border-color: #fff;
+    }
+
+    .epoch-toggle {
+      display: flex;
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .epoch-btn {
+      font-family: var(--font-ui);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.2rem;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+    }
+
+    .epoch-btn.active {
+      background: var(--bg-card-hover);
+      color: var(--magma-bright);
+    }
+
+    /* Program Grid Cards */
+    .program-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .program-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.35s var(--ease-fluid), border-color 0.35s ease, box-shadow 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .program-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: transparent;
+      transition: background 0.3s ease;
+    }
+
+    .program-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 87, 34, 0.4);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.5);
+    }
+
+    .program-card:hover::after {
+      background: var(--magma-glow);
+    }
+
+    .program-meta-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+    }
+
+    .card-island-badge {
+      color: var(--magma-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+    }
+
+    .card-epoch-date {
+      color: var(--text-muted);
+    }
+
+    .program-work-title {
+      font-family: var(--font-ui);
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .program-artist-name {
+      font-family: var(--font-body);
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--pumice);
+      margin-bottom: 1.2rem;
+    }
+
+    .program-summary {
+      font-size: 0.94rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.8rem;
+    }
+
+    .program-tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .prog-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 0.25rem 0.65rem;
+      border-radius: 3px;
+      color: var(--text-secondary);
+    }
+
+    .card-action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .btn-preview-tone {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--magma-bright);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s ease;
+    }
+
+    .btn-preview-tone:hover {
+      color: #fff;
+    }
+
+    .btn-dossier {
+      font-family: var(--font-ui);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.45rem 0.9rem;
+      border-radius: 3px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-dossier:hover {
+      background: #fff;
+      color: #000;
+    }
+
+    /* ----------------------------------------------------
+       TICKETING SUITE & LIVE PASS SELECTOR
+    ---------------------------------------------------- */
+    .ticketing-section {
+      background: radial-gradient(circle at 50% 0%, #171520 0%, var(--bg-deep) 75%);
+      border-top: 1px solid var(--border-subtle);
+      position: relative;
+      padding-bottom: 8rem;
+    }
+
+    .ticket-selector-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+      margin-top: 3.5rem;
+    }
+
+    .ticket-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 2.4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.35s var(--ease-fluid);
+    }
+
+    .ticket-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    }
+
+    .ticket-card.selected {
+      border-color: var(--magma-glow);
+      background: linear-gradient(180deg, #1d1b26 0%, var(--bg-card) 100%);
+      box-shadow: 0 12px 40px rgba(255, 87, 34, 0.25);
+    }
+
+    .popular-ribbon {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: var(--magma-glow);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.8rem;
+      border-radius: 3px;
+      box-shadow: 0 4px 12px rgba(255, 87, 34, 0.4);
+    }
+
+    .ticket-tier-name {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.4rem;
+    }
+
+    .ticket-duration {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 1.6rem;
+    }
+
+    .ticket-price-box {
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .price-currency {
+      font-family: var(--font-ui);
+      font-size: 1.4rem;
+      color: var(--magma-bright);
+      vertical-align: top;
+      margin-right: 2px;
+    }
+
+    .price-value {
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .price-period {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-left: 4px;
+    }
+
+    .ticket-features-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 2.2rem;
+      font-size: 0.94rem;
+      color: var(--text-secondary);
+    }
+
+    .ticket-features-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      line-height: 1.4;
+    }
+
+    .ticket-features-list li svg {
+      flex-shrink: 0;
+      margin-top: 3px;
+      stroke: var(--magma-glow);
+    }
+
+    .btn-select-tier {
+      width: 100%;
+      padding: 0.95rem;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .ticket-card.selected .btn-select-tier {
+      background: var(--magma-glow);
+      border-color: var(--magma-glow);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(255, 87, 34, 0.4);
+    }
+
+    .ticket-card:hover .btn-select-tier {
+      background: var(--magma-bright);
+      border-color: var(--magma-bright);
+      color: #fff;
+    }
+
+    /* Checkout & Reservation Interactive Panel */
+    .reservation-calculator-box {
+      margin-top: 4rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 4rem;
+    }
+
+    .calculator-left h3 {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .calculator-left p.sub {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .addons-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
+
+    .addon-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .addon-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .addon-item.selected {
+      border-color: var(--magma-glow);
+      background: rgba(255, 87, 34, 0.05);
+    }
+
+    .addon-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .addon-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--text-muted);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .addon-item.selected .addon-checkbox {
+      background: var(--magma-glow);
+      border-color: var(--magma-glow);
+    }
+
+    .addon-title {
+      font-family: var(--font-ui);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .addon-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .addon-price {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--magma-bright);
+      font-weight: 700;
+    }
+
+    /* Calculator Summary (Right side) */
+    .calculator-summary-card {
+      background: #09090d;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 2.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .summary-heading {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .summary-line-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+    }
+
+    .summary-line-item strong {
+      color: #fff;
+    }
+
+    .quantity-counter {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 1.2rem 0;
+      padding: 0.8rem 0;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .qty-btn {
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: background 0.2s ease;
+    }
+
+    .qty-btn:hover {
+      background: var(--magma-glow);
+    }
+
+    .qty-display {
+      font-family: var(--font-mono);
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      min-width: 24px;
+      text-align: center;
+    }
+
+    .summary-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 1.8rem;
+      margin-bottom: 1.8rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .total-label {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--pumice);
+    }
+
+    .total-amount {
+      font-family: var(--font-display);
+      font-size: 2.6rem;
+      font-weight: 900;
+      color: var(--magma-bright);
+      line-height: 1;
+    }
+
+    .btn-checkout-trigger {
+      width: 100%;
+      background: linear-gradient(135deg, var(--magma-glow) 0%, #e64a19 100%);
+      color: #fff;
+      padding: 1.1rem;
+      border-radius: 4px;
+      font-family: var(--font-ui);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(255, 87, 34, 0.4);
+    }
+
+    .btn-checkout-trigger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(255, 87, 34, 0.6);
+      background: linear-gradient(135deg, #ff7043 0%, #d84315 100%);
+    }
+
+    /* ----------------------------------------------------
+       MODAL: DOSSIER & CHECKOUT
+    ---------------------------------------------------- */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(4, 4, 6, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-window {
+      background: #111117;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 2.8rem;
+      position: relative;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      transform: scale(0.96);
+      transition: transform 0.3s var(--ease-fluid);
+    }
+
+    .modal-backdrop.open .modal-window {
+      transform: scale(1);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      transition: all 0.2s ease;
+    }
+
+    .modal-close-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    /* Form inside Modal */
+    .checkout-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-top: 1.8rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .form-input {
+      background: #07070a;
+      border: 1px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 0.85rem 1.1rem;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--magma-glow);
+    }
+
+    /* Boarding Pass Result inside Modal */
+    .boarding-pass-result {
+      display: none;
+      background: #09090d;
+      border: 1px solid var(--magma-glow);
+      border-radius: 6px;
+      padding: 2rem;
+      margin-top: 1.5rem;
+      position: relative;
+    }
+
+    .boarding-pass-header {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+      padding-bottom: 1.2rem;
+      margin-bottom: 1.4rem;
+    }
+
+    /* ----------------------------------------------------
+       STICKY AUDIO FOOTER DOCK
+    ---------------------------------------------------- */
+    .bottom-sound-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(8, 8, 11, 0.94);
+      backdrop-filter: blur(15px);
+      border-top: 1px solid var(--border-subtle);
+      padding: 0.75rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 99;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+
+    .sound-info-left {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .acoustic-canvas-preview {
+      width: 140px;
+      height: 24px;
+      background: #000;
+      border-radius: 3px;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .now-playing-label {
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .now-playing-title {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .sound-controls-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .resonance-slider-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--text-muted);
+    }
+
+    .slider-knob {
+      accent-color: var(--magma-glow);
+      cursor: pointer;
+    }
+
+    /* ----------------------------------------------------
+       PRACTICALITIES & FOOTER
+    ---------------------------------------------------- */
+    .practical-section {
+      background: #09090c;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .faq-accordion-item {
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 1.5rem 0;
+      font-family: var(--font-ui);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .faq-answer.open {
+      max-height: 300px;
+      padding-bottom: 1.5rem;
+    }
+
+    .site-footer {
+      background: #040406;
+      border-top: 1px solid var(--border-subtle);
+      padding: 5rem 3rem 8rem;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .footer-grid {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+    }
+
+    .footer-desc {
+      font-family: var(--font-body);
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+      margin-top: 1rem;
+      max-width: 360px;
+      line-height: 1.6;
+    }
+
+    .footer-col h5 {
+      font-family: var(--font-ui);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 1.4rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .footer-col a:hover {
+      color: var(--magma-bright);
+    }
+
+    /* ----------------------------------------------------
+       RESPONSIVE ADAPTATIONS
+    ---------------------------------------------------- */
+    @media (max-width: 1024px) {
+      .curatorial-grid,
+      .reservation-calculator-box,
+      .island-card-panel {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .site-nav {
+        padding: 1rem 1.5rem;
+      }
+      .hero {
+        padding: 3rem 1.5rem;
+      }
+      .section-container {
+        padding: 5rem 1.5rem;
+      }
+      .interactive-map-wrapper {
+        margin: 2rem 1.5rem 0;
+      }
+      .island-tabs-nav,
+      .island-cards-container {
+        padding: 1rem 1.5rem;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .telemetry-ticker {
+        font-size: 0.65rem;
+      }
+      .program-cards-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .bottom-sound-bar {
+        padding: 0.6rem 1rem;
+      }
+      .acoustic-canvas-preview {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="film-grain"></div>
+
+  <!-- Real-time Volcanic Telemetry Bar -->
+  <div class="telemetry-ticker">
+    <div class="ticker-group">
+      <div class="telemetry-item">
+        <span class="live-dot"></span> SEISMIC RHYTHM: <strong>0.14 Hz HARMONIC TREMOR (STEADY)</strong>
+      </div>
+      <div class="telemetry-item">CALDERA SALINITY: <strong>38.4 PSU</strong></div>
+      <div class="telemetry-item">BATHYMETRIC DEPTH: <strong>-505m (KOLUMBO VENT)</strong></div>
+    </div>
+    <div class="ticker-group">
+      <div class="telemetry-item">CYCLADIC VOLCANIC ARC / <strong>OCT 08–24, 2027</strong></div>
+      <div class="telemetry-item">STATUS: <strong>RESERVATIONS ACTIVE</strong></div>
+    </div>
+  </div>
+
+  <!-- Primary Navigation -->
+  <header class="site-nav" id="main-nav">
+    <div class="brand-logo">
+      <a href="#top" class="logo-main">Archipelago</a>
+      <span class="logo-sub">2027 Experimental Architecture & Sound Biennial</span>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="#curatorial" class="nav-link">Statement</a></li>
+      <li><a href="#islands" class="nav-link">5 Islands</a></li>
+      <li><a href="#program" class="nav-link">Lineup & Works</a></li>
+      <li><a href="#passes" class="nav-link">Passes & Tiers</a></li>
+      <li><a href="#practicalities" class="nav-link">Field Guide</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <!-- Generative Audio Synthesizer Toggle -->
+      <button class="btn-audio-toggle" id="global-audio-toggle" aria-label="Toggle ambient volcanic drone">
+        <div class="audio-visualizer-bars">
+          <span class="audio-bar"></span>
+          <span class="audio-bar"></span>
+          <span class="audio-bar"></span>
+          <span class="audio-bar"></span>
+        </div>
+        <span id="audio-btn-label">SOUND: MUTED</span>
+      </button>
+
+      <a href="#passes" class="btn-ticket-nav">Reserve Passes</a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <main id="top">
+    <section class="hero">
+      <canvas id="hero-canvas"></canvas>
+      <div class="hero-vignette"></div>
+
+      <div class="hero-content">
+        <div class="hero-meta-badge">
+          <span class="pulse-indicator"></span>
+          5 Islands &bull; 32 Spatial Monuments &bull; 48 Sound Works
+        </div>
+
+        <h1 class="hero-title">
+          <span class="line-dim">Where Stone</span>
+          <span class="line-flame">Remembers Sound</span>
+        </h1>
+
+        <p class="hero-manifesto">
+          Held across five uninhabited volcanic landmasses of the Cycladic Caldera, Archipelago 2027 convenes architects, acousticians, and radical sound artists to transform petrified magma into resonant, ephemeral architecture.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#passes" class="btn-hero-primary">
+            Explore Biennial Passes
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+
+          <a href="#islands" class="btn-hero-secondary">
+            View 5-Island Map
+          </a>
+        </div>
+
+        <div class="hero-stats-row">
+          <div class="stat-box">
+            <div class="stat-number">05<span>ISL</span></div>
+            <div class="stat-label">Volcanic Landmasses</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">32<span>PAV</span></div>
+            <div class="stat-label">Acoustic Pavilions</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">18<span>DAYS</span></div>
+            <div class="stat-label">Oct 08 &mdash; 24, 2027</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number">0.14<span>HZ</span></div>
+            <div class="stat-label">Caldera Infrasound Core</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CURATORIAL STATEMENT SECTION -->
+    <section class="section-container" id="curatorial">
+      <div class="section-header-tag">Curatorial Proposition</div>
+      <h2 class="section-main-title">The Geology of Attention: Sound in Liquid Stone</h2>
+
+      <div class="curatorial-grid">
+        <div class="curatorial-body">
+          <p class="lead">
+            Architecture has historically been constructed to enclose and insulate against natural forces. Archipelago 2027 turns this premise inside out: we treat the volcanic caldera not as an empty site, but as an active transducer.
+          </p>
+
+          <p>
+            When magma cools into cellular pumice and basalt, it captures geological time in porous cavities. These cavities possess unique acoustic reverberation constants (RT60) that respond to atmospheric wind shear, pelagic water pressure, and low-frequency tectonic friction. The pavilions built here do not speak over the earth; they listen to it.
+          </p>
+
+          <p>
+            For eighteen days, international practitioners will occupy five distinct geological formations: from the sulfur fumaroles of Nea Kameni to the chalk cliffs of Aspronisi and the submerged hydrothermal vents of Kolumbo Seamount. Each work is constructed with bio-compatible volcanic cast aggregates, salt lattices, and tuned acoustic chambers that will weather, erode, and dissolve back into the sea.
+          </p>
+
+          <blockquote style="border-left: 2px solid var(--magma-glow); padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: #fff; font-size: 1.25rem;">
+            "We are not bringing sound to silent islands. The volcanic arc has been singing at frequencies below human hearing for two million years. Our architecture is simply a tuning peg."
+          </blockquote>
+
+          <p>
+            Visitors will travel between islands exclusively via solar-electric silent catamarans, passing through marine acoustic sanctuaries where underwater hydrophone hydro-arrays broadcast the living pulse of the subterranean mantle.
+          </p>
+        </div>
+
+        <div class="curatorial-sidebar">
+          <div class="curator-profile">
+            <div class="curator-avatar-box">EV</div>
+            <div class="curator-info">
+              <h4>Dr. Eleni Vanezi</h4>
+              <p>Lead Curator / Institute of Spatial Psychoacoustics, Athens</p>
+            </div>
+          </div>
+
+          <div class="curator-profile" style="border-bottom: none; margin-bottom: 0;">
+            <div class="curator-avatar-box">KM</div>
+            <div class="curator-info">
+              <h4>Kaito Morishita</h4>
+              <p>Architectural Director / Lab of Lithic Architecture, Kyoto</p>
+            </div>
+          </div>
+
+          <div class="pillars-list">
+            <div class="pillar-card">
+              <h5>Pillar I: Lithic Resonance</h5>
+              <p>Utilizing volcanic basalt as physical acoustic membranes and mechanical sound resonators.</p>
+            </div>
+
+            <div class="pillar-card">
+              <h5>Pillar II: Hydrophonic Caldera</h5>
+              <p>Submerged amphitheaters engaging with pelagic echoes and thermal hydrothermal vents.</p>
+            </div>
+
+            <div class="pillar-card">
+              <h5>Pillar III: Sub-Audible Infrasound</h5>
+              <p>Spatial compositions felt directly through bone conduction and floor-embedded transducers.</p>
+            </div>
+
+            <div class="pillar-card">
+              <h5>Pillar IV: Ephemeral Dissolution</h5>
+              <p>Zero-concrete pavilions designed to biodegrade and return to Cycladic geological strata.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- THE FIVE VOLCANIC ISLANDS (INTERACTIVE CARTOGRAPHY) -->
+    <section class="islands-section" id="islands">
+      <div class="section-container" style="padding-top: 0; padding-bottom: 1rem;">
+        <div class="section-header-tag">Spatial Territory</div>
+        <h2 class="section-main-title">The Five Resonant Islands</h2>
+        <p style="color: var(--text-secondary); max-width: 720px; font-size: 1.15rem;">
+          Each island in the caldera archipelago represents a distinct geological stratum and acoustic condition. Click an island to inspect its spatial specs and audition its resonant drone.
+        </p>
+      </div>
+
+      <!-- Interactive SVG Bathymetric Caldera Map -->
+      <div class="interactive-map-wrapper">
+        <div class="map-header-bar">
+          <div>CYCLADIC VOLCANIC CALDERA &bull; BATHYMETRIC BATH & ACOUSTIC MAPPING</div>
+          <div class="map-coordinates" id="active-map-coords">36°24'14" N &mdash; 25°23'42" E</div>
+        </div>
+
+        <svg class="island-map-svg" viewBox="0 0 1000 480" xmlns="http://www.w3.org/2000/svg">
+          <!-- Bathymetric depth contour lines -->
+          <ellipse cx="500" cy="240" rx="420" ry="190" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1.5" stroke-dasharray="4 6"/>
+          <ellipse cx="500" cy="240" rx="330" ry="150" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"/>
+          <ellipse cx="500" cy="240" rx="240" ry="110" fill="none" stroke="rgba(255,87,34,0.09)" stroke-width="1.5"/>
+          <ellipse cx="500" cy="240" rx="140" ry="65" fill="none" stroke="rgba(255,87,34,0.18)" stroke-width="1.5" stroke-dasharray="2 4"/>
+
+          <!-- Caldera Water Basin Depth Gradient -->
+          <circle cx="500" cy="240" r="85" fill="rgba(255,87,34,0.03)" filter="blur(20px)"/>
+
+          <!-- Radar sweep animation line -->
+          <line x1="500" y1="240" x2="900" y2="240" stroke="rgba(255,87,34,0.15)" stroke-width="1">
+            <animateTransform attributeName="transform" type="rotate" from="0 500 240" to="360 500 240" dur="18s" repeatCount="indefinite"/>
+          </line>
+
+          <!-- 1. NEA KAMENI (Central Hearth) -->
+          <g class="island-node active" id="node-nea" onclick="selectIsland('nea', 0)">
+            <circle class="pulse-ring" cx="500" cy="240" r="16" fill="rgba(255,87,34,0.2)"/>
+            <path d="M475,225 Q500,210 525,228 Q535,255 510,265 Q480,262 475,240 Z" fill="#1c1a24" stroke="#ff5722" stroke-width="2"/>
+            <circle class="core-dot" cx="500" cy="240" r="5" fill="#ff5722"/>
+            <text x="515" y="238">01. Nea Kameni</text>
+            <text x="515" y="250" class="coords">127m Peak &bull; RT60 4.8s</text>
+          </g>
+
+          <!-- 2. THIRASIA (Western Rim) -->
+          <g class="island-node" id="node-thirasia" onclick="selectIsland('thirasia', 1)">
+            <circle class="pulse-ring" cx="240" cy="170" r="14" fill="rgba(255,255,255,0.1)"/>
+            <path d="M210,140 Q250,135 270,165 Q265,210 235,215 Q215,190 210,140 Z" fill="#181822" stroke="#666" stroke-width="1.5"/>
+            <circle class="core-dot" cx="240" cy="170" r="4.5" fill="#c8c2b7"/>
+            <text x="140" y="165">02. Thirasia</text>
+            <text x="140" y="177" class="coords">295m Escarpment &bull; Wind Harp</text>
+          </g>
+
+          <!-- 3. PALEA KAMENI (Thermal Rift) -->
+          <g class="island-node" id="node-palea" onclick="selectIsland('palea', 2)">
+            <circle class="pulse-ring" cx="420" cy="275" r="13" fill="rgba(255,255,255,0.1)"/>
+            <path d="M405,265 Q435,260 440,285 Q425,295 405,285 Z" fill="#1b1b24" stroke="#666" stroke-width="1.5"/>
+            <circle class="core-dot" cx="420" cy="275" r="4" fill="#e5c158"/>
+            <text x="320" y="315">03. Palea Kameni</text>
+            <text x="320" y="327" class="coords">Sulfur Springs &bull; Hydrophones</text>
+          </g>
+
+          <!-- 4. ASPRONISI (The White Crag) -->
+          <g class="island-node" id="node-aspronisi" onclick="selectIsland('aspronisi', 3)">
+            <circle class="pulse-ring" cx="290" cy="330" r="12" fill="rgba(255,255,255,0.1)"/>
+            <polygon points="280,325 300,320 295,340 278,335" fill="#20202e" stroke="#888" stroke-width="1.5"/>
+            <circle class="core-dot" cx="290" cy="330" r="3.5" fill="#ffffff"/>
+            <text x="210" y="365">04. Aspronisi</text>
+            <text x="210" y="377" class="coords">White Pumice &bull; Anechoic Sanctuary</text>
+          </g>
+
+          <!-- 5. KOLUMBO SEAMOUNT (Submerged Vent) -->
+          <g class="island-node" id="node-kolumbo" onclick="selectIsland('kolumbo', 4)">
+            <circle class="pulse-ring" cx="780" cy="110" r="18" fill="rgba(0,230,118,0.15)"/>
+            <circle cx="780" cy="110" r="22" fill="none" stroke="#00e676" stroke-width="1" stroke-dasharray="2 3"/>
+            <circle class="core-dot" cx="780" cy="110" r="5" fill="#00e676"/>
+            <text x="710" y="85">05. Kolumbo Seamount</text>
+            <text x="710" y="97" class="coords">-505m Depth &bull; Sonar Telemetry</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Island Switcher Tabs -->
+      <div class="island-tabs-nav">
+        <button class="island-tab-btn active" onclick="selectIsland('nea', 0)">01. Nea Kameni</button>
+        <button class="island-tab-btn" onclick="selectIsland('thirasia', 1)">02. Thirasia</button>
+        <button class="island-tab-btn" onclick="selectIsland('palea', 2)">03. Palea Kameni</button>
+        <button class="island-tab-btn" onclick="selectIsland('aspronisi', 3)">04. Aspronisi</button>
+        <button class="island-tab-btn" onclick="selectIsland('kolumbo', 4)">05. Kolumbo Vent</button>
+      </div>
+
+      <!-- Island Detail Panels -->
+      <div class="island-cards-container">
+        <!-- 1. NEA KAMENI -->
+        <div class="island-card-panel active" id="panel-nea">
+          <div class="island-panel-left">
+            <h3>Nea Kameni</h3>
+            <div class="island-subtitle">The Caldera Hearth &bull; Basalt Amphitheaters</div>
+            <p class="island-description">
+              Formed through historical lava outflows between 1570 and 1950, Nea Kameni is an active volcanic dome characterized by steaming sulfur fumaroles and dark obsidian fields. Its raw basalt surface acts as a natural high-frequency baffle, dampening flutter echoes and accentuating low-end sub-frequencies.
+            </p>
+
+            <table class="acoustic-profile-table">
+              <tr>
+                <td>Geological Base</td>
+                <td>Black Dacite & Glassy Basalt</td>
+              </tr>
+              <tr>
+                <td>Reverberation (RT60)</td>
+                <td>4.8 Seconds (Caldera Crater)</td>
+              </tr>
+              <tr>
+                <td>Natural Resonator</td>
+                <td>Active Subterranean Fumarole Vents</td>
+              </tr>
+              <tr>
+                <td>Pavilion Count</td>
+                <td>8 Site-Specific Works</td>
+              </tr>
+            </table>
+
+            <button class="btn-island-sound" onclick="playIslandTone('nea')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+              Audition Nea Kameni Tone (48 Hz / Obsidian Drone)
+            </button>
+          </div>
+
+          <div class="island-panel-right">
+            <div>
+              <div class="highlight-installation-tag">Monumental Highlight &bull; Crater Apex</div>
+              <h4 class="installation-title">Chamber of Fumaroles</h4>
+              <div class="installation-artists">Anne Holtrop &amp; Toshiya Tsunoda</div>
+              <p class="installation-excerpt">
+                A massive circular monolith cast from molten volcanic aggregate directly over a dormant steam fissure. As sulfuric steam rises through internal labyrinthine acoustic chambers, it drives an aeolian organ that hums at the exact resonant frequency of the island's seismic tremor.
+              </p>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
+              MATERIALS: Cast basalt slurry, carbonized oak, microphonic sensors.
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. THIRASIA -->
+        <div class="island-card-panel" id="panel-thirasia">
+          <div class="island-panel-left">
+            <h3>Thirasia</h3>
+            <div class="island-subtitle">The Western Rim &bull; Cliffside Wind Harps</div>
+            <p class="island-description">
+              The rugged western boundary of the ancient prehistoric eruption. Thirasia rises 295 meters sheer from the Aegean Sea. The intense Cycladic winds crashing against the porous pumice cliffs produce constant aeolian harmonics that travel miles across the bay.
+            </p>
+
+            <table class="acoustic-profile-table">
+              <tr>
+                <td>Geological Base</td>
+                <td>Stratified White Pumice &amp; Red Tuff</td>
+              </tr>
+              <tr>
+                <td>Reverberation (RT60)</td>
+                <td>6.2 Seconds (Cliff Caverns)</td>
+              </tr>
+              <tr>
+                <td>Natural Resonator</td>
+                <td>295m Vertical Pumice Shear Wall</td>
+              </tr>
+              <tr>
+                <td>Pavilion Count</td>
+                <td>7 Cliff Pavilions &amp; Choral Steps</td>
+              </tr>
+            </table>
+
+            <button class="btn-island-sound" onclick="playIslandTone('thirasia')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+              Audition Thirasia Tone (112 Hz / Aeolian Pumice)
+            </button>
+          </div>
+
+          <div class="island-panel-right">
+            <div>
+              <div class="highlight-installation-tag">Cliffside Monument &bull; Manolas Escarpment</div>
+              <h4 class="installation-title">Petrified Breath (Aeolian Cantata)</h4>
+              <div class="installation-artists">Smiljan Radić &amp; Jana Winderen</div>
+              <p class="installation-excerpt">
+                Suspended over the abyss from titanium anchor cables, Radić’s translucent fiberglass boulders house 120-meter stretched piano wires that vibrate under the prevailing Meltemi wind. The resulting sound mimics human microtonal choir chants.
+              </p>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
+              MATERIALS: Translucent resin boulders, tempered steel strings, wind-funnels.
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. PALEA KAMENI -->
+        <div class="island-card-panel" id="panel-palea">
+          <div class="island-panel-left">
+            <h3>Palea Kameni</h3>
+            <div class="island-subtitle">The Thermal Rift &bull; Hydrophone Thermal Baths</div>
+            <p class="island-description">
+              The oldest of the central volcanic islands, surrounded by mineral-rich geothermal hot springs that glow yellow with sulfur. Visitors enter buoyant acoustic immersion tanks submerged in 34°C water, listening to subaquatic soundscapes that travel through water five times faster than through air.
+            </p>
+
+            <table class="acoustic-profile-table">
+              <tr>
+                <td>Geological Base</td>
+                <td>Iron-Stained Hydrothermal Rhyolite</td>
+              </tr>
+              <tr>
+                <td>Reverberation (RT60)</td>
+                <td>8.5 Seconds (Underwater Caldarium)</td>
+              </tr>
+              <tr>
+                <td>Natural Resonator</td>
+                <td>Pelagic Thermal Density Layers</td>
+              </tr>
+              <tr>
+                <td>Pavilion Count</td>
+                <td>6 Floating &amp; Submerged Pods</td>
+              </tr>
+            </table>
+
+            <button class="btn-island-sound" onclick="playIslandTone('palea')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+              Audition Palea Kameni Tone (74 Hz / Geothermal Slumber)
+            </button>
+          </div>
+
+          <div class="island-panel-right">
+            <div>
+              <div class="highlight-installation-tag">Subaquatic Pavilion &bull; St. Nicholas Cove</div>
+              <h4 class="installation-title">Pelagic Bathymetry</h4>
+              <div class="installation-artists">Forensic Architecture &amp; Kali Malone</div>
+              <p class="installation-excerpt">
+                An underwater pipe organ tuned to ocean salinity. Submerged swimmers place their temples against bronze contact pads to perceive massive organ drone intervals through pure cranial bone conduction while immersed in volcanic mud.
+              </p>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
+              MATERIALS: Marine bronze pipes, sulfur-resistant silicone, bone transducers.
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. ASPRONISI -->
+        <div class="island-card-panel" id="panel-aspronisi">
+          <div class="island-panel-left">
+            <h3>Aspronisi</h3>
+            <div class="island-subtitle">The White Crag &bull; Anechoic Silence Sanctuary</div>
+            <p class="island-description">
+              Aspronisi ("White Island") is completely unpopulated, composed of brilliant white pumice and volcanic ash layers. The ultra-porous pumice absorbs almost 92% of incident acoustic energy, creating an open-air natural near-anechoic environment where footsteps are eerily swallowed.
+            </p>
+
+            <table class="acoustic-profile-table">
+              <tr>
+                <td>Geological Base</td>
+                <td>High-Porosity Compressed Ash &amp; Chalk</td>
+              </tr>
+              <tr>
+                <td>Reverberation (RT60)</td>
+                <td>0.35 Seconds (Open-Air Anechoic Basin)</td>
+              </tr>
+              <tr>
+                <td>Natural Resonator</td>
+                <td>Total Acoustic Absorption Wall</td>
+              </tr>
+              <tr>
+                <td>Pavilion Count</td>
+                <td>5 Silence Chambers &amp; Optical Reflectors</td>
+              </tr>
+            </table>
+
+            <button class="btn-island-sound" onclick="playIslandTone('aspronisi')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+              Audition Aspronisi Tone (220 Hz / White Pumice Silence)
+            </button>
+          </div>
+
+          <div class="island-panel-right">
+            <div>
+              <div class="highlight-installation-tag">Silence Sanctuary &bull; Ash Plateau</div>
+              <h4 class="installation-title">Microtonal Pumice Organ</h4>
+              <div class="installation-artists">Ryoji Ikeda &amp; Junya Ishigami</div>
+              <p class="installation-excerpt">
+                A featherweight pavilion constructed of ultra-thin chalk panels that funnel absolute quietude into a subterranean acoustic well. Inside, the visitor hears the internal circulating blood of their own ears tuned against ultra-precise sine waves.
+              </p>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
+              MATERIALS: Ash-block lintels, stretched membrane prisms, sine frequency emitter.
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. KOLUMBO SEAMOUNT -->
+        <div class="island-card-panel" id="panel-kolumbo">
+          <div class="island-panel-left">
+            <h3>Kolumbo Seamount</h3>
+            <div class="island-subtitle">The Submerged Abyss &bull; Telemetry Floating Vessel</div>
+            <p class="island-description">
+              Located 7 kilometers northeast of the caldera, Kolumbo is an active submarine volcano whose crater lies 505 meters below sea level. Since it cannot be physically walked upon, Biennial attendees board anchored research catamarans equipped with spatialized abyssal hydrophone arrays.
+            </p>
+
+            <table class="acoustic-profile-table">
+              <tr>
+                <td>Geological Base</td>
+                <td>Hydrothermal Chimneys &amp; Mantle Magma Chamber</td>
+              </tr>
+              <tr>
+                <td>Reverberation (RT60)</td>
+                <td>Infinite Dispersion (Pelagic Abyss)</td>
+              </tr>
+              <tr>
+                <td>Natural Resonator</td>
+                <td>Superheated 220°C Hydrothermal Gas Jets</td>
+              </tr>
+              <tr>
+                <td>Pavilion Count</td>
+                <td>6 Floating Catamaran Audio Pods</td>
+              </tr>
+            </table>
+
+            <button class="btn-island-sound" onclick="playIslandTone('kolumbo')">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+              Audition Kolumbo Telemetry (32 Hz / Deep Vent Bass)
+            </button>
+          </div>
+
+          <div class="island-panel-right">
+            <div>
+              <div class="highlight-installation-tag">Deep-Sea Telemetry &bull; Research Vessel 'Aethra'</div>
+              <h4 class="installation-title">Sub-Pelagic Tremor Broadcasts</h4>
+              <div class="installation-artists">Assemble &amp; Éliane Radigue Archive</div>
+              <p class="installation-excerpt">
+                Four subsea titanium hydrophones lowered into the bubbling throat of Kolumbo transmit boiling geothermal vents directly into an onboard wooden chamber designed to vibrate as a solitary acoustic instrument under starry nocturnal skies.
+              </p>
+            </div>
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); border-top: 1px solid var(--border-subtle); padding-top: 1rem;">
+              MATERIALS: Marine sonar relays, steamed chestnut vessel chamber, infrasonic actuators.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAM LINEUP & WORKS SECTION -->
+    <section class="section-container" id="program">
+      <div class="section-header-tag">Curated Program</div>
+      <h2 class="section-main-title">Lineup &amp; Spatial Commissions</h2>
+      <p style="color: var(--text-secondary); max-width: 780px; font-size: 1.15rem;">
+        Discover the 32 architectural pavilions and live acoustic rituals scheduled across the three Biennial Epochs. Filter by island, medium, or date epoch.
+      </p>
+
+      <!-- Program Filters Bar -->
+      <div class="program-controls">
+        <div class="filter-pills" id="program-island-filters">
+          <button class="filter-btn active" data-filter="all">All Islands (32)</button>
+          <button class="filter-btn" data-filter="nea">Nea Kameni</button>
+          <button class="filter-btn" data-filter="thirasia">Thirasia</button>
+          <button class="filter-btn" data-filter="palea">Palea Kameni</button>
+          <button class="filter-btn" data-filter="aspronisi">Aspronisi</button>
+          <button class="filter-btn" data-filter="kolumbo">Kolumbo Seamount</button>
+        </div>
+
+        <div class="epoch-toggle">
+          <button class="epoch-btn active" data-epoch="all">All Dates</button>
+          <button class="epoch-btn" data-epoch="epoch-1">Epoch I (Oct 8–12)</button>
+          <button class="epoch-btn" data-epoch="epoch-2">Epoch II (Oct 13–18)</button>
+          <button class="epoch-btn" data-epoch="epoch-3">Epoch III (Oct 19–24)</button>
+        </div>
+      </div>
+
+      <!-- Program Cards Grid -->
+      <div class="program-cards-grid" id="program-grid">
+
+        <!-- Card 1 -->
+        <article class="program-card" data-island="nea" data-epoch="epoch-1">
+          <div>
+            <div class="program-meta-top">
+              <span class="card-island-badge">Nea Kameni &bull; Crater Apex</span>
+              <span class="card-epoch-date">Epoch I &bull; Oct 09</span>
+            </div>
+            <h3 class="program-work-title">Chamber of Fumaroles</h3>
+            <div class="program-artist-name">Anne Holtrop &amp; Toshiya Tsunoda</div>
+            <p class="program-summary">
+              A circular cast-basalt amphitheater capturing geothermal steam vents to activate subterranean harmonic whistle pipes at dusk.
+            </p>
+            <div class="program-tags-row">
+              <span class="prog-tag">Cast Basalt</span>
+              <span class="prog-tag">Steam Aeolian</span>
+              <span class="prog-tag">Dusk Ritual</span>
+            </div>
+          </div>
+          <div class="card-action-bar">
+            <button class="btn-preview-tone" onclick="synthesizeTone(55, 'sawtooth', 2.5)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Preview Tone
+            </button>
+            <button class="btn-dossier" onclick="openDossier('Chamber of Fumaroles', 'Studio Anne Holtrop & Toshiya Tsunoda', 'Nea Kameni Crater Apex', 'The structure consists of an 18-meter ring made of unreinforced volcanic slag cast directly upon the fumarole fissures. By channeling pressurized 95°C sulfuric gas through graduated flutes cut into porous basalt, the pavilion sounds continuously without human intervention.', 'Dacite aggregates, basalt sand, high-temp titanium reeds, micro-seismographs.')">Dossier</button>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="program-card" data-island="thirasia" data-epoch="epoch-1">
+          <div>
+            <div class="program-meta-top">
+              <span class="card-island-badge">Thirasia &bull; 290m Escarpment</span>
+              <span class="card-epoch-date">Epoch I &bull; Oct 11</span>
+            </div>
+            <h3 class="program-work-title">Petrified Breath</h3>
+            <div class="program-artist-name">Smiljan Radić &amp; Jana Winderen</div>
+            <p class="program-summary">
+              120-meter stretched steel strings spanning the caldera cliff gap, played by the fierce Meltemi wind into cliff-embedded pumice listening caves.
+            </p>
+            <div class="program-tags-row">
+              <span class="prog-tag">Aeolian Harp</span>
+              <span class="prog-tag">Pumice Cave</span>
+              <span class="prog-tag">Cliff Architecture</span>
+            </div>
+          </div>
+          <div class="card-action-bar">
+            <button class="btn-preview-tone" onclick="synthesizeTone(110, 'sine', 3)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Preview Tone
+            </button>
+            <button class="btn-dossier" onclick="openDossier('Petrified Breath', 'Smiljan Radić & Jana Winderen', 'Thirasia Western Cliff', 'Suspended across a natural fault gorge, the installation uses wind velocity to trigger harmonics that resonate inside excavated pumice niches where listeners recline.', 'High-tensile steel cables, resin boulders, carved volcanic pumice walls.')">Dossier</button>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="program-card" data-island="palea" data-epoch="epoch-2">
+          <div>
+            <div class="program-meta-top">
+              <span class="card-island-badge">Palea Kameni &bull; Thermal Cove</span>
+              <span class="card-epoch-date">Epoch II &bull; Oct 14</span>
+            </div>
+            <h3 class="program-work-title">Pelagic Bathymetry</h3>
+            <div class="program-artist-name">Forensic Architecture &amp; Kali Malone</div>
+            <p class="program-summary">
+              Submerged bronze organ conduits playing slow, gravity-heavy harmonic chords directly into geothermal thermal pools for floating listeners.
+            </p>
+            <div class="program-tags-row">
+              <span class="prog-tag">Bone Conduction</span>
+              <span class="prog-tag">Thermal Pool</span>
+              <span class="prog-tag">Hydrophone</span>
+            </div>
+          </div>
+          <div class="card-action-bar">
+            <button class="btn-preview-tone" onclick="synthesizeTone(73.4, 'triangle', 3.5)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Preview Tone
+            </button>
+            <button class="btn-dossier" onclick="openDossier('Pelagic Bathymetry', 'Forensic Architecture & Kali Malone', 'Palea Kameni Thermal Cove', 'Submerged acoustic resonators calibrated to Cycladic water temperatures and sulfur salinity. Listeners wear buoyant neck supports and experience music through bone vibration.', 'Submerged bronze pipes, silicone hydrophones, floating teak platforms.')">Dossier</button>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="program-card" data-island="aspronisi" data-epoch="epoch-2">
+          <div>
+            <div class="program-meta-top">
+              <span class="card-island-badge">Aspronisi &bull; White Basin</span>
+              <span class="card-epoch-date">Epoch II &bull; Oct 16</span>
+            </div>
+            <h3 class="program-work-title">Microtonal Pumice Organ</h3>
+            <div class="program-artist-name">Ryoji Ikeda &amp; Junya Ishigami</div>
+            <p class="program-summary">
+              An open-air pavilion built of ultra-thin, sound-absorbing pumice slabs that funnel pure silence into a central anechoic listening chamber.
+            </p>
+            <div class="program-tags-row">
+              <span class="prog-tag">Anechoic Sanctuary</span>
+              <span class="prog-tag">Pure Sine</span>
+              <span class="prog-tag">Minimalist</span>
+            </div>
+          </div>
+          <div class="card-action-bar">
+            <button class="btn-preview-tone" onclick="synthesizeTone(220, 'sine', 2.8)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Preview Tone
+            </button>
+            <button class="btn-dossier" onclick="openDossier('Microtonal Pumice Organ', 'Ryoji Ikeda & Junya Ishigami', 'Aspronisi White Ash Ridge', 'Pumice slabs 40mm thick arranged in concentric ellipses absorb all extraneous sea and wind noise, isolating visitors inside a zero-reverberation spatial envelope with discrete ultrasonic frequencies.', 'Sintered white pumice, carbon fiber braces, precision transducers.')">Dossier</button>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="program-card" data-island="kolumbo" data-epoch="epoch-3">
+          <div>
+            <div class="program-meta-top">
+              <span class="card-island-badge">Kolumbo Seamount &bull; Vessel 'Aethra'</span>
+              <span class="card-epoch-date">Epoch III &bull; Oct 20</span>
+            </div>
+            <h3 class="program-work-title">Sub-Pelagic Tremor Broadcasts</h3>
+            <div class="program-artist-name">Assemble &amp; Éliane Radigue Archive</div>
+            <p class="program-summary">
+              Night-time hydrophone transmissions from 505m deep hydrothermal vents, broadcast inside a custom curved timber hull listening boat.
+            </p>
+            <div class="program-tags-row">
+              <span class="prog-tag">Deep Hydrophone</span>
+              <span class="prog-tag">Nocturnal</span>
+              <span class="prog-tag">Catamaran Vessel</span>
+            </div>
+          </div>
+          <div class="card-action-bar">
+            <button class="btn-preview-tone" onclick="synthesizeTone(38, 'sawtooth', 4)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Preview Tone
+            </button>
+            <button class="btn-dossier" onclick="openDossier('Sub-Pelagic Tremor Broadcasts', 'Assemble & Éliane Radigue Archive', 'Kolumbo Submerged Vent (Offshore)', 'Participants sail out under new moon darkness to hover directly over the bubbling hydrothermal chimney. Sound signals are received via armored fiber-optic cables and projected through a resonance floor.', 'Offshore vessel, subsea telemetry arrays, curved steam-bent larch timber.')">Dossier</button>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="program-card" data-island="nea" data-epoch="epoch-3">
+          <div>
+            <div class="program-meta-top">
+              <span class="card-island-badge">Nea Kameni &bull; Lava Flow 1925</span>
+              <span class="card-epoch-date">Epoch III &bull; Oct 23</span>
+            </div>
+            <h3 class="program-work-title">The Caldera Requiem (Closing Ritual)</h3>
+            <div class="program-artist-name">Channa Horwitz Estate, Alvin Lucier Trust &amp; Ensemble Courage</div>
+            <p class="program-summary">
+              A monumental closing ceremony featuring 40 brass and percussion players stationed across the jagged volcanic perimeter at twilight.
+            </p>
+            <div class="program-tags-row">
+              <span class="prog-tag">40 Musicians</span>
+              <span class="prog-tag">Spatial Brass</span>
+              <span class="prog-tag">Twilight Ritual</span>
+            </div>
+          </div>
+          <div class="card-action-bar">
+            <button class="btn-preview-tone" onclick="synthesizeTone(65.4, 'triangle', 3.8)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Preview Tone
+            </button>
+            <button class="btn-dossier" onclick="openDossier('The Caldera Requiem', 'Alvin Lucier Trust, Channa Horwitz & Ensemble Courage', 'Nea Kameni Lava Slopes', 'Performers scattered at 80-meter intervals around the volcanic rim play long sinusoidal tones that collide and create acoustic interference patterns across the entire bay as the sun dips into the Aegean.', 'Custom bronze bells, extended horn arrays, obsidian reflecting disks.')">Dossier</button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- TICKETING SECTION & TIER SELECTOR -->
+    <section class="ticketing-section" id="passes">
+      <div class="section-container" style="padding-bottom: 2rem;">
+        <div class="section-header-tag">Pass Allocations</div>
+        <h2 class="section-main-title">Select Your Expedition Pass</h2>
+        <p style="color: var(--text-secondary); max-width: 780px; font-size: 1.15rem;">
+          Attendance is strictly capped to 350 visitors per day to protect fragile volcanic geology and ensure pristine acoustic environments. Solar ferry transit between islands is coordinated seamlessly.
+        </p>
+
+        <!-- Ticket Tier Cards -->
+        <div class="ticket-selector-grid">
+          <!-- Tier 1 -->
+          <div class="ticket-card" data-tier="single" data-price="180" onclick="selectTierCard(this)">
+            <div>
+              <h3 class="ticket-tier-name">Passage</h3>
+              <div class="ticket-duration">Single Island Discovery &bull; 1 Day</div>
+              
+              <div class="ticket-price-box">
+                <span class="price-currency">&euro;</span>
+                <span class="price-value">180</span>
+                <span class="price-period">/ day</span>
+              </div>
+
+              <ul class="ticket-features-list">
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Access to 1 designated island program
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Scheduled solar ferry transfer to/from port
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Curated binaural audio guide download
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Volcanic geology safety gear kit
+                </li>
+              </ul>
+            </div>
+
+            <button class="btn-select-tier">Select Passage</button>
+          </div>
+
+          <!-- Tier 2: Selected by default -->
+          <div class="ticket-card selected" data-tier="circuit" data-price="460" onclick="selectTierCard(this)">
+            <span class="popular-ribbon">Most Popular</span>
+            <div>
+              <h3 class="ticket-tier-name">Caldera Circuit</h3>
+              <div class="ticket-duration">All 5 Islands &bull; 4 Consecutive Days</div>
+              
+              <div class="ticket-price-box">
+                <span class="price-currency">&euro;</span>
+                <span class="price-value">460</span>
+                <span class="price-period">/ pass</span>
+              </div>
+
+              <ul class="ticket-features-list">
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Full access to all 5 volcanic island sites
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Unlimited hop-on solar catamaran shuttles
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Reserved sunset entry for Nea Kameni &amp; Thirasia
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Printed Biennial Cartography &amp; Acoustic Folio
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Kolumbo offshore audio listening vessel slot
+                </li>
+              </ul>
+            </div>
+
+            <button class="btn-select-tier">Selected</button>
+          </div>
+
+          <!-- Tier 3 -->
+          <div class="ticket-card" data-tier="residency" data-price="920" onclick="selectTierCard(this)">
+            <div>
+              <h3 class="ticket-tier-name">Residency Fellow</h3>
+              <div class="ticket-duration">Full 18-Day Biennial Access</div>
+              
+              <div class="ticket-price-box">
+                <span class="price-currency">&euro;</span>
+                <span class="price-value">920</span>
+                <span class="price-period">/ all epochs</span>
+              </div>
+
+              <ul class="ticket-features-list">
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  All 32 pavilions across all 3 Epochs
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Guaranteed admission to all nocturnal rituals
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Dawn crater walk with curators Vanezi &amp; Morishita
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Exclusive archival 3xLP Vinyl Box Set &amp; Book
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Private hydrophone acoustic bath session
+                </li>
+              </ul>
+            </div>
+
+            <button class="btn-select-tier">Select Residency</button>
+          </div>
+
+          <!-- Tier 4 -->
+          <div class="ticket-card" data-tier="patron" data-price="1850" onclick="selectTierCard(this)">
+            <div>
+              <h3 class="ticket-tier-name">Subterranean Patron</h3>
+              <div class="ticket-duration">Benefactor Circle &bull; VIP Privileges</div>
+              
+              <div class="ticket-price-box">
+                <span class="price-currency">&euro;</span>
+                <span class="price-value">1,850</span>
+                <span class="price-period">/ benefactor</span>
+              </div>
+
+              <ul class="ticket-features-list">
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Dedicated private RIB boat tender on demand
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Opening Banquet inside Thirasia pumice cave
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Numbered cast basalt acoustic transducer sculpture
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  Caldera Marine Volcanic Sanctuary conservation patron
+                </li>
+              </ul>
+            </div>
+
+            <button class="btn-select-tier">Select Patron</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Calculator & Reservation Panel -->
+        <div class="reservation-calculator-box">
+          <div class="calculator-left">
+            <h3>Tailor Your Expedition</h3>
+            <p class="sub">Select optional equipment, fast-tracks, and field publications to accompany your pass.</p>
+
+            <div class="addons-list">
+              <!-- Addon 1 -->
+              <div class="addon-item" data-price="65" onclick="toggleAddon(this)">
+                <div class="addon-info">
+                  <div class="addon-checkbox">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  <div>
+                    <div class="addon-title">Priority Solar Tender Boarding</div>
+                    <div class="addon-desc">Zero-wait queue priority for all inter-island water transfers</div>
+                  </div>
+                </div>
+                <div class="addon-price">+&euro;65</div>
+              </div>
+
+              <!-- Addon 2 -->
+              <div class="addon-item" data-price="45" onclick="toggleAddon(this)">
+                <div class="addon-info">
+                  <div class="addon-checkbox">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  <div>
+                    <div class="addon-title">Binaural Night-Vision Acoustic Kit</div>
+                    <div class="addon-desc">Infrared goggles + calibrated high-gain directional microphone</div>
+                  </div>
+                </div>
+                <div class="addon-price">+&euro;45</div>
+              </div>
+
+              <!-- Addon 3 -->
+              <div class="addon-item" data-price="95" onclick="toggleAddon(this)">
+                <div class="addon-info">
+                  <div class="addon-checkbox">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  <div>
+                    <div class="addon-title">Archival Monograph &amp; 3xLP Vinyl Box</div>
+                    <div class="addon-desc">480-page hardbound catalog + field recordings of all 32 works</div>
+                  </div>
+                </div>
+                <div class="addon-price">+&euro;95</div>
+              </div>
+
+              <!-- Addon 4 -->
+              <div class="addon-item" data-price="55" onclick="toggleAddon(this)">
+                <div class="addon-info">
+                  <div class="addon-checkbox">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  </div>
+                  <div>
+                    <div class="addon-title">Subaquatic Hydrophone Rental</div>
+                    <div class="addon-desc">Waterproof handheld listening wand for Palea Kameni thermal baths</div>
+                  </div>
+                </div>
+                <div class="addon-price">+&euro;55</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Summary & Instant Calculation -->
+          <div class="calculator-summary-card">
+            <div>
+              <div class="summary-heading">Expedition Calculation Summary</div>
+              
+              <div class="summary-line-item">
+                <span>Selected Tier:</span>
+                <strong id="summary-tier-name">Caldera Circuit Pass</strong>
+              </div>
+
+              <div class="summary-line-item">
+                <span>Tier Base Rate:</span>
+                <strong id="summary-base-rate">&euro;460</strong>
+              </div>
+
+              <div class="quantity-counter">
+                <span style="font-size: 0.85rem; color: var(--text-secondary); margin-right: auto;">Number of Attendees:</span>
+                <button class="qty-btn" onclick="updateQty(-1)">&minus;</button>
+                <span class="qty-display" id="attendee-qty">1</span>
+                <button class="qty-btn" onclick="updateQty(1)">&#43;</button>
+              </div>
+
+              <div class="summary-line-item">
+                <span>Selected Add-ons:</span>
+                <strong id="summary-addons-total">&euro;0</strong>
+              </div>
+
+              <div class="summary-line-item">
+                <span>Cycladic Ecological Preservation Fee:</span>
+                <strong>Included (&euro;25)</strong>
+              </div>
+            </div>
+
+            <div>
+              <div class="summary-total-row">
+                <div class="total-label">Total Amount:</div>
+                <div class="total-amount" id="summary-grand-total">&euro;460</div>
+              </div>
+
+              <button class="btn-checkout-trigger" onclick="openCheckoutModal()">
+                Proceed to Reservation
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRACTICALITIES & FIELD GUIDE -->
+    <section class="practical-section" id="practicalities">
+      <div class="section-container">
+        <div class="section-header-tag">Visitor Logistics</div>
+        <h2 class="section-main-title">Archipelago Practicalities &amp; FAQ</h2>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem;">
+          <div>
+            <h4 style="font-family: var(--font-ui); font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 1.2rem;">
+              Crucial Expedition Guidelines
+            </h4>
+            <div style="font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; display: flex; flex-direction: column; gap: 1.2rem;">
+              <p>
+                <strong style="color: #fff;">Footwear:</strong> High-traction ankle-support hiking boots are mandatory. The volcanic terrain consists of brittle basalt slag, sharp obsidian glass, and loose pumice gravel.
+              </p>
+              <p>
+                <strong style="color: #fff;">Solar Shuttles:</strong> Inter-island transfers depart every 30 minutes from Athinios Port and Fira Old Harbor. All boats are fully electric to minimize underwater acoustic pollution.
+              </p>
+              <p>
+                <strong style="color: #fff;">Acoustic Silence Zones:</strong> Cellular phones must remain in airplane mode on Aspronisi and inside the Nea Kameni caldera amphitheaters. Mobile loudspeakers are prohibited.
+              </p>
+              <p>
+                <strong style="color: #fff;">Ecological Sanction:</strong> The five islands are under strict UNESCO Geopark protection. Do not remove volcanic rocks, sulfur crystals, or disturb nesting pelagic shearwaters.
+              </p>
+            </div>
+          </div>
+
+          <!-- Accordion FAQ -->
+          <div class="faq-accordion">
+            <div class="faq-accordion-item">
+              <button class="faq-question" onclick="toggleFaq(this)">
+                <span>How do I reach the islands?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-answer">
+                Your Biennial pass includes boarding passes for the official Archipelago Solar Catamaran fleet operating from Santorini (Athinios port and Fira harbor). Shuttles run continuously from 07:30 to 23:30 daily.
+              </div>
+            </div>
+
+            <div class="faq-accordion-item">
+              <button class="faq-question" onclick="toggleFaq(this)">
+                <span>Are the pavilions accessible for mobility impairments?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-answer">
+                Due to pristine volcanic topography, certain crater trails involve natural stone steps. However, Thirasia lower harbor, Palea Kameni floating rafts, and the Kolumbo telemetry vessels are fully wheelchair accessible via custom tender gangways.
+              </div>
+            </div>
+
+            <div class="faq-accordion-item">
+              <button class="faq-question" onclick="toggleFaq(this)">
+                <span>What happens in case of heavy Aegean sea swells?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-answer">
+                The interior caldera water is naturally shielded from open Aegean waves. In rare instances of gale-force Meltemi winds exceeding 7 Beaufort, acoustic performances are relocated to protected cliffside caverns on Thirasia. Pass validity automatically extends.
+              </div>
+            </div>
+
+            <div class="faq-accordion-item">
+              <button class="faq-question" onclick="toggleFaq(this)">
+                <span>Can I purchase tickets at the port upon arrival?</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="faq-answer">
+                No. Because daily visitor quotas are strictly capped at 350 attendees across the archipelago, all passes must be reserved in advance through this portal.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- STICKY BOTTOM ACOUSTIC TELEMETRY DOCK -->
+  <aside class="bottom-sound-bar">
+    <div class="sound-info-left">
+      <canvas class="acoustic-canvas-preview" id="dock-waveform"></canvas>
+      <div>
+        <div class="now-playing-label">Currently Resonating</div>
+        <div class="now-playing-title" id="dock-title">Caldera Infrasound Core &bull; 0.14 Hz Harmonic Drift</div>
+      </div>
+    </div>
+
+    <div class="sound-controls-right">
+      <div class="resonance-slider-wrapper">
+        <span>FILTER:</span>
+        <input type="range" min="100" max="2400" value="450" class="slider-knob" id="filter-slider" oninput="adjustAcousticFilter(this.value)" aria-label="Acoustic cutoff filter">
+      </div>
+
+      <button class="btn-audio-toggle" id="dock-audio-btn" onclick="toggleGlobalAudio()">
+        <span id="dock-audio-text">Activate Sound</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <div class="logo-main" style="font-size: 1.2rem;">Archipelago 2027</div>
+        <div class="footer-desc">
+          The International Biennial of Experimental Architecture and Spatial Acoustics. Organized under the auspices of the Hellenic Ministry of Culture and the Cycladic Tectonic Foundation.
+        </div>
+        <p style="margin-top: 1.5rem; color: #555;">
+          ISSN 2940-184X &bull; Coordinates: 36°24'14" N &mdash; 25°23'42" E
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Territory</h5>
+        <ul>
+          <li><a href="#islands">Nea Kameni</a></li>
+          <li><a href="#islands">Thirasia</a></li>
+          <li><a href="#islands">Palea Kameni</a></li>
+          <li><a href="#islands">Aspronisi</a></li>
+          <li><a href="#islands">Kolumbo Seamount</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Program</h5>
+        <ul>
+          <li><a href="#program">All 32 Pavilions</a></li>
+          <li><a href="#program">Epoch I (Oct 8–12)</a></li>
+          <li><a href="#program">Epoch II (Oct 13–18)</a></li>
+          <li><a href="#program">Epoch III (Oct 19–24)</a></li>
+          <li><a href="#curatorial">Curatorial Proposition</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Passes &amp; Legal</h5>
+        <ul>
+          <li><a href="#passes">Ticket Allocations</a></li>
+          <li><a href="#passes">Patron Benefactor Circle</a></li>
+          <li><a href="#practicalities">Field Safety Code</a></li>
+          <li><a href="#">Geopark Ethics Protocol</a></li>
+          <li><a href="#">Press &amp; Spatial Monograph</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 2rem;">
+      <div>&copy; 2027 Archipelago Biennial Foundation. All tectonic rights reserved.</div>
+      <div style="font-family: var(--font-mono); color: var(--magma-glow);">CYCLADIC VOLCANIC ARC / CALDERA RESIDENCY</div>
+    </div>
+  </footer>
+
+  <!-- MODAL: SPATIAL DOSSIER -->
+  <div class="modal-backdrop" id="dossier-modal">
+    <div class="modal-window">
+      <button class="modal-close-btn" onclick="closeDossier()">&times;</button>
+      <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--magma-bright); letter-spacing: 0.16em; text-transform: uppercase;" id="dossier-location">
+        Location Specs
+      </div>
+      <h2 style="font-family: var(--font-display); font-size: 2.2rem; color: #fff; margin: 0.4rem 0;" id="dossier-title">
+        Pavilion Title
+      </h2>
+      <div style="font-family: var(--font-body); font-style: italic; font-size: 1.2rem; color: var(--pumice); margin-bottom: 1.5rem;" id="dossier-artist">
+        Artist / Architect
+      </div>
+
+      <div style="border-top: 1px solid var(--border-subtle); padding-top: 1.5rem; font-size: 1.05rem; line-height: 1.7; color: #dfdcd4;" id="dossier-desc">
+        Full architectural description.
+      </div>
+
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 4px; padding: 1.2rem; margin-top: 1.8rem;">
+        <strong style="display: block; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sulfur); margin-bottom: 0.4rem;">
+          Material Composition &amp; Structural Specs
+        </strong>
+        <p style="font-size: 0.92rem; color: var(--text-secondary);" id="dossier-materials">
+          Materials list.
+        </p>
+      </div>
+
+      <div style="margin-top: 2rem; display: flex; justify-content: flex-end;">
+        <button class="btn-hero-primary" onclick="closeDossier()" style="padding: 0.8rem 1.8rem; font-size: 0.8rem;">
+          Close Dossier
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: CHECKOUT & BOARDING PASS -->
+  <div class="modal-backdrop" id="checkout-modal">
+    <div class="modal-window">
+      <button class="modal-close-btn" onclick="closeCheckoutModal()">&times;</button>
+      
+      <div id="checkout-form-container">
+        <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--magma-bright); letter-spacing: 0.16em; text-transform: uppercase;">
+          Biennial Accreditation
+        </div>
+        <h2 style="font-family: var(--font-display); font-size: 2rem; color: #fff; margin: 0.4rem 0;">
+          Reserve Expedition Pass
+        </h2>
+        <p style="font-size: 0.95rem; color: var(--text-secondary);">
+          Complete your registration for Archipelago 2027. Your digital pass and QR code will be generated immediately.
+        </p>
+
+        <form class="checkout-form" onsubmit="handleReservationSubmit(event)">
+          <div class="form-group">
+            <label>Full Legal Name</label>
+            <input type="text" class="form-input" required placeholder="e.g. Marina Thorne" id="form-name">
+          </div>
+
+          <div class="form-group">
+            <label>Email Address for Telemetry Dispatch</label>
+            <input type="email" class="form-input" required placeholder="marina@institute.org" id="form-email">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label>Country of Origin</label>
+              <input type="text" class="form-input" required placeholder="e.g. Greece / Japan / USA" id="form-country">
+            </div>
+            <div class="form-group">
+              <label>Target Arrival Epoch</label>
+              <select class="form-input" id="form-epoch">
+                <option>Epoch I (Oct 08–12)</option>
+                <option>Epoch II (Oct 13–18)</option>
+                <option>Epoch III (Oct 19–24)</option>
+                <option>Full Duration (Oct 08–24)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="background: rgba(255,87,34,0.06); border: 1px solid rgba(255,87,34,0.3); border-radius: 4px; padding: 1.2rem; margin: 0.8rem 0;">
+            <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.82rem;">
+              <span>Allocated Pass:</span>
+              <span style="color: #fff; font-weight: 700;" id="modal-pass-label">Caldera Circuit Pass (x1)</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 1.1rem; margin-top: 0.6rem; color: var(--magma-bright); font-weight: 900;">
+              <span>Total Payable:</span>
+              <span id="modal-pass-price">&euro;460</span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-checkout-trigger" style="margin-top: 0.5rem;">
+            Confirm &amp; Issue Boarding Pass
+          </button>
+        </form>
+      </div>
+
+      <!-- SUCCESS BOARDING PASS CARD -->
+      <div id="checkout-success" class="boarding-pass-result">
+        <div class="boarding-pass-header">
+          <div>
+            <div style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 900; color: #fff;">ARCHIPELAGO 2027</div>
+            <div style="font-family: var(--font-mono); font-size: 0.68rem; color: var(--magma-bright);">OFFICIAL EXPEDITION BOARDING PASS</div>
+          </div>
+          <div style="text-align: right; font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted);">
+            SECTOR: <strong style="color: #fff;" id="pass-sector">CALDERA-HEARTH</strong><br>
+            CODE: <strong style="color: var(--sulfur);" id="pass-uuid">ARC-9821-VOLC</strong>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; align-items: center;">
+          <div>
+            <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Accredited Explorer</div>
+            <div style="font-family: var(--font-ui); font-size: 1.35rem; font-weight: 700; color: #fff; margin-bottom: 0.8rem;" id="pass-name">
+              Marina Thorne
+            </div>
+
+            <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Pass Tier &amp; Access</div>
+            <div style="font-size: 0.95rem; color: var(--pumice); margin-bottom: 0.8rem;" id="pass-tier-assigned">
+              Caldera Circuit &bull; All 5 Volcanic Islands
+            </div>
+
+            <div style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase;">Shuttle Departure Port</div>
+            <div style="font-size: 0.95rem; color: var(--magma-bright);">
+              Athinios Marine Pier 3 &bull; Solar Catamaran 'Nereus'
+            </div>
+          </div>
+
+          <!-- Simulated QR Code SVG -->
+          <div style="text-align: center;">
+            <svg width="110" height="110" viewBox="0 0 100 100" style="background: #fff; padding: 6px; border-radius: 4px;">
+              <!-- Outer boxes -->
+              <rect x="5" y="5" width="28" height="28" fill="#000"/>
+              <rect x="9" y="9" width="20" height="20" fill="#fff"/>
+              <rect x="13" y="13" width="12" height="12" fill="#000"/>
+
+              <rect x="67" y="5" width="28" height="28" fill="#000"/>
+              <rect x="71" y="9" width="20" height="20" fill="#fff"/>
+              <rect x="75" y="13" width="12" height="12" fill="#000"/>
+
+              <rect x="5" y="67" width="28" height="28" fill="#000"/>
+              <rect x="9" y="71" width="20" height="20" fill="#fff"/>
+              <rect x="13" y="75" width="12" height="12" fill="#000"/>
+
+              <!-- Matrix elements -->
+              <rect x="38" y="8" width="6" height="6" fill="#000"/>
+              <rect x="48" y="18" width="6" height="6" fill="#000"/>
+              <rect x="56" y="8" width="6" height="6" fill="#000"/>
+              <rect x="40" y="38" width="8" height="8" fill="#000"/>
+              <rect x="54" y="44" width="8" height="8" fill="#000"/>
+              <rect x="44" y="60" width="6" height="6" fill="#000"/>
+              <rect x="72" y="40" width="8" height="8" fill="#000"/>
+              <rect x="84" y="52" width="6" height="6" fill="#000"/>
+              <rect x="66" y="66" width="10" height="10" fill="#000"/>
+              <rect x="80" y="78" width="12" height="12" fill="#000"/>
+              <rect x="40" y="80" width="8" height="8" fill="#000"/>
+            </svg>
+            <div style="font-family: var(--font-mono); font-size: 0.65rem; color: #fff; margin-top: 4px;">PASS QR VERIFIED</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px dashed rgba(255,255,255,0.2); display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #00e676;">
+            &bull; RESERVATION SECURED &amp; DISPATCHED VIA EMAIL
+          </span>
+          <button class="btn-dossier" onclick="closeCheckoutModal()">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT: GENERATIVE CANVAS, WEB AUDIO SYNTH, INTERACTIVE MAP & TICKET CALCULATOR -->
+  <script>
+    /* ====================================================
+       1. GENERATIVE SEISMIC TOPOGRAPHY (HERO CANVAS)
+    ==================================================== */
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let time = 0;
+    let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    window.addEventListener('mousemove', (e) => {
+      mouse.targetX = (e.clientX / width - 0.5) * 60;
+      mouse.targetY = (e.clientY / height - 0.5) * 60;
+    });
+
+    // Draw undulating bathymetric contour wave lines
+    function drawTopography() {
+      ctx.clearRect(0, 0, width, height);
+      mouse.x += (mouse.targetX - mouse.x) * 0.05;
+      mouse.y += (mouse.targetY - mouse.y) * 0.05;
+      time += 0.007;
+
+      const numLines = 26;
+      const stepY = height / (numLines - 2);
+
+      for (let i = 0; i < numLines; i++) {
+        const baseY = i * stepY;
+        ctx.beginPath();
+        ctx.lineWidth = i % 5 === 0 ? 1.4 : 0.8;
+        
+        // Magma accent colors on periodic contours
+        if (i === 12 || i === 13) {
+          ctx.strokeStyle = `rgba(255, 87, 34, ${0.35 + Math.sin(time + i) * 0.15})`;
+        } else if (i % 4 === 0) {
+          ctx.strokeStyle = 'rgba(230, 193, 88, 0.2)';
+        } else {
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+        }
+
+        ctx.moveTo(0, baseY);
+
+        for (let x = 0; x <= width; x += 25) {
+          const distToCenter = Math.abs(x - width * 0.5) / (width * 0.5);
+          const volcanicBulge = Math.exp(-distToCenter * 2.8) * 80;
+
+          const wave1 = Math.sin(x * 0.003 + time * 1.2 + i * 0.28) * (20 + volcanicBulge * 0.5);
+          const wave2 = Math.cos(x * 0.007 - time * 0.8 + i * 0.4) * 12;
+          const mouseDisplacement = Math.sin((x + mouse.x * 10) * 0.004) * mouse.y;
+
+          const y = baseY + wave1 + wave2 + mouseDisplacement - (volcanicBulge * Math.sin(time + i * 0.1));
+          ctx.lineTo(x, y);
+        }
+
+        ctx.stroke();
+      }
+
+      // Volcanic particulate floats
+      drawAshParticles();
+
+      requestAnimationFrame(drawTopography);
+    }
+
+    // Ash Particle System
+    const ashParticles = Array.from({ length: 45 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      size: Math.random() * 2.5 + 0.6,
+      speedY: Math.random() * -0.6 - 0.2,
+      speedX: (Math.random() - 0.5) * 0.4,
+      opacity: Math.random() * 0.6 + 0.2,
+      pulse: Math.random() * Math.PI
+    }));
+
+    function drawAshParticles() {
+      for (const p of ashParticles) {
+        p.y += p.speedY;
+        p.x += p.speedX;
+        p.pulse += 0.02;
+
+        if (p.y < 0) {
+          p.y = height + 10;
+          p.x = Math.random() * width;
+        }
+
+        const currentOpacity = p.opacity * (0.6 + Math.sin(p.pulse) * 0.4);
+        ctx.fillStyle = `rgba(255, 110, 64, ${currentOpacity})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    drawTopography();
+
+    /* ====================================================
+       2. GENERATIVE WEB AUDIO API SYNTHESIZER
+       Self-contained, works with NO external audio files!
+    ==================================================== */
+    let audioCtx = null;
+    let isAudioActive = false;
+    let masterGain = null;
+    let filterNode = null;
+    let droneOsc1 = null;
+    let droneOsc2 = null;
+    let subOsc = null;
+    let lfo = null;
+    let lfoGain = null;
+
+    function initWebAudio() {
+      if (audioCtx) return;
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioCtx = new AudioContext();
+
+      // Master output volume
+      masterGain = audioCtx.createGain();
+      masterGain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+      masterGain.connect(audioCtx.destination);
+
+      // Lowpass resonance filter (emulates volcanic earth & magma cavity)
+      filterNode = audioCtx.createBiquadFilter();
+      filterNode.type = 'lowpass';
+      filterNode.frequency.setValueAtTime(450, audioCtx.currentTime);
+      filterNode.Q.setValueAtTime(4.2, audioCtx.currentTime);
+      filterNode.connect(masterGain);
+
+      // Drone Oscillator 1 (Warm sawtooth chord tuned to low D)
+      droneOsc1 = audioCtx.createOscillator();
+      droneOsc1.type = 'sawtooth';
+      droneOsc1.frequency.setValueAtTime(73.42, audioCtx.currentTime); // D2
+
+      // Drone Oscillator 2 (Fifth interval, detuned)
+      droneOsc2 = audioCtx.createOscillator();
+      droneOsc2.type = 'triangle';
+      droneOsc2.frequency.setValueAtTime(110.0, audioCtx.currentTime); // A2
+
+      // Sub-bass oscillator (Infrasound subterranean hum)
+      subOsc = audioCtx.createOscillator();
+      subOsc.type = 'sine';
+      subOsc.frequency.setValueAtTime(36.71, audioCtx.currentTime); // D1 Sub
+
+      // LFO for breathing geological tremor modulation
+      lfo = audioCtx.createOscillator();
+      lfo.frequency.setValueAtTime(0.14, audioCtx.currentTime); // 0.14 Hz seismic rhythm!
+      lfoGain = audioCtx.createGain();
+      lfoGain.gain.setValueAtTime(120, audioCtx.currentTime);
+      lfo.connect(lfoGain);
+      lfoGain.connect(filterNode.frequency);
+
+      // Connect oscillators through filter
+      droneOsc1.connect(filterNode);
+      droneOsc2.connect(filterNode);
+      subOsc.connect(filterNode);
+
+      droneOsc1.start();
+      droneOsc2.start();
+      subOsc.start();
+      lfo.start();
+
+      initDockVisualizer();
+    }
+
+    function toggleGlobalAudio() {
+      initWebAudio();
+
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      const btnNav = document.getElementById('global-audio-toggle');
+      const labelNav = document.getElementById('audio-btn-label');
+      const dockBtn = document.getElementById('dock-audio-btn');
+      const dockText = document.getElementById('dock-audio-text');
+
+      if (!isAudioActive) {
+        // Fade in
+        masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+        masterGain.gain.linearRampToValueAtTime(0.28, audioCtx.currentTime + 2.5);
+        isAudioActive = true;
+
+        btnNav.classList.add('audio-playing');
+        labelNav.textContent = 'SOUND: ACTIVE';
+        dockBtn.classList.add('audio-playing');
+        dockText.textContent = 'Mute Soundscape';
+      } else {
+        // Fade out
+        masterGain.gain.cancelScheduledValues(audioCtx.currentTime);
+        masterGain.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
+        isAudioActive = false;
+
+        btnNav.classList.remove('audio-playing');
+        labelNav.textContent = 'SOUND: MUTED';
+        dockBtn.classList.remove('audio-playing');
+        dockText.textContent = 'Activate Sound';
+      }
+    }
+
+    document.getElementById('global-audio-toggle').addEventListener('click', toggleGlobalAudio);
+
+    function adjustAcousticFilter(val) {
+      if (filterNode && audioCtx) {
+        filterNode.frequency.setTargetAtTime(parseFloat(val), audioCtx.currentTime, 0.1);
+      }
+    }
+
+    // Play procedural tone preview for specific island
+    function playIslandTone(islandKey) {
+      initWebAudio();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      const tones = {
+        nea: { freq: 48, type: 'sawtooth', title: 'Nea Kameni (48 Hz / Basalt Drone)' },
+        thirasia: { freq: 112, type: 'triangle', title: 'Thirasia (112 Hz / Aeolian Harp)' },
+        palea: { freq: 74, type: 'sine', title: 'Palea Kameni (74 Hz / Hydrothermal Pulse)' },
+        aspronisi: { freq: 220, type: 'sine', title: 'Aspronisi (220 Hz / White Pumice Anechoic)' },
+        kolumbo: { freq: 32, type: 'sawtooth', title: 'Kolumbo Vent (32 Hz / Abyssal Sonar)' }
+      };
+
+      const spec = tones[islandKey];
+      if (!spec) return;
+
+      document.getElementById('dock-title').textContent = spec.title;
+
+      // Play localized synth tone
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = spec.type;
+      osc.frequency.setValueAtTime(spec.freq, audioCtx.currentTime);
+
+      gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.35, audioCtx.currentTime + 0.4);
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 3.8);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + 4.0);
+    }
+
+    // Quick Synthesizer for Program Cards
+    function synthesizeTone(freq, type = 'sine', duration = 3.0) {
+      initWebAudio();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+      g.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+      g.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 0.3);
+      g.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+      osc.connect(g);
+      g.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+
+      document.getElementById('dock-title').textContent = `Auditioning Program Tone &bull; ${freq} Hz (${type})`;
+    }
+
+    // Mini visualizer canvas in bottom sticky dock
+    function initDockVisualizer() {
+      const dockCanvas = document.getElementById('dock-waveform');
+      const dCtx = dockCanvas.getContext('2d');
+      dockCanvas.width = 140;
+      dockCanvas.height = 24;
+
+      let phase = 0;
+      function renderDockWave() {
+        dCtx.fillStyle = '#060608';
+        dCtx.fillRect(0, 0, 140, 24);
+
+        dCtx.beginPath();
+        dCtx.strokeStyle = isAudioActive ? '#ff5722' : '#33333e';
+        dCtx.lineWidth = 1.5;
+
+        phase += isAudioActive ? 0.08 : 0.015;
+        for (let x = 0; x < 140; x++) {
+          const amp = isAudioActive ? 7.5 : 2;
+          const y = 12 + Math.sin(x * 0.12 + phase) * amp * Math.cos(x * 0.04);
+          if (x === 0) dCtx.moveTo(x, y);
+          else dCtx.lineTo(x, y);
+        }
+        dCtx.stroke();
+        requestAnimationFrame(renderDockWave);
+      }
+      renderDockWave();
+    }
+
+    /* ====================================================
+       3. INTERACTIVE 5-ISLAND EXPLORER & MAP
+    ==================================================== */
+    const islandKeys = ['nea', 'thirasia', 'palea', 'aspronisi', 'kolumbo'];
+    const islandCoords = [
+      '36°24\'14" N — 25°23\'42" E (NEA KAMENI CALDERA)',
+      '36°26\'02" N — 25°20\'18" E (THIRASIA RIM)',
+      '36°23\'52" N — 25°22\'45" E (PALEA KAMENI RIFT)',
+      '36°22\'58" N — 25°21\'04" E (ASPRONISI WHITE CRAG)',
+      '36°31\'12" N — 25°28\'48" E (KOLUMBO SUBMERGED -505M)'
+    ];
+
+    function selectIsland(key, index) {
+      // Update Tab buttons
+      const tabBtns = document.querySelectorAll('.island-tab-btn');
+      tabBtns.forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === index);
+      });
+
+      // Update SVG node pins
+      islandKeys.forEach(k => {
+        const node = document.getElementById(`node-${k}`);
+        if (node) {
+          node.classList.toggle('active', k === key);
+        }
+      });
+
+      // Update Panel displays
+      islandKeys.forEach(k => {
+        const panel = document.getElementById(`panel-${k}`);
+        if (panel) {
+          panel.classList.toggle('active', k === key);
+        }
+      });
+
+      // Update Coordinates
+      document.getElementById('active-map-coords').textContent = islandCoords[index];
+    }
+
+    /* ====================================================
+       4. PROGRAM LINEUP FILTERING
+    ==================================================== */
+    let currentIslandFilter = 'all';
+    let currentEpochFilter = 'all';
+
+    const islandFilterButtons = document.querySelectorAll('#program-island-filters .filter-btn');
+    islandFilterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        islandFilterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentIslandFilter = btn.dataset.filter;
+        applyProgramFilters();
+      });
+    });
+
+    const epochFilterButtons = document.querySelectorAll('.epoch-btn');
+    epochFilterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        epochFilterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentEpochFilter = btn.dataset.epoch;
+        applyProgramFilters();
+      });
+    });
+
+    function applyProgramFilters() {
+      const cards = document.querySelectorAll('.program-card');
+      cards.forEach(card => {
+        const islandMatch = (currentIslandFilter === 'all') || (card.dataset.island === currentIslandFilter);
+        const epochMatch = (currentEpochFilter === 'all') || (card.dataset.epoch === currentEpochFilter);
+
+        if (islandMatch && epochMatch) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    /* ====================================================
+       5. TICKET CALCULATOR & BOOKING SUITE
+    ==================================================== */
+    let selectedTier = {
+      name: 'Caldera Circuit Pass',
+      price: 460
+    };
+    let attendeeQty = 1;
+    let activeAddons = new Set();
+
+    function selectTierCard(cardElement) {
+      document.querySelectorAll('.ticket-card').forEach(c => {
+        c.classList.remove('selected');
+        const btn = c.querySelector('.btn-select-tier');
+        if (btn) btn.textContent = btn.textContent.replace('Selected', 'Select');
+      });
+
+      cardElement.classList.add('selected');
+      const btn = cardElement.querySelector('.btn-select-tier');
+      if (btn) btn.textContent = 'Selected';
+
+      const tierKey = cardElement.dataset.tier;
+      const price = parseInt(cardElement.dataset.price, 10);
+      const name = cardElement.querySelector('.ticket-tier-name').textContent.trim();
+
+      selectedTier = { name, price };
+      updateCalculatorSummary();
+    }
+
+    function toggleAddon(addonElem) {
+      addonElem.classList.toggle('selected');
+      const price = parseInt(addonElem.dataset.price, 10);
+
+      if (addonElem.classList.contains('selected')) {
+        activeAddons.add(price);
+      } else {
+        activeAddons.delete(price);
+      }
+      updateCalculatorSummary();
+    }
+
+    function updateQty(delta) {
+      attendeeQty = Math.max(1, Math.min(10, attendeeQty + delta));
+      document.getElementById('attendee-qty').textContent = attendeeQty;
+      updateCalculatorSummary();
+    }
+
+    function updateCalculatorSummary() {
+      document.getElementById('summary-tier-name').textContent = selectedTier.name;
+      document.getElementById('summary-base-rate').textContent = `€${selectedTier.price}`;
+
+      let addonsSum = 0;
+      activeAddons.forEach(p => addonsSum += p);
+      document.getElementById('summary-addons-total').textContent = `€${addonsSum * attendeeQty}`;
+
+      const grandTotal = (selectedTier.price + addonsSum) * attendeeQty;
+      document.getElementById('summary-grand-total').textContent = `€${grandTotal.toLocaleString()}`;
+
+      // Update Modal summary mirrors
+      document.getElementById('modal-pass-label').textContent = `${selectedTier.name} (x${attendeeQty})`;
+      document.getElementById('modal-pass-price').textContent = `€${grandTotal.toLocaleString()}`;
+    }
+
+    /* ====================================================
+       6. MODAL HANDLERS & SIMULATED PASS ISSUANCE
+    ==================================================== */
+    function openCheckoutModal() {
+      updateCalculatorSummary();
+      document.getElementById('checkout-form-container').style.display = 'block';
+      document.getElementById('checkout-success').style.display = 'none';
+      document.getElementById('checkout-modal').classList.add('open');
+    }
+
+    function closeCheckoutModal() {
+      document.getElementById('checkout-modal').classList.remove('open');
+    }
+
+    function handleReservationSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('form-name').value;
+      const randomUUID = 'ARC-' + Math.floor(1000 + Math.random() * 9000) + '-VOLC';
+      
+      document.getElementById('pass-name').textContent = name;
+      document.getElementById('pass-tier-assigned').textContent = `${selectedTier.name} &bull; ${attendeeQty} ${attendeeQty === 1 ? 'Explorer' : 'Explorers'}`;
+      document.getElementById('pass-uuid').textContent = randomUUID;
+
+      document.getElementById('checkout-form-container').style.display = 'none';
+      document.getElementById('checkout-success').style.display = 'block';
+    }
+
+    // Dossier Modal
+    function openDossier(title, artist, location, desc, materials) {
+      document.getElementById('dossier-title').textContent = title;
+      document.getElementById('dossier-artist').textContent = artist;
+      document.getElementById('dossier-location').textContent = location;
+      document.getElementById('dossier-desc').textContent = desc;
+      document.getElementById('dossier-materials').textContent = materials;
+
+      document.getElementById('dossier-modal').classList.add('open');
+    }
+
+    function closeDossier() {
+      document.getElementById('dossier-modal').classList.remove('open');
+    }
+
+    // FAQ Accordion
+    function toggleFaq(btn) {
+      const answer = btn.nextElementSibling;
+      const isOpen = answer.classList.contains('open');
+
+      document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+      if (!isOpen) {
+        answer.classList.add('open');
+      }
+    }
+
+    // Close modals on clicking outside window
+    document.querySelectorAll('.modal-backdrop').forEach(b => {
+      b.addEventListener('click', (e) => {
+        if (e.target === b) {
+          b.classList.remove('open');
+        }
+      });
+    });
+
+    // Close on Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-backdrop').forEach(b => b.classList.remove('open'));
+      }
+    });
+  </script>
+</body>
+</html>

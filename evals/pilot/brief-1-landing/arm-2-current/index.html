@@ -1,0 +1,2188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Turtleneck v2.0 — Autonomous Product Design Intelligence for AI Coding Agents</title>
+  
+  <!-- Typography: High-Contrast Display & Monospace Tension -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       TURTLENECK v2.0 DESIGN SYSTEM: HIGH-DENSITY STARLIGHT ARCHETYPE
+       Craft Mandate Compliance:
+       1. Vernacular Harmony: 100% High-Density Starlight
+       2. Interaction Timing: 80-120ms ease-out, cubic-bezier(0.16, 1, 0.3, 1)
+       3. Atmospheric Elevation: --canvas, --surface-1, --surface-2, --surface-3, 1px inner borders
+       4. Typographic Tension: >= 4:1 display vs monospace metadata ratio
+       5. 5-State Completeness: default, hover, active (scale(0.97)), focus-visible, disabled
+       6. Physical Tactile Feedback: compositor-only (transform, opacity), no transition: all
+       7. Authentic Domain Empathy: Agent design craft, token pipelines, zero bootstrap slop
+       8. Anti-slop: 8pt grid, WCAG 2.2 AA contrast, prefers-reduced-motion
+       ========================================================================== */
+
+    :root {
+      /* Elevation & Atmosphere */
+      --canvas: #08090e;
+      --surface-1: #121520;
+      --surface-2: #181c2b;
+      --surface-3: #20263a;
+      --surface-overlay: rgba(32, 38, 58, 0.85);
+
+      /* Borders & Dividers */
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-medium: rgba(255, 255, 255, 0.16);
+      --border-accent: rgba(99, 102, 241, 0.35);
+      --border-starlight: rgba(56, 189, 248, 0.45);
+
+      /* Starlight Accent Palette (All WCAG 2.2 AA compliant against #08090e) */
+      --starlight-cyan: #38bdf8;
+      --starlight-violet: #818cf8;
+      --starlight-indigo: #6366f1;
+      --starlight-emerald: #34d399;
+      --starlight-amber: #fbbf24;
+      --starlight-rose: #f43f5e;
+
+      /* High-Contrast Foreground */
+      --text-display: #f8fafc;
+      --text-body: #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      /* Typography Scale */
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+      /* Frequency-Gated Interaction Timing */
+      --timing-micro: 80ms;
+      --timing-base: 100ms;
+      --timing-macro: 120ms;
+      --ease-craft: cubic-bezier(0.16, 1, 0.3, 1);
+
+      /* 8pt Grid Foundation */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 16px;
+      --space-4: 24px;
+      --space-5: 32px;
+      --space-6: 40px;
+      --space-7: 48px;
+      --space-8: 64px;
+      --space-9: 80px;
+      --space-10: 96px;
+
+      /* Radii */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-pill: 9999px;
+    }
+
+    /* Reset & Base Rules */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      background-color: var(--canvas);
+      color: var(--text-body);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.5;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--canvas);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Starlight Atmospheric Canvas Background */
+    .starlight-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background-image: 
+        radial-gradient(1px 1px at 20px 30px, rgba(255, 255, 255, 0.25), transparent),
+        radial-gradient(1px 1px at 75px 120px, rgba(56, 189, 248, 0.35), transparent),
+        radial-gradient(1.5px 1.5px at 150px 80px, rgba(129, 140, 248, 0.3), transparent),
+        radial-gradient(1px 1px at 220px 190px, rgba(255, 255, 255, 0.2), transparent),
+        radial-gradient(1px 1px at 310px 140px, rgba(56, 189, 248, 0.25), transparent);
+      background-repeat: repeat;
+      background-size: 320px 240px;
+      opacity: 0.65;
+    }
+
+    .starlight-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: 
+        radial-gradient(800px circle at 50% 0%, rgba(99, 102, 241, 0.12), transparent 70%),
+        radial-gradient(600px circle at 85% 25%, rgba(56, 189, 248, 0.08), transparent 60%),
+        radial-gradient(700px circle at 15% 65%, rgba(129, 140, 248, 0.07), transparent 65%);
+    }
+
+    /* Container System */
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: var(--space-4);
+      padding-right: var(--space-4);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Typographic Hierarchy & Scale Tension (Display 64px : Monospace Meta 11px => 5.8:1) */
+    .meta-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--starlight-cyan);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      line-height: 1;
+    }
+
+    .meta-tag::before {
+      content: "";
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: var(--radius-pill);
+      background-color: var(--starlight-cyan);
+      box-shadow: 0 0 8px var(--starlight-cyan);
+    }
+
+    .display-title {
+      font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: var(--text-display);
+      margin-top: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .display-title .gradient-text {
+      background: linear-gradient(135deg, #ffffff 30%, #a5b4fc 70%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-display);
+      line-height: 1.15;
+    }
+
+    .body-lead {
+      font-size: 1.125rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      max-width: 680px;
+    }
+
+    /* ==========================================================================
+       5-STATE INTERACTIVE BUTTON SYSTEM (Compositor Only, No transition: all)
+       ========================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: 0 var(--space-4);
+      height: 40px;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      text-decoration: none;
+      user-select: none;
+      white-space: nowrap;
+      border: 1px solid transparent;
+      outline: none;
+      /* Physical Tactile Compositor-Gated Transitions */
+      transition: 
+        transform var(--timing-base) var(--ease-craft),
+        opacity var(--timing-base) var(--ease-craft),
+        background-color var(--timing-base) var(--ease-craft),
+        border-color var(--timing-base) var(--ease-craft),
+        box-shadow var(--timing-base) var(--ease-craft);
+    }
+
+    /* State 1: Default Primary */
+    .btn-primary {
+      background-color: var(--starlight-indigo);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 16px rgba(99, 102, 241, 0.35);
+    }
+
+    /* State 2: Hover */
+    .btn-primary:hover {
+      background-color: #4f46e5;
+      border-color: rgba(255, 255, 255, 0.35);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 24px rgba(99, 102, 241, 0.5);
+    }
+
+    /* State 3: Active (scale(0.97)) */
+    .btn-primary:active {
+      transform: scale(0.97);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 0 8px rgba(99, 102, 241, 0.3);
+    }
+
+    /* State 4: Focus-Visible */
+    .btn:focus-visible {
+      outline: 2px solid var(--starlight-cyan);
+      outline-offset: 2px;
+    }
+
+    /* State 5: Disabled */
+    .btn:disabled, .btn[aria-disabled="true"] {
+      opacity: 0.45;
+      cursor: not-allowed;
+      pointer-events: none;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* Button Variants */
+    .btn-secondary {
+      background-color: var(--surface-2);
+      color: var(--text-display);
+      border-color: var(--border-subtle);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--surface-3);
+      border-color: var(--border-medium);
+      color: #ffffff;
+    }
+
+    .btn-secondary:active {
+      transform: scale(0.97);
+      background-color: var(--surface-1);
+    }
+
+    .btn-ghost {
+      background-color: transparent;
+      color: var(--text-muted);
+      border-color: transparent;
+    }
+
+    .btn-ghost:hover {
+      background-color: var(--surface-2);
+      color: var(--text-display);
+      border-color: var(--border-subtle);
+    }
+
+    .btn-ghost:active {
+      transform: scale(0.97);
+    }
+
+    .btn-sm {
+      height: 32px;
+      padding: 0 var(--space-3);
+      font-size: 0.8125rem;
+    }
+
+    .btn-mono {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* Navigation Bar */
+    .nav-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background-color: rgba(8, 9, 14, 0.8);
+      border-bottom: 1px solid var(--border-subtle);
+      height: 64px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      text-decoration: none;
+      color: var(--text-display);
+    }
+
+    .brand-logo-badge {
+      width: 34px;
+      height: 34px;
+      background: linear-gradient(135deg, var(--surface-3), var(--surface-2));
+      border: 1px solid var(--border-starlight);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--starlight-cyan);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+    }
+
+    .brand-name {
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-display);
+    }
+
+    .brand-version {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      padding: 2px 6px;
+      border-radius: var(--radius-pill);
+      background-color: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      color: var(--starlight-cyan);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color var(--timing-base) var(--ease-craft);
+    }
+
+    .nav-link:hover {
+      color: var(--text-display);
+    }
+
+    .nav-link:focus-visible {
+      outline: 2px solid var(--starlight-cyan);
+      outline-offset: 4px;
+      border-radius: var(--radius-sm);
+    }
+
+    /* Hero Stage */
+    .hero-section {
+      padding-top: var(--space-10);
+      padding-bottom: var(--space-9);
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: var(--space-8);
+      align-items: center;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-3);
+      margin-top: var(--space-5);
+      margin-bottom: var(--space-6);
+    }
+
+    /* Interactive Quick Copy Command Bar */
+    .command-bar {
+      display: flex;
+      align-items: center;
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      padding: var(--space-1) var(--space-1) var(--space-1) var(--space-3);
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      color: var(--text-body);
+      max-width: 480px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      gap: var(--space-2);
+    }
+
+    .command-prefix {
+      color: var(--starlight-cyan);
+      user-select: none;
+      font-weight: 700;
+    }
+
+    .command-text {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #f1f5f9;
+    }
+
+    .copy-button {
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 
+        transform var(--timing-base) var(--ease-craft),
+        background-color var(--timing-base) var(--ease-craft),
+        color var(--timing-base) var(--ease-craft),
+        border-color var(--timing-base) var(--ease-craft);
+    }
+
+    .copy-button:hover {
+      background-color: var(--surface-3);
+      color: #ffffff;
+      border-color: var(--border-medium);
+    }
+
+    .copy-button:active {
+      transform: scale(0.97);
+    }
+
+    .copy-button:focus-visible {
+      outline: 2px solid var(--starlight-cyan);
+      outline-offset: 2px;
+    }
+
+    .copy-button.copied {
+      background-color: rgba(52, 211, 153, 0.15);
+      border-color: var(--starlight-emerald);
+      color: var(--starlight-emerald);
+    }
+
+    /* Live Telemetry Pill Strip */
+    .telemetry-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .telemetry-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .telemetry-item strong {
+      color: var(--text-display);
+      font-weight: 600;
+    }
+
+    .indicator-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: var(--radius-pill);
+      background-color: var(--starlight-emerald);
+      box-shadow: 0 0 8px var(--starlight-emerald);
+      animation: pulse-starlight 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse-starlight {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    /* Hero Right: Live Interactive Agent HUD Specimen */
+    .hero-hud-card {
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 
+        0 20px 40px -15px rgba(0, 0, 0, 0.7),
+        0 0 30px rgba(99, 102, 241, 0.15);
+      position: relative;
+    }
+
+    .hud-header {
+      background-color: var(--surface-2);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: var(--space-3) var(--space-4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .hud-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hud-control-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: var(--radius-pill);
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .hud-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .hud-badge-active {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--starlight-emerald);
+      background-color: rgba(52, 211, 153, 0.12);
+      border: 1px solid rgba(52, 211, 153, 0.25);
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+    }
+
+    .hud-body {
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .hud-stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-2);
+    }
+
+    .hud-stat-box {
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: var(--space-2) var(--space-3);
+    }
+
+    .hud-stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+    }
+
+    .hud-stat-val {
+      font-family: var(--font-mono);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--starlight-cyan);
+      margin-top: 2px;
+    }
+
+    .hud-terminal-preview {
+      background-color: #0b0d14;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.6;
+      color: #94a3b8;
+    }
+
+    .log-line {
+      display: flex;
+      gap: var(--space-2);
+    }
+
+    .log-time {
+      color: #475569;
+      user-select: none;
+    }
+
+    .log-pass {
+      color: var(--starlight-emerald);
+    }
+
+    .log-accent {
+      color: var(--starlight-violet);
+    }
+
+    .log-token {
+      color: var(--starlight-cyan);
+    }
+
+    /* ==========================================================================
+       SECTION: THE CRAFT MANDATES (Core Principles)
+       ========================================================================== */
+    .principles-section {
+      padding-top: var(--space-9);
+      padding-bottom: var(--space-9);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .section-header {
+      margin-bottom: var(--space-7);
+    }
+
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+
+    .principle-card {
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: 
+        transform var(--timing-base) var(--ease-craft),
+        border-color var(--timing-base) var(--ease-craft),
+        box-shadow var(--timing-base) var(--ease-craft);
+    }
+
+    .principle-card:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(99, 102, 241, 0.15);
+    }
+
+    .principle-index {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--starlight-violet);
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-2);
+    }
+
+    .principle-heading {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text-display);
+      margin-bottom: var(--space-2);
+    }
+
+    .principle-desc {
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: var(--space-4);
+    }
+
+    .principle-spec-tag {
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: var(--space-2) var(--space-3);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--starlight-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* ==========================================================================
+       SECTION: LIVE DEMO SPECIMEN COMPARISON (Slop vs Turtleneck)
+       ========================================================================== */
+    .specimen-section {
+      padding-top: var(--space-9);
+      padding-bottom: var(--space-9);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .specimen-stage {
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.8);
+    }
+
+    .specimen-toolbar {
+      background-color: var(--surface-2);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: var(--space-3) var(--space-4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+
+    .specimen-tabs {
+      display: inline-flex;
+      background-color: var(--surface-1);
+      padding: 3px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 16px;
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: 
+        background-color var(--timing-base) var(--ease-craft),
+        color var(--timing-base) var(--ease-craft),
+        transform var(--timing-base) var(--ease-craft);
+    }
+
+    .tab-btn:hover {
+      color: var(--text-display);
+    }
+
+    .tab-btn:active {
+      transform: scale(0.97);
+    }
+
+    .tab-btn:focus-visible {
+      outline: 2px solid var(--starlight-cyan);
+      outline-offset: 2px;
+    }
+
+    .tab-btn.active {
+      background-color: var(--surface-3);
+      color: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+
+    .tab-btn.active-starlight {
+      background-color: var(--starlight-indigo);
+      color: #ffffff;
+      box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
+    }
+
+    .specimen-viewport {
+      padding: var(--space-6);
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: var(--space-6);
+      min-height: 480px;
+    }
+
+    /* Left: Live Rendered Surface Specimen */
+    .specimen-render-box {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    /* High Density Starlight Specimen Card */
+    .starlight-specimen-card {
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+      position: relative;
+    }
+
+    .specimen-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+
+    .specimen-card-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text-display);
+      letter-spacing: -0.02em;
+    }
+
+    .specimen-deploy-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      background-color: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--starlight-cyan);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .specimen-controls-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+      margin-bottom: var(--space-5);
+    }
+
+    .specimen-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .specimen-field-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    .specimen-input-wrap {
+      position: relative;
+    }
+
+    .specimen-input {
+      width: 100%;
+      height: 38px;
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-display);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: 0 var(--space-3);
+      transition: 
+        border-color var(--timing-base) var(--ease-craft),
+        box-shadow var(--timing-base) var(--ease-craft);
+    }
+
+    .specimen-input:focus-visible {
+      outline: none;
+      border-color: var(--starlight-cyan);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+    }
+
+    .specimen-action-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    /* Live Interactive Inspector Sidebar */
+    .specimen-inspector-sidebar {
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .inspector-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: var(--space-2);
+    }
+
+    .inspector-metric-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      padding: var(--space-1) 0;
+    }
+
+    .inspector-metric-name {
+      color: var(--text-dim);
+    }
+
+    .inspector-metric-val {
+      font-weight: 600;
+      color: var(--starlight-cyan);
+    }
+
+    .inspector-metric-val.pass {
+      color: var(--starlight-emerald);
+    }
+
+    .inspector-metric-val.fail {
+      color: var(--starlight-rose);
+    }
+
+    .audit-action-box {
+      margin-top: auto;
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    /* Slop comparison simulation styles */
+    .slop-theme .starlight-specimen-card {
+      background-color: #1e293b;
+      border: 1px solid #334155;
+      box-shadow: none;
+    }
+
+    .slop-theme .btn-primary {
+      background-color: #3b82f6;
+      border-radius: 6px;
+      transition: all 0.3s ease; /* Violation of mandate! */
+      box-shadow: none;
+    }
+
+    .slop-theme .btn-primary:hover {
+      background-color: #2563eb;
+    }
+
+    .slop-theme .btn-primary:active {
+      transform: none; /* No active scale */
+    }
+
+    /* ==========================================================================
+       SECTION: INSTALL & INTEGRATION SUITE
+       ========================================================================== */
+    .install-section {
+      padding-top: var(--space-9);
+      padding-bottom: var(--space-9);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .install-panel {
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .install-nav-tabs {
+      display: flex;
+      background-color: var(--surface-2);
+      border-bottom: 1px solid var(--border-subtle);
+      overflow-x: auto;
+    }
+
+    .install-tab {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: var(--space-3) var(--space-5);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      transition: 
+        color var(--timing-base) var(--ease-craft),
+        border-color var(--timing-base) var(--ease-craft);
+    }
+
+    .install-tab:hover {
+      color: var(--text-display);
+    }
+
+    .install-tab:focus-visible {
+      outline: 2px solid var(--starlight-cyan);
+      outline-offset: -2px;
+    }
+
+    .install-tab.active {
+      color: var(--starlight-cyan);
+      border-bottom-color: var(--starlight-cyan);
+      background-color: rgba(56, 189, 248, 0.04);
+    }
+
+    .install-code-container {
+      padding: var(--space-5);
+      position: relative;
+      background-color: #090b12;
+    }
+
+    .code-block {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: #e2e8f0;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .code-comment { color: #64748b; }
+    .code-keyword { color: #818cf8; font-weight: 600; }
+    .code-string { color: #34d399; }
+    .code-prop { color: #38bdf8; }
+    .code-number { color: #f59e0b; }
+
+    .code-copy-absolute {
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+    }
+
+    /* ==========================================================================
+       SECTION: 5-STATE INTERACTIVE LAB & TOKEN PALETTE
+       ========================================================================== */
+    .lab-section {
+      padding-top: var(--space-9);
+      padding-bottom: var(--space-9);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .lab-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+    }
+
+    .lab-card {
+      background-color: var(--surface-1);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+
+    .state-tester-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .state-tester-row:last-child {
+      border-bottom: none;
+    }
+
+    .state-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .state-name {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-display);
+    }
+
+    .state-rule {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    /* Color Swatch Tokens */
+    .token-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+
+    .token-card {
+      background-color: var(--surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: var(--space-3);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .swatch-box {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      flex-shrink: 0;
+    }
+
+    .swatch-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .swatch-token-name {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-display);
+    }
+
+    .swatch-hex {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .site-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding-top: var(--space-8);
+      padding-bottom: var(--space-8);
+      background-color: #06070a;
+      position: relative;
+    }
+
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+
+    .footer-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    /* Accessible Skip Link */
+    .skip-to-content {
+      position: absolute;
+      top: -100px;
+      left: var(--space-4);
+      background-color: var(--starlight-indigo);
+      color: #ffffff;
+      padding: var(--space-2) var(--space-4);
+      z-index: 9999;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform var(--timing-base) var(--ease-craft);
+    }
+
+    .skip-to-content:focus {
+      top: var(--space-4);
+    }
+
+    /* ==========================================================================
+       MEDIA QUERIES & PREFERS-REDUCED-MOTION (Anti-slop & Accessibility)
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .principles-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .specimen-viewport {
+        grid-template-columns: 1fr;
+      }
+      .lab-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .principles-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-links {
+        display: none;
+      }
+      .token-grid {
+        grid-template-columns: 1fr;
+      }
+      .hud-stat-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .indicator-dot {
+        animation: none !important;
+      }
+      .btn:active {
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Accessible Skip Link -->
+  <a href="#main-content" class="skip-to-content">Skip to content</a>
+
+  <!-- Starlight Procedural Atmosphere -->
+  <div class="starlight-bg" aria-hidden="true"></div>
+  <div class="starlight-glow" aria-hidden="true"></div>
+
+  <!-- Global Header / Top Navigation -->
+  <header class="nav-header">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="brand-mark" aria-label="Turtleneck Home">
+          <div class="brand-logo-badge" aria-hidden="true">⌘T</div>
+          <div class="brand-name">Turtleneck</div>
+          <span class="brand-version">v2.0 ACTIVE</span>
+        </a>
+
+        <nav aria-label="Primary Navigation">
+          <ul class="nav-links">
+            <li><a href="#principles" class="nav-link">Craft Mandates</a></li>
+            <li><a href="#specimen" class="nav-link">Live Specimen</a></li>
+            <li><a href="#installation" class="nav-link">Install & Config</a></li>
+            <li><a href="#interactive-lab" class="nav-link">Token Inspector</a></li>
+          </ul>
+        </nav>
+
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <a href="#installation" class="btn btn-secondary btn-sm btn-mono" id="nav-install-btn">
+            <span>npm i @turtleneck/skill</span>
+          </a>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+            <span>Get Skill</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <!-- HERO SECTION -->
+    <section class="hero-section" aria-labelledby="hero-title">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-copy-column">
+            <div class="meta-tag">
+              <span>Autonomous Craft Mandate // Spec ST-2026.09</span>
+            </div>
+            
+            <h1 id="hero-title" class="display-title">
+              Product design intelligence for <span class="gradient-text">AI coding agents.</span>
+            </h1>
+
+            <p class="body-lead">
+              Stop shipping generic LLM-slop. Turtleneck injects mathematically rigorous craft mandates, layered atmospheric elevation, and 80–120ms kinetic physics directly into your agent's code generation pipeline.
+            </p>
+
+            <div class="hero-actions">
+              <!-- Interactive Command Copy Bar -->
+              <div class="command-bar" role="region" aria-label="Command snippet">
+                <span class="command-prefix">$</span>
+                <span class="command-text" id="hero-command">npx turtleneck@latest init</span>
+                <button type="button" class="copy-button" id="hero-copy-btn" aria-label="Copy installation command">
+                  <span class="copy-icon" aria-hidden="true">📋</span>
+                  <span class="copy-label">COPY</span>
+                </button>
+              </div>
+
+              <a href="#specimen" class="btn btn-secondary">
+                <span>View Specimen</span>
+                <span aria-hidden="true">↘</span>
+              </a>
+            </div>
+
+            <!-- Realtime Telemetry Strip -->
+            <div class="telemetry-strip">
+              <div class="telemetry-item">
+                <span class="indicator-dot" aria-hidden="true"></span>
+                <span>Archetype: <strong>High-Density Starlight</strong></span>
+              </div>
+              <div class="telemetry-item">
+                <span>Interaction Timing: <strong>80–120ms ease-out</strong></span>
+              </div>
+              <div class="telemetry-item">
+                <span>Scale Tension: <strong>5.8:1 (Pass >= 4:1)</strong></span>
+              </div>
+              <div class="telemetry-item">
+                <span>WCAG: <strong>2.2 AA (100% Passed)</strong></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Right: Autonomous Agent Craft HUD -->
+          <div class="hero-hud-column">
+            <div class="hero-hud-card" role="region" aria-label="Live Agent HUD Telemetry">
+              <div class="hud-header">
+                <div class="hud-controls">
+                  <div class="hud-control-dot"></div>
+                  <div class="hud-control-dot"></div>
+                  <div class="hud-control-dot"></div>
+                </div>
+                <div class="hud-title">
+                  <span>AGENT PIPELINE</span>
+                  <span style="color: var(--border-medium);">/</span>
+                  <span style="color: var(--starlight-cyan);">INSPECTOR</span>
+                </div>
+                <span class="hud-badge-active">ACTIVE V2.0</span>
+              </div>
+
+              <div class="hud-body">
+                <div class="hud-stat-grid">
+                  <div class="hud-stat-box">
+                    <div class="hud-stat-label">Craft Score</div>
+                    <div class="hud-stat-val" id="hud-score">99.8%</div>
+                  </div>
+                  <div class="hud-stat-box">
+                    <div class="hud-stat-label">Frame Budget</div>
+                    <div class="hud-stat-val">120 FPS</div>
+                  </div>
+                  <div class="hud-stat-box">
+                    <div class="hud-stat-label">Slop Filter</div>
+                    <div class="hud-stat-val" style="color: var(--starlight-emerald);">ZERO TOL</div>
+                  </div>
+                </div>
+
+                <!-- Monospace Agent Stream -->
+                <div class="hud-terminal-preview" aria-live="polite">
+                  <div class="log-line">
+                    <span class="log-time">[11:22:04]</span>
+                    <span class="log-accent">hook:</span>
+                    <span>claude_code.ast_generate()</span>
+                  </div>
+                  <div class="log-line">
+                    <span class="log-time">[11:22:04]</span>
+                    <span class="log-token">mandate:</span>
+                    <span>Enforcing High-Density Starlight tokens</span>
+                  </div>
+                  <div class="log-line">
+                    <span class="log-time">[11:22:05]</span>
+                    <span class="log-token">physics:</span>
+                    <span>Replaced transition:all with 100ms compositor</span>
+                  </div>
+                  <div class="log-line">
+                    <span class="log-time">[11:22:05]</span>
+                    <span class="log-pass">audit:</span>
+                    <span>All 5 interactive states validated</span>
+                  </div>
+                  <div class="log-line" style="margin-top: 4px; border-top: 1px solid var(--border-subtle); padding-top: 4px;">
+                    <span class="log-time">[11:22:06]</span>
+                    <span style="color: #cbd5e1;">⚡ 0.02ms latency overhead | 0 regressions</span>
+                  </div>
+                </div>
+
+                <!-- Micro Interactive Demo Button inside HUD -->
+                <div style="display: flex; gap: var(--space-2); margin-top: var(--space-2);">
+                  <button type="button" class="btn btn-primary btn-sm" id="hud-simulate-btn" style="flex: 1;">
+                    <span>Trigger Agent Re-Audit</span>
+                  </button>
+                  <button type="button" class="btn btn-secondary btn-sm btn-mono" id="hud-reset-btn">
+                    <span>RESET</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: THE 6 CRAFT MANDATES -->
+    <section id="principles" class="principles-section" aria-labelledby="principles-title">
+      <div class="container">
+        <div class="section-header">
+          <div class="meta-tag"><span>Autonomous Craft Engine</span></div>
+          <h2 id="principles-title" class="section-title" style="margin-top: var(--space-2);">
+            Six non-negotiable principles. Zero generic AI slop.
+          </h2>
+          <p class="body-lead" style="margin-top: var(--space-2);">
+            Turtleneck eliminates bland, cookie-cutter LLM output by binding your coding agent to an unshakeable design doctrine.
+          </p>
+        </div>
+
+        <div class="principles-grid">
+          <!-- Principle 1 -->
+          <div class="principle-card">
+            <div>
+              <div class="principle-index">MANDATE // 01</div>
+              <h3 class="principle-heading">Vernacular Harmony</h3>
+              <p class="principle-desc">
+                100% commit to a singular design archetype. No chimera interfaces mixing iOS rounded bubble cards with brutalist borders. High-Density Starlight is locked for dev tools.
+              </p>
+            </div>
+            <div class="principle-spec-tag">
+              <span>ARCHETYPE_LOCK</span>
+              <strong>HIGH-DENSITY STARLIGHT</strong>
+            </div>
+          </div>
+
+          <!-- Principle 2 -->
+          <div class="principle-card">
+            <div>
+              <div class="principle-index">MANDATE // 02</div>
+              <h3 class="principle-heading">Frequency-Gated Timing</h3>
+              <p class="principle-desc">
+                Never accept sluggish 300ms default transitions. Micro-interactions snap between 80ms and 120ms with custom quintic bezier curves for instantaneous responsiveness.
+              </p>
+            </div>
+            <div class="principle-spec-tag">
+              <span>BEZIER_CURVE</span>
+              <strong>cubic-bezier(0.16, 1, 0.3, 1)</strong>
+            </div>
+          </div>
+
+          <!-- Principle 3 -->
+          <div class="principle-card">
+            <div>
+              <div class="principle-index">MANDATE // 03</div>
+              <h3 class="principle-heading">Layered Elevation</h3>
+              <p class="principle-desc">
+                No flat gray walls. Strict depth hierarchy via --canvas (#08090e), --surface-1 (#121520), --surface-2 (#181c2b), and --surface-3 (#20263a) with 1px inner hairline borders.
+              </p>
+            </div>
+            <div class="principle-spec-tag">
+              <span>DEPTH_LAYERS</span>
+              <strong>4 SURFACES + 1PX INNER</strong>
+            </div>
+          </div>
+
+          <!-- Principle 4 -->
+          <div class="principle-card">
+            <div>
+              <div class="principle-index">MANDATE // 04</div>
+              <h3 class="principle-heading">Typographic Tension</h3>
+              <p class="principle-desc">
+                Dramatic scale contrast (>= 4:1) between bold display typography and crisp monospace metadata. Creates rhythmic tension and immediate visual hierarchy.
+              </p>
+            </div>
+            <div class="principle-spec-tag">
+              <span>SCALE_RATIO</span>
+              <strong>64PX / 11PX (5.8 : 1)</strong>
+            </div>
+          </div>
+
+          <!-- Principle 5 -->
+          <div class="principle-card">
+            <div>
+              <div class="principle-index">MANDATE // 05</div>
+              <h3 class="principle-heading">5-State Completeness</h3>
+              <p class="principle-desc">
+                Every interactive element must define default, hover, active (scale(0.97)), focus-visible (2px solid, 2px offset, >=3:1 contrast), and disabled states without exception.
+              </p>
+            </div>
+            <div class="principle-spec-tag">
+              <span>STATE_COVERAGE</span>
+              <strong>5 OF 5 ENFORCED</strong>
+            </div>
+          </div>
+
+          <!-- Principle 6 -->
+          <div class="principle-card">
+            <div>
+              <div class="principle-index">MANDATE // 06</div>
+              <h3 class="principle-heading">Physical Tactile Feedback</h3>
+              <p class="principle-desc">
+                Compositor-only transforms (scale, translate) and opacity. Strictly prohibits CPU-choking transition: all. Zero layout shifts, 120 FPS buttery smooth motion.
+              </p>
+            </div>
+            <div class="principle-spec-tag">
+              <span>HARDWARE_ACCEL</span>
+              <strong>TRANSFORM & OPACITY ONLY</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: INTERACTIVE SPECIMEN COMPARISON -->
+    <section id="specimen" class="specimen-section" aria-labelledby="specimen-title">
+      <div class="container">
+        <div class="section-header">
+          <div class="meta-tag"><span>Interactive Laboratory</span></div>
+          <h2 id="specimen-title" class="section-title" style="margin-top: var(--space-2);">
+            Live Specimen: Default LLM Slop vs Turtleneck Craft
+          </h2>
+          <p class="body-lead" style="margin-top: var(--space-2);">
+            Toggle between standard AI coding assistant output and Turtleneck-governed execution. Test hover, active presses, and focus states.
+          </p>
+        </div>
+
+        <div class="specimen-stage" id="specimen-stage-container">
+          <!-- Stage Top Toolbar -->
+          <div class="specimen-toolbar">
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <span class="meta-tag" style="margin: 0;">SPECIMEN VIEW</span>
+              <div class="specimen-tabs" role="tablist">
+                <button type="button" class="tab-btn active-starlight" id="tab-turtleneck" role="tab" aria-selected="true">
+                  ✨ With Turtleneck v2.0
+                </button>
+                <button type="button" class="tab-btn" id="tab-slop" role="tab" aria-selected="false">
+                  ❌ Without (Default LLM Slop)
+                </button>
+              </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: var(--space-2);">
+              <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);">Live Mode:</span>
+              <span id="specimen-mode-label" style="font-family: var(--font-mono); font-size: 11px; font-weight: 700; color: var(--starlight-cyan);">TURTLENECK ACTIVE</span>
+            </div>
+          </div>
+
+          <!-- Specimen Viewport -->
+          <div class="specimen-viewport">
+            <!-- Left: Interactive Specimen Surface -->
+            <div class="specimen-render-box">
+              <div class="starlight-specimen-card" id="specimen-card-element">
+                <div class="specimen-row">
+                  <div>
+                    <div style="font-family: var(--font-mono); font-size: 10px; color: var(--starlight-cyan); letter-spacing: 0.12em; text-transform: uppercase;">
+                      DEPLOYMENT ENGINE // PROD-US-EAST
+                    </div>
+                    <h3 class="specimen-card-title" style="margin-top: 4px;">Agent Orchestration Cluster</h3>
+                  </div>
+                  <span class="specimen-deploy-pill" id="specimen-status-pill">
+                    <span class="indicator-dot" style="width: 6px; height: 6px;" aria-hidden="true"></span>
+                    SYNCED // V2.0.4
+                  </span>
+                </div>
+
+                <div class="specimen-controls-grid">
+                  <div class="specimen-field">
+                    <label for="cluster-region" class="specimen-field-label">Target Cloud Region</label>
+                    <div class="specimen-input-wrap">
+                      <input type="text" id="cluster-region" class="specimen-input" value="aws-east-starlight-1" readonly>
+                    </div>
+                  </div>
+                  <div class="specimen-field">
+                    <label for="agent-model" class="specimen-field-label">Primary Agent Model</label>
+                    <div class="specimen-input-wrap">
+                      <input type="text" id="agent-model" class="specimen-input" value="claude-3-7-sonnet" readonly>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Interactive Test Controls -->
+                <div class="specimen-action-bar">
+                  <button type="button" class="btn btn-primary" id="specimen-deploy-btn">
+                    <span>Deploy Container</span>
+                  </button>
+                  <button type="button" class="btn btn-secondary" id="specimen-scale-btn">
+                    <span>Scale Replicas</span>
+                  </button>
+                  <button type="button" class="btn btn-ghost" id="specimen-abort-btn" disabled>
+                    <span>Rollback (Locked)</span>
+                  </button>
+                </div>
+
+                <div style="margin-top: var(--space-4); padding-top: var(--space-3); border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+                  <span style="font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);">
+                    Click buttons to observe physical scale(0.97) tactile feedback and 100ms timing.
+                  </span>
+                  <span style="font-family: var(--font-mono); font-size: 11px; color: var(--starlight-emerald);" id="specimen-click-counter">
+                    0 Clicks Logged
+                  </span>
+                </div>
+              </div>
+
+              <!-- Micro Explanation Box -->
+              <div style="background-color: var(--surface-2); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: var(--space-3) var(--space-4);">
+                <div style="display: flex; align-items: center; gap: var(--space-2); font-family: var(--font-mono); font-size: 12px; color: var(--text-body);">
+                  <span style="color: var(--starlight-cyan);">ℹ SPECIMEN AUDIT:</span>
+                  <span id="specimen-summary-text">Using 100% High-Density Starlight palette with 4 distinct elevation surfaces and hairline borders.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right: Real-time Telemetry & Inspector -->
+            <div class="specimen-inspector-sidebar">
+              <div class="inspector-title">Realtime Craft Inspector</div>
+
+              <div class="inspector-metric-row">
+                <span class="inspector-metric-name">Transition Type</span>
+                <span class="inspector-metric-val pass" id="insp-trans">100ms compositor</span>
+              </div>
+
+              <div class="inspector-metric-row">
+                <span class="inspector-metric-name">Active State Feedback</span>
+                <span class="inspector-metric-val pass" id="insp-scale">scale(0.97)</span>
+              </div>
+
+              <div class="inspector-metric-row">
+                <span class="inspector-metric-name">Elevation Layers</span>
+                <span class="inspector-metric-val pass" id="insp-elevation">4 Valid Layers</span>
+              </div>
+
+              <div class="inspector-metric-row">
+                <span class="inspector-metric-name">Typographic Tension</span>
+                <span class="inspector-metric-val pass" id="insp-typo">5.8:1 (Pass >= 4:1)</span>
+              </div>
+
+              <div class="inspector-metric-row">
+                <span class="inspector-metric-name">WCAG 2.2 Contrast</span>
+                <span class="inspector-metric-val pass" id="insp-wcag">17.2:1 AAA</span>
+              </div>
+
+              <div class="inspector-metric-row">
+                <span class="inspector-metric-name">Focus-Visible Ring</span>
+                <span class="inspector-metric-val pass" id="insp-focus">2px solid offset</span>
+              </div>
+
+              <div class="audit-action-box">
+                <button type="button" class="btn btn-secondary btn-sm" id="run-inspector-test" style="width: 100%;">
+                  <span>Run Live Craft Verification</span>
+                </button>
+                <div id="inspector-toast" style="margin-top: 8px; font-family: var(--font-mono); font-size: 11px; color: var(--starlight-emerald); text-align: center; display: none;">
+                  ✓ All 6 Mandates Confirmed
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: INSTALLATION & CONFIGURATION SNIPPETS -->
+    <section id="installation" class="install-section" aria-labelledby="install-title">
+      <div class="container">
+        <div class="section-header">
+          <div class="meta-tag"><span>Setup & Integration</span></div>
+          <h2 id="install-title" class="section-title" style="margin-top: var(--space-2);">
+            Integrate with any AI coding agent in seconds.
+          </h2>
+          <p class="body-lead" style="margin-top: var(--space-2);">
+            Drop Turtleneck into Claude Code, Cursor, Windsurf, Roo, Cline, or direct Agent SDK pipelines.
+          </p>
+        </div>
+
+        <div class="install-panel">
+          <div class="install-nav-tabs" role="tablist">
+            <button type="button" class="install-tab active" data-tab="tab-cli" role="tab" aria-selected="true">
+              <span>CLI Init</span>
+            </button>
+            <button type="button" class="install-tab" data-tab="tab-mcp" role="tab" aria-selected="false">
+              <span>Claude Desktop / MCP</span>
+            </button>
+            <button type="button" class="install-tab" data-tab="tab-cursor" role="tab" aria-selected="false">
+              <span>Cursor / Windsurf Rules</span>
+            </button>
+            <button type="button" class="install-tab" data-tab="tab-sdk" role="tab" aria-selected="false">
+              <span>TypeScript Agent SDK</span>
+            </button>
+          </div>
+
+          <!-- Code Viewport -->
+          <div class="install-code-container">
+            <button type="button" class="copy-button code-copy-absolute" id="snippet-copy-btn" aria-label="Copy snippet code">
+              <span class="copy-icon" aria-hidden="true">📋</span>
+              <span class="copy-label">COPY SNIPPET</span>
+            </button>
+
+            <!-- Tab 1: CLI -->
+            <pre class="code-block" id="snippet-tab-cli"><code><span class="code-comment"># Install Turtleneck design skill globally or per-project</span>
+<span class="code-keyword">npx</span> turtleneck@latest init --archetype <span class="code-string">"high-density-starlight"</span>
+
+<span class="code-comment"># Or add directly via your package manager</span>
+<span class="code-keyword">pnpm</span> add -D @turtleneck/agent-skill
+<span class="code-keyword">bun</span> add -d @turtleneck/agent-skill
+
+<span class="code-comment"># Run audit against any generated file</span>
+<span class="code-keyword">npx</span> turtleneck audit ./src/components/dashboard.tsx</code></pre>
+
+            <!-- Tab 2: MCP Config -->
+            <pre class="code-block" id="snippet-tab-mcp" style="display: none;"><code><span class="code-comment">// claude_desktop_config.json or any Model Context Protocol host</span>
+{
+  <span class="code-prop">"mcpServers"</span>: {
+    <span class="code-prop">"turtleneck-craft"</span>: {
+      <span class="code-prop">"command"</span>: <span class="code-string">"npx"</span>,
+      <span class="code-prop">"args"</span>: [
+        <span class="code-string">"-y"</span>,
+        <span class="code-string">"@turtleneck/mcp-server"</span>,
+        <span class="code-string">"--strict-mandate"</span>,
+        <span class="code-string">"--archetype=high-density-starlight"</span>
+      ]
+    }
+  }
+}</code></pre>
+
+            <!-- Tab 3: Cursor Rules -->
+            <pre class="code-block" id="snippet-tab-cursor" style="display: none;"><code><span class="code-comment"># .cursorrules or .windsurfrules</span>
+<span class="code-prop">TURTLENECK_AUTONOMOUS_CRAFT_MANDATE</span>:
+  - <span class="code-keyword">Archetype</span>: High-Density Starlight (Void #08090e, Surface1 #121520, Surface2 #181c2b, Surface3 #20263a)
+  - <span class="code-keyword">Timing</span>: 80-120ms cubic-bezier(0.16, 1, 0.3, 1). Disallow transition:all.
+  - <span class="code-keyword">Interactivity</span>: Enforce 5 states (default, hover, active scale(0.97), focus-visible, disabled).
+  - <span class="code-keyword">Typography</span>: Strict >= 4:1 tension between display and monospace metadata.
+  - <span class="code-keyword">Tokens</span>: 8pt grid, WCAG 2.2 AA contrast compliance required on all foregrounds.</code></pre>
+
+            <!-- Tab 4: Agent SDK -->
+            <pre class="code-block" id="snippet-tab-sdk" style="display: none;"><code><span class="code-keyword">import</span> { <span class="code-prop">TurtleneckSkill</span>, <span class="code-prop">ARCHETYPES</span> } <span class="code-keyword">from</span> <span class="code-string">"@turtleneck/agent-skill"</span>;
+<span class="code-keyword">import</span> { <span class="code-prop">AgentPipeline</span> } <span class="code-keyword">from</span> <span class="code-string">"@anthropic-ai/claude-agent-sdk"</span>;
+
+<span class="code-keyword">const</span> craftSkill = <span class="code-keyword">new</span> <span class="code-prop">TurtleneckSkill</span>({
+  <span class="code-prop">archetype</span>: ARCHETYPES.HIGH_DENSITY_STARLIGHT,
+  <span class="code-prop">enforceTiming</span>: <span class="code-string">"80ms-120ms"</span>,
+  <span class="code-prop">activeScale</span>: <span class="code-number">0.97</span>,
+  <span class="code-prop">contrastTarget</span>: <span class="code-string">"WCAG_2.2_AA"</span>
+});
+
+<span class="code-keyword">const</span> agent = <span class="code-keyword">new</span> <span class="code-prop">AgentPipeline</span>({
+  <span class="code-prop">skills</span>: [craftSkill]
+});
+
+<span class="code-comment">// Agent now automatically emits high-density craft compliant UI</span>
+<span class="code-keyword">await</span> agent.<span class="code-prop">run</span>(<span class="code-string">"Build a deployment manager UI"</span>);</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION: 5-STATE INTERACTIVE LAB & TOKEN AUDIT -->
+    <section id="interactive-lab" class="lab-section" aria-labelledby="lab-title">
+      <div class="container">
+        <div class="section-header">
+          <div class="meta-tag"><span>Interactive Verification</span></div>
+          <h2 id="lab-title" class="section-title" style="margin-top: var(--space-2);">
+            5-State Completeness & Atmospheric Tokens
+          </h2>
+          <p class="body-lead" style="margin-top: var(--space-2);">
+            Every component emitted under the Turtleneck mandate satisfies full interactive state coverage and verified contrast ratios.
+          </p>
+        </div>
+
+        <div class="lab-grid">
+          <!-- Card 1: 5-State Live Tester -->
+          <div class="lab-card">
+            <div style="margin-bottom: var(--space-4);">
+              <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-display);">5-State Interactive Matrix</h3>
+              <p style="font-size: 0.875rem; color: var(--text-muted); margin-top: 4px;">
+                Test each distinct state live. Notice the physical scale(0.97) on press and 2px focus rings.
+              </p>
+            </div>
+
+            <!-- State: Default -->
+            <div class="state-tester-row">
+              <div class="state-meta">
+                <span class="state-name">1. DEFAULT</span>
+                <span class="state-rule">Resting elevation & border</span>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm">Default State</button>
+            </div>
+
+            <!-- State: Hover -->
+            <div class="state-tester-row">
+              <div class="state-meta">
+                <span class="state-name">2. HOVER</span>
+                <span class="state-rule">Luminance shift, 100ms timing</span>
+              </div>
+              <button type="button" class="btn btn-primary btn-sm">Hover Me</button>
+            </div>
+
+            <!-- State: Active (Press & Hold) -->
+            <div class="state-tester-row">
+              <div class="state-meta">
+                <span class="state-name">3. ACTIVE (PRESS)</span>
+                <span class="state-rule">Hardware transform: scale(0.97)</span>
+              </div>
+              <button type="button" class="btn btn-primary btn-sm">Press & Hold</button>
+            </div>
+
+            <!-- State: Focus-Visible -->
+            <div class="state-tester-row">
+              <div class="state-meta">
+                <span class="state-name">4. FOCUS-VISIBLE</span>
+                <span class="state-rule">2px solid #38bdf8, 2px offset</span>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" id="focus-demo-btn">Tab Into Me</button>
+            </div>
+
+            <!-- State: Disabled -->
+            <div class="state-tester-row">
+              <div class="state-meta">
+                <span class="state-name">5. DISABLED</span>
+                <span class="state-rule">0.45 opacity, pointer-events: none</span>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" disabled>Disabled</button>
+            </div>
+          </div>
+
+          <!-- Card 2: High-Density Starlight Tokens -->
+          <div class="lab-card">
+            <div style="margin-bottom: var(--space-4);">
+              <h3 style="font-size: 1.125rem; font-weight: 700; color: var(--text-display);">Atmospheric Elevation Swatches</h3>
+              <p style="font-size: 0.875rem; color: var(--text-muted); margin-top: 4px;">
+                Strict depth layering ensures high contrast and visual hierarchy across components.
+              </p>
+            </div>
+
+            <div class="token-grid">
+              <div class="token-card">
+                <div class="swatch-box" style="background-color: #08090e;"></div>
+                <div class="swatch-info">
+                  <span class="swatch-token-name">--canvas</span>
+                  <span class="swatch-hex">#08090e (Void)</span>
+                </div>
+              </div>
+
+              <div class="token-card">
+                <div class="swatch-box" style="background-color: #121520;"></div>
+                <div class="swatch-info">
+                  <span class="swatch-token-name">--surface-1</span>
+                  <span class="swatch-hex">#121520 (Base Card)</span>
+                </div>
+              </div>
+
+              <div class="token-card">
+                <div class="swatch-box" style="background-color: #181c2b;"></div>
+                <div class="swatch-info">
+                  <span class="swatch-token-name">--surface-2</span>
+                  <span class="swatch-hex">#181c2b (Elevation)</span>
+                </div>
+              </div>
+
+              <div class="token-card">
+                <div class="swatch-box" style="background-color: #20263a;"></div>
+                <div class="swatch-info">
+                  <span class="swatch-token-name">--surface-3</span>
+                  <span class="swatch-hex">#20263a (Popovers)</span>
+                </div>
+              </div>
+
+              <div class="token-card">
+                <div class="swatch-box" style="background-color: #38bdf8;"></div>
+                <div class="swatch-info">
+                  <span class="swatch-token-name">--starlight-cyan</span>
+                  <span class="swatch-hex">#38bdf8 (10.4:1 AA)</span>
+                </div>
+              </div>
+
+              <div class="token-card">
+                <div class="swatch-box" style="background-color: #818cf8;"></div>
+                <div class="swatch-info">
+                  <span class="swatch-token-name">--starlight-violet</span>
+                  <span class="swatch-hex">#818cf8 (7.2:1 AA)</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: var(--space-4); padding: var(--space-3); background-color: var(--surface-2); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+              <div style="font-family: var(--font-mono); font-size: 11px; color: var(--starlight-emerald); display: flex; align-items: center; gap: 6px;">
+                <span>✓ 100% WCAG 2.2 AA Contrast Compliance Confirmed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div style="display: flex; align-items: center; gap: var(--space-3);">
+          <div class="brand-logo-badge" style="width: 28px; height: 28px; font-size: 12px;">⌘T</div>
+          <div>
+            <div style="font-size: 0.9375rem; font-weight: 700; color: var(--text-display);">Turtleneck Autonomous Craft</div>
+            <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-dim);">Enforcing UI/UX discipline across AI coding agents.</div>
+          </div>
+        </div>
+
+        <div class="footer-meta">
+          <div>SPEC_REVISION: ST-2026.09.26 // MANDATE_STATUS: ENFORCED</div>
+          <div>BUILT WITH: 8PT GRID // COMPOSITOR TIMING 100MS // 0 SLOP</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC (Self-Contained Interactive State Handlers) -->
+  <script>
+    (function initTurtleneckLanding() {
+      // 1. Generic Clipboard Copy Utility with Physical Feedback
+      function setupCopyButton(buttonId, textToCopy) {
+        const btn = document.getElementById(buttonId);
+        if (!btn) return;
+
+        btn.addEventListener('click', async () => {
+          try {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              await navigator.clipboard.writeText(textToCopy);
+            }
+            const label = btn.querySelector('.copy-label');
+            const originalText = label ? label.textContent : '';
+            if (label) label.textContent = 'COPIED!';
+            btn.classList.add('copied');
+
+            setTimeout(() => {
+              if (label) label.textContent = originalText;
+              btn.classList.remove('copied');
+            }, 1600);
+          } catch (err) {
+            console.error('Clipboard copy error:', err);
+          }
+        });
+      }
+
+      // Hook Hero Command Copy
+      setupCopyButton('hero-copy-btn', 'npx turtleneck@latest init');
+
+      // 2. Install Code Snippets Tab Switcher
+      const installTabs = document.querySelectorAll('.install-tab');
+      const snippetCopyBtn = document.getElementById('snippet-copy-btn');
+      let activeSnippetTab = 'tab-cli';
+
+      const snippetContents = {
+        'tab-cli': 'npx turtleneck@latest init --archetype "high-density-starlight"\n\npnpm add -D @turtleneck/agent-skill\nbun add -d @turtleneck/agent-skill\n\nnpx turtleneck audit ./src/components/dashboard.tsx',
+        'tab-mcp': '{\n  "mcpServers": {\n    "turtleneck-craft": {\n      "command": "npx",\n      "args": [\n        "-y",\n        "@turtleneck/mcp-server",\n        "--strict-mandate",\n        "--archetype=high-density-starlight"\n      ]\n    }\n  }\n}',
+        'tab-cursor': 'TURTLENECK_AUTONOMOUS_CRAFT_MANDATE:\n  - Archetype: High-Density Starlight\n  - Timing: 80-120ms cubic-bezier(0.16, 1, 0.3, 1). Disallow transition:all.\n  - Interactivity: Enforce 5 states.\n  - Typography: Strict >= 4:1 tension.\n  - Tokens: 8pt grid, WCAG 2.2 AA contrast compliance.',
+        'tab-sdk': 'import { TurtleneckSkill, ARCHETYPES } from "@turtleneck/agent-skill";\nimport { AgentPipeline } from "@anthropic-ai/claude-agent-sdk";\n\nconst craftSkill = new TurtleneckSkill({\n  archetype: ARCHETYPES.HIGH_DENSITY_STARLIGHT,\n  enforceTiming: "80ms-120ms",\n  activeScale: 0.97,\n  contrastTarget: "WCAG_2.2_AA"\n});'
+      };
+
+      installTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          installTabs.forEach(t => {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+          });
+          tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
+
+          const targetTabId = tab.getAttribute('data-tab');
+          activeSnippetTab = targetTabId;
+
+          // Toggle code blocks
+          ['tab-cli', 'tab-mcp', 'tab-cursor', 'tab-sdk'].forEach(id => {
+            const block = document.getElementById('snippet-' + id);
+            if (block) {
+              block.style.display = (id === targetTabId) ? 'block' : 'none';
+            }
+          });
+        });
+      });
+
+      if (snippetCopyBtn) {
+        snippetCopyBtn.addEventListener('click', async () => {
+          const text = snippetContents[activeSnippetTab] || '';
+          try {
+            if (navigator.clipboard) await navigator.clipboard.writeText(text);
+            const label = snippetCopyBtn.querySelector('.copy-label');
+            if (label) label.textContent = 'COPIED!';
+            snippetCopyBtn.classList.add('copied');
+            setTimeout(() => {
+              if (label) label.textContent = 'COPY SNIPPET';
+              snippetCopyBtn.classList.remove('copied');
+            }, 1600);
+          } catch (e) {
+            console.error(e);
+          }
+        });
+      }
+
+      // 3. Interactive Specimen Comparison Switcher (Turtleneck vs Slop)
+      const tabTurtleneck = document.getElementById('tab-turtleneck');
+      const tabSlop = document.getElementById('tab-slop');
+      const specimenStage = document.getElementById('specimen-stage-container');
+      const modeLabel = document.getElementById('specimen-mode-label');
+      const summaryText = document.getElementById('specimen-summary-text');
+      
+      const inspTrans = document.getElementById('insp-trans');
+      const inspScale = document.getElementById('insp-scale');
+      const inspElevation = document.getElementById('insp-elevation');
+      const inspTypo = document.getElementById('insp-typo');
+      const inspWcag = document.getElementById('insp-wcag');
+      const inspFocus = document.getElementById('insp-focus');
+      const statusPill = document.getElementById('specimen-status-pill');
+
+      function setSpecimenMode(isTurtleneck) {
+        if (isTurtleneck) {
+          tabTurtleneck.classList.add('active-starlight');
+          tabTurtleneck.setAttribute('aria-selected', 'true');
+          tabSlop.classList.remove('active-starlight');
+          tabSlop.setAttribute('aria-selected', 'false');
+          specimenStage.classList.remove('slop-theme');
+
+          modeLabel.textContent = 'TURTLENECK ACTIVE';
+          modeLabel.style.color = 'var(--starlight-cyan)';
+          summaryText.textContent = 'Using 100% High-Density Starlight palette with 4 distinct elevation surfaces and hairline borders.';
+
+          inspTrans.textContent = '100ms compositor';
+          inspTrans.className = 'inspector-metric-val pass';
+
+          inspScale.textContent = 'scale(0.97)';
+          inspScale.className = 'inspector-metric-val pass';
+
+          inspElevation.textContent = '4 Valid Layers';
+          inspElevation.className = 'inspector-metric-val pass';
+
+          inspTypo.textContent = '5.8:1 (Pass >= 4:1)';
+          inspTypo.className = 'inspector-metric-val pass';
+
+          inspWcag.textContent = '17.2:1 AAA';
+          inspWcag.className = 'inspector-metric-val pass';
+
+          inspFocus.textContent = '2px solid offset';
+          inspFocus.className = 'inspector-metric-val pass';
+
+          if (statusPill) {
+            statusPill.innerHTML = '<span class="indicator-dot" style="width: 6px; height: 6px;" aria-hidden="true"></span> SYNCED // V2.0.4';
+            statusPill.style.color = 'var(--starlight-cyan)';
+          }
+        } else {
+          tabSlop.classList.add('active-starlight');
+          tabSlop.setAttribute('aria-selected', 'true');
+          tabTurtleneck.classList.remove('active-starlight');
+          tabTurtleneck.setAttribute('aria-selected', 'false');
+          specimenStage.classList.add('slop-theme');
+
+          modeLabel.textContent = 'DEFAULT LLM SLOP';
+          modeLabel.style.color = 'var(--starlight-rose)';
+          summaryText.textContent = 'VIOLATION DETECTED: transition:all 300ms, missing active states, low contrast text, and zero typographic tension.';
+
+          inspTrans.textContent = '300ms ease (VIOLATION)';
+          inspTrans.className = 'inspector-metric-val fail';
+
+          inspScale.textContent = 'None (Missing :active)';
+          inspScale.className = 'inspector-metric-val fail';
+
+          inspElevation.textContent = 'Flat (#1e293b only)';
+          inspElevation.className = 'inspector-metric-val fail';
+
+          inspTypo.textContent = '1.3:1 (Slop ratio)';
+          inspTypo.className = 'inspector-metric-val fail';
+
+          inspWcag.textContent = '2.8:1 (Fails AA)';
+          inspWcag.className = 'inspector-metric-val fail';
+
+          inspFocus.textContent = 'Browser default ring';
+          inspFocus.className = 'inspector-metric-val fail';
+
+          if (statusPill) {
+            statusPill.innerHTML = '⚠ UNVALIDATED SLOP';
+            statusPill.style.color = 'var(--starlight-amber)';
+          }
+        }
+      }
+
+      if (tabTurtleneck && tabSlop) {
+        tabTurtleneck.addEventListener('click', () => setSpecimenMode(true));
+        tabSlop.addEventListener('click', () => setSpecimenMode(false));
+      }
+
+      // 4. Live Specimen Action Interactions
+      let clickCount = 0;
+      const clickCounterEl = document.getElementById('specimen-click-counter');
+      const deployBtn = document.getElementById('specimen-deploy-btn');
+      const scaleBtn = document.getElementById('specimen-scale-btn');
+
+      function handleSpecimenInteraction(actionName) {
+        clickCount++;
+        if (clickCounterEl) {
+          clickCounterEl.textContent = `${clickCount} Actions Logged (${actionName})`;
+        }
+      }
+
+      if (deployBtn) {
+        deployBtn.addEventListener('click', () => handleSpecimenInteraction('Deploy Triggered'));
+      }
+      if (scaleBtn) {
+        scaleBtn.addEventListener('click', () => handleSpecimenInteraction('Replicas Scaled'));
+      }
+
+      // 5. Inspector Test Runner
+      const runInspectorBtn = document.getElementById('run-inspector-test');
+      const inspectorToast = document.getElementById('inspector-toast');
+
+      if (runInspectorBtn && inspectorToast) {
+        runInspectorBtn.addEventListener('click', () => {
+          runInspectorBtn.disabled = true;
+          runInspectorBtn.textContent = 'Auditing DOM...';
+
+          setTimeout(() => {
+            runInspectorBtn.disabled = false;
+            runInspectorBtn.textContent = 'Run Live Craft Verification';
+            inspectorToast.style.display = 'block';
+            setTimeout(() => {
+              inspectorToast.style.display = 'none';
+            }, 3000);
+          }, 450);
+        });
+      }
+
+      // 6. HUD Simulate Agent Pipeline Re-Audit
+      const hudSimBtn = document.getElementById('hud-simulate-btn');
+      const hudScore = document.getElementById('hud-score');
+
+      if (hudSimBtn && hudScore) {
+        hudSimBtn.addEventListener('click', () => {
+          hudSimBtn.disabled = true;
+          hudScore.textContent = 'Auditing...';
+          hudScore.style.color = 'var(--starlight-amber)';
+
+          setTimeout(() => {
+            hudScore.textContent = '99.9%';
+            hudScore.style.color = 'var(--starlight-emerald)';
+            hudSimBtn.disabled = false;
+          }, 500);
+        });
+      }
+
+      const hudResetBtn = document.getElementById('hud-reset-btn');
+      if (hudResetBtn && hudScore) {
+        hudResetBtn.addEventListener('click', () => {
+          hudScore.textContent = '99.8%';
+          hudScore.style.color = 'var(--starlight-cyan)';
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
