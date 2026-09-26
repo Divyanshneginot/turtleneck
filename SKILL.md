@@ -40,7 +40,7 @@ Use for:
 * Requests such as "make it feel designed," "make it dynamic," "create a modern UI," or "give users options."
 * UI/UX audits where recommendations must become implementable changes.
 
-Do not invoke for a trivial isolated CSS fix, a supplied pixel-perfect design, or a non-UI task. Apply the relevant accessibility and interaction rules directly in those cases.
+For a trivial isolated CSS fix or a supplied pixel-perfect design, use **Direct** mode — apply accessibility and interaction rules without running the full pipeline. For a non-UI task (backend, CLI, data), do not invoke.
 
 ### Select a tempo
 

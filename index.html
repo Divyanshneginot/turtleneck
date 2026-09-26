@@ -520,7 +520,7 @@
         <a href="#principles">Philosophy</a>
         <a href="#pipeline">Pipeline</a>
         <a href="#install">Install</a>
-        <a href="https://github.com/rmyndharis/antigravity-skills" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/Divyanshneginot/turtleneck" target="_blank" rel="noopener">GitHub</a>
       </nav>
     </div>
   </header>
@@ -534,7 +534,7 @@
       </p>
 
       <div class="install-bar">
-        <code>agy skill add turtleneck</code>
+        <code>python scripts/install.py --skill</code>
         <button type="button" class="btn-copy" onclick="copyInstallCmd(this)" aria-label="Copy install command">Copy</button>
       </div>
     </section>
@@ -544,7 +544,7 @@
       <div class="specimen-chassis">
         <div class="specimen-header">
           <span class="specimen-label">Live Atelier Specimen // Interactive Product Surface</span>
-          <span class="specimen-badge">&check; WCAG 2.2 AA Verified</span>
+          <span class="specimen-badge">&check; Declared Token Contrast Verified</span>
         </div>
 
         <div class="atelier-card">
@@ -572,14 +572,14 @@
               <span class="price-large" id="priceDisplay">$128</span>
               <span class="price-sub" id="cycleDisplay">/ month billed monthly</span>
             </div>
-            <button type="button" class="btn-atelier-action" onclick="handleAuthorize(this)" aria-label="Authorize workspace subscription">
+            <button type="button" class="btn-atelier-action" onclick="handleAuthorize(this)" aria-label="Demo: simulated authorize interaction">
               Authorize Access &rarr;
             </button>
           </div>
         </div>
 
         <div class="specimen-specs">
-          <span>SCALE TENSION: 4.8:1 (32px / 11px)</span>
+          <span>SCALE TENSION: 2.9:1 (32px / 11px)</span>
           <span>MICRO-TIMING: 80ms CUBIC-OUT</span>
           <span>CONTRAST: 18.59:1 AAA</span>
           <span>DIALECT: ATELIER MINIMAL</span>
@@ -664,7 +664,7 @@
 
   <footer class="site-footer wrap">
     <div>Turtleneck &bull; Product Design Intelligence</div>
-    <div>MIT License &bull; <a href="https://github.com/rmyndharis/antigravity-skills" target="_blank" rel="noopener">GitHub</a></div>
+    <div>MIT License &bull; <a href="https://github.com/Divyanshneginot/turtleneck" target="_blank" rel="noopener">GitHub</a></div>
   </footer>
 
   <script>
@@ -703,7 +703,7 @@
     }
 
     function copyInstallCmd(btn) {
-      navigator.clipboard.writeText('agy skill add turtleneck').then(() => {
+      navigator.clipboard.writeText('python scripts/install.py --skill').then(() => {
         btn.textContent = 'Copied';
         setTimeout(() => { btn.textContent = 'Copy'; }, 1600);
       });
