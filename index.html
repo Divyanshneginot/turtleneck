@@ -5,30 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Turtleneck — Product Design Intelligence & Verification for Coding Agents</title>
   
-  <!-- Modern Clean Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
        DESIGN SYSTEM & CALIBRATED TOKENS
        ========================================================================== */
     :root {
-      --canvas: #090a0f;
-      --surface-1: #11131a;
-      --surface-2: #161922;
-      --surface-3: #1e2230;
+      --canvas: #08090d;
+      --surface-1: #10121a;
+      --surface-2: #161822;
+      --surface-3: #1c202d;
       --surface-border: rgba(255, 255, 255, 0.08);
       --surface-border-subtle: rgba(255, 255, 255, 0.04);
-      --surface-border-hover: rgba(255, 255, 255, 0.18);
+      --surface-border-hover: rgba(255, 255, 255, 0.2);
 
       --text-primary: #f8fafc;
       --text-secondary: #94a3b8;
       --text-muted: #828fa3;
 
       --accent: #3b82f6;
-      --accent-glow: rgba(59, 130, 246, 0.12);
       --accent-hover: #60a5fa;
       --accent-emerald: #10b981;
       --accent-amber: #f59e0b;
@@ -47,6 +45,31 @@
       padding: 0;
     }
 
+    /* Impeccable: Themed Browser Surfaces */
+    ::selection {
+      background-color: rgba(59, 130, 246, 0.28);
+      color: #ffffff;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--canvas);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--surface-3);
+      border-radius: 4px;
+      border: 2px solid var(--canvas);
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-muted);
+    }
+
     html {
       color-scheme: dark;
       background-color: var(--canvas);
@@ -59,16 +82,13 @@
 
     body {
       background-color: var(--canvas);
-      background-image: 
-        radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 60%),
-        radial-gradient(circle at 90% 20%, rgba(16, 185, 129, 0.04) 0%, transparent 45%);
-      background-repeat: no-repeat;
       min-height: 100vh;
       overflow-x: hidden;
-      line-height: 1.5;
+      line-height: 1.55;
+      caret-color: var(--accent);
     }
 
-    /* Accessibility Focus-Visible (Strict >= 3:1) */
+    /* Strict Focus-Visible (>= 3:1) */
     :focus-visible {
       outline: 2px solid var(--focus-ring);
       outline-offset: 2px;
@@ -83,22 +103,21 @@
       }
     }
 
-    /* Layout Constraints */
     .container {
       width: 100%;
-      max-width: 1200px;
+      max-width: 1180px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
     /* ==========================================================================
-       NAVIGATION BAR
+       NAVIGATION
        ========================================================================== */
     .nav {
       position: sticky;
       top: 0;
       z-index: 50;
-      background-color: rgba(9, 10, 15, 0.85);
+      background-color: rgba(8, 9, 13, 0.9);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--surface-border);
     }
@@ -107,7 +126,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 68px;
+      height: 64px;
     }
 
     .brand {
@@ -119,49 +138,48 @@
     }
 
     .brand-mark {
-      width: 32px;
-      height: 32px;
-      background: linear-gradient(135deg, var(--surface-2), var(--surface-3));
+      width: 28px;
+      height: 28px;
+      background: var(--surface-2);
       border: 1px solid var(--surface-border-hover);
-      border-radius: 8px;
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 15px;
+      font-size: 13px;
       color: var(--text-primary);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }
 
     .brand-name {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       letter-spacing: -0.02em;
     }
 
-    .brand-badge {
+    .brand-version {
       font-size: 11px;
       font-family: var(--font-mono);
       font-weight: 500;
       color: var(--accent-emerald);
       background-color: rgba(16, 185, 129, 0.1);
       border: 1px solid rgba(16, 185, 129, 0.25);
-      padding: 2px 8px;
-      border-radius: 999px;
+      padding: 2px 7px;
+      border-radius: 4px;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 28px;
     }
 
     .nav-link {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
       color: var(--text-secondary);
       text-decoration: none;
-      transition: color 0.15s var(--ease-out);
+      transition: color 0.12s var(--ease-out);
     }
 
     .nav-link:hover {
@@ -207,57 +225,34 @@
     }
 
     /* ==========================================================================
-       HERO SECTION
+       HERO (IMPECCABLE: NO GRADIENT TEXT, NO EYEBROW KICKERS)
        ========================================================================== */
     .hero {
-      padding: 88px 0 64px;
+      padding: 96px 0 64px;
       text-align: center;
-      position: relative;
-    }
-
-    .hero-badge-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      background-color: var(--surface-1);
-      border: 1px solid var(--surface-border);
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      margin-bottom: 24px;
-    }
-
-    .hero-badge-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background-color: var(--accent-emerald);
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
     }
 
     .hero-title {
-      font-size: clamp(34px, 5.5vw, 62px);
+      font-size: clamp(36px, 6vw, 64px);
       font-weight: 800;
       letter-spacing: -0.035em;
       line-height: 1.1;
-      max-width: 960px;
-      margin: 0 auto 20px;
+      max-width: 980px;
+      margin: 0 auto 24px;
       color: var(--text-primary);
     }
 
-    .hero-title span {
-      background: linear-gradient(135deg, #f8fafc 40%, #94a3b8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .hero-title em {
+      font-style: normal;
+      color: var(--text-secondary);
+      font-weight: 400;
     }
 
     .hero-subtitle {
       font-size: clamp(16px, 2vw, 19px);
       color: var(--text-secondary);
-      max-width: 680px;
-      margin: 0 auto 36px;
+      max-width: 660px;
+      margin: 0 auto 40px;
       line-height: 1.6;
     }
 
@@ -266,7 +261,7 @@
       align-items: center;
       justify-content: center;
       gap: 16px;
-      margin-bottom: 56px;
+      margin-bottom: 64px;
       flex-wrap: wrap;
     }
 
@@ -275,13 +270,12 @@
       align-items: center;
       background-color: var(--surface-1);
       border: 1px solid var(--surface-border);
-      border-radius: 8px;
+      border-radius: 6px;
       padding: 4px 6px 4px 14px;
       gap: 12px;
       font-family: var(--font-mono);
       font-size: 13px;
       color: var(--text-primary);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
 
     .install-bar code {
@@ -293,7 +287,7 @@
       border: 1px solid var(--surface-border);
       color: var(--text-secondary);
       padding: 6px 12px;
-      border-radius: 6px;
+      border-radius: 4px;
       font-size: 12px;
       font-weight: 600;
       cursor: pointer;
@@ -313,195 +307,91 @@
     }
 
     /* ==========================================================================
-       SANDBOX SECTION (PRODUCT PROOF CENTERPIECE)
+       WORKBENCH CENTERPIECE
        ========================================================================== */
-    .sandbox-section {
-      padding: 40px 0 80px;
+    .workbench-section {
+      padding: 24px 0 88px;
     }
 
-    .sandbox-frame {
+    .workbench-shell {
       background-color: var(--surface-1);
       border: 1px solid var(--surface-border);
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
     }
 
-    .sandbox-header {
+    .workbench-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 20px;
+      padding: 12px 20px;
       background-color: var(--surface-2);
       border-bottom: 1px solid var(--surface-border);
       flex-wrap: wrap;
       gap: 12px;
     }
 
-    .sandbox-title-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .sandbox-dots {
-      display: flex;
-      gap: 6px;
-    }
-
-    .sandbox-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.12);
-    }
-
-    .sandbox-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-secondary);
+    .workbench-tag {
+      font-size: 12px;
       font-family: var(--font-mono);
+      font-weight: 500;
+      color: var(--text-muted);
     }
 
-    .sandbox-tabs {
+    .workbench-nav {
       display: flex;
-      gap: 6px;
+      gap: 4px;
       background-color: var(--surface-1);
       padding: 3px;
-      border-radius: 8px;
+      border-radius: 6px;
       border: 1px solid var(--surface-border);
     }
 
-    .sandbox-tab {
+    .nav-tab-btn {
       background: none;
       border: none;
       color: var(--text-muted);
       font-size: 12px;
       font-weight: 600;
       padding: 6px 14px;
-      border-radius: 6px;
+      border-radius: 4px;
       cursor: pointer;
       font-family: var(--font-sans);
-      transition: color 0.15s var(--ease-out), background-color 0.15s var(--ease-out);
+      transition: color 0.12s var(--ease-out), background-color 0.12s var(--ease-out);
     }
 
-    .sandbox-tab:hover {
+    .nav-tab-btn:hover {
       color: var(--text-primary);
     }
 
-    .sandbox-tab.active {
+    .nav-tab-btn.active {
       background-color: var(--surface-2);
       color: var(--text-primary);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     }
 
-    .sandbox-body {
-      padding: 28px;
+    .workbench-body {
+      padding: 32px;
       min-height: 480px;
     }
 
-    .panel-view {
+    .panel-content {
       display: none;
     }
 
-    .panel-view.active {
+    .panel-content.active {
       display: block;
     }
 
-    /* Tab 1: Taste DNA Sandbox */
-    .taste-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-    }
-
-    @media (max-width: 860px) {
-      .taste-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .taste-config-card {
-      background-color: var(--surface-2);
-      border: 1px solid var(--surface-border);
-      border-radius: 10px;
-      padding: 20px;
-    }
-
-    .card-title {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      color: var(--text-primary);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .tropes-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .trope-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 14px;
-      background-color: var(--surface-1);
-      border: 1px solid var(--surface-border);
-      border-radius: 6px;
-      font-size: 13px;
-    }
-
-    .trope-label {
-      font-family: var(--font-mono);
-      color: var(--text-secondary);
-    }
-
-    .trope-toggle {
-      background-color: var(--surface-3);
-      border: 1px solid var(--surface-border);
-      color: var(--text-muted);
-      padding: 4px 10px;
-      border-radius: 4px;
-      font-size: 11px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.12s var(--ease-out);
-    }
-
-    .trope-toggle.rejected {
-      background-color: rgba(244, 63, 94, 0.15);
-      border-color: rgba(244, 63, 94, 0.35);
-      color: #fda4af;
-    }
-
-    .taste-preview-card {
-      background-color: #050608;
-      border: 1px solid var(--surface-border);
-      border-radius: 10px;
-      padding: 20px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      line-height: 1.6;
-      color: #cbd5e1;
-      overflow-x: auto;
-      white-space: pre-wrap;
-    }
-
-    /* Tab 2: 4-State Stress Simulator */
-    .state-switch-bar {
+    /* 4-State Stress Panel */
+    .state-selector-bar {
       display: flex;
       gap: 8px;
       margin-bottom: 24px;
       flex-wrap: wrap;
     }
 
-    .state-btn {
-      padding: 7px 14px;
+    .state-pill {
+      padding: 6px 14px;
       font-size: 12px;
       font-weight: 600;
       border-radius: 6px;
@@ -511,46 +401,47 @@
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       transition: color 0.12s var(--ease-out), border-color 0.12s var(--ease-out);
     }
 
-    .state-btn:hover {
+    .state-pill:hover {
       color: var(--text-primary);
       border-color: var(--surface-border-hover);
     }
 
-    .state-btn.active {
+    .state-pill.active {
       background-color: var(--accent);
       border-color: var(--accent);
       color: #ffffff;
     }
 
-    .component-stage {
+    .canvas-stage {
       background-color: var(--surface-2);
       border: 1px solid var(--surface-border);
-      border-radius: 10px;
+      border-radius: 8px;
       padding: 24px;
-      min-height: 320px;
+      min-height: 300px;
     }
 
-    .comp-table {
+    .table-view {
       width: 100%;
       border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
     }
 
-    .comp-table th {
+    .table-view th {
       text-align: left;
       font-size: 11px;
       font-family: var(--font-mono);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.04em;
       color: var(--text-muted);
       padding: 10px 14px;
       border-bottom: 1px solid var(--surface-border);
     }
 
-    .comp-table td {
+    .table-view td {
       padding: 14px;
       font-size: 13px;
       border-bottom: 1px solid var(--surface-border-subtle);
@@ -559,7 +450,7 @@
       word-break: break-word;
     }
 
-    .status-badge {
+    .badge-chip {
       display: inline-flex;
       align-items: center;
       gap: 6px;
@@ -569,51 +460,63 @@
       border-radius: 4px;
     }
 
-    .status-badge.active {
-      background-color: rgba(16, 185, 129, 0.15);
+    .badge-chip.emerald {
+      background-color: rgba(16, 185, 129, 0.12);
       color: #6ee7b7;
     }
 
-    .status-badge.pending {
-      background-color: rgba(245, 158, 11, 0.15);
+    .badge-chip.amber {
+      background-color: rgba(245, 158, 11, 0.12);
       color: #fcd34d;
     }
 
-    /* Skeleton State */
-    .skeleton-bar {
+    /* Authored SVGs */
+    .icon-svg {
+      width: 14px;
       height: 14px;
-      background: linear-gradient(90deg, rgba(255, 255, 255, 0.04) 25%, rgba(255, 255, 255, 0.09) 50%, rgba(255, 255, 255, 0.04) 75%);
-      background-size: 200% 100%;
-      border-radius: 4px;
-      animation: skeletonShimmer 1.8s infinite;
+      stroke-width: 1.5;
+      stroke: currentColor;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      display: inline-block;
+      vertical-align: middle;
     }
 
-    @keyframes skeletonShimmer {
+    /* Shimmer Skeleton */
+    .skeleton-line {
+      height: 14px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.03) 25%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.03) 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeletonPulse 1.8s infinite;
+    }
+
+    @keyframes skeletonPulse {
       0% { background-position: 200% 0; }
       100% { background-position: -200% 0; }
     }
 
-    /* Empty State */
-    .empty-state-card {
+    /* Empty state */
+    .empty-card {
       text-align: center;
       padding: 56px 20px;
     }
 
-    .empty-icon {
-      width: 48px;
-      height: 48px;
+    .empty-symbol {
+      width: 44px;
+      height: 44px;
       margin: 0 auto 16px;
-      border-radius: 12px;
+      border-radius: 10px;
       background-color: var(--surface-3);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--text-muted);
-      font-size: 20px;
     }
 
     .empty-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       margin-bottom: 6px;
     }
@@ -621,16 +524,16 @@
     .empty-desc {
       font-size: 13px;
       color: var(--text-secondary);
-      max-width: 360px;
+      max-width: 380px;
       margin: 0 auto 20px;
     }
 
-    /* Error State */
+    /* Error recovery */
     .error-card {
-      border: 1px solid rgba(244, 63, 94, 0.3);
-      background-color: rgba(244, 63, 94, 0.05);
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      background-color: rgba(244, 63, 94, 0.04);
       border-radius: 8px;
-      padding: 24px;
+      padding: 28px 20px;
       text-align: center;
     }
 
@@ -644,129 +547,218 @@
     .error-desc {
       color: var(--text-secondary);
       font-size: 13px;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
-    /* ==========================================================================
-       VALUE PROPOSITION SECTION
-       ========================================================================== */
-    .why-section {
-      padding: 80px 0;
-      border-top: 1px solid var(--surface-border);
-    }
-
-    .section-header {
-      text-align: center;
-      max-width: 640px;
-      margin: 0 auto 56px;
-    }
-
-    .section-title {
-      font-size: clamp(26px, 3.5vw, 38px);
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      margin-bottom: 14px;
-    }
-
-    .section-desc {
-      font-size: 16px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    .pillars-grid {
+    /* Taste Compiler Panel */
+    .taste-columns {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 24px;
     }
 
-    @media (max-width: 900px) {
-      .pillars-grid {
+    @media (max-width: 860px) {
+      .taste-columns {
         grid-template-columns: 1fr;
       }
     }
 
-    .pillar-card {
+    .taste-card {
+      background-color: var(--surface-2);
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    .taste-heading {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .rejections-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .rejection-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background-color: var(--surface-1);
+      border: 1px solid var(--surface-border);
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+    .code-tag {
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    .reject-toggle {
+      background-color: var(--surface-3);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.12s var(--ease-out);
+    }
+
+    .reject-toggle.active {
+      background-color: rgba(244, 63, 94, 0.15);
+      border-color: rgba(244, 63, 94, 0.35);
+      color: #fda4af;
+    }
+
+    .output-pre {
+      background-color: #040507;
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.6;
+      color: #cbd5e1;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    /* ==========================================================================
+       ASYMMETRIC EDITORIAL COMPARISON (IMPECCABLE: NO IDENTICAL 3-BOX GRID)
+       ========================================================================== */
+    .editorial-section {
+      padding: 88px 0;
+      border-top: 1px solid var(--surface-border);
+    }
+
+    .editorial-headline {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 48px;
+      max-width: 720px;
+    }
+
+    .contrast-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .contrast-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .lead-argument {
       background-color: var(--surface-1);
       border: 1px solid var(--surface-border);
       border-radius: 12px;
-      padding: 32px 24px;
-      transition: transform 0.15s var(--ease-out), border-color 0.15s var(--ease-out);
+      padding: 40px;
     }
 
-    .pillar-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--surface-border-hover);
-    }
-
-    .pillar-num {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--accent);
-      margin-bottom: 16px;
-    }
-
-    .pillar-title {
-      font-size: 18px;
+    .lead-title {
+      font-size: 22px;
       font-weight: 700;
-      margin-bottom: 10px;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
       color: var(--text-primary);
     }
 
-    .pillar-text {
-      font-size: 14px;
+    .lead-body {
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 24px;
+      max-width: 68ch;
+    }
+
+    .sub-arguments {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .sub-card {
+      background-color: var(--surface-1);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 28px;
+      transition: border-color 0.15s var(--ease-out);
+    }
+
+    .sub-card:hover {
+      border-color: var(--surface-border-hover);
+    }
+
+    .sub-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .sub-text {
+      font-size: 13px;
       color: var(--text-secondary);
       line-height: 1.6;
     }
 
     /* ==========================================================================
-       FIVE GATES SECTION
+       PROOF GATES
        ========================================================================== */
-    .gates-section {
-      padding: 80px 0;
+    .proof-section {
+      padding: 88px 0;
       border-top: 1px solid var(--surface-border);
-      background-color: rgba(17, 19, 26, 0.4);
+      background-color: rgba(16, 18, 26, 0.4);
     }
 
-    .gates-grid {
+    .gates-stack {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 16px;
+      margin-top: 40px;
     }
 
-    .gate-box {
+    .gate-card {
       background-color: var(--surface-1);
       border: 1px solid var(--surface-border);
       border-radius: 8px;
       padding: 20px;
     }
 
-    .gate-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-
-    .gate-tag {
+    .gate-chip {
       font-family: var(--font-mono);
       font-size: 11px;
       font-weight: 600;
       color: var(--accent-emerald);
-      background-color: rgba(16, 185, 129, 0.1);
-      padding: 2px 6px;
-      border-radius: 4px;
+      margin-bottom: 12px;
+      display: block;
     }
 
-    .gate-name {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 6px;
+    .gate-filename {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 600;
       color: var(--text-primary);
+      margin-bottom: 8px;
     }
 
-    .gate-desc {
+    .gate-text {
       font-size: 12px;
       color: var(--text-secondary);
       line-height: 1.5;
@@ -776,28 +768,28 @@
        INSTALLATION MATRIX
        ========================================================================== */
     .install-section {
-      padding: 80px 0;
+      padding: 88px 0;
       border-top: 1px solid var(--surface-border);
     }
 
-    .agent-matrix {
-      max-width: 820px;
-      margin: 0 auto;
+    .installer-box {
+      max-width: 800px;
+      margin: 40px auto 0;
       background-color: var(--surface-1);
       border: 1px solid var(--surface-border);
       border-radius: 12px;
       overflow: hidden;
     }
 
-    .agent-nav {
+    .installer-tabs {
       display: flex;
       overflow-x: auto;
       background-color: var(--surface-2);
       border-bottom: 1px solid var(--surface-border);
     }
 
-    .agent-btn {
-      padding: 14px 20px;
+    .tab-btn {
+      padding: 14px 18px;
       font-size: 13px;
       font-weight: 600;
       color: var(--text-muted);
@@ -809,40 +801,40 @@
       transition: color 0.12s var(--ease-out);
     }
 
-    .agent-btn:hover {
+    .tab-btn:hover {
       color: var(--text-primary);
     }
 
-    .agent-btn.active {
+    .tab-btn.active {
       color: var(--text-primary);
       border-bottom-color: var(--accent);
       background-color: var(--surface-1);
     }
 
-    .agent-content {
+    .installer-content {
       padding: 28px;
     }
 
-    .cmd-box {
+    .cmd-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background-color: #050608;
+      background-color: #040507;
       border: 1px solid var(--surface-border);
-      border-radius: 8px;
+      border-radius: 6px;
       padding: 12px 18px;
       margin-bottom: 16px;
       gap: 12px;
     }
 
-    .cmd-box code {
+    .cmd-bar code {
       font-family: var(--font-mono);
       font-size: 13px;
       color: #93c5fd;
       overflow-x: auto;
     }
 
-    .agent-note {
+    .cmd-hint {
       font-size: 13px;
       color: var(--text-secondary);
       line-height: 1.5;
@@ -866,17 +858,18 @@
       gap: 16px;
     }
 
-    .footer-links {
+    .footer-nav {
       display: flex;
-      gap: 20px;
+      gap: 24px;
     }
 
-    .footer-link {
+    .footer-nav a {
       color: var(--text-muted);
       text-decoration: none;
+      text-underline-offset: 4px;
     }
 
-    .footer-link:hover {
+    .footer-nav a:hover {
       color: var(--text-primary);
     }
   </style>
@@ -887,15 +880,15 @@
   <nav class="nav" aria-label="Main Navigation">
     <div class="container nav-inner">
       <a href="#" class="brand" aria-label="Turtleneck Home">
-        <div class="brand-mark">T</div>
+        <div class="brand-mark" aria-hidden="true">T</div>
         <span class="brand-name">Turtleneck</span>
-        <span class="brand-badge">v2.1.0</span>
+        <span class="brand-version">v2.1.0</span>
       </a>
 
       <div class="nav-links">
-        <a href="#simulator" class="nav-link">Simulator</a>
-        <a href="#why" class="nav-link">Why Turtleneck</a>
-        <a href="#gates" class="nav-link">Proof Gates</a>
+        <a href="#simulator" class="nav-link">Workbench</a>
+        <a href="#contrast" class="nav-link">Architecture</a>
+        <a href="#gates" class="nav-link">Gates</a>
         <a href="#install" class="nav-link">Install</a>
         <a href="https://github.com/Divyanshneginot/turtleneck" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" aria-label="GitHub Repository">
           GitHub
@@ -908,132 +901,120 @@
     <!-- HERO -->
     <header class="hero">
       <div class="container">
-        <div class="hero-badge-pill">
-          <span class="hero-badge-dot" aria-hidden="true"></span>
-          <span>Zero Groundhog Day · Deterministic Verification</span>
-        </div>
-
         <h1 class="hero-title">
-          <span>Senior Product Design Intelligence</span><br>
-          For AI Coding Agents.
+          Senior Product Design Intelligence.<br>
+          <em>Zero amnesia. Zero prompt whispering.</em>
         </h1>
 
         <p class="hero-subtitle">
-          Other UI skills are stateless prompt essays that write fragile single-state prototypes. Turtleneck remembers your design DNA across sessions and stress-tests every interaction before shipping.
+          Other UI skills are stateless prompt essays that output fragile single-state toys. Turtleneck remembers your design taste across chats and stress-tests edge cases before code ships.
         </p>
 
         <div class="hero-actions">
           <div class="install-bar">
             <span>$</span>
             <code id="quick-cmd">python scripts/install.py --all</code>
-            <button type="button" class="btn-copy" id="btn-quick-copy" aria-label="Copy installation command">
-              <span>Copy</span>
+            <button type="button" class="btn-copy" id="btn-quick-copy" aria-label="Copy install command">
+              Copy
             </button>
           </div>
-          <a href="#simulator" class="btn btn-primary" aria-label="Explore Live Simulator">
-            Explore Simulator →
+          <a href="#simulator" class="btn btn-primary" aria-label="Explore Live Workbench">
+            Explore Workbench
           </a>
         </div>
       </div>
     </header>
 
-    <!-- LIVE SIMULATOR (CENTERPIECE) -->
-    <section id="simulator" class="sandbox-section" aria-label="Interactive Simulator">
+    <!-- LIVE WORKBENCH (PRODUCT PROOF) -->
+    <section id="simulator" class="workbench-section" aria-label="Interactive Workbench">
       <div class="container">
-        <div class="sandbox-frame">
-          <div class="sandbox-header">
-            <div class="sandbox-title-wrap">
-              <div class="sandbox-dots" aria-hidden="true">
-                <div class="sandbox-dot"></div>
-                <div class="sandbox-dot"></div>
-                <div class="sandbox-dot"></div>
-              </div>
-              <span class="sandbox-title">turtleneck-interactive-workbench</span>
-            </div>
+        <div class="workbench-shell">
+          <div class="workbench-bar">
+            <span class="workbench-tag">turtleneck-live-runtime</span>
 
-            <div class="sandbox-tabs" role="tablist" aria-label="Simulator Views">
-              <button type="button" role="tab" aria-selected="true" class="sandbox-tab active" id="tab-btn-stress" onclick="switchSandboxTab('stress')" aria-label="4-State Stress Simulator View">
+            <div class="workbench-nav" role="tablist" aria-label="Workbench Panels">
+              <button type="button" role="tab" aria-selected="true" class="nav-tab-btn active" id="tab-btn-stress" onclick="switchTab('stress')" aria-label="4-State Stress Gauntlet Panel">
                 4-State Stress Gauntlet
               </button>
-              <button type="button" role="tab" aria-selected="false" class="sandbox-tab" id="tab-btn-taste" onclick="switchSandboxTab('taste')" aria-label="Adaptive Taste Compiler View">
+              <button type="button" role="tab" aria-selected="false" class="nav-tab-btn" id="tab-btn-taste" onclick="switchTab('taste')" aria-label="Adaptive Taste Compiler Panel">
                 Taste DNA Compiler
               </button>
             </div>
           </div>
 
-          <div class="sandbox-body">
+          <div class="workbench-body">
             <!-- TAB 1: 4-STATE STRESS GAUNTLET -->
-            <div id="view-stress" class="panel-view active">
-              <div class="state-switch-bar" role="group" aria-label="Component States">
-                <button type="button" class="state-btn active" id="btn-state-nominal" onclick="setCompState('nominal')" aria-label="Show Nominal State">
-                  ● Nominal Data
+            <div id="panel-stress" class="panel-content active">
+              <div class="state-selector-bar" role="group" aria-label="Selectable Interaction States">
+                <button type="button" class="state-pill active" id="pill-nominal" onclick="renderState('nominal')" aria-label="Show Nominal State">
+                  Nominal Data
                 </button>
-                <button type="button" class="state-btn" id="btn-state-empty" onclick="setCompState('empty')" aria-label="Show Empty State">
-                  ○ Empty State (0 Records)
+                <button type="button" class="state-pill" id="pill-empty" onclick="renderState('empty')" aria-label="Show Empty State">
+                  Empty State (0 Records)
                 </button>
-                <button type="button" class="state-btn" id="btn-state-loading" onclick="setCompState('loading')" aria-label="Show Loading Skeleton State">
-                  ◌ Loading Skeleton (0 CLS)
+                <button type="button" class="state-pill" id="pill-loading" onclick="renderState('loading')" aria-label="Show Loading Skeleton State">
+                  Loading Skeleton (Zero CLS)
                 </button>
-                <button type="button" class="state-btn" id="btn-state-error" onclick="setCompState('error')" aria-label="Show Error Recovery State">
-                  ⚠ Error Boundary & Retry
+                <button type="button" class="state-pill" id="pill-error" onclick="renderState('error')" aria-label="Show Error Recovery State">
+                  Error Boundary & Retry
                 </button>
-                <button type="button" class="state-btn" id="btn-state-overflow" onclick="setCompState('overflow')" aria-label="Show Long String Stress Test">
-                  ↔ Overflow Stress Test
+                <button type="button" class="state-pill" id="pill-overflow" onclick="renderState('overflow')" aria-label="Show Long String Stress Test">
+                  Overflow Stress Test
                 </button>
               </div>
 
-              <div class="component-stage" id="component-container">
-                <!-- State content dynamically injected here -->
+              <div class="canvas-stage" id="stage-viewport">
+                <!-- State DOM rendered here -->
               </div>
             </div>
 
             <!-- TAB 2: TASTE DNA COMPILER -->
-            <div id="view-taste" class="panel-view">
-              <div class="taste-grid">
-                <div class="taste-config-card">
-                  <div class="card-title">
-                    <span>Aesthetic Rejection Ledger</span>
-                    <span style="font-size: 11px; color: var(--text-muted);">.turtleneck/taste-profile.json</span>
+            <div id="panel-taste" class="panel-content">
+              <div class="taste-columns">
+                <div class="taste-card">
+                  <div class="taste-heading">
+                    <span>Aesthetic Rejections</span>
+                    <span style="font-family: var(--font-mono); color: var(--text-muted); font-size: 11px;">.turtleneck/taste-profile.json</span>
                   </div>
 
-                  <div class="tropes-list">
-                    <div class="trope-item">
-                      <span class="trope-label">purple_neon_blur</span>
-                      <button type="button" class="trope-toggle rejected" onclick="toggleTrope(this, 'purple_neon_blur')" aria-label="Toggle purple neon blur trope rejection">
+                  <div class="rejections-stack">
+                    <div class="rejection-row">
+                      <span class="code-tag">purple_neon_blur</span>
+                      <button type="button" class="reject-toggle active" onclick="toggleTrope(this, 'purple_neon_blur')" aria-label="Toggle purple neon blur rejection">
                         REJECTED
                       </button>
                     </div>
-                    <div class="trope-item">
-                      <span class="trope-label">centered_3_cards</span>
-                      <button type="button" class="trope-toggle rejected" onclick="toggleTrope(this, 'centered_3_cards')" aria-label="Toggle centered 3 cards trope rejection">
+                    <div class="rejection-row">
+                      <span class="code-tag">centered_3_cards</span>
+                      <button type="button" class="reject-toggle active" onclick="toggleTrope(this, 'centered_3_cards')" aria-label="Toggle centered 3 cards rejection">
                         REJECTED
                       </button>
                     </div>
-                    <div class="trope-item">
-                      <span class="trope-label">dusty_retro_serif</span>
-                      <button type="button" class="trope-toggle rejected" onclick="toggleTrope(this, 'dusty_retro_serif')" aria-label="Toggle dusty retro serif trope rejection">
+                    <div class="rejection-row">
+                      <span class="code-tag">dusty_retro_serif</span>
+                      <button type="button" class="reject-toggle active" onclick="toggleTrope(this, 'dusty_retro_serif')" aria-label="Toggle dusty retro serif rejection">
                         REJECTED
                       </button>
                     </div>
-                    <div class="trope-item">
-                      <span class="trope-label">fake_diagnostics_telemetry</span>
-                      <button type="button" class="trope-toggle rejected" onclick="toggleTrope(this, 'fake_diagnostics_telemetry')" aria-label="Toggle fake diagnostics telemetry trope rejection">
+                    <div class="rejection-row">
+                      <span class="code-tag">fake_diagnostics_telemetry</span>
+                      <button type="button" class="reject-toggle active" onclick="toggleTrope(this, 'fake_diagnostics_telemetry')" aria-label="Toggle fake diagnostics telemetry rejection">
                         REJECTED
                       </button>
                     </div>
                   </div>
 
-                  <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">
-                    Rejecting a trope permanently compiles it into agent constraints across all sessions, preventing amnesia.
+                  <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6;">
+                    Accumulated rejections persist in your repository across all sessions. Models never repeat banned tropes.
                   </p>
                 </div>
 
                 <div>
-                  <div class="card-title">
-                    <span>Compiled Agent Constraints</span>
-                    <button type="button" class="btn-copy" id="btn-copy-taste" onclick="copyTasteBlock()" aria-label="Copy compiled taste constraints">Copy Block</button>
+                  <div class="taste-heading">
+                    <span>Compiled Agent Prompt Block</span>
+                    <button type="button" class="btn-copy" id="btn-copy-taste" onclick="copyTaste()" aria-label="Copy compiled constraints">Copy Block</button>
                   </div>
-                  <pre class="taste-preview-card" id="taste-preview-block">
+                  <pre class="output-pre" id="taste-block-output">
 &lt;!-- TURTLENECK PERSISTENT TASTE CONSTRAINTS --&gt;
 Preferred styles: modern_high_precision_editorial, asymmetric_layout, generous_whitespace
 Banned tropes (never generate):
@@ -1051,93 +1032,80 @@ Contrast floor: &gt;=7.0:1</pre>
       </div>
     </section>
 
-    <!-- WHY TURTLENECK SECTION -->
-    <section id="why" class="why-section" aria-label="Why Turtleneck">
+    <!-- ASYMMETRIC ARCHITECTURAL CONTRAST -->
+    <section id="contrast" class="editorial-section" aria-label="Architectural Contrast">
       <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">The Three Unsolved Frontiers</h2>
-          <p class="section-desc">
-            Why other UI skills fail at production software, and how Turtleneck's dual-engine harness solves it.
-          </p>
-        </div>
+        <h2 class="editorial-headline">
+          The difference between prompt whispering and deterministic engineering.
+        </h2>
 
-        <div class="pillars-grid">
-          <article class="pillar-card">
-            <div class="pillar-num">01 / PERSISTENCE</div>
-            <h3 class="pillar-title">Kills "Groundhog Day"</h3>
-            <p class="pillar-text">
-              Every other skill resets to default in every new chat. You waste tokens re-prompting font stacks, border radii, and density preferences forever. Turtleneck's Taste Ledger stores rejections permanently in your repo.
+        <div class="contrast-layout">
+          <article class="lead-argument">
+            <h3 class="lead-title">Kills Stateless Amnesia at the Root</h3>
+            <p class="lead-body">
+              LLMs have no durable memory between chats. Every session defaults to median internet web training: purple gradients, dark bento boxes, and unconstrained containers. You waste tokens re-prompting font stacks, border radii, and density preferences every day.
+            </p>
+            <p class="lead-body">
+              Turtleneck turns taste into an accumulated rejection ledger in <code>.turtleneck/taste-profile.json</code>. Reject a trope once, and the compiler injects your exact aesthetic DNA into every agent turn.
             </p>
           </article>
 
-          <article class="pillar-card">
-            <div class="pillar-num">02 / PRODUCTION RIGOR</div>
-            <h3 class="pillar-title">The 4-State Guarantee</h3>
-            <p class="pillar-text">
-              AI models generate fragile happy-path Dribbble prototypes that crash when data is empty or text wraps. Turtleneck enforces Empty, Loading skeleton, and Error recovery states before marking tasks complete.
-            </p>
-          </article>
+          <div class="sub-arguments">
+            <article class="sub-card">
+              <h3 class="sub-title">The 4-State Production Guarantee</h3>
+              <p class="sub-text">
+                Dribbble prototypes only render the happy path. Turtleneck blocks task completion until Empty, Loading skeleton, and Error recovery states are verified in the markup.
+              </p>
+            </article>
 
-          <article class="pillar-card">
-            <div class="pillar-num">03 / VERIFICATION</div>
-            <h3 class="pillar-title">Zero Prompt Whispering</h3>
-            <p class="pillar-text">
-              Begging a token predictor to "have good taste" does not work. Turtleneck uses five zero-dependency Python gates that mechanically assert contrast, focus rings, compositor motion, and layout bounds in CI.
-            </p>
-          </article>
+            <article class="sub-card">
+              <h3 class="sub-title">Zero-Dependency Python Gates</h3>
+              <p class="sub-text">
+                No prompt begging. Five deterministic gates run in local CI, mechanically asserting contrast maths, focus rings, compositor motion, and layout bounds before code is merged.
+              </p>
+            </article>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- FIVE GATES SECTION -->
-    <section id="gates" class="gates-section" aria-label="Verification Gates">
+    <!-- PROOF GATES -->
+    <section id="gates" class="proof-section" aria-label="Verification Gates">
       <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Proof Over Promises</h2>
-          <p class="section-desc">
-            Five automated verification gates run locally and on GitHub Actions with Python standard library alone.
-          </p>
-        </div>
+        <h2 style="font-size: 26px; font-weight: 800; letter-spacing: -0.02em;">Mechanical Verification in CI</h2>
+        <p style="font-size: 15px; color: var(--text-secondary); margin-top: 8px;">
+          All five gates run with Python standard library alone. Zero heavy dependencies.
+        </p>
 
-        <div class="gates-grid">
-          <div class="gate-box">
-            <div class="gate-header">
-              <span class="gate-tag">GATE 01</span>
-            </div>
-            <div class="gate-name">check_frontmatter.py</div>
-            <div class="gate-desc">Asserts trigger-only discovery format and bounded description length.</div>
+        <div class="gates-stack">
+          <div class="gate-card">
+            <span class="gate-chip">GATE 01</span>
+            <div class="gate-filename">check_frontmatter.py</div>
+            <div class="gate-text">Asserts trigger-only discovery format and bounded description character count.</div>
           </div>
 
-          <div class="gate-box">
-            <div class="gate-header">
-              <span class="gate-tag">GATE 02</span>
-            </div>
-            <div class="gate-name">check_consistency.py</div>
-            <div class="gate-desc">Ensures byte-identical pipeline parity across all 6 agent rules with zero drift.</div>
+          <div class="gate-card">
+            <span class="gate-chip">GATE 02</span>
+            <div class="gate-filename">check_consistency.py</div>
+            <div class="gate-text">Verifies byte-identical pipeline parity across all 6 agent rule configurations.</div>
           </div>
 
-          <div class="gate-box">
-            <div class="gate-header">
-              <span class="gate-tag">GATE 03</span>
-            </div>
-            <div class="gate-name">check_contrast.py</div>
-            <div class="gate-desc">Mathematically verifies all 46 declared color pairs meet strict WCAG 2.2 AA.</div>
+          <div class="gate-card">
+            <span class="gate-chip">GATE 03</span>
+            <div class="gate-filename">check_contrast.py</div>
+            <div class="gate-text">Mathematically checks all 46 declared color pairs against WCAG 2.2 AA.</div>
           </div>
 
-          <div class="gate-box">
-            <div class="gate-header">
-              <span class="gate-tag">GATE 04</span>
-            </div>
-            <div class="gate-name">check_examples.py</div>
-            <div class="gate-desc">Guarantees focus-visible outlines, reduced-motion fallbacks, and a11y names.</div>
+          <div class="gate-card">
+            <span class="gate-chip">GATE 04</span>
+            <div class="gate-filename">check_examples.py</div>
+            <div class="gate-text">Guarantees focus-visible outlines, reduced-motion blocks, and accessible names.</div>
           </div>
 
-          <div class="gate-box">
-            <div class="gate-header">
-              <span class="gate-tag">GATE 05</span>
-            </div>
-            <div class="gate-name">check_stress.py</div>
-            <div class="gate-desc">Enforces anti-slop rules, 4-state completeness, and layout blowout safety.</div>
+          <div class="gate-card">
+            <span class="gate-chip">GATE 05</span>
+            <div class="gate-filename">check_stress.py</div>
+            <div class="gate-text">Enforces anti-slop rules, 4-state completeness, and mobile layout containment.</div>
           </div>
         </div>
       </div>
@@ -1146,30 +1114,30 @@ Contrast floor: &gt;=7.0:1</pre>
     <!-- INSTALLATION MATRIX -->
     <section id="install" class="install-section" aria-label="Installation Matrix">
       <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">One Command for Every Agent</h2>
-          <p class="section-desc">
-            Installs non-destructively. Auto-detects your environment and creates recoverable backups.
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+          <h2 style="font-size: 28px; font-weight: 800; letter-spacing: -0.02em;">Universal Compatibility</h2>
+          <p style="font-size: 15px; color: var(--text-secondary); margin-top: 8px;">
+            Installs non-destructively. Auto-detects project structure and creates recoverable backups.
           </p>
         </div>
 
-        <div class="agent-matrix">
-          <nav class="agent-nav" aria-label="Agent Installer Tabs">
-            <button type="button" class="agent-btn active" onclick="switchAgent('skill')" aria-label="Universal Agent Skill Instructions">Universal Skill</button>
-            <button type="button" class="agent-btn" onclick="switchAgent('claude')" aria-label="Claude Code Instructions">Claude Code</button>
-            <button type="button" class="agent-btn" onclick="switchAgent('cursor')" aria-label="Cursor Instructions">Cursor</button>
-            <button type="button" class="agent-btn" onclick="switchAgent('windsurf')" aria-label="Windsurf Instructions">Windsurf</button>
-            <button type="button" class="agent-btn" onclick="switchAgent('copilot')" aria-label="Copilot Instructions">Copilot</button>
-            <button type="button" class="agent-btn" onclick="switchAgent('antigravity')" aria-label="Google Antigravity Instructions">Antigravity</button>
+        <div class="installer-box">
+          <nav class="installer-tabs" aria-label="Supported Coding Agents">
+            <button type="button" class="tab-btn active" onclick="pickAgent('skill')" aria-label="Universal Skill Instructions">Universal Skill</button>
+            <button type="button" class="tab-btn" onclick="pickAgent('claude')" aria-label="Claude Code Instructions">Claude Code</button>
+            <button type="button" class="tab-btn" onclick="pickAgent('cursor')" aria-label="Cursor Instructions">Cursor</button>
+            <button type="button" class="tab-btn" onclick="pickAgent('windsurf')" aria-label="Windsurf Instructions">Windsurf</button>
+            <button type="button" class="tab-btn" onclick="pickAgent('copilot')" aria-label="Copilot Instructions">Copilot</button>
+            <button type="button" class="tab-btn" onclick="pickAgent('antigravity')" aria-label="Google Antigravity Instructions">Antigravity</button>
           </nav>
 
-          <div class="agent-content">
-            <div class="cmd-box">
-              <code id="agent-cmd-text">python scripts/install.py --skill</code>
-              <button type="button" class="btn-copy" id="btn-agent-copy" onclick="copyAgentCmd()" aria-label="Copy agent command">Copy</button>
+          <div class="installer-content">
+            <div class="cmd-bar">
+              <code id="agent-command-text">python scripts/install.py --skill</code>
+              <button type="button" class="btn-copy" id="btn-copy-agent" onclick="copyAgent()" aria-label="Copy agent installation command">Copy</button>
             </div>
-            <p class="agent-note" id="agent-note-text">
-              Installs full skill into <code>.agents/skills/turtleneck/</code> following the open Agent Skills standard. Works with any compatible runtime.
+            <p class="cmd-hint" id="agent-hint-text">
+              Installs full skill into <code>.agents/skills/turtleneck/</code> following the open Agent Skills standard.
             </p>
           </div>
         </div>
@@ -1180,26 +1148,23 @@ Contrast floor: &gt;=7.0:1</pre>
   <!-- FOOTER -->
   <footer class="footer">
     <div class="container footer-inner">
-      <div>
-        <span>Turtleneck v2.1.0 · MIT Licensed · Production Design Intelligence</span>
-      </div>
-      <div class="footer-links">
-        <a href="https://github.com/Divyanshneginot/turtleneck" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
-        <a href="https://github.com/Divyanshneginot/turtleneck/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="footer-link">License</a>
-        <a href="https://github.com/Divyanshneginot/turtleneck/blob/main/SKILL.md" target="_blank" rel="noopener noreferrer" class="footer-link">SKILL.md</a>
-      </div>
+      <span>Turtleneck v2.1.0 · MIT License · Production Design Intelligence</span>
+      <nav class="footer-nav" aria-label="Footer Links">
+        <a href="https://github.com/Divyanshneginot/turtleneck" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://github.com/Divyanshneginot/turtleneck/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">License</a>
+        <a href="https://github.com/Divyanshneginot/turtleneck/blob/main/SKILL.md" target="_blank" rel="noopener noreferrer">SKILL.md</a>
+      </nav>
     </div>
   </footer>
 
-  <!-- INTERACTIVE LOGIC -->
+  <!-- JAVASCRIPT ENGINE -->
   <script>
     // Copy helper
     function setupCopy(btnId, textGetter) {
       const btn = document.getElementById(btnId);
       if (!btn) return;
       btn.addEventListener('click', () => {
-        const text = textGetter();
-        navigator.clipboard.writeText(text).then(() => {
+        navigator.clipboard.writeText(textGetter()).then(() => {
           const original = btn.innerText;
           btn.innerText = 'Copied!';
           setTimeout(() => { btn.innerText = original; }, 1800);
@@ -1209,36 +1174,34 @@ Contrast floor: &gt;=7.0:1</pre>
 
     setupCopy('btn-quick-copy', () => 'python scripts/install.py --all');
 
-    // Tab switcher for Simulator
-    function switchSandboxTab(tabName) {
-      document.querySelectorAll('.sandbox-tab').forEach(b => {
+    // Tab Switcher
+    function switchTab(tabId) {
+      document.querySelectorAll('.nav-tab-btn').forEach(b => {
         b.classList.remove('active');
         b.setAttribute('aria-selected', 'false');
       });
-      document.querySelectorAll('.panel-view').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.panel-content').forEach(p => p.classList.remove('active'));
 
-      if (tabName === 'stress') {
+      if (tabId === 'stress') {
         document.getElementById('tab-btn-stress').classList.add('active');
         document.getElementById('tab-btn-stress').setAttribute('aria-selected', 'true');
-        document.getElementById('view-stress').classList.add('active');
+        document.getElementById('panel-stress').classList.add('active');
       } else {
         document.getElementById('tab-btn-taste').classList.add('active');
         document.getElementById('tab-btn-taste').setAttribute('aria-selected', 'true');
-        document.getElementById('view-taste').classList.add('active');
+        document.getElementById('panel-taste').classList.add('active');
       }
     }
 
-    // 4-State Component Interactive Simulator
-    const compContainer = document.getElementById('component-container');
-
-    const STATES = {
+    // 4-State Stage Data
+    const COMP_STATES = {
       nominal: `
         <div data-state="nominal" style="width: 100%;">
-          <table class="comp-table">
+          <table class="table-view">
             <thead>
               <tr>
-                <th>Resource Name</th>
-                <th>Environment</th>
+                <th>Service Name</th>
+                <th>Region</th>
                 <th>Status</th>
                 <th>Latency</th>
               </tr>
@@ -1247,19 +1210,34 @@ Contrast floor: &gt;=7.0:1</pre>
               <tr>
                 <td style="font-weight: 600;">auth-gateway-service</td>
                 <td style="color: var(--text-secondary);">Production / us-east-1</td>
-                <td><span class="status-badge active">● Healthy</span></td>
+                <td>
+                  <span class="badge-chip emerald">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="currentColor"/></svg>
+                    Healthy
+                  </span>
+                </td>
                 <td style="font-family: var(--font-mono); color: var(--text-secondary);">14ms</td>
               </tr>
               <tr>
                 <td style="font-weight: 600;">event-stream-broker</td>
                 <td style="color: var(--text-secondary);">Production / eu-west-1</td>
-                <td><span class="status-badge active">● Healthy</span></td>
+                <td>
+                  <span class="badge-chip emerald">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="currentColor"/></svg>
+                    Healthy
+                  </span>
+                </td>
                 <td style="font-family: var(--font-mono); color: var(--text-secondary);">8ms</td>
               </tr>
               <tr>
                 <td style="font-weight: 600;">cache-replica-node-4</td>
                 <td style="color: var(--text-secondary);">Staging / us-central</td>
-                <td><span class="status-badge pending">○ Rebalancing</span></td>
+                <td>
+                  <span class="badge-chip amber">
+                    <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="currentColor"/></svg>
+                    Rebalancing
+                  </span>
+                </td>
                 <td style="font-family: var(--font-mono); color: var(--text-secondary);">42ms</td>
               </tr>
             </tbody>
@@ -1267,65 +1245,67 @@ Contrast floor: &gt;=7.0:1</pre>
         </div>
       `,
       empty: `
-        <div data-state="empty" class="empty-state-card">
-          <div class="empty-icon" aria-hidden="true">∅</div>
+        <div data-state="empty" class="empty-card">
+          <div class="empty-symbol" aria-hidden="true">
+            <svg class="icon-svg" style="width: 22px; height: 22px;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          </div>
           <h4 class="empty-title">No Active Services Connected</h4>
-          <p class="empty-desc">Zero items found in this workspace. Connect your first infrastructure cluster to begin real-time telemetry.</p>
-          <button type="button" class="btn btn-primary" onclick="setCompState('nominal')" aria-label="Provision Demo Cluster">
-            Provision Demo Cluster
+          <p class="empty-desc">Zero items found in this workspace. Provision your first infrastructure node to begin telemetry.</p>
+          <button type="button" class="btn btn-primary" onclick="renderState('nominal')" aria-label="Provision Demo Node">
+            Provision Demo Node
           </button>
         </div>
       `,
       loading: `
         <div data-state="loading" style="display: flex; flex-direction: column; gap: 18px; padding: 12px 0;">
           <div style="display: flex; justify-content: space-between;">
-            <div class="skeleton-bar" style="width: 28%;"></div>
-            <div class="skeleton-bar" style="width: 18%;"></div>
-            <div class="skeleton-bar" style="width: 14%;"></div>
-            <div class="skeleton-bar" style="width: 12%;"></div>
+            <div class="skeleton-line" style="width: 28%;"></div>
+            <div class="skeleton-line" style="width: 20%;"></div>
+            <div class="skeleton-line" style="width: 14%;"></div>
+            <div class="skeleton-line" style="width: 10%;"></div>
           </div>
           <div style="display: flex; justify-content: space-between;">
-            <div class="skeleton-bar" style="width: 32%;"></div>
-            <div class="skeleton-bar" style="width: 22%;"></div>
-            <div class="skeleton-bar" style="width: 14%;"></div>
-            <div class="skeleton-bar" style="width: 12%;"></div>
+            <div class="skeleton-line" style="width: 32%;"></div>
+            <div class="skeleton-line" style="width: 22%;"></div>
+            <div class="skeleton-line" style="width: 14%;"></div>
+            <div class="skeleton-line" style="width: 10%;"></div>
           </div>
           <div style="display: flex; justify-content: space-between;">
-            <div class="skeleton-bar" style="width: 25%;"></div>
-            <div class="skeleton-bar" style="width: 19%;"></div>
-            <div class="skeleton-bar" style="width: 14%;"></div>
-            <div class="skeleton-bar" style="width: 12%;"></div>
+            <div class="skeleton-line" style="width: 26%;"></div>
+            <div class="skeleton-line" style="width: 18%;"></div>
+            <div class="skeleton-line" style="width: 14%;"></div>
+            <div class="skeleton-line" style="width: 10%;"></div>
           </div>
         </div>
       `,
       error: `
         <div data-state="error" class="error-card">
-          <h4 class="error-title">Telemetry Cluster Connection Failed</h4>
-          <p class="error-desc">Upstream WebSocket terminated unexpectedly (HTTP 503). Retrying handshake in progress.</p>
-          <button type="button" class="btn btn-secondary" onclick="setCompState('nominal')" aria-label="Retry connection">
+          <h4 class="error-title">Telemetry Stream Handshake Failed</h4>
+          <p class="error-desc">Upstream connection terminated with status code 503. Retry policy active.</p>
+          <button type="button" class="btn btn-secondary" onclick="renderState('nominal')" aria-label="Retry Connection">
             Retry Connection Now
           </button>
         </div>
       `,
       overflow: `
         <div data-state="overflow" style="width: 100%;">
-          <table class="comp-table">
+          <table class="table-view">
             <thead>
               <tr>
                 <th>Resource Name</th>
-                <th>Environment</th>
+                <th>Cluster Host</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td style="font-weight: 600; max-width: 240px;">
-                  Kraftfahrzeug-Haftpflichtversicherung-Abrechnungssystem-Cluster-Production-v42-Alpha-Release
+                <td style="font-weight: 600; max-width: 260px;">
+                  Kraftfahrzeug-Haftpflichtversicherung-Abrechnungssystem-Cluster-Production-v42-Alpha
                 </td>
-                <td style="color: var(--text-secondary); max-width: 200px;">
+                <td style="color: var(--text-secondary); max-width: 220px;">
                   Frankfurt-Tier-4-Datacenter-Rack-Nordrhein-Westfalen-Underground-Bunker-Zone-9
                 </td>
-                <td><span class="status-badge active">● Protected Wrap</span></td>
+                <td><span class="badge-chip emerald">Protected Wrap</span></td>
               </tr>
             </tbody>
           </table>
@@ -1333,50 +1313,49 @@ Contrast floor: &gt;=7.0:1</pre>
       `
     };
 
-    function setCompState(stateName) {
-      document.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
-      const activeBtn = document.getElementById('btn-state-' + stateName);
-      if (activeBtn) activeBtn.classList.add('active');
-      compContainer.innerHTML = STATES[stateName] || STATES.nominal;
+    function renderState(key) {
+      document.querySelectorAll('.state-pill').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('pill-' + key);
+      if (btn) btn.classList.add('active');
+      document.getElementById('stage-viewport').innerHTML = COMP_STATES[key] || COMP_STATES.nominal;
     }
 
-    // Initialize with nominal
-    setCompState('nominal');
+    renderState('nominal');
 
-    // Taste Tropes Interactive Toggles
-    const tropesState = {
+    // Taste Compiler Logic
+    const TROPES = {
       purple_neon_blur: true,
       centered_3_cards: true,
       dusty_retro_serif: true,
       fake_diagnostics_telemetry: true
     };
 
-    function toggleTrope(btn, tropeKey) {
-      tropesState[tropeKey] = !tropesState[tropeKey];
-      if (tropesState[tropeKey]) {
-        btn.classList.add('rejected');
+    function toggleTrope(btn, key) {
+      TROPES[key] = !TROPES[key];
+      if (TROPES[key]) {
+        btn.classList.add('active');
         btn.innerText = 'REJECTED';
       } else {
-        btn.classList.remove('rejected');
+        btn.classList.remove('active');
         btn.innerText = 'ALLOWED';
       }
-      updateTasteBlock();
+      updateTasteView();
     }
 
-    function updateTasteBlock() {
-      const rejectedList = Object.keys(tropesState).filter(k => tropesState[k]);
-      const listStr = rejectedList.length ? rejectedList.map(r => `  - ${r}`).join('\n') : '  (none)';
-      const block = `<!-- TURTLENECK PERSISTENT TASTE CONSTRAINTS -->
+    function updateTasteView() {
+      const active = Object.keys(TROPES).filter(k => TROPES[k]);
+      const list = active.length ? active.map(r => `  - ${r}`).join('\n') : '  (none)';
+      const output = `<!-- TURTLENECK PERSISTENT TASTE CONSTRAINTS -->
 Preferred styles: modern_high_precision_editorial, asymmetric_layout, generous_whitespace
 Banned tropes (never generate):
-${listStr}
+${list}
 Typography: headline='Plus Jakarta Sans' tracking='-0.03em', mono='JetBrains Mono'
 Contrast floor: >=7.0:1`;
-      document.getElementById('taste-preview-block').textContent = block;
+      document.getElementById('taste-block-output').textContent = output;
     }
 
-    function copyTasteBlock() {
-      const text = document.getElementById('taste-preview-block').textContent;
+    function copyTaste() {
+      const text = document.getElementById('taste-block-output').textContent;
       navigator.clipboard.writeText(text).then(() => {
         const btn = document.getElementById('btn-copy-taste');
         btn.innerText = 'Copied!';
@@ -1384,46 +1363,46 @@ Contrast floor: >=7.0:1`;
       });
     }
 
-    // Agent Installer Tab switcher
-    const AGENTS_INFO = {
+    // Agent Installer Logic
+    const AGENTS = {
       skill: {
         cmd: 'python scripts/install.py --skill',
-        note: 'Installs full skill into .agents/skills/turtleneck/ following the open Agent Skills standard. Compatible with any modern agent runtime.'
+        hint: 'Installs full skill into .agents/skills/turtleneck/ following the open Agent Skills standard.'
       },
       claude: {
         cmd: 'python scripts/install.py --claude',
-        note: 'Installs rules into CLAUDE.md or .claude/ directory, ensuring Claude Code follows Turtleneck decision loops.'
+        hint: 'Configures CLAUDE.md or .claude/ directory for Claude Code CLI and desktop.'
       },
       cursor: {
         cmd: 'python scripts/install.py --cursor',
-        note: 'Writes non-destructive rules to .cursorrules with automated backups if an existing file is present.'
+        hint: 'Writes rules to .cursorrules with automated non-destructive backups.'
       },
       windsurf: {
         cmd: 'python scripts/install.py --windsurf',
-        note: 'Installs rules into .windsurfrules for Cascade AI coding assistant.'
+        hint: 'Configures .windsurfrules for Cascade AI coding assistant.'
       },
       copilot: {
         cmd: 'python scripts/install.py --copilot',
-        note: 'Configures .github/copilot-instructions.md with Turtleneck craft gates.'
+        hint: 'Installs into .github/copilot-instructions.md with full craft gates.'
       },
       antigravity: {
         cmd: 'python scripts/install.py --antigravity',
-        note: 'Installs globally into Google Antigravity ~/.gemini/ configuration.'
+        hint: 'Installs globally into Google Antigravity configuration directory.'
       }
     };
 
-    function switchAgent(key) {
-      document.querySelectorAll('.agent-btn').forEach(b => b.classList.remove('active'));
+    function pickAgent(key) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       event.target.classList.add('active');
-      const data = AGENTS_INFO[key] || AGENTS_INFO.skill;
-      document.getElementById('agent-cmd-text').innerText = data.cmd;
-      document.getElementById('agent-note-text').innerText = data.note;
+      const data = AGENTS[key] || AGENTS.skill;
+      document.getElementById('agent-command-text').innerText = data.cmd;
+      document.getElementById('agent-hint-text').innerText = data.hint;
     }
 
-    function copyAgentCmd() {
-      const cmd = document.getElementById('agent-cmd-text').innerText;
+    function copyAgent() {
+      const cmd = document.getElementById('agent-command-text').innerText;
       navigator.clipboard.writeText(cmd).then(() => {
-        const btn = document.getElementById('btn-agent-copy');
+        const btn = document.getElementById('btn-copy-agent');
         btn.innerText = 'Copied!';
         setTimeout(() => { btn.innerText = 'Copy'; }, 1500);
       });
