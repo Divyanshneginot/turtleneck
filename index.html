@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Turtleneck — Product Design Intelligence for AI Coding Agents</title>
+  <title>Turtleneck — Product Design Intelligence & Verification for Coding Agents</title>
   
   <!-- Modern Clean Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,27 +17,28 @@
     :root {
       --canvas: #090a0f;
       --surface-1: #11131a;
-      --surface-2: #171a24;
-      --surface-3: #1f2332;
+      --surface-2: #161922;
+      --surface-3: #1e2230;
       --surface-border: rgba(255, 255, 255, 0.08);
       --surface-border-subtle: rgba(255, 255, 255, 0.04);
-      --surface-border-hover: rgba(255, 255, 255, 0.16);
+      --surface-border-hover: rgba(255, 255, 255, 0.18);
 
       --text-primary: #f8fafc;
       --text-secondary: #94a3b8;
       --text-muted: #828fa3;
 
       --accent: #3b82f6;
-      --accent-glow: rgba(59, 130, 246, 0.15);
+      --accent-glow: rgba(59, 130, 246, 0.12);
       --accent-hover: #60a5fa;
       --accent-emerald: #10b981;
       --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
 
       --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
 
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-      --focus-ring: #3b82f6;
+      --focus-ring: #60a5fa;
     }
 
     *, *::before, *::after {
@@ -59,15 +60,15 @@
     body {
       background-color: var(--canvas);
       background-image: 
-        radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.12) 0%, transparent 65%),
-        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+        radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 90% 20%, rgba(16, 185, 129, 0.04) 0%, transparent 45%);
       background-repeat: no-repeat;
       min-height: 100vh;
       overflow-x: hidden;
       line-height: 1.5;
     }
 
-    /* Accessibility Focus-Visible */
+    /* Accessibility Focus-Visible (Strict >= 3:1) */
     :focus-visible {
       outline: 2px solid var(--focus-ring);
       outline-offset: 2px;
@@ -82,31 +83,31 @@
       }
     }
 
-    /* Layout Containers */
+    /* Layout Constraints */
     .container {
+      width: 100%;
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
     }
 
     /* ==========================================================================
-       NAVIGATION
+       NAVIGATION BAR
        ========================================================================== */
     .nav {
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      background: rgba(9, 10, 15, 0.75);
-      border-bottom: 1px solid var(--surface-border-subtle);
+      background-color: rgba(9, 10, 15, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--surface-border);
     }
 
     .nav-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 72px;
+      height: 68px;
     }
 
     .brand {
@@ -120,62 +121,51 @@
     .brand-mark {
       width: 32px;
       height: 32px;
+      background: linear-gradient(135deg, var(--surface-2), var(--surface-3));
+      border: 1px solid var(--surface-border-hover);
       border-radius: 8px;
-      background: linear-gradient(135deg, #1e293b, #0f172a);
-      border: 1px solid rgba(255, 255, 255, 0.12);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    .brand-mark svg {
-      width: 18px;
-      height: 18px;
-      fill: none;
-      stroke: var(--text-primary);
-      stroke-width: 2;
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--text-primary);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }
 
     .brand-name {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: -0.02em;
     }
 
-    .brand-version {
+    .brand-badge {
       font-size: 11px;
-      font-weight: 600;
       font-family: var(--font-mono);
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-weight: 500;
+      color: var(--accent-emerald);
+      background-color: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
       padding: 2px 8px;
-      border-radius: 9999px;
-      color: var(--text-secondary);
+      border-radius: 999px;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: 24px;
     }
 
     .nav-link {
-      color: var(--text-secondary);
-      text-decoration: none;
       font-size: 14px;
       font-weight: 500;
-      transition: color 140ms var(--ease-out);
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.15s var(--ease-out);
     }
 
     .nav-link:hover {
       color: var(--text-primary);
-    }
-
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 14px;
     }
 
     .btn {
@@ -183,631 +173,676 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+      padding: 8px 16px;
       font-size: 13px;
       font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 8px;
-      cursor: pointer;
+      border-radius: 6px;
       text-decoration: none;
+      cursor: pointer;
       border: 1px solid transparent;
-      transition: transform 140ms var(--ease-out), background-color 140ms var(--ease-out), border-color 140ms var(--ease-out), color 140ms var(--ease-out);
+      transition: transform 0.12s var(--ease-out), opacity 0.12s var(--ease-out);
     }
 
     .btn:active {
-      transform: scale(0.97);
+      transform: scale(0.98);
     }
 
     .btn-secondary {
-      background: var(--surface-1);
+      background-color: var(--surface-2);
       border-color: var(--surface-border);
       color: var(--text-primary);
     }
 
     .btn-secondary:hover {
-      background: var(--surface-2);
       border-color: var(--surface-border-hover);
     }
 
     .btn-primary {
-      background: #ffffff;
-      color: #000000;
-      border-color: #ffffff;
+      background-color: var(--accent);
+      color: #ffffff;
     }
 
     .btn-primary:hover {
-      background: #e2e8f0;
+      background-color: var(--accent-hover);
     }
 
     /* ==========================================================================
        HERO SECTION
        ========================================================================== */
     .hero {
-      padding: 100px 0 80px;
+      padding: 88px 0 64px;
       text-align: center;
+      position: relative;
     }
 
-    .hero-badge {
+    .hero-badge-pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 6px 14px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 9999px;
+      background-color: var(--surface-1);
+      border: 1px solid var(--surface-border);
+      border-radius: 999px;
       font-size: 12px;
       font-weight: 500;
       color: var(--text-secondary);
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .hero-badge-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--accent-emerald);
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
+      background-color: var(--accent-emerald);
       box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
     }
 
     .hero-title {
-      font-size: clamp(40px, 6vw, 68px);
+      font-size: clamp(34px, 5.5vw, 62px);
       font-weight: 800;
-      line-height: 1.08;
       letter-spacing: -0.035em;
-      margin-bottom: 24px;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
+      line-height: 1.1;
+      max-width: 960px;
+      margin: 0 auto 20px;
+      color: var(--text-primary);
     }
 
     .hero-title span {
-      background: linear-gradient(180deg, #ffffff 30%, #94a3b8 100%);
+      background: linear-gradient(135deg, #f8fafc 40%, #94a3b8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .hero-sub {
+    .hero-subtitle {
       font-size: clamp(16px, 2vw, 19px);
       color: var(--text-secondary);
       max-width: 680px;
       margin: 0 auto 36px;
       line-height: 1.6;
-      font-weight: 400;
     }
 
-    .hero-cta {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 56px;
-    }
-
-    .install-bar {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--surface-1);
-      border: 1px solid var(--surface-border);
-      border-radius: 10px;
-      padding: 6px 6px 6px 16px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-      max-width: 460px;
-      width: 100%;
-    }
-
-    .install-cmd {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--text-primary);
-      flex: 1;
-      text-align: left;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .install-cmd span {
-      color: var(--text-muted);
-      user-select: none;
-    }
-
-    .btn-copy {
-      background: var(--surface-2);
-      border: 1px solid var(--surface-border);
-      color: var(--text-primary);
-      padding: 7px 14px;
-      border-radius: 7px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: background-color 140ms var(--ease-out), border-color 140ms var(--ease-out);
-    }
-
-    .btn-copy:hover {
-      background: var(--surface-3);
-      border-color: var(--surface-border-hover);
-    }
-
-    /* ==========================================================================
-       BEFORE / AFTER CRAFT SHOWCASE (THE CENTERPIECE)
-       ========================================================================== */
-    .showcase {
-      margin-bottom: 120px;
-    }
-
-    .showcase-chassis {
-      background: var(--surface-1);
-      border: 1px solid var(--surface-border);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 
-        0 24px 64px -12px rgba(0, 0, 0, 0.65),
-        0 0 0 1px rgba(255, 255, 255, 0.05);
-    }
-
-    .showcase-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 24px;
-      border-bottom: 1px solid var(--surface-border-subtle);
-      background: rgba(17, 19, 26, 0.8);
-      backdrop-filter: blur(12px);
-    }
-
-    .showcase-title-group {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .window-dots {
-      display: flex;
-      gap: 6px;
-    }
-
-    .window-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
-    }
-
-    .showcase-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      font-family: var(--font-mono);
-    }
-
-    /* Toggle Switch */
-    .view-toggle {
-      display: flex;
-      background: var(--surface-2);
-      border: 1px solid var(--surface-border);
-      border-radius: 8px;
-      padding: 3px;
-    }
-
-    .view-toggle-btn {
-      padding: 6px 14px;
-      font-size: 12px;
-      font-weight: 600;
-      border: none;
-      background: transparent;
-      color: var(--text-secondary);
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 140ms var(--ease-out), color 140ms var(--ease-out);
-    }
-
-    .view-toggle-btn.active {
-      background: #ffffff;
-      color: #000000;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    }
-
-    .view-toggle-btn:not(.active):hover {
-      color: var(--text-primary);
-    }
-
-    .showcase-body {
-      padding: 48px;
-      min-height: 480px;
+    .hero-actions {
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(circle at 50% 50%, var(--surface-2) 0%, var(--surface-1) 100%);
+      gap: 16px;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
     }
 
-    /* Specimen A: Generic AI Slop */
-    .specimen-slop {
-      width: 100%;
-      max-width: 640px;
-      background: linear-gradient(135deg, rgba(88, 28, 135, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%);
-      border: 1px solid rgba(168, 85, 247, 0.35);
-      box-shadow: 0 0 50px rgba(168, 85, 247, 0.15);
-      border-radius: 24px;
-      padding: 36px;
-      text-align: center;
-    }
-
-    .slop-pill {
-      display: inline-block;
-      padding: 4px 16px;
-      border-radius: 9999px;
-      background: linear-gradient(90deg, #ec4899, #8b5cf6);
-      color: #ffffff;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 20px;
-    }
-
-    .slop-heading {
-      font-size: 26px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: #ffffff;
-    }
-
-    .slop-text {
-      font-size: 14px;
-      color: #cbd5e1;
-      margin-bottom: 28px;
-      line-height: 1.6;
-    }
-
-    .slop-card-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+    .install-bar {
+      display: inline-flex;
+      align-items: center;
+      background-color: var(--surface-1);
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 4px 6px 4px 14px;
       gap: 12px;
-      margin-bottom: 28px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-primary);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
     }
 
-    .slop-mini-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 16px;
-      backdrop-filter: blur(8px);
+    .install-bar code {
+      color: #93c5fd;
     }
 
-    .slop-mini-val {
-      font-size: 20px;
-      font-weight: 700;
-      color: #c084fc;
-      margin-bottom: 4px;
-    }
-
-    .slop-mini-label {
-      font-size: 11px;
-      color: #94a3b8;
-    }
-
-    .slop-btn {
-      width: 100%;
-      padding: 12px;
-      background: linear-gradient(90deg, #a855f7, #6366f1);
-      color: #ffffff;
+    .btn-copy {
+      background-color: var(--surface-2);
+      border: 1px solid var(--surface-border);
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
       font-weight: 600;
-      border: none;
-      border-radius: 12px;
       cursor: pointer;
-      font-size: 14px;
-      box-shadow: 0 4px 16px rgba(168, 85, 247, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.12s var(--ease-out), color 0.12s var(--ease-out);
     }
 
-    /* Specimen B: Turtleneck Calibrated Craft */
-    .specimen-calibrated {
-      width: 100%;
-      max-width: 680px;
-      background: #0f1118;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    .btn-copy:hover {
+      color: var(--text-primary);
+      border-color: var(--surface-border-hover);
+    }
+
+    .btn-copy:active {
+      transform: scale(0.96);
+    }
+
+    /* ==========================================================================
+       SANDBOX SECTION (PRODUCT PROOF CENTERPIECE)
+       ========================================================================== */
+    .sandbox-section {
+      padding: 40px 0 80px;
+    }
+
+    .sandbox-frame {
+      background-color: var(--surface-1);
+      border: 1px solid var(--surface-border);
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
     }
 
-    .calibrated-top {
-      padding: 24px 28px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    .sandbox-header {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: flex-start;
+      padding: 14px 20px;
+      background-color: var(--surface-2);
+      border-bottom: 1px solid var(--surface-border);
+      flex-wrap: wrap;
+      gap: 12px;
     }
 
-    .calibrated-meta {
+    .sandbox-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sandbox-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .sandbox-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .sandbox-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
       font-family: var(--font-mono);
+    }
+
+    .sandbox-tabs {
+      display: flex;
+      gap: 6px;
+      background-color: var(--surface-1);
+      padding: 3px;
+      border-radius: 8px;
+      border: 1px solid var(--surface-border);
+    }
+
+    .sandbox-tab {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: color 0.15s var(--ease-out), background-color 0.15s var(--ease-out);
+    }
+
+    .sandbox-tab:hover {
+      color: var(--text-primary);
+    }
+
+    .sandbox-tab.active {
+      background-color: var(--surface-2);
+      color: var(--text-primary);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .sandbox-body {
+      padding: 28px;
+      min-height: 480px;
+    }
+
+    .panel-view {
+      display: none;
+    }
+
+    .panel-view.active {
+      display: block;
+    }
+
+    /* Tab 1: Taste DNA Sandbox */
+    .taste-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 860px) {
+      .taste-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .taste-config-card {
+      background-color: var(--surface-2);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tropes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .trope-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background-color: var(--surface-1);
+      border: 1px solid var(--surface-border);
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+    .trope-label {
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+    }
+
+    .trope-toggle {
+      background-color: var(--surface-3);
+      border: 1px solid var(--surface-border);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: 4px;
       font-size: 11px;
       font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
+      cursor: pointer;
+      transition: transform 0.12s var(--ease-out);
     }
 
-    .calibrated-title {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: #ffffff;
-      margin-bottom: 4px;
+    .trope-toggle.rejected {
+      background-color: rgba(244, 63, 94, 0.15);
+      border-color: rgba(244, 63, 94, 0.35);
+      color: #fda4af;
     }
 
-    .calibrated-desc {
-      font-size: 13px;
+    .taste-preview-card {
+      background-color: #050608;
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.6;
+      color: #cbd5e1;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    /* Tab 2: 4-State Stress Simulator */
+    .state-switch-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .state-btn {
+      padding: 7px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      background-color: var(--surface-2);
+      border: 1px solid var(--surface-border);
       color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    .calibrated-badge {
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 10px;
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 600;
-      font-family: var(--font-mono);
-      color: #34d399;
+      transition: color 0.12s var(--ease-out), border-color 0.12s var(--ease-out);
     }
 
-    .calibrated-badge::before {
-      content: "";
-      width: 5px;
-      height: 5px;
-      background: #34d399;
-      border-radius: 50%;
+    .state-btn:hover {
+      color: var(--text-primary);
+      border-color: var(--surface-border-hover);
     }
 
-    .calibrated-metric-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .calibrated-cell {
-      padding: 20px 28px;
-      border-right: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .calibrated-cell:last-child {
-      border-right: none;
-    }
-
-    .calibrated-num {
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      font-family: var(--font-mono);
+    .state-btn.active {
+      background-color: var(--accent);
+      border-color: var(--accent);
       color: #ffffff;
-      margin-bottom: 4px;
     }
 
-    .calibrated-sub {
+    .component-stage {
+      background-color: var(--surface-2);
+      border: 1px solid var(--surface-border);
+      border-radius: 10px;
+      padding: 24px;
+      min-height: 320px;
+    }
+
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .comp-table th {
+      text-align: left;
       font-size: 11px;
-      color: var(--text-secondary);
+      font-family: var(--font-mono);
       text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .calibrated-action-bar {
-      padding: 16px 28px;
-      background: rgba(0, 0, 0, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .calibrated-audit-note {
-      font-size: 12px;
+      letter-spacing: 0.05em;
       color: var(--text-muted);
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .comp-table td {
+      padding: 14px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--surface-border-subtle);
+      color: var(--text-primary);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
       font-family: var(--font-mono);
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .status-badge.active {
+      background-color: rgba(16, 185, 129, 0.15);
+      color: #6ee7b7;
+    }
+
+    .status-badge.pending {
+      background-color: rgba(245, 158, 11, 0.15);
+      color: #fcd34d;
+    }
+
+    /* Skeleton State */
+    .skeleton-bar {
+      height: 14px;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.04) 25%, rgba(255, 255, 255, 0.09) 50%, rgba(255, 255, 255, 0.04) 75%);
+      background-size: 200% 100%;
+      border-radius: 4px;
+      animation: skeletonShimmer 1.8s infinite;
+    }
+
+    @keyframes skeletonShimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* Empty State */
+    .empty-state-card {
+      text-align: center;
+      padding: 56px 20px;
+    }
+
+    .empty-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 16px;
+      border-radius: 12px;
+      background-color: var(--surface-3);
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 20px;
     }
 
-    .calibrated-action-btn {
-      padding: 8px 18px;
-      background: #ffffff;
-      color: #000000;
-      font-size: 12px;
-      font-weight: 600;
-      border: 1px solid #ffffff;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: transform 120ms var(--ease-out), background-color 120ms var(--ease-out);
+    .empty-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
     }
 
-    .calibrated-action-btn:hover {
-      background: #e2e8f0;
-    }
-
-    .calibrated-action-btn:active {
-      transform: scale(0.97);
-    }
-
-    /* Diagnosis Footnote */
-    .showcase-footer {
-      padding: 16px 24px;
-      background: var(--surface-1);
-      border-top: 1px solid var(--surface-border-subtle);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 12px;
+    .empty-desc {
+      font-size: 13px;
       color: var(--text-secondary);
-      font-family: var(--font-mono);
+      max-width: 360px;
+      margin: 0 auto 20px;
+    }
+
+    /* Error State */
+    .error-card {
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      background-color: rgba(244, 63, 94, 0.05);
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .error-title {
+      color: #fca5a5;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .error-desc {
+      color: var(--text-secondary);
+      font-size: 13px;
+      margin-bottom: 16px;
     }
 
     /* ==========================================================================
-       THREE PILLARS (RESTRAINT, DECISIONS, PROOF)
+       VALUE PROPOSITION SECTION
        ========================================================================== */
-    .pillars {
-      margin-bottom: 120px;
+    .why-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--surface-border);
     }
 
     .section-header {
       text-align: center;
-      margin-bottom: 56px;
-    }
-
-    .section-badge {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      margin-bottom: 12px;
+      max-width: 640px;
+      margin: 0 auto 56px;
     }
 
     .section-title {
-      font-size: clamp(28px, 4vw, 42px);
+      font-size: clamp(26px, 3.5vw, 38px);
       font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 16px;
+      letter-spacing: -0.025em;
+      margin-bottom: 14px;
     }
 
     .section-desc {
       font-size: 16px;
       color: var(--text-secondary);
-      max-width: 600px;
-      margin: 0 auto;
+      line-height: 1.6;
     }
 
-    .pillar-grid {
+    .pillars-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
     }
 
+    @media (max-width: 900px) {
+      .pillars-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .pillar-card {
-      background: var(--surface-1);
+      background-color: var(--surface-1);
       border: 1px solid var(--surface-border);
       border-radius: 12px;
-      padding: 32px;
-      position: relative;
-      transition: border-color 160ms var(--ease-out), transform 160ms var(--ease-out);
+      padding: 32px 24px;
+      transition: transform 0.15s var(--ease-out), border-color 0.15s var(--ease-out);
     }
 
     .pillar-card:hover {
-      border-color: var(--surface-border-hover);
       transform: translateY(-2px);
+      border-color: var(--surface-border-hover);
     }
 
-    .pillar-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      background: var(--surface-2);
-      border: 1px solid var(--surface-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
+    .pillar-num {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 16px;
     }
 
-    .pillar-icon svg {
-      width: 22px;
-      height: 22px;
-      stroke: var(--text-primary);
-      fill: none;
-      stroke-width: 2;
-    }
-
-    .pillar-name {
+    .pillar-title {
       font-size: 18px;
       font-weight: 700;
-      margin-bottom: 12px;
-      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+      color: var(--text-primary);
     }
 
-    .pillar-body {
+    .pillar-text {
       font-size: 14px;
       color: var(--text-secondary);
       line-height: 1.6;
     }
 
     /* ==========================================================================
-       AGENT COMPATIBILITY TABS
+       FIVE GATES SECTION
        ========================================================================== */
-    .agents {
-      margin-bottom: 120px;
+    .gates-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--surface-border);
+      background-color: rgba(17, 19, 26, 0.4);
     }
 
-    .agent-box {
-      background: var(--surface-1);
+    .gates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .gate-box {
+      background-color: var(--surface-1);
       border: 1px solid var(--surface-border);
-      border-radius: 16px;
-      padding: 36px;
-      max-width: 840px;
-      margin: 0 auto;
-    }
-
-    .agent-tabs {
-      display: flex;
-      gap: 8px;
-      border-bottom: 1px solid var(--surface-border-subtle);
-      padding-bottom: 16px;
-      margin-bottom: 24px;
-      overflow-x: auto;
-    }
-
-    .agent-tab {
-      padding: 8px 16px;
-      font-size: 13px;
-      font-weight: 600;
       border-radius: 8px;
-      border: 1px solid transparent;
-      background: transparent;
-      color: var(--text-secondary);
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background-color 140ms var(--ease-out), color 140ms var(--ease-out);
+      padding: 20px;
     }
 
-    .agent-tab.active {
-      background: var(--surface-2);
-      border-color: var(--surface-border);
-      color: var(--text-primary);
-    }
-
-    .agent-tab:not(.active):hover {
-      color: var(--text-primary);
-    }
-
-    .agent-terminal {
-      background: #06070a;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 10px;
-      padding: 18px 22px;
+    .gate-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-family: var(--font-mono);
-      font-size: 13px;
+      margin-bottom: 10px;
     }
 
-    .agent-cmd {
+    .gate-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent-emerald);
+      background-color: rgba(16, 185, 129, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .gate-name {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
       color: var(--text-primary);
     }
 
-    .agent-cmd span {
-      color: var(--accent);
-      user-select: none;
+    .gate-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
     }
 
-    .agent-notes {
-      margin-top: 18px;
+    /* ==========================================================================
+       INSTALLATION MATRIX
+       ========================================================================== */
+    .install-section {
+      padding: 80px 0;
+      border-top: 1px solid var(--surface-border);
+    }
+
+    .agent-matrix {
+      max-width: 820px;
+      margin: 0 auto;
+      background-color: var(--surface-1);
+      border: 1px solid var(--surface-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .agent-nav {
+      display: flex;
+      overflow-x: auto;
+      background-color: var(--surface-2);
+      border-bottom: 1px solid var(--surface-border);
+    }
+
+    .agent-btn {
+      padding: 14px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 0.12s var(--ease-out);
+    }
+
+    .agent-btn:hover {
+      color: var(--text-primary);
+    }
+
+    .agent-btn.active {
+      color: var(--text-primary);
+      border-bottom-color: var(--accent);
+      background-color: var(--surface-1);
+    }
+
+    .agent-content {
+      padding: 28px;
+    }
+
+    .cmd-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #050608;
+      border: 1px solid var(--surface-border);
+      border-radius: 8px;
+      padding: 12px 18px;
+      margin-bottom: 16px;
+      gap: 12px;
+    }
+
+    .cmd-box code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #93c5fd;
+      overflow-x: auto;
+    }
+
+    .agent-note {
       font-size: 13px;
       color: var(--text-secondary);
       line-height: 1.5;
@@ -817,7 +852,7 @@
        FOOTER
        ========================================================================== */
     .footer {
-      border-top: 1px solid var(--surface-border-subtle);
+      border-top: 1px solid var(--surface-border);
       padding: 48px 0;
       color: var(--text-muted);
       font-size: 13px;
@@ -827,295 +862,326 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
     }
 
     .footer-links {
       display: flex;
-      gap: 24px;
+      gap: 20px;
     }
 
     .footer-link {
-      color: var(--text-secondary);
+      color: var(--text-muted);
       text-decoration: none;
-      transition: color 140ms var(--ease-out);
     }
 
     .footer-link:hover {
       color: var(--text-primary);
     }
-
-    @media (max-width: 768px) {
-      .pillar-grid {
-        grid-template-columns: 1fr;
-      }
-      .nav-links {
-        display: none;
-      }
-      .showcase-body {
-        padding: 24px;
-      }
-      .calibrated-metric-row {
-        grid-template-columns: 1fr;
-      }
-      .calibrated-cell {
-        border-right: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-      }
-      .footer-inner {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <!-- Navigation -->
-  <header class="nav">
+  <!-- NAVIGATION -->
+  <nav class="nav" aria-label="Main Navigation">
     <div class="container nav-inner">
-      <a href="#" class="brand">
-        <div class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-          </svg>
-        </div>
+      <a href="#" class="brand" aria-label="Turtleneck Home">
+        <div class="brand-mark">T</div>
         <span class="brand-name">Turtleneck</span>
-        <span class="brand-version">v2.0</span>
+        <span class="brand-badge">v2.1.0</span>
       </a>
 
-      <nav class="nav-links" aria-label="Main Navigation">
-        <a href="#showcase" class="nav-link">Craft Comparison</a>
-        <a href="#principles" class="nav-link">Design Principles</a>
-        <a href="#install" class="nav-link">Agent Setup</a>
-      </nav>
-
-      <div class="nav-actions">
-        <a href="https://github.com/Divyanshneginot/turtleneck" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+      <div class="nav-links">
+        <a href="#simulator" class="nav-link">Simulator</a>
+        <a href="#why" class="nav-link">Why Turtleneck</a>
+        <a href="#gates" class="nav-link">Proof Gates</a>
+        <a href="#install" class="nav-link">Install</a>
+        <a href="https://github.com/Divyanshneginot/turtleneck" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" aria-label="GitHub Repository">
           GitHub
-        </a>
-        <a href="#install" class="btn btn-primary">
-          Install Skill
         </a>
       </div>
     </div>
-  </header>
+  </nav>
 
-  <!-- Hero Section -->
   <main>
-    <section class="hero">
+    <!-- HERO -->
+    <header class="hero">
       <div class="container">
-        <div class="hero-badge">
-          <span class="hero-badge-dot"></span>
-          <span>Product Design Intelligence for Autonomous Agents</span>
+        <div class="hero-badge-pill">
+          <span class="hero-badge-dot" aria-hidden="true"></span>
+          <span>Zero Groundhog Day · Deterministic Verification</span>
         </div>
 
         <h1 class="hero-title">
-          Autonomous agents build backends.<br>
-          <span>Now give them design taste.</span>
+          <span>Senior Product Design Intelligence</span><br>
+          For AI Coding Agents.
         </h1>
 
-        <p class="hero-sub">
-          Stop settling for purple blur cards and arbitrary templates. Turtleneck equips coding agents with the spatial restraint, typographic tension, and accessibility discipline of a principal designer.
+        <p class="hero-subtitle">
+          Other UI skills are stateless prompt essays that write fragile single-state prototypes. Turtleneck remembers your design DNA across sessions and stress-tests every interaction before shipping.
         </p>
 
-        <div class="hero-cta">
+        <div class="hero-actions">
           <div class="install-bar">
-            <div class="install-cmd" id="quick-cmd">
-              <span>$ </span>python scripts/install.py --skill
-            </div>
-            <button class="btn-copy" id="quick-copy-btn" aria-label="Copy install command">
-              Copy
+            <span>$</span>
+            <code id="quick-cmd">python scripts/install.py --all</code>
+            <button type="button" class="btn-copy" id="btn-quick-copy" aria-label="Copy installation command">
+              <span>Copy</span>
             </button>
           </div>
+          <a href="#simulator" class="btn btn-primary" aria-label="Explore Live Simulator">
+            Explore Simulator →
+          </a>
         </div>
       </div>
-    </section>
+    </header>
 
-    <!-- Centerpiece: Before & After Craft Comparison -->
-    <section class="showcase container" id="showcase">
-      <div class="showcase-chassis">
-        <div class="showcase-header">
-          <div class="showcase-title-group">
-            <div class="window-dots" aria-hidden="true">
-              <div class="window-dot"></div>
-              <div class="window-dot"></div>
-              <div class="window-dot"></div>
-            </div>
-            <div class="showcase-label">craft_engine_diagnostic.spec</div>
-          </div>
-
-          <div class="view-toggle" role="tablist" aria-label="Design Comparison Toggle">
-            <button class="view-toggle-btn" id="btn-show-slop" role="tab" aria-selected="false" aria-controls="view-container">
-              Default AI Slop
-            </button>
-            <button class="view-toggle-btn active" id="btn-show-craft" role="tab" aria-selected="true" aria-controls="view-container">
-              Turtleneck Calibrated
-            </button>
-          </div>
-        </div>
-
-        <div class="showcase-body" id="view-container">
-          <!-- Specimen A: Generic AI (Hidden by default) -->
-          <div class="specimen-slop" id="specimen-slop" style="display: none;">
-            <div class="slop-pill">Next-Gen Quantum Solution</div>
-            <h3 class="slop-heading">Supercharge Your Workflows With AI</h3>
-            <p class="slop-text">
-              Seamlessly harness the synergy of hyper-scalable neural pipelines with end-to-end automated multi-cloud cloudiness.
-            </p>
-            <div class="slop-card-grid">
-              <div class="slop-mini-card">
-                <div class="slop-mini-val">99.9%</div>
-                <div class="slop-mini-label">Hyper Synergy</div>
+    <!-- LIVE SIMULATOR (CENTERPIECE) -->
+    <section id="simulator" class="sandbox-section" aria-label="Interactive Simulator">
+      <div class="container">
+        <div class="sandbox-frame">
+          <div class="sandbox-header">
+            <div class="sandbox-title-wrap">
+              <div class="sandbox-dots" aria-hidden="true">
+                <div class="sandbox-dot"></div>
+                <div class="sandbox-dot"></div>
+                <div class="sandbox-dot"></div>
               </div>
-              <div class="slop-mini-card">
-                <div class="slop-mini-val">&infin;</div>
-                <div class="slop-mini-label">Limitless Magic</div>
-              </div>
-              <div class="slop-mini-card">
-                <div class="slop-mini-val">10x</div>
-                <div class="slop-mini-label">Disruption</div>
-              </div>
-            </div>
-            <button class="slop-btn" type="button" aria-label="Generic marketing trigger">Get Started Free Today</button>
-          </div>
-
-          <!-- Specimen B: Turtleneck Calibrated (Active) -->
-          <div class="specimen-calibrated" id="specimen-craft">
-            <div class="calibrated-top">
-              <div>
-                <div class="calibrated-meta">Security &bull; Continuous Ledger</div>
-                <h3 class="calibrated-title">Cryptographic Key Derivation</h3>
-                <p class="calibrated-desc">Hardware security module status and entropy verification across node cluster.</p>
-              </div>
-              <div class="calibrated-badge">Online // Calibrated</div>
+              <span class="sandbox-title">turtleneck-interactive-workbench</span>
             </div>
 
-            <div class="calibrated-metric-row">
-              <div class="calibrated-cell">
-                <div class="calibrated-num">4,096<span style="font-size: 13px; color: var(--text-secondary); font-weight: normal;">-bit</span></div>
-                <div class="calibrated-sub">RSA Master Modulus</div>
-              </div>
-              <div class="calibrated-cell">
-                <div class="calibrated-num">0.82<span style="font-size: 13px; color: var(--text-secondary); font-weight: normal;"> ms</span></div>
-                <div class="calibrated-sub">Sign Verification Latency</div>
-              </div>
-              <div class="calibrated-cell">
-                <div class="calibrated-num">100<span style="font-size: 13px; color: var(--text-secondary); font-weight: normal;">%</span></div>
-                <div class="calibrated-sub">FIPS 140-3 Compliance</div>
-              </div>
-            </div>
-
-            <div class="calibrated-action-bar">
-              <div class="calibrated-audit-note">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" aria-hidden="true">
-                  <path d="M20 6L9 17l-5-5"/>
-                </svg>
-                WCAG 2.2 AA Contrast: 18.2:1 &bull; 0ms Transition Lag
-              </div>
-              <button class="calibrated-action-btn" type="button" aria-label="Rotate Root Key">
-                Rotate Root Key
+            <div class="sandbox-tabs" role="tablist" aria-label="Simulator Views">
+              <button type="button" role="tab" aria-selected="true" class="sandbox-tab active" id="tab-btn-stress" onclick="switchSandboxTab('stress')" aria-label="4-State Stress Simulator View">
+                4-State Stress Gauntlet
+              </button>
+              <button type="button" role="tab" aria-selected="false" class="sandbox-tab" id="tab-btn-taste" onclick="switchSandboxTab('taste')" aria-label="Adaptive Taste Compiler View">
+                Taste DNA Compiler
               </button>
             </div>
           </div>
-        </div>
 
-        <div class="showcase-footer">
-          <div id="status-caption">Turtleneck Mode: High contrast, functional typography, verified focus states, zero marketing fluff.</div>
-          <div>Tested against 12 blind pilot briefs</div>
+          <div class="sandbox-body">
+            <!-- TAB 1: 4-STATE STRESS GAUNTLET -->
+            <div id="view-stress" class="panel-view active">
+              <div class="state-switch-bar" role="group" aria-label="Component States">
+                <button type="button" class="state-btn active" id="btn-state-nominal" onclick="setCompState('nominal')" aria-label="Show Nominal State">
+                  ● Nominal Data
+                </button>
+                <button type="button" class="state-btn" id="btn-state-empty" onclick="setCompState('empty')" aria-label="Show Empty State">
+                  ○ Empty State (0 Records)
+                </button>
+                <button type="button" class="state-btn" id="btn-state-loading" onclick="setCompState('loading')" aria-label="Show Loading Skeleton State">
+                  ◌ Loading Skeleton (0 CLS)
+                </button>
+                <button type="button" class="state-btn" id="btn-state-error" onclick="setCompState('error')" aria-label="Show Error Recovery State">
+                  ⚠ Error Boundary & Retry
+                </button>
+                <button type="button" class="state-btn" id="btn-state-overflow" onclick="setCompState('overflow')" aria-label="Show Long String Stress Test">
+                  ↔ Overflow Stress Test
+                </button>
+              </div>
+
+              <div class="component-stage" id="component-container">
+                <!-- State content dynamically injected here -->
+              </div>
+            </div>
+
+            <!-- TAB 2: TASTE DNA COMPILER -->
+            <div id="view-taste" class="panel-view">
+              <div class="taste-grid">
+                <div class="taste-config-card">
+                  <div class="card-title">
+                    <span>Aesthetic Rejection Ledger</span>
+                    <span style="font-size: 11px; color: var(--text-muted);">.turtleneck/taste-profile.json</span>
+                  </div>
+
+                  <div class="tropes-list">
+                    <div class="trope-item">
+                      <span class="trope-label">purple_neon_blur</span>
+                      <button type="button" class="trope-toggle rejected" onclick="toggleTrope(this, 'purple_neon_blur')" aria-label="Toggle purple neon blur trope rejection">
+                        REJECTED
+                      </button>
+                    </div>
+                    <div class="trope-item">
+                      <span class="trope-label">centered_3_cards</span>
+                      <button type="button" class="trope-toggle rejected" onclick="toggleTrope(this, 'centered_3_cards')" aria-label="Toggle centered 3 cards trope rejection">
+                        REJECTED
+                      </button>
+                    </div>
+                    <div class="trope-item">
+                      <span class="trope-label">dusty_retro_serif</span>
+                      <button type="button" class="trope-toggle rejected" onclick="toggleTrope(this, 'dusty_retro_serif')" aria-label="Toggle dusty retro serif trope rejection">
+                        REJECTED
+                      </button>
+                    </div>
+                    <div class="trope-item">
+                      <span class="trope-label">fake_diagnostics_telemetry</span>
+                      <button type="button" class="trope-toggle rejected" onclick="toggleTrope(this, 'fake_diagnostics_telemetry')" aria-label="Toggle fake diagnostics telemetry trope rejection">
+                        REJECTED
+                      </button>
+                    </div>
+                  </div>
+
+                  <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">
+                    Rejecting a trope permanently compiles it into agent constraints across all sessions, preventing amnesia.
+                  </p>
+                </div>
+
+                <div>
+                  <div class="card-title">
+                    <span>Compiled Agent Constraints</span>
+                    <button type="button" class="btn-copy" id="btn-copy-taste" onclick="copyTasteBlock()" aria-label="Copy compiled taste constraints">Copy Block</button>
+                  </div>
+                  <pre class="taste-preview-card" id="taste-preview-block">
+&lt;!-- TURTLENECK PERSISTENT TASTE CONSTRAINTS --&gt;
+Preferred styles: modern_high_precision_editorial, asymmetric_layout, generous_whitespace
+Banned tropes (never generate):
+  - purple_neon_blur
+  - centered_3_cards
+  - dusty_retro_serif
+  - fake_diagnostics_telemetry
+Typography: headline='Plus Jakarta Sans' tracking='-0.03em', mono='JetBrains Mono'
+Contrast floor: &gt;=7.0:1</pre>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- Three Foundational Pillars -->
-    <section class="pillars container" id="principles">
-      <div class="section-header">
-        <div class="section-badge">Core Principles</div>
-        <h2 class="section-title">Senior designer instincts, codified.</h2>
-        <p class="section-desc">
-          Turtleneck turns outcomes into information architecture, interaction models, and verified states before writing code.
-        </p>
-      </div>
-
-      <div class="pillar-grid">
-        <div class="pillar-card">
-          <div class="pillar-icon">
-            <svg viewBox="0 0 24 24">
-              <rect x="3" y="3" width="18" height="18" rx="2"/>
-              <path d="M3 9h18M9 21V9"/>
-            </svg>
-          </div>
-          <h3 class="pillar-name">Spatial Restraint Over Clutter</h3>
-          <p class="pillar-body">
-            World-class design is about what you remove. Turtleneck enforces generous negative space, strict typography scales, and single dominant visual anchors instead of endless decorative cards.
+    <!-- WHY TURTLENECK SECTION -->
+    <section id="why" class="why-section" aria-label="Why Turtleneck">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">The Three Unsolved Frontiers</h2>
+          <p class="section-desc">
+            Why other UI skills fail at production software, and how Turtleneck's dual-engine harness solves it.
           </p>
         </div>
 
-        <div class="pillar-card">
-          <div class="pillar-icon">
-            <svg viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M12 6v6l4 2"/>
-            </svg>
-          </div>
-          <h3 class="pillar-name">Autonomous Decision Loop</h3>
-          <p class="pillar-body">
-            Agents stop guessing CSS rules. The decision loop extracts transferable interaction principles from references without cloning branding, surface decorations, or irrelevant centerpieces.
-          </p>
-        </div>
+        <div class="pillars-grid">
+          <article class="pillar-card">
+            <div class="pillar-num">01 / PERSISTENCE</div>
+            <h3 class="pillar-title">Kills "Groundhog Day"</h3>
+            <p class="pillar-text">
+              Every other skill resets to default in every new chat. You waste tokens re-prompting font stacks, border radii, and density preferences forever. Turtleneck's Taste Ledger stores rejections permanently in your repo.
+            </p>
+          </article>
 
-        <div class="pillar-card">
-          <div class="pillar-icon">
-            <svg viewBox="0 0 24 24">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-          </div>
-          <h3 class="pillar-name">Deterministic Test Gates</h3>
-          <p class="pillar-body">
-            Code isn't complete until gates pass: WCAG 2.2 AA contrast ratios, visible 2px focus rings, reduced-motion fallbacks, accessible labels, and compositor-only transitions.
-          </p>
+          <article class="pillar-card">
+            <div class="pillar-num">02 / PRODUCTION RIGOR</div>
+            <h3 class="pillar-title">The 4-State Guarantee</h3>
+            <p class="pillar-text">
+              AI models generate fragile happy-path Dribbble prototypes that crash when data is empty or text wraps. Turtleneck enforces Empty, Loading skeleton, and Error recovery states before marking tasks complete.
+            </p>
+          </article>
+
+          <article class="pillar-card">
+            <div class="pillar-num">03 / VERIFICATION</div>
+            <h3 class="pillar-title">Zero Prompt Whispering</h3>
+            <p class="pillar-text">
+              Begging a token predictor to "have good taste" does not work. Turtleneck uses five zero-dependency Python gates that mechanically assert contrast, focus rings, compositor motion, and layout bounds in CI.
+            </p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- Agent Setup -->
-    <section class="agents container" id="install">
-      <div class="section-header">
-        <div class="section-badge">Multi-Agent Support</div>
-        <h2 class="section-title">One command for every agent.</h2>
-        <p class="section-desc">
-          Zero external runtime dependencies. Runs pure Python standard library.
-        </p>
-      </div>
-
-      <div class="agent-box">
-        <div class="agent-tabs" role="tablist" aria-label="Agent Platforms">
-          <button class="agent-tab active" role="tab" aria-selected="true" data-cmd="python scripts/install.py --skill">Universal Skill</button>
-          <button class="agent-tab" role="tab" aria-selected="false" data-cmd="python scripts/install.py --claude">Claude Code</button>
-          <button class="agent-tab" role="tab" aria-selected="false" data-cmd="python scripts/install.py --cursor">Cursor</button>
-          <button class="agent-tab" role="tab" aria-selected="false" data-cmd="python scripts/install.py --copilot">GitHub Copilot</button>
-          <button class="agent-tab" role="tab" aria-selected="false" data-cmd="python scripts/install.py --antigravity">Antigravity</button>
+    <!-- FIVE GATES SECTION -->
+    <section id="gates" class="gates-section" aria-label="Verification Gates">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Proof Over Promises</h2>
+          <p class="section-desc">
+            Five automated verification gates run locally and on GitHub Actions with Python standard library alone.
+          </p>
         </div>
 
-        <div class="agent-terminal">
-          <div class="agent-cmd">
-            <span>$ </span><span id="agent-active-cmd">python scripts/install.py --skill</span>
+        <div class="gates-grid">
+          <div class="gate-box">
+            <div class="gate-header">
+              <span class="gate-tag">GATE 01</span>
+            </div>
+            <div class="gate-name">check_frontmatter.py</div>
+            <div class="gate-desc">Asserts trigger-only discovery format and bounded description length.</div>
           </div>
-          <button class="btn-copy" id="agent-copy-btn" aria-label="Copy agent command">Copy Command</button>
+
+          <div class="gate-box">
+            <div class="gate-header">
+              <span class="gate-tag">GATE 02</span>
+            </div>
+            <div class="gate-name">check_consistency.py</div>
+            <div class="gate-desc">Ensures byte-identical pipeline parity across all 6 agent rules with zero drift.</div>
+          </div>
+
+          <div class="gate-box">
+            <div class="gate-header">
+              <span class="gate-tag">GATE 03</span>
+            </div>
+            <div class="gate-name">check_contrast.py</div>
+            <div class="gate-desc">Mathematically verifies all 46 declared color pairs meet strict WCAG 2.2 AA.</div>
+          </div>
+
+          <div class="gate-box">
+            <div class="gate-header">
+              <span class="gate-tag">GATE 04</span>
+            </div>
+            <div class="gate-name">check_examples.py</div>
+            <div class="gate-desc">Guarantees focus-visible outlines, reduced-motion fallbacks, and a11y names.</div>
+          </div>
+
+          <div class="gate-box">
+            <div class="gate-header">
+              <span class="gate-tag">GATE 05</span>
+            </div>
+            <div class="gate-name">check_stress.py</div>
+            <div class="gate-desc">Enforces anti-slop rules, 4-state completeness, and layout blowout safety.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTALLATION MATRIX -->
+    <section id="install" class="install-section" aria-label="Installation Matrix">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">One Command for Every Agent</h2>
+          <p class="section-desc">
+            Installs non-destructively. Auto-detects your environment and creates recoverable backups.
+          </p>
         </div>
 
-        <div class="agent-notes" id="agent-notes">
-          Installs full Turtleneck skill into <code>.agents/skills/turtleneck/</code>. Compatible with all Open Agent Skills consumers.
+        <div class="agent-matrix">
+          <nav class="agent-nav" aria-label="Agent Installer Tabs">
+            <button type="button" class="agent-btn active" onclick="switchAgent('skill')" aria-label="Universal Agent Skill Instructions">Universal Skill</button>
+            <button type="button" class="agent-btn" onclick="switchAgent('claude')" aria-label="Claude Code Instructions">Claude Code</button>
+            <button type="button" class="agent-btn" onclick="switchAgent('cursor')" aria-label="Cursor Instructions">Cursor</button>
+            <button type="button" class="agent-btn" onclick="switchAgent('windsurf')" aria-label="Windsurf Instructions">Windsurf</button>
+            <button type="button" class="agent-btn" onclick="switchAgent('copilot')" aria-label="Copilot Instructions">Copilot</button>
+            <button type="button" class="agent-btn" onclick="switchAgent('antigravity')" aria-label="Google Antigravity Instructions">Antigravity</button>
+          </nav>
+
+          <div class="agent-content">
+            <div class="cmd-box">
+              <code id="agent-cmd-text">python scripts/install.py --skill</code>
+              <button type="button" class="btn-copy" id="btn-agent-copy" onclick="copyAgentCmd()" aria-label="Copy agent command">Copy</button>
+            </div>
+            <p class="agent-note" id="agent-note-text">
+              Installs full skill into <code>.agents/skills/turtleneck/</code> following the open Agent Skills standard. Works with any compatible runtime.
+            </p>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container footer-inner">
       <div>
-        <strong>Turtleneck</strong> &mdash; Product Design Intelligence. MIT License.
+        <span>Turtleneck v2.1.0 · MIT Licensed · Production Design Intelligence</span>
       </div>
       <div class="footer-links">
         <a href="https://github.com/Divyanshneginot/turtleneck" target="_blank" rel="noopener noreferrer" class="footer-link">GitHub</a>
@@ -1125,14 +1191,14 @@
     </div>
   </footer>
 
-  <!-- Interactive Scripts -->
+  <!-- INTERACTIVE LOGIC -->
   <script>
     // Copy helper
     function setupCopy(btnId, textGetter) {
       const btn = document.getElementById(btnId);
       if (!btn) return;
       btn.addEventListener('click', () => {
-        const text = typeof textGetter === 'function' ? textGetter() : textGetter;
+        const text = textGetter();
         navigator.clipboard.writeText(text).then(() => {
           const original = btn.innerText;
           btn.innerText = 'Copied!';
@@ -1141,67 +1207,227 @@
       });
     }
 
-    setupCopy('quick-copy-btn', 'python scripts/install.py --skill');
-    setupCopy('agent-copy-btn', () => document.getElementById('agent-active-cmd').innerText);
+    setupCopy('btn-quick-copy', () => 'python scripts/install.py --all');
 
-    // Comparison Toggle
-    const btnSlop = document.getElementById('btn-show-slop');
-    const btnCraft = document.getElementById('btn-show-craft');
-    const specimenSlop = document.getElementById('specimen-slop');
-    const specimenCraft = document.getElementById('specimen-craft');
-    const caption = document.getElementById('status-caption');
+    // Tab switcher for Simulator
+    function switchSandboxTab(tabName) {
+      document.querySelectorAll('.sandbox-tab').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      document.querySelectorAll('.panel-view').forEach(p => p.classList.remove('active'));
 
-    btnSlop.addEventListener('click', () => {
-      btnSlop.classList.add('active');
-      btnSlop.setAttribute('aria-selected', 'true');
-      btnCraft.classList.remove('active');
-      btnCraft.setAttribute('aria-selected', 'false');
-      specimenSlop.style.display = 'block';
-      specimenCraft.style.display = 'none';
-      caption.innerText = 'Generic AI Mode: Cliché purple gradients, buzzwords, arbitrary badges, poor contrast.';
-    });
+      if (tabName === 'stress') {
+        document.getElementById('tab-btn-stress').classList.add('active');
+        document.getElementById('tab-btn-stress').setAttribute('aria-selected', 'true');
+        document.getElementById('view-stress').classList.add('active');
+      } else {
+        document.getElementById('tab-btn-taste').classList.add('active');
+        document.getElementById('tab-btn-taste').setAttribute('aria-selected', 'true');
+        document.getElementById('view-taste').classList.add('active');
+      }
+    }
 
-    btnCraft.addEventListener('click', () => {
-      btnCraft.classList.add('active');
-      btnCraft.setAttribute('aria-selected', 'true');
-      btnSlop.classList.remove('active');
-      btnSlop.setAttribute('aria-selected', 'false');
-      specimenCraft.style.display = 'block';
-      specimenSlop.style.display = 'none';
-      caption.innerText = 'Turtleneck Mode: High contrast, functional typography, verified focus states, zero marketing fluff.';
-    });
+    // 4-State Component Interactive Simulator
+    const compContainer = document.getElementById('component-container');
 
-    // Agent Tabs
-    const tabs = document.querySelectorAll('.agent-tab');
-    const activeCmd = document.getElementById('agent-active-cmd');
-    const agentNotes = document.getElementById('agent-notes');
-
-    const descriptions = {
-      '--skill': 'Installs full Turtleneck skill into <code>.agents/skills/turtleneck/</code>. Compatible with all Open Agent Skills consumers.',
-      '--claude': 'Installs architect instructions and prompt rules into <code>CLAUDE.md</code> for Claude Code.',
-      '--cursor': 'Generates curated project rules in <code>.cursorrules</code> for Cursor.',
-      '--copilot': 'Generates workspace instructions in <code>.github/copilot-instructions.md</code>.',
-      '--antigravity': 'Installs globally into Google Antigravity configuration directory.'
+    const STATES = {
+      nominal: `
+        <div data-state="nominal" style="width: 100%;">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Resource Name</th>
+                <th>Environment</th>
+                <th>Status</th>
+                <th>Latency</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 600;">auth-gateway-service</td>
+                <td style="color: var(--text-secondary);">Production / us-east-1</td>
+                <td><span class="status-badge active">● Healthy</span></td>
+                <td style="font-family: var(--font-mono); color: var(--text-secondary);">14ms</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600;">event-stream-broker</td>
+                <td style="color: var(--text-secondary);">Production / eu-west-1</td>
+                <td><span class="status-badge active">● Healthy</span></td>
+                <td style="font-family: var(--font-mono); color: var(--text-secondary);">8ms</td>
+              </tr>
+              <tr>
+                <td style="font-weight: 600;">cache-replica-node-4</td>
+                <td style="color: var(--text-secondary);">Staging / us-central</td>
+                <td><span class="status-badge pending">○ Rebalancing</span></td>
+                <td style="font-family: var(--font-mono); color: var(--text-secondary);">42ms</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `,
+      empty: `
+        <div data-state="empty" class="empty-state-card">
+          <div class="empty-icon" aria-hidden="true">∅</div>
+          <h4 class="empty-title">No Active Services Connected</h4>
+          <p class="empty-desc">Zero items found in this workspace. Connect your first infrastructure cluster to begin real-time telemetry.</p>
+          <button type="button" class="btn btn-primary" onclick="setCompState('nominal')" aria-label="Provision Demo Cluster">
+            Provision Demo Cluster
+          </button>
+        </div>
+      `,
+      loading: `
+        <div data-state="loading" style="display: flex; flex-direction: column; gap: 18px; padding: 12px 0;">
+          <div style="display: flex; justify-content: space-between;">
+            <div class="skeleton-bar" style="width: 28%;"></div>
+            <div class="skeleton-bar" style="width: 18%;"></div>
+            <div class="skeleton-bar" style="width: 14%;"></div>
+            <div class="skeleton-bar" style="width: 12%;"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <div class="skeleton-bar" style="width: 32%;"></div>
+            <div class="skeleton-bar" style="width: 22%;"></div>
+            <div class="skeleton-bar" style="width: 14%;"></div>
+            <div class="skeleton-bar" style="width: 12%;"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <div class="skeleton-bar" style="width: 25%;"></div>
+            <div class="skeleton-bar" style="width: 19%;"></div>
+            <div class="skeleton-bar" style="width: 14%;"></div>
+            <div class="skeleton-bar" style="width: 12%;"></div>
+          </div>
+        </div>
+      `,
+      error: `
+        <div data-state="error" class="error-card">
+          <h4 class="error-title">Telemetry Cluster Connection Failed</h4>
+          <p class="error-desc">Upstream WebSocket terminated unexpectedly (HTTP 503). Retrying handshake in progress.</p>
+          <button type="button" class="btn btn-secondary" onclick="setCompState('nominal')" aria-label="Retry connection">
+            Retry Connection Now
+          </button>
+        </div>
+      `,
+      overflow: `
+        <div data-state="overflow" style="width: 100%;">
+          <table class="comp-table">
+            <thead>
+              <tr>
+                <th>Resource Name</th>
+                <th>Environment</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="font-weight: 600; max-width: 240px;">
+                  Kraftfahrzeug-Haftpflichtversicherung-Abrechnungssystem-Cluster-Production-v42-Alpha-Release
+                </td>
+                <td style="color: var(--text-secondary); max-width: 200px;">
+                  Frankfurt-Tier-4-Datacenter-Rack-Nordrhein-Westfalen-Underground-Bunker-Zone-9
+                </td>
+                <td><span class="status-badge active">● Protected Wrap</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `
     };
 
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => {
-          t.classList.remove('active');
-          t.setAttribute('aria-selected', 'false');
-        });
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
-        const cmd = tab.getAttribute('data-cmd');
-        activeCmd.innerText = cmd;
-        for (const [key, desc] of Object.entries(descriptions)) {
-          if (cmd.includes(key)) {
-            agentNotes.innerHTML = desc;
-            break;
-          }
-        }
+    function setCompState(stateName) {
+      document.querySelectorAll('.state-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = document.getElementById('btn-state-' + stateName);
+      if (activeBtn) activeBtn.classList.add('active');
+      compContainer.innerHTML = STATES[stateName] || STATES.nominal;
+    }
+
+    // Initialize with nominal
+    setCompState('nominal');
+
+    // Taste Tropes Interactive Toggles
+    const tropesState = {
+      purple_neon_blur: true,
+      centered_3_cards: true,
+      dusty_retro_serif: true,
+      fake_diagnostics_telemetry: true
+    };
+
+    function toggleTrope(btn, tropeKey) {
+      tropesState[tropeKey] = !tropesState[tropeKey];
+      if (tropesState[tropeKey]) {
+        btn.classList.add('rejected');
+        btn.innerText = 'REJECTED';
+      } else {
+        btn.classList.remove('rejected');
+        btn.innerText = 'ALLOWED';
+      }
+      updateTasteBlock();
+    }
+
+    function updateTasteBlock() {
+      const rejectedList = Object.keys(tropesState).filter(k => tropesState[k]);
+      const listStr = rejectedList.length ? rejectedList.map(r => `  - ${r}`).join('\n') : '  (none)';
+      const block = `<!-- TURTLENECK PERSISTENT TASTE CONSTRAINTS -->
+Preferred styles: modern_high_precision_editorial, asymmetric_layout, generous_whitespace
+Banned tropes (never generate):
+${listStr}
+Typography: headline='Plus Jakarta Sans' tracking='-0.03em', mono='JetBrains Mono'
+Contrast floor: >=7.0:1`;
+      document.getElementById('taste-preview-block').textContent = block;
+    }
+
+    function copyTasteBlock() {
+      const text = document.getElementById('taste-preview-block').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('btn-copy-taste');
+        btn.innerText = 'Copied!';
+        setTimeout(() => { btn.innerText = 'Copy Block'; }, 1500);
       });
-    });
+    }
+
+    // Agent Installer Tab switcher
+    const AGENTS_INFO = {
+      skill: {
+        cmd: 'python scripts/install.py --skill',
+        note: 'Installs full skill into .agents/skills/turtleneck/ following the open Agent Skills standard. Compatible with any modern agent runtime.'
+      },
+      claude: {
+        cmd: 'python scripts/install.py --claude',
+        note: 'Installs rules into CLAUDE.md or .claude/ directory, ensuring Claude Code follows Turtleneck decision loops.'
+      },
+      cursor: {
+        cmd: 'python scripts/install.py --cursor',
+        note: 'Writes non-destructive rules to .cursorrules with automated backups if an existing file is present.'
+      },
+      windsurf: {
+        cmd: 'python scripts/install.py --windsurf',
+        note: 'Installs rules into .windsurfrules for Cascade AI coding assistant.'
+      },
+      copilot: {
+        cmd: 'python scripts/install.py --copilot',
+        note: 'Configures .github/copilot-instructions.md with Turtleneck craft gates.'
+      },
+      antigravity: {
+        cmd: 'python scripts/install.py --antigravity',
+        note: 'Installs globally into Google Antigravity ~/.gemini/ configuration.'
+      }
+    };
+
+    function switchAgent(key) {
+      document.querySelectorAll('.agent-btn').forEach(b => b.classList.remove('active'));
+      event.target.classList.add('active');
+      const data = AGENTS_INFO[key] || AGENTS_INFO.skill;
+      document.getElementById('agent-cmd-text').innerText = data.cmd;
+      document.getElementById('agent-note-text').innerText = data.note;
+    }
+
+    function copyAgentCmd() {
+      const cmd = document.getElementById('agent-cmd-text').innerText;
+      navigator.clipboard.writeText(cmd).then(() => {
+        const btn = document.getElementById('btn-agent-copy');
+        btn.innerText = 'Copied!';
+        setTimeout(() => { btn.innerText = 'Copy'; }, 1500);
+      });
+    }
   </script>
 </body>
 </html>
