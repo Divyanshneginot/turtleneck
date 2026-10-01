@@ -90,3 +90,15 @@ def test_json_and_show_output(tmp_path: Path, capsys: pytest.CaptureFixture[str]
     assert rc == 0
     captured_show = capsys.readouterr()
     assert "test_trope" in captured_show.out
+
+
+def test_compile_output(tmp_path: Path, capsys: pytest.CaptureFixture[str]):
+    taste.main(["--project", str(tmp_path), "init"])
+    taste.main(["--project", str(tmp_path), "reject", "bento_grid_slop"])
+    capsys.readouterr()
+
+    rc = taste.main(["--project", str(tmp_path), "compile"])
+    assert rc == 0
+    captured = capsys.readouterr()
+    assert "TURTLENECK PERSISTENT TASTE CONSTRAINTS" in captured.out
+    assert "bento_grid_slop" in captured.out

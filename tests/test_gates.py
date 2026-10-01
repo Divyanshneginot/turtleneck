@@ -31,6 +31,7 @@ contrast = _load("tn_gate_contrast", "check_contrast.py")
 consistency = _load("tn_gate_consistency", "check_consistency.py")
 examples = _load("tn_gate_examples", "check_examples.py")
 frontmatter = _load("tn_gate_frontmatter", "check_frontmatter.py")
+stress = _load("tn_gate_stress", "check_stress.py")
 
 
 # --------------------------------------------------------------------------
@@ -78,6 +79,10 @@ def test_examples_gate_passes_on_repository():
     assert examples.EXAMPLES, "no examples discovered"
     for path in examples.EXAMPLES:
         assert examples.check_example(path) == [], f"{path.name} violates the protocol"
+
+
+def test_stress_gate_passes_on_repository():
+    assert stress.check(verbose=False) == 0
 
 
 # --------------------------------------------------------------------------

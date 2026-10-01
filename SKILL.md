@@ -89,7 +89,7 @@ The gates in `scripts/` assert that they obey the accessibility and craft baseli
 Before changing code, inspect the workspace (see [Workspace Scanner Guide](./references/workspace-scanner-guide.md), [Framework Integrations](./references/framework-integrations.md), and [Adaptive Taste Ledger](./references/adaptive-taste-ledger.md)):
 
 * Identify framework, routing, styling system, component library, token source, icon/font approach, test/build commands, and relevant existing screens. When targeting mobile or native apps, consult [Mobile, Touch & Native Ergonomics](./references/mobile-touch-and-native.md).
-* Read persistent taste profile: Check `.turtleneck/taste-profile.json` (or run `python scripts/taste.py json`) to honor accumulated user preferences and rejected tropes before proposing visual direction.
+* Read persistent taste profile: Check `.turtleneck/taste-profile.json` (or run `python scripts/taste.py compile` / `json`) to honor accumulated user preferences and rejected tropes before proposing visual direction.
 * Reuse local primitives and conventions where they are good; repair inconsistencies rather than layering a second system over them.
 * Identify target viewport(s), real data shape, loading/error/empty permissions states, and likely content lengths.
 * If references or competitor examples are available, study them as pattern evidence, not as a layout to copy (see [Design Research Playbook](./references/design-research-playbook.md), [Creative Direction Guide](./references/creative-direction-guide.md), and [Creative Synthesis Protocol](./references/creative-synthesis-protocol.md)). Extract task model, navigation, progressive disclosure, trust cues, density, and interaction feedback. Do not reproduce distinctive branding, wording, illustrations, or recognizable page composition.
@@ -204,6 +204,8 @@ Meet WCAG 2.2 AA contrast targets (see [Accessibility Checklist](./references/ac
 ### Verification
 Before claiming completion:
 * run the repository's relevant build, typecheck, lint, and tests;
+* run deterministic verification gates: `python scripts/check_stress.py <target>` and `python scripts/check_contrast.py`;
+* verify 4 essential states (nominal, empty, loading/skeleton, error/recovery);
 * inspect desktop and mobile layouts; exercise keyboard-only navigation;
 * test default, hover, focus, disabled, loading, empty, error, and success states that apply;
 * verify quiz scoring/recommendation paths and template preview/apply/reset flows with representative answers;

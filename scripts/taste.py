@@ -178,6 +178,26 @@ def cmd_json(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_compile(args: argparse.Namespace) -> int:
+    resolved = resolve_profile(args.project)
+    pref = ", ".join(resolved.get("preferred_vernacular", [])) or "none specified"
+    lines = [
+        "<!-- TURTLENECK PERSISTENT TASTE CONSTRAINTS -->",
+        f"Preferred styles: {pref}",
+        "Banned tropes (never generate):",
+    ]
+    for r in resolved.get("rejected_tropes", []):
+        lines.append(f"  - {r}")
+    typo = resolved.get("typography", {})
+    lines.append(
+        f"Typography: headline='{typo.get('headline_family', 'sans-serif')}' "
+        f"tracking='{typo.get('tracking', '-0.02em')}', mono='{typo.get('mono_family', 'monospace')}'"
+    )
+    lines.append(f"Contrast floor: >={resolved.get('contrast_floor', 4.5)}:1")
+    print("\n".join(lines))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Turtleneck Adaptive Taste Ledger CLI",
@@ -220,6 +240,10 @@ def build_parser() -> argparse.ArgumentParser:
     # json
     p_json = sub.add_parser("json", help="Output resolved taste profile as JSON for agent context")
     p_json.set_defaults(func=cmd_json)
+
+    # compile
+    p_comp = sub.add_parser("compile", help="Output compact prompt constraint block for agent injection")
+    p_comp.set_defaults(func=cmd_compile)
 
     return parser
 

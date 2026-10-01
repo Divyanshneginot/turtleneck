@@ -111,7 +111,7 @@ Archetypes act as constraint lenses (`references/design-archetypes.md`):
 
 ## Proof over promises
 
-Four zero-dependency gates assert the repository obeys its own protocol. CI runs all four across
+Five zero-dependency gates assert the repository obeys its own protocol. CI runs all gates across
 Python 3.11 and 3.12, alongside the pytest suite.
 
 ```bash
@@ -120,12 +120,14 @@ python scripts/check_consistency.py   # pipeline parity, interview step, referen
 python scripts/check_contrast.py      # all 46 declared colour pairs vs WCAG 2.2 AA
 python scripts/check_contrast.py --tokens <path.json>  # verify arbitrary generated palettes
 python scripts/check_examples.py      # examples honour focus-visible, reduced-motion, no `transition: all`
-pytest tests/ -q                      # installer safety contract + gates (86 tests)
+python scripts/check_stress.py        # UX stress gate: anti-slop, 4-state completeness, layout safety
+python scripts/taste.py compile       # compiles persistent user aesthetic DNA for agent injection
+pytest tests/ -q                      # installer safety contract + gates (101 tests)
 ```
 
-`check_contrast.py` fails if the documentation ever drifts from the values it verifies, so a
-token can't be quietly weakened. Passing `--tokens <json>` validates generated palettes against
-the minimal contrast schema. `check_examples.py` keeps the reference implementations honest.
+`check_stress.py` enforces production UX rigor: fails build on missing empty/loading/error states,
+`transition: all`, unlabelled controls, and unconstrained containers. `taste.py` makes design
+preferences and rejected tropes persistent across agent chats without token waste.
 
 ### Behavioral evaluations (`evals/`)
 
