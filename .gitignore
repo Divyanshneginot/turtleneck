@@ -15,3 +15,15 @@ venv/
 *.turtleneck.bak
 *.turtleneck.bak.*
 
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor & IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+

@@ -22,6 +22,7 @@ regeneration path.
 python scripts/check_consistency.py
 python scripts/check_contrast.py
 python scripts/check_examples.py
+python scripts/check_stress.py
 ```
 
 CI runs the same four commands on Python 3.11 and 3.12.

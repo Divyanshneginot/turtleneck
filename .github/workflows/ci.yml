@@ -38,5 +38,8 @@ jobs:
       - name: Examples gate (focus-visible, reduced motion, transitions, a11y names, contrast)
         run: python scripts/check_examples.py
 
+      - name: Stress & anti-slop gate (anti-slop, 4-state completeness, layout safety)
+        run: python scripts/check_stress.py
+
       - name: Installer safety contract & gate test suite
         run: pytest tests/ -v
